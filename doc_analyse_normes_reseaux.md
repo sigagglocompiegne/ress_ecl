@@ -11,6 +11,10 @@ Une troisième classe pourra être commune car indispensable à la gestion de r�
 |noeud| Point d'intérêt d'un réseau (jonction des lineaires reseau, support d'éclairage autonome... etc) représenté spatialement par un point.|
 |Maintenance|Lieu et détails d'une intervention de réparation, ou de prévention, de panne de réseau représentés spatialement par un point. |
 
+Ces 3 classes pourraient ainsi être les seules à détenir de l'information géographique, les autres tables se posant en héritage des classes "lineaire reseau" ou "noeud", comme sur le schèma conceptuel simplifié ci-dessous.  
+
+
+
 Topologie générales des réseaux : 
 
 - Tout arc (ligne ou polyligne) est relié à deux noeuds par ses extrémités.
@@ -19,3 +23,4 @@ Topologie générales des réseaux :
   - une terminaison de réseau
   - une connection entre deux arcs
   - indépendant du réseau (cas des supports d'éclairage indépendants)
+
