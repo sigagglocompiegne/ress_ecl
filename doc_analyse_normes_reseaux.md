@@ -13,7 +13,7 @@ Une troisième classe pourra être commune car indispensable à la gestion de r�
 
 Ces 3 classes pourraient ainsi être les seules à détenir de l'information géographique, les autres tables se posant en héritage des classes "lineaire reseau" ou "noeud", comme sur le schèma conceptuel simplifié ci-dessous.  
 
-
+! [UML urbanisation simplifié](/UML_simplifie_urbanisation.jpg)
 
 Topologie générales des réseaux : 
 
