@@ -6,6 +6,7 @@ Les deux normes réseaux étudiées (RAEPA et GRACE) utilisent deux types de gé
 Une troisième classe pourra être commune car indispensable à la gestion de réseau : la classe "maintenance".
 
 |Nom de la classe|Définition de la classe|
+|:---|:---|
 |lineaire reseau | Tronçon d'un réseau de caractéristiques (physiques et immatérielles --> propriétaires, exploitants...) uniformes sur toute la longueur, représenté spatialement par des lignes. |
 |noeud| Point d'intérêt d'un réseau (jonction des lineaires reseau, support d'éclairage autonome... etc) représenté spatialement par un point.|
 |Maintenance|Lieu et détails d'une intervention de réparation, ou de prévention, de panne de réseau représenté spatialement par un point. |
