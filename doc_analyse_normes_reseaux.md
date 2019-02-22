@@ -9,4 +9,12 @@ Une troisième classe pourra être commune car indispensable à la gestion de r�
 |:---|:---|
 |lineaire reseau | Tronçon d'un réseau de caractéristiques (physiques et immatérielles --> propriétaires, exploitants...) uniformes sur toute la longueur, représenté spatialement par des lignes. |
 |noeud| Point d'intérêt d'un réseau (jonction des lineaires reseau, support d'éclairage autonome... etc) représenté spatialement par un point.|
-|Maintenance|Lieu et détails d'une intervention de réparation, ou de prévention, de panne de réseau représenté spatialement par un point. |
+|Maintenance|Lieu et détails d'une intervention de réparation, ou de prévention, de panne de réseau représentés spatialement par un point. |
+
+Topologie générales des réseaux : 
+
+- Tout arc (ligne ou polyligne) est relié à deux noeuds par ses extrémités.
+- Deux arcs peuvent se croiser sans présence d'un noeud. 
+- Un noeud est au choix : - une terminaison de réseau
+                          - une connection entre deux arcs
+                          - indépendant du réseau (cas des supports d'éclairage indépendants)
