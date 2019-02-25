@@ -26,6 +26,12 @@ Topologie générales des réseaux :
 
 ## Etude des attributs commun des réseaux
 
+Cette étude ne comprend pas les attributs issus des liaisons entre les tables, elle a uniquement pour but de voir les attributs communs afin de réaliser le modèle conceptuel.
+
+### La table maintenance
+
+  Cette table est commune à tous les réseaux. Elle n'apparaît que dans la norme covadis RAEPA, mais peut-être utilisée pour tout type de réseau. Les listes de valeur des "types" (type défaillance, type réparation...) devront être élargies en fonction des réseaux pris en compte. 
+
 **Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
 :-----:|:-----:|:-----:|:-----:|:-----:
 idDefaillance|Identifiant de l'action de maintenance|Texte| | 
@@ -42,3 +48,29 @@ commentaireReparation|Commentaire libre|Texte| |
 PhotoIntervention|Photographie de l'intervention|Image| | 
 Coordonnées x|Coordonnée X en lambert 93|Réel | | 
 Coordonnées Y|Coordonnée Y en lambert 93|Réel | | 
+
+### La table noeud 
+
+La table noeud est présente dans les normes réseaux humides et réseaux télécom covadis. Les deux tables proposées dans ces normes partage des attributs, présent dans le tableau suivant.
+
+**Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
+:-----:|:-----:|:-----:|:-----:|:-----:
+idNoeud|Identifiant du noeud| | | 
+Coordonnées x|Coordonnée X en lambert 93| | | 
+Coordonnées Y|Coordonnée Y en lambert 93| | | 
+Propriétaire(maitre ouvrage ?)|Propriétaire du nœud (pour élec : propriétaire du fourreau)| | | 
+Exploitant/gestionnaire|Exploitant du nœud| | | 
+DateInstallation|Date d'installation/construction du nœud. | | | 
+DateSaisie|Date de première saisie de l'information| | | 
+DateMaj|Date de la dernière modificiation| | | 
+ReferencielSaisie|Référentiel de saisie | | | 
+QualiteSaisie|indice de qualité de l'information saisie| | | 
+Photo|Photographie du nœud (générique ou de l'objet propre)| | | 
+Commentaire|Libre| | | 
+precision xy|précision planimétrique| | | 
+Métadonnées|Selon standart de la norme concernée| | | 
+Etat|Etat de qualité du nœud| | | 
+TechnologiePrésente|Technologie présente sur ou dans le nœud|Liste de valeur, de 1 à 5 option| | 
+z|Hauteur du nœud : entre le sol et la base de l'infrastructure| | | 
+/Adresse|Adresse de la voie --> pour dénomination du nœud| | | 
+planRec|Lien vers plan de recollement| | | 
