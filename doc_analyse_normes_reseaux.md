@@ -26,7 +26,7 @@ Topologie générales des réseaux :
 
 ## Etude des attributs commun des réseaux
 
-Cette étude ne comprend pas les attributs issus des liaisons entre les tables, elle a uniquement pour but de voir les attributs communs afin de réaliser le modèle conceptuel.
+Cette étude ne comprend pas les attributs issus des liaisons entre les tables, elle a uniquement pour but de voir les attributs communs afin de réaliser le modèle conceptuel. De même, les noms des attributs n'est qu'indicatif pour le moment.
 
 ### La table maintenance
 
