@@ -28,22 +28,17 @@ Topologie générales des réseaux :
 
 **Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
 :-----:|:-----:|:-----:|:-----:|:-----:
-idNoeud|Identifiant du noeud| | | 
-Coordonnées x|Coordonnée X en lambert 93| | | 
-Coordonnées Y|Coordonnée Y en lambert 93| | | 
-Propriétaire(maitre ouvrage ?)|Propriétaire du nœud (pour élec : propriétaire du fourreau)| | | 
-Exploitant/gestionnaire|Exploitant du nœud| | | 
-DateInstallation|Date d'installation/construction du nœud. | | | 
-DateSaisie|Date de première saisie de l'information| | | 
-DateMaj|Date de la dernière modificiation| | | 
-ReferencielSaisie|Référentiel de saisie | | | 
-QualiteSaisie|indice de qualité de l'information saisie| | | 
-Photo|Photographie du nœud (générique ou de l'objet propre)| | | 
-Commentaire|Libre| | | 
-precision xy|précision planimétrique| | | 
-Métadonnées|Selon standart de la norme concernée| | | 
-Etat|Etat de qualité du nœud| | | 
-TechnologiePrésente|Technologie présente sur ou dans le nœud|Liste de valeur, de 1 à 5 option| | 
-z|Hauteur du nœud : entre le sol et la base de l'infrastructure| | | 
-/Adresse|Adresse de la voie --> pour dénomination du nœud| | | 
-planRec|Lien vers plan de recollement| | | 
+idDefaillance|Identifiant de l'action de maintenance|Texte| | 
+supportIncident|Objet concerné par l'action de maintenance|Liste de valeur| | 
+typeDefaillance|Type de défaillance concernée par l'action de maintenance|Liste de valeur| | 
+typeReparation|Type de réparation effectuée|Texte| | 
+maitreOuvrage|Maitre d'ouvrage de l'action de maintenance|Texte| | 
+origineDetection|Opération ayant permis de détecter la défaillance|Liste de valeur| | 
+dateDetection|Date de détection de la défaillance|Date| | 
+dateIntervention|Date d'intervention |Date| | 
+causeDefaillance|Type de cause de la défaillance|Liste devaleur| | 
+sourceDefaillance|Source de la défaillance ayant donné lieu à réparation|Texte| | 
+commentaireReparation|Commentaire libre|Texte| | 
+PhotoIntervention|Photographie de l'intervention|Image| | 
+Coordonnées x|Coordonnée X en lambert 93|Réel | | 
+Coordonnées Y|Coordonnée Y en lambert 93|Réel | | 
