@@ -30,7 +30,7 @@ Cette étude ne comprend pas les attributs issus des liaisons entre les tables, 
 
 ### La table maintenance
 
-  Cette table est commune à tous les réseaux. Elle n'apparaît que dans la norme covadis RAEPA, mais peut-être utilisée pour tout type de réseau. Les listes de valeur des "types" (type défaillance, type réparation...) devront être élargies en fonction des réseaux pris en compte. 
+  Cette table est commune à tous les réseaux. Elle n'apparaît que dans la norme covadis RAEPA, mais peut-être utilisée pour tout type de réseau. Les listes de valeur des "types" (type défaillance, type réparation...) devront être actualisées en fonction des réseaux pris en compte. 
 
 **Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
 :-----:|:-----:|:-----:|:-----:|:-----:
@@ -51,7 +51,7 @@ Coordonnées Y|Coordonnée Y en lambert 93|Réel | |
 
 ### La table noeud 
 
-La table noeud est présente dans les normes réseaux humides et réseaux télécom covadis. Les deux tables proposées dans ces normes partage des attributs, présents dans le tableau suivant.
+La table noeud est présente dans les normes réseaux humides et réseaux télécom covadis. Les deux tables "noeud" proposées dans ces normes partagent des attributs, présents dans le tableau suivant.
 
 **Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
 :-----:|:-----:|:-----:|:-----:|:-----:
@@ -74,3 +74,28 @@ TechnologiePrésente|Technologie présente sur ou dans le nœud|Liste de valeur,
 z|Hauteur du nœud : entre le sol et la base de l'infrastructure| | | 
 /Adresse|Adresse de la voie --> pour dénomination du nœud| | | 
 planRec|Lien vers plan de recollement| | | 
+
+### La table lineaire reseau
+
+La table lineaire reseau n'existe pas dans les normes ni dans les diverses BdD réseau étudiées. Ses attributs ont ici été définis selon les attributs communs des différentes classes représentées par des linéaires dans les normes RAEPA et Réseaux télécom. 
+
+**Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
+:-----:|:-----:|:-----:|:-----:|:-----:
+idlineaire|Identifiant du lineaire\_reseau| | | 
+Coordonnées x|Coordonnée X en lambert 93| | | 
+Coordonnées Y|Coordonnée Y en lambert 93| | | 
+Propriétaire(maitre ouvrage ?)|Propriétaire du nœud (pour élec : propriétaire du fourreau)| | | 
+Exploitant/gestionnaire|Exploitant du nœud| | | 
+DateCreation|Date d'installation/construction du nœud. | | | 
+Etat|Etat de qualité du lineaire| | | 
+DateSaisie|Date de première saisie de l'information| | | 
+DateMaj|Date de la dernière modificiation| | | 
+ReferencielSaisie|Référentiel de saisie | | | 
+QualiteSaisie|indice de qualité de l'information saisie| | | 
+Commentaire|Libre| | | 
+Métadonnées|Selon standart de la norme concernée| | | 
+precision xy|précision planimétrique| | | 
+z|Hauteur du lineaire entre le sol et la base de l'infrastructure| | | 
+planRec|Lien vers plan de recollement| | | 
+/Adresse|Adresse de la voie --> pour dénomination du nœud| | | 
+/longueur|Longueur calculée du réseau| | | 
