@@ -84,7 +84,7 @@ La table lineaire reseau n'existe pas dans les normes ni dans les diverses BdD r
 idlineaire|Identifiant du lineaire\_reseau| | | 
 Coordonnées x|Coordonnée X en lambert 93| | | 
 Coordonnées Y|Coordonnée Y en lambert 93| | | 
-Propriétaire(maitre ouvrage ?)|Propriétaire du nœud (pour élec : propriétaire du fourreau)| | | 
+Propriétaire(maitre ouvrage ?)|Propriétaire du linéaire (pour élec : propriétaire du fourreau)| | | 
 Exploitant/gestionnaire|Exploitant du nœud| | | 
 DateCreation|Date d'installation/construction du nœud. | | | 
 Etat|Etat de qualité du lineaire| | | 
