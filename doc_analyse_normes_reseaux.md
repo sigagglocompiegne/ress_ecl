@@ -24,4 +24,30 @@ Topologie générales des réseaux :
   - une connection entre deux arcs
   - indépendant du réseau (cas des supports d'éclairage indépendants)
 
-##Etude des attributs commun des réseaux
+## Etude des attributs commun des réseaux
+
+**Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
+:-----:|:-----:|:-----:|:-----:|:-----:
+idNoeud|Identifiant du noeud| | | 
+Coordonnées x|Coordonnée X en lambert 93| | | 
+Coordonnées Y|Coordonnée Y en lambert 93| | | 
+Propriétaire(maitre ouvrage ?)|Propriétaire du nœud (pour élec : propriétaire du fourreau)| | | 
+Exploitant/gestionnaire|Exploitant du nœud| | | 
+DateInstallation|Date d'installation/construction du nœud. | | | 
+DateSaisie|Date de première saisie de l'information| | | 
+DateMaj|Date de la dernière modificiation| | | 
+ReferencielSaisie|Référentiel de saisie | | | 
+QualiteSaisie|indice de qualité de l'information saisie| | | 
+Photo|Photographie du nœud (générique ou de l'objet propre)| | | 
+Commentaire|Libre| | | 
+precision xy|précision planimétrique| | | 
+Métadonnées|Selon standart de la norme concernée| | | 
+Etat|Etat de qualité du nœud| | | 
+TechnologiePrésente|Technologie présente sur ou dans le nœud|Liste de valeur, de 1 à 5 option| | 
+z|Hauteur du nœud : entre le sol et la base de l'infrastructure| | | 
+/Adresse|Adresse de la voie --> pour dénomination du nœud| | | 
+planRec|Lien vers plan de recollement| | | 
+occupation| | | | 
+accessibilité|Accessibilité du nœud| | | 
+plinox|Présence de plinox (fil traceur émettant un signal électromagnétique)| | | 
+/NbrEquipementPassif|Nbr équipements passifs dans le nœud| | | 
