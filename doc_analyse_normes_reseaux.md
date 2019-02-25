@@ -47,7 +47,3 @@ TechnologiePrésente|Technologie présente sur ou dans le nœud|Liste de valeur,
 z|Hauteur du nœud : entre le sol et la base de l'infrastructure| | | 
 /Adresse|Adresse de la voie --> pour dénomination du nœud| | | 
 planRec|Lien vers plan de recollement| | | 
-occupation| | | | 
-accessibilité|Accessibilité du nœud| | | 
-plinox|Présence de plinox (fil traceur émettant un signal électromagnétique)| | | 
-/NbrEquipementPassif|Nbr équipements passifs dans le nœud| | | 
