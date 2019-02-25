@@ -51,7 +51,7 @@ Coordonnées Y|Coordonnée Y en lambert 93|Réel | |
 
 ### La table noeud 
 
-La table noeud est présente dans les normes réseaux humides et réseaux télécom covadis. Les deux tables proposées dans ces normes partage des attributs, présent dans le tableau suivant.
+La table noeud est présente dans les normes réseaux humides et réseaux télécom covadis. Les deux tables proposées dans ces normes partage des attributs, présents dans le tableau suivant.
 
 **Nom de l'attribut**|**Définition**|**Type de valeurs**|**Valeurs possibles**|**Contraintes sur l'attribut**
 :-----:|:-----:|:-----:|:-----:|:-----:
@@ -70,7 +70,7 @@ Commentaire|Libre| | |
 precision xy|précision planimétrique| | | 
 Métadonnées|Selon standart de la norme concernée| | | 
 Etat|Etat de qualité du nœud| | | 
-TechnologiePrésente|Technologie présente sur ou dans le nœud|Liste de valeur, de 1 à 5 option| | 
+TechnologiePrésente|Technologie présente sur ou dans le nœud|Liste de valeur, de 1 à 5 options| | 
 z|Hauteur du nœud : entre le sol et la base de l'infrastructure| | | 
 /Adresse|Adresse de la voie --> pour dénomination du nœud| | | 
 planRec|Lien vers plan de recollement| | | 
