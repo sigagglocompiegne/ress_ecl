@@ -94,7 +94,7 @@ DROP SEQUENCE m_reseau_sec.fourreau_seq;
 CREATE TABLE m_reseau_sec.an_ecl_modele_support ------------------------------------ Modèle des différents supports          
 	(
 	id_mod_sup  integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Nom métier du modèle
-	nom_mod_su  character varying (254) UNIQUE,---------------------------------------- Numéro du modèle de support, interne à l''ARC'
+	nom_mod_su  character varying (254) UNIQUE,--------------------------------- Numéro du modèle de support, interne à l''ARC'
 	mat_supp    character varying (2) NOT NULL DEFAULT '00',-------------------- Matériau du support
 	cod_ral_s   character varying (20) ,---------------------------------------- Code RAL du support
 	ik_supp     integer ,------------------------------------------------------- Indice de protection face aux influences extérieures
@@ -111,7 +111,7 @@ CREATE TABLE m_reseau_sec.an_ecl_modele_support --------------------------------
 CREATE TABLE m_reseau_sec.an_ecl_modele_lanterne ----------------------------------- Modèles de lanternes existants ou ayant existés à Compiègne
 	(
 	id_mod_ln   integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Numéro du modèle de lanterne interne à l''ARC
-	nom_mod_ln  character varying (254) UNIQUE,---------------------------------------- Nom métier du modèle
+	nom_mod_ln  character varying (254) UNIQUE,--------------------------------- Nom métier du modèle
 	ty_lantern  character varying (2) NOT NULL DEFAULT '00',-------------------- Type de la lanterne
 	gar_lant    smallint ,------------------------------------------------------ Durée de garantie de la lanterne, en années
 	cod_ral_ln  character varying (20) ,---------------------------------------- Code RAL de la lanterne
@@ -129,11 +129,11 @@ CREATE TABLE m_reseau_sec.an_ecl_modele_lanterne -------------------------------
 CREATE TABLE m_reseau_sec.an_ecl_modele_lampe--------------------------------------- Modèles de lampe existants ou ayant existés à Compiègne
 	(
 	id_mod_lm   integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Numéro du modèle de la lampe, interne à l''ARC
-	nom_mod_lm  character varying (254) UNIQUE,---------------------------------------- Nom métier du modèle
+	nom_mod_lm  character varying (254) UNIQUE,--------------------------------- Nom métier du modèle
 	ty_lampe    character varying (2) NOT NULL DEFAULT '00',-------------------- Type de lampe
 	puis_lam    smallint ,------------------------------------------------------ Puissance de la lampe
 	cul_lamp    character varying(2) NOT NULL DEFAULT '00',--------------------- Culot de la lampe
-	telgest     character varying (2) NOT NULL DEFAULT '00',------------------------------ Présence d''une télégestion
+	telgest     character varying (2) NOT NULL DEFAULT '00',-------------------- Présence d''une télégestion
 	cou_ecl     character varying (2) NOT NULL DEFAULT '00',-------------------- Couleur d''éclairage de la lampe
 	gar_lamp    smallint ,------------------------------------------------------ Garantie de la lampe en années
 	observ      character varying(254) ,---------------------------------------- Commentaires divers
