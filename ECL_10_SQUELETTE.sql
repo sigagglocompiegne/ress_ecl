@@ -1,10 +1,10 @@
 
 /*ECL V1.0*/
 /*Creation du squelette de la structure des données (tables, séquences, triggers,...) */
-/*ECL_10_DEMO_squelette.sql */
+/*ECL_10_SQUELETTE.sql */
 /*PostGIS*/
-/* GeoCompiegnois - http://geo.compiegnois.fr/ */
-/* Auteur : Thibaud Billoteau */
+/*GeoCompiegnois - http://geo.compiegnois.fr/ */
+/*Auteur : Thibaud Billoteau */
 
 /*
 SOMMAIRE :
@@ -19,8 +19,8 @@ SOMMAIRE :
 */
 
 
---Changements depuis mise à jour dans GEO :
-----      - + UNIQUE pour tous les noms de modèles
+--Changements depuis mise à jour dans Github :
+----      
 
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
@@ -32,9 +32,9 @@ SOMMAIRE :
 -- CLASSES
 
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_modele_support CASCADE;
-DROP TABLE IF EXISTS m_reseau_sec.an_ecl_support CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_modele_lanterne CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_modele_lampe CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.an_ecl_support CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_ouvrage_electrique CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_depart CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_pi CASCADE;
@@ -42,13 +42,16 @@ DROP TABLE IF EXISTS m_reseau_sec.geo_ecl_noeud CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.geo_ecl_cable CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_fourreau CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_foyer CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.an_ecl_intervention CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.an_ecl_media CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.an_ecl_erreur CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.log_ecl CASCADE;
 
 
 -- DOMAINES DE VALEUR
 
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_etat CASCADE;
-DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_etat_fixation CASCADE;
-DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_etat_signalement CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_etat_signalement_affichage CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_support CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_ouvrage_electrique CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_commande CASCADE;
@@ -62,25 +65,60 @@ DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_ballast CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_amorceur CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_lampe CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_auto_transformateur CASCADE;
-DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_cable CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_mode_pose_ouvrage_electrique CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_emplacement CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_qualite_date CASCADE;
-DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_marque_fixation CASCADE;
-DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_marque_lanterne CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_materiaux_supports CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_situation_cable CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_classe_electrique CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_culot_lampe CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_presence CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_couleur_eclairage CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_ouvrage CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_depart CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_foyer CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_pi CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_point_lumineux CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_moyen_intervention CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_options_support CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_puissance_lampe CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_qualite_geolocalisation CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_section_cable CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_signalement_intervention CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_situation CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_source_defaillance CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_defaillance CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_cables CASCADE;
 
 
---SEQUENCE
+--TRIGGERS
 
-DROP SEQUENCE m_reseau_sec.noeud_seq CASCADE;
-DROP SEQUENCE m_reseau_sec.depart_seq;
-DROP SEQUENCE m_reseau_sec.fourreau_seq;
+DROP TRIGGER t_t1_depart_insert_update ON m_reseau_sec.an_ecl_depart ;
+DROP TRIGGER t_t2_log_depart ON m_reseau_sec.an_ecl_depart ;
+DROP TRIGGER t_t3_depart_delete ON m_reseau_sec.an_ecl_depart ;
+DROP TRIGGER t_t1_foyer ON m_reseau_sec.an_ecl_foyer ;
+DROP TRIGGER t_t2_log_foyer ON m_reseau_sec.an_ecl_foyer ;
+DROP TRIGGER t_t3_foyer_after ON m_reseau_sec.an_ecl_foyer ;
+DROP TRIGGER t_t4_foyer_delete ON m_reseau_sec.an_ecl_foyer ;
+DROP TRIGGER t_t1_intervention ON m_reseau_sec.an_ecl_intervention ;
+DROP TRIGGER t_t2_log_intervention ON m_reseau_sec.an_ecl_intervention ;
+DROP TRIGGER t_t2_log_intervention ON m_reseau_sec.an_ecl_modele_lampe ;
+DROP TRIGGER t_t1_modele_lampe ON m_reseau_sec.an_ecl_modele_lampe ;
+DROP TRIGGER t_t2_log_modele_lampe ON m_reseau_sec.an_ecl_modele_lampe ;
+DROP TRIGGER t_t1_modele_lanterne ON m_reseau_sec.an_ecl_modele_lanterne ;
+DROP TRIGGER t_t2_log_modele_lanterne ON m_reseau_sec.an_ecl_modele_lanterne ;
+DROP TRIGGER t_t1_modele_support ON m_reseau_sec.an_ecl_modele_support ;
+DROP TRIGGER t_t2_log_modele_support ON m_reseau_sec.an_ecl_modele_support ;
+DROP TRIGGER t_t1_cable ON m_reseau_sec.geo_ecl_cable ;
+DROP TRIGGER t_t2_cable ON m_reseau_sec.geo_ecl_cable ;
+DROP TRIGGER t_t2_log_cable ON m_reseau_sec.geo_ecl_cable ;
+
+--SEQUENCES
+
+DROP SEQUENCE m_reseau_sec.objet_seq CASCADE;
+DROP SEQUENCE m_reseau_sec.ecl_log_seq CASCADE;
+DROP SEQUENCE m_reseau_sec.an_ecl_media_gid_seq1 CASCADE;
 
 
 -- ###############################################################################################################################
@@ -93,15 +131,16 @@ DROP SEQUENCE m_reseau_sec.fourreau_seq;
 
 CREATE TABLE m_reseau_sec.an_ecl_modele_support ------------------------------------ Modèle des différents supports          
 	(
-	id_mod_sup  integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Nom métier du modèle
-	nom_mod_su  character varying (254) UNIQUE,--------------------------------- Numéro du modèle de support, interne à l''ARC'
+	id_mod_sup  integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,----- Nom métier du modèle
+	nom_mod_su  character varying (254) UNIQUE,--------------------------------- Numéro du modèle de support, interne à l''ARC
 	mat_supp    character varying (2) NOT NULL DEFAULT '00',-------------------- Matériau du support
 	cod_ral_s   character varying (20) ,---------------------------------------- Code RAL du support
 	ik_supp     integer ,------------------------------------------------------- Indice de protection face aux influences extérieures
 	ip_supp     integer ,------------------------------------------------------- Indice de protection aux chocs mécaniques
 	observ      character varying(254) ,---------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone ------------------------------------ Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
+	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
+	date_maj    timestamp without time zone, ----------------------------------- Date de dernière mise à jour de la donnée
+	op_sai      character varying(80) ------------------------------------------ Opérateur de la saisie de la donnée
 	);
 ---
  
@@ -110,17 +149,17 @@ CREATE TABLE m_reseau_sec.an_ecl_modele_support --------------------------------
 
 CREATE TABLE m_reseau_sec.an_ecl_modele_lanterne ----------------------------------- Modèles de lanternes existants ou ayant existés à Compiègne
 	(
-	id_mod_ln   integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Numéro du modèle de lanterne interne à l''ARC
+	id_mod_ln   integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,----- Numéro du modèle de lanterne interne à l''ARC
 	nom_mod_ln  character varying (254) UNIQUE,--------------------------------- Nom métier du modèle
-	ty_lantern  character varying (2) NOT NULL DEFAULT '00',-------------------- Type de la lanterne
 	gar_lant    smallint ,------------------------------------------------------ Durée de garantie de la lanterne, en années
 	cod_ral_ln  character varying (20) ,---------------------------------------- Code RAL de la lanterne
 	clas_el_ln  character varying (2) NOT NULL DEFAULT '00',-------------------- Classe électrique de la lanterne
 	ik_lant     integer ,------------------------------------------------------- Indice de protection face aux influences extérieures
 	ip_lant     integer ,------------------------------------------------------- Indice de protection aux chocs mécaniques
 	observ      character varying(254) ,---------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone------------------------------------- Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
+	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
+	date_maj    timestamp without time zone,------------------------------------ Date de dernière mise à jour de la donnée
+	op_sai      character varying(80)  ----------------------------------------- Opérateur de la saisie de la donnée
 	);
 ---
 
@@ -128,194 +167,232 @@ CREATE TABLE m_reseau_sec.an_ecl_modele_lanterne -------------------------------
 
 CREATE TABLE m_reseau_sec.an_ecl_modele_lampe--------------------------------------- Modèles de lampe existants ou ayant existés à Compiègne
 	(
-	id_mod_lm   integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Numéro du modèle de la lampe, interne à l''ARC
+	id_mod_lm   integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,----- Numéro du modèle de la lampe, interne à l''ARC
 	nom_mod_lm  character varying (254) UNIQUE,--------------------------------- Nom métier du modèle
 	ty_lampe    character varying (2) NOT NULL DEFAULT '00',-------------------- Type de lampe
-	puis_lam    smallint ,------------------------------------------------------ Puissance de la lampe
+	puis_lam    character varying (2) NOT NULL DEFAULT '00' ,------------------- Puissance de la lampe en Watt
 	cul_lamp    character varying(2) NOT NULL DEFAULT '00',--------------------- Culot de la lampe
 	telgest     character varying (2) NOT NULL DEFAULT '00',-------------------- Présence d''une télégestion
 	cou_ecl     character varying (2) NOT NULL DEFAULT '00',-------------------- Couleur d''éclairage de la lampe
 	gar_lamp    smallint ,------------------------------------------------------ Garantie de la lampe en années
 	observ      character varying(254) ,---------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone------------------------------------- Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	);
----
-
---################################################################ FOURREAU #####################################################
-
-CREATE TABLE m_reseau_sec.an_ecl_fourreau------------------------------------------- Objet linéaire permettant de faire passer un ou plusieurs câble(s)
-	(
-	id_fourr    integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,------------- Numéro de fourreaut interne à l''ARC
-	nom_fourr   character varying (254),---------------------------------------- Nom métier du fourreau
-	dat_pos_fr  timestamp without time zone ,----------------------------------- Date de pose du fourreau
-	place_libr  smallint ,------------------------------------------------------ Possibilité de rajouter un câble
-	etat_four   character varying (2) NOT NULL DEFAULT '00',-------------------- Etat du fourreau
-	observ      character varying(254) ,---------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(), ------------ Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone, ------------------------------------ Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	op_sai      character varying(80) ------------------------------------------ Opérateur de la saisie de la donnée
+	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
+	date_maj    timestamp without time zone,------------------------------------ Date de dernière mise à jour de la donnée
+	op_sai      character varying(80)  ----------------------------------------- Opérateur de la saisie de la donnée
 	);
 ---
 
 --################################################################# NOEUD #######################################################
 
-CREATE TABLE m_reseau_sec.geo_ecl_noeud--------------------------------------- Objet ponctuel d''intérêt pour la connaissance patrimoniale du réseau
+CREATE TABLE m_reseau_sec.geo_ecl_noeud--------------------------------------------- Noeud ponctuel du réseau
 	(
-	id_noeud    integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,------------- Numéro du noeud interne à l''ARC
+	id_noeud    integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,----- Numéro du noeud interne à l''ARC
 	depart      integer,-------------------------------------------------------- Départ auquel est relié le noeud
 	exploit_nd  character varying (254) ,--------------------------------------- Exploitant du nœud
 	presta_nd   character varying (254) ,--------------------------------------- Prestataire des travaux sur le nœud
-	commune     integer ,------------------------------------------------------- Commune sur laquelle est situé le nœud
+	commune     character varying (254) ,--------------------------------------- Commune sur laquelle est situé le nœud
+	insee       character varying (5),------------------------------------------ Code insee de la commune sur laquelle est situé le nœud
 	ent_pose    character varying (254),---------------------------------------- Entreprise ayant posé l''ouvrage électrique
 	dat_pos     timestamp without time zone ,----------------------------------- Date de la pose
 	qua_dat     character varying(2) NOT NULL DEFAULT '00',--------------------- Qualité de date de la pose
-	src_geom    varchar(2) DEFAULT '00',---------------------------------------- Source du référentiel géographique pour le positionnement du nœud
-	src_date    varchar(4) DEFAULT '0000',-------------------------------------- Année du millésime du référentiel géographique de saisie
-	prec        varchar(3) ,---------------------------------------------------- Précision cartographique du noeud exprimée en cm
-	ope_sai     varchar(254) ,-------------------------------------------------- Opérateur de la saisie de la donnée nœud
+	src_geom    varchar(2) NOT NULL DEFAULT '00'-------------------------------- Source du référentiel géographique pour le positionnement du nœud
+	src_date    varchar(4),----------------------------------------------------- Année du millésime du référentiel géographique de saisie
+	op_sai      character varying(80) ,----------------------------------------- Opérateur de la saisie attributaire de la donnée nœud
 	geom        geometry(Point,2154)-------------------------------------------- Géométrie du noeud
+	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
+	date_maj    timestamp without time zone,------------------------------------ Date de dernière mise à jour de la donnée
+	observ      character varying(254)------------------------------------------ Commentaires divers
+	qua_geo_XY  character varying (2) NOT NULL DEFAULT '00',-------------------- Qualité de la géolocalisation planimétrique
+	qua_geo_Z   character varying (2) NOT NULL DEFAULT '00', ------------------- Qualité de la géolocalisation altimétrique
+	op_sai_geo  character varying (254) ---------------------------------------- Opérateur de la géolocalisation
+	date_donne  timestamp without time zone ------------------------------------ Horodatage de la production initiale de la donnée
+	situation   character varying (2) NOT NULL DEFAULT '10', ------------------- Situation générale : plus utilisé mais encore là ou utilisé ou supprimé
 	);
 ---
-
 --################################################################# CABLE #######################################################
 
-CREATE TABLE m_reseau_sec.geo_ecl_cable -------------------------------------- Objet linéaire allant d''un nœud à un autre. Transporte l''électricité lorsque le réseau est sous tension
+CREATE TABLE m_reseau_sec.geo_ecl_cable -------------------------------------------- Objet linéaire allant d''un nœud à un autre. Transporte l''électricité lorsque le réseau est sous tension
 	(
-	id_cab      integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Numéro du câble interne à l''ARC
+	id_cab      integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,----- Numéro du câble interne à l''ARC
 	id_nd_ini   integer ,------------------------------------------------------- Lien vers l''identifiant du nœud initial du câble
 	id_nd_fin   integer ,------------------------------------------------------- Lien vers l''identifiant du nœud final du câble
-	fourreau    integer ,------------------------------------------------------- Identifiant du fourreau dans lequel passe le câble
 	exploi_cab  character varying (254) ,--------------------------------------- Exploitant du câble
 	presta_cab  character varying (254) ,--------------------------------------- Prestataire des travaux sur le câble
 	etat_cable  character varying (2) NOT NULL DEFAULT '00',-------------------- Etat du câble
 	situ_cab    character varying (2) NOT NULL DEFAULT '00',-------------------- Situation physique du câble
 	dat_pos_ca  timestamp without time zone ,----------------------------------- Date de pose du câble
-	sect_cab    character varying (10) ,---------------------------------------- Section du câble
+	qua_dat     character varying(2) NOT NULL DEFAULT '00',--------------------- Qualité de date de la pose
+	sect_cab    character varying (2) ,----------------------------------------- Section du câble
 	ent_pose    character varying (254) ,--------------------------------------- Entreprise ayant posé le cable
-	insee1	    character varying(5), ------------------------------------------- Code insee de la commune
+	insee1	    character varying(5), ------------------------------------------ Code insee de la commune
 	commune1    integer ,------------------------------------------------------- Commune sur laquelle est située le câble
-	insee2	    character varying(5), ------------------------------------------- Code insee de la commune
+	insee2	    character varying(5), ------------------------------------------ Code insee de la commune
 	commune2    integer ,------------------------------------------------------- Commune sur laquelle est située le câble
-	src_geom    varchar(2) ,---------------------------------------------------- Source du référentiel géographique pour le positionnement du nœud
+	src_geom    varchar(2) NOT NULL DEFAULT '00' ,------------------------------ Source du référentiel géographique pour le positionnement du nœud
 	src_date    varchar(4) ,---------------------------------------------------- Année du millésime du référentiel géographique de saisie
-	prec        varchar(3) ,---------------------------------------------------- Précision cartographique moyenne du câble exprimée en cm
-	observ     varchar(254),--------------------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT now(),------------- Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone, ------------------------------------ Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	op_sai      character varying(80), ------------------------------------------ Opérateur de la saisie de la donnée
-	geom        geometry(LineString,2154) -------------------------------------- Géométrie du câble
+	observ      varchar(254),--------------------------------------------------- Commentaires divers
+	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
+	date_maj    timestamp without time zone,------------------------------------ Date de dernière mise à jour de la donnée
+	op_sai      character varying(80), ----------------------------------------- Opérateur de la saisie de la donnée
+	geom        geometry(LineString,2154), ------------------------------------- Géométrie du câble
+	qua_geo_XY  character varying (2) NOT NULL DEFAULT '00',-------------------- Qualité de la géolocalisation planimétrique
+	qua_geo_Z   character varying (2) NOT NULL DEFAULT '00', ------------------- Qualité de la géolocalisation altimétrique
+	op_sai_geo  character varying (254) ---------------------------------------- Opérateur de la géolocalisation
+	date_donne  timestamp without time zone ------------------------------------ Horodatage de la donnée
+	situation   character varying (2) NOT NULL DEFAULT '10', ------------------- Situation générale : plus utilisé mais encore là ou utilisé ou supprimé
 	);
 ---
-
 --################################################################# SUPPORT #####################################################
-
-CREATE TABLE m_reseau_sec.an_ecl_support ------------------------------------- Table des supports de foyer
+CREATE TABLE m_reseau_sec.an_ecl_support ------------------------------------------- Table des supports de foyer
 	(
 	id_supp     integer NOT NULL,  --------------------------------------------- Identifiant du nœud lié au support
 	id_mod_sup  integer NOT NULL DEFAULT '1',  --------------------------------- Lien vers table modèle support
 	ty_supp     character varying (2) NOT NULL DEFAULT '00',  ------------------ Type de support : mat, facade…etc.
-	opt_supp    varchar (25),  ------------------------------------------------- Option(s) du support, sous forme de liste déroulante dans l''application
-	entr_mass   smallint,  ----------------------------------------------------- Entraxe du massif : séparation entre les deux bords intérieur servant à caler le mât
+	opt_supp    varchar (80),  ------------------------------------------------- Option(s) du support, sous forme de liste déroulante dans GEO
 	ty_parasu   character varying (2) NOT NULL DEFAULT '00',  ------------------ Type de parasurtenseur
 	etat_supp   character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat du support
-	haut_trap   integer ,  ----------------------------------------------------- Hauteur de la trappe de visite, en mètres, si elle existe
-	etat_trappe character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat de la porte de la chambre de visite
-	loc_sy_el   character varying (2) NOT NULL DEFAULT '00',  ------------------ Emplacement du parasurtenseur et fusible/disjoncteur
-	loc_plat    character varying (2) NOT NULL DEFAULT '00',  ------------------ Emplacement de la platine
+	haut_trap   character varying (2) NOT NULL DEFAULT '00',  ------------------ Hauteur de la trappe de visite : Standard ou En hauteur
 	ty_disjonc  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type du disjoncteur
 	ty_fusible  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type du fusible
-	marq_fixat  character varying(2) NOT NULL DEFAULT '00',  ------------------- Marque de la fixation
-	etat_fixa   character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat de la fixation
-	cod_ral_f   character varying(20),  ---------------------------------------- Code RAL de la fixation
-	haut_supp   numeric ,  ----------------------------------------------------- Hauteur du support
-	date_sai    timestamp without time zone NOT NULL DEFAULT now(), ------------ Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone ,----------------------------------- Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	observ      character varying(254)------------------------------------------ Commentaires divers
+	haut_supp   integer ,  ----------------------------------------------------- Hauteur du support
+	nbr_foyer   integer
 	);
----
-
+--
 --############################################################# POINT D'INTERET ##################################################
 
-CREATE TABLE m_reseau_sec.an_ecl_pi ------------------------------------------------ Objet réel ou abstrait indiquant un point ayant une importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''EP.
+CREATE TABLE m_reseau_sec.an_ecl_pi ------------------------------------------------ Objet réel ou abstrait indiquant un point d'importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''Eclairage Public.
 	(
 	id_pi       integer NOT NULL,  --------------------------------------------- Identifiant du nœud lié au point d''interet
-	ty_pi       character varying (2) NOT NULL DEFAULT '99',  ------------------ Type de point d''intérêt
+	ty_pi       character varying (2) NOT NULL DEFAULT '00',  ------------------ Type de point d''intérêt
 	etat_pi     character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat du point d''intérêt
-	observ      character varying(254),----------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT now(), ------------ Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone ------------------------------------ Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
 	);
 ---
 
 --############################################################ OUVRAGE ELECTRIQUE ##################################################
 
-CREATE TABLE m_reseau_sec.an_ecl_ouvrage_electrique -------------------------- Objet avec une arrivée d''électricité et un ou plusieurs départs
+CREATE TABLE m_reseau_sec.an_ecl_ouvrage_electrique -------------------------------- Objet avec une arrivée d''électricité et un ou plusieurs départs
 	(
 	id_ouvelec  integer NOT NULL,  --------------------------------------------- Identifiant du nœud lié à l''ouvrage
-	nom_ouv     character varying (254) UNIQUE, ------------------- Nom métier de l'ouvrage
+	nom_ouv     character varying (254) UNIQUE, -------------------------------- Nom métier de l'ouvrage
 	pdl_edf     character varying (4) ,  --------------------------------------- Numéro de référence EDF
 	n_com_edf   character varying (10) ,  -------------------------------------- Numéro du compteur EDF
-	ty_ouvelec  character varying (2)  DEFAULT '00',---------------------------- Type d''ouvrage électrique / coffret = sous-ouvrage électrique
+	ty_ouvelec  character varying (2)  DEFAULT '00',---------------------------- Type d''ouvrage électrique
 	etat_ouvel  character varying (2)  DEFAULT '00',---------------------------- Etat de l''ouvrage électrique
 	mod_pos_ou  character varying (2)  DEFAULT '00',  -------------------------- Mode de pose de l''ouvrage électrique
-	mis_terre   character varying (2)  DEFAULT '00',  -------------------------- Présence d''une mise à la terre de l''ouvrage électrique
 	val_terre   smallint ,  ---------------------------------------------------- Valeur globale de la terre
 	ik_ouvelec  integer ,   ---------------------------------------------------- Indice de protection face aux influences extérieures
 	ip_ouvelec  integer ,   ---------------------------------------------------- Indice de protection eux chocs mécaniques
 	puis_mes    integer ,  ----------------------------------------------------- Puissance mesurée
 	puis_sous   integer ,  ----------------------------------------------------- Puissance souscrite
 	ty_comm     character varying (2)  DEFAULT '00',  -------------------------- Type de commande
-	pres_var    character varying(2)  DEFAULT '00',  --------------------------- Présence d''un variateur
+	pres_var    character varying(2)  vDEFAULT '00',  -------------------------- Présence d''un variateur
 	ty_disjonc  character varying (2)  DEFAULT '00',  -------------------------- Type du disjoncteur
 	ty_fusible  character varying (2)  DEFAULT '00',  -------------------------- Type du fusible
-	date_sai    timestamp without time zone NOT NULL DEFAULT now(),------------- Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone ,----------------------------------- Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	observ      character varying(254)------------------------------------------ Commentaires divers
 	);
----
+--- 
 
 --################################################################### DEPART #######################################################
 
-CREATE TABLE m_reseau_sec.an_ecl_depart -------------------------------------- Objet intégré à une armoire et permettant le branchement d''un câble
+CREATE TABLE m_reseau_sec.an_ecl_depart -------------------------------------------- Objet intégré à une armoire et permettant le branchement d''un câble
 	(
-	id_depart   integer DEFAULT nextval('m_reseau_sec.depart_seq') NOT NULL,---- Numéro du depart interne à l''ARC
+	id_depart   integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,----- Numéro du depart interne à l''ARC
 	id_ouvelec  integer NOT NULL,  --------------------------------------------- Lien vers table armoire
-	nom_depart  character varying (254) UNIQUE,  ------------------------------- Nom du secteur déservi par le départ
+	nom_depart  character varying (254),  -------------------------------------- Nom du secteur déservi par le départ -- pas de unique car pour les transformateurs les noms sont les mêmes
 	etat_dep    character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat du départ
-	tension     integer ,  ----------------------------------------------------- Tension électrique en sortie
+	tension     character varying (4) ,  --------------------------------------- Tension électrique en sortie - en varchar pour la gestion d'intervention
 	ty_disjonc  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type du disjoncteur
 	ty_fusible  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type du fusible
 	observ      character varying(254) ,  -------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(), ------------ Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone,------------------------------------ Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	op_sai      character varying(80) ------------------------------------------ Opérateur de la saisie de la donnée
+	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
+	date_maj    timestamp without time zone,------------------------------------ Date de dernière mise à jour de la donnée
+	op_sai      character varying(80), ----------------------------------------- Opérateur de la saisie initiale de la donnée
+	situation   character varying (2) NOT NULL DEFAULT '10', ------------------- Situation générale : plus utilisé mais encore là ou utilisé ou supprimé
+	date_donne  timestamp without time zone, ----------------------------------- Horodatage de la donnée
+	puis_sous   integer -------------------------------------------------------- Puissance souscrite calculée via trigger
 	);
 ---
 
 --################################################################## FOYER  ########################################################
-
 CREATE TABLE m_reseau_sec.an_ecl_foyer -------------------------------------- Objet reposant sur un support, intégrant une source lumineuse
 	(
-	id_foyer    integer DEFAULT nextval('m_reseau_sec.media_seq') NOT NULL,----- Numéro du foyer interne à l''ARC
+	id_foyer    integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,----- Numéro du foyer interne à l''ARC
 	id_supp     integer NOT NULL,  --------------------------------------------- Identifiant du support sur lequel repose le foyer
-	id_mod_ln   integer NOT NULL DEFAULT '1',  --------------------------------------------- Lien vers la table modèle lanterne
-	id_mod_lm   integer NOT NULL DEFAULT '1',  --------------------------------------------- Lien vers table modèle lampe
-	etat_lant   character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat de la lanterne
+	id_mod_ln   integer NOT NULL DEFAULT '1',  --------------------------------- Lien vers la table modèle lanterne
+	id_mod_lm   integer NOT NULL DEFAULT '1',  --------------------------------- Lien vers table modèle lampe
+	etat_foy    character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat du foyer : état de la lanterne + etat de la lampe = moyenne
+	ty_lantern  character varying (2) NOT NULL DEFAULT '00',-------------------- Type de la lanterne piéton / routier / projecteur
 	haut_feu    integer ,  ----------------------------------------------------- Hauteur max de la lanterne par rapport au niveau de la chaussée
 	dat_pos_ln  timestamp without time zone ,  --------------------------------- Date de la pose de la lanterne
 	pct_fct     numeric ,  ----------------------------------------------------- Puissance de la lampe en % de sa puissance maximale : uniquement pour les leds / Présent dans un logiciel mais non accessible au ST
-	etat_lamp   character varying (2) NOT NULL DEFAULT '00', ------------------- Etat de la lampe
 	dat_pos_lm  timestamp without time zone ,  --------------------------------- Date de pose de la lampe
 	ty_ballast  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type de ballast installé
 	ty_amorce   character varying (2) NOT NULL DEFAULT '00',  ------------------ Type d''amorceur installé
 	ty_auto_tr  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type d''auto trasformateur installé
+	loc_plat    character varying (2) NOT NULL DEFAULT '00',  ------------------ Localisation de la platine du foyer
 	observ      character varying(254) ,  -------------------------------------- Commentaires divers
-	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(), ------------ Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
-	date_maj    timestamp without time zone,------------------------------------ Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine
+	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
+	date_maj    timestamp without time zone,------------------------------------ Date de dernière mise à jour de la donnée
 	op_sai      character varying(80) ------------------------------------------ Opérateur de la saisie de la donnée
+	situation   character varying (2) NOT NULL DEFAULT '10', ------------------- Situation générale : plus utilisé mais encore là ou utilisé ou supprimé
+	date_donne  timestamp without time zone ------------------------------------ Horodatage de la donnée
 	);
 ---
+
+--################################################################## ERREURS  ########################################################
+
+CREATE TABLE m_reseau_sec.an_ecl_erreur -------------------------------------------- Table récupérant les messages d'erreurs
+	(
+	id_erreur   integer DEFAULT nextval('m_reseau_sec.objet_seq') NOT NULL,------- Numéro de l'erreur interne à l''ARC
+	id_objet    integer,---------------------------------------------------------- Identifiant de l'objet sur lequel l'erreur a été saisie
+	message     varchar (254), --------------------------------------------------- Message d'erreur destiné à l'utilisateur de l'application
+	heure       timestamp without time zone -------------------------------------- Date de la saisie de l'erreur
+	);
+--- 
+
+
+--################################################################## INTERVENTION ########################################################
+
+CREATE TABLE m_reseau_sec.an_ecl_intervention --------------------------------------- Interventions et signalements du service métier
+(
+	id_inter 	integer NOT NULL DEFAULT nextval('m_reseau_sec.objet_seq'),-- Numéro de l''intervention interne à l''ARC
+	id_objet 	integer NOT NULL,-------------------------------------------- Identifiant de l''objet concerné par l''intervention
+	type_si_in 	character varying(2) DEFAULT '10'::character varying,-------- Signalement ou intervention
+	dat_signa 	timestamp without time zone DEFAULT now(),------------------- Date du signalement
+	dat_progra 	timestamp without time zone,--------------------------------- Date de la programmation
+	dat_real 	timestamp without time zone,--------------------------------- Date de la réalisation de l''intervention
+	typ_def 	character varying(2) DEFAULT '00'::character varying,-------- Type de défaillance
+	src_def 	character varying(2) DEFAULT '00'::character varying,-------- Source de la défaillance
+	etat_sign 	character varying(2) DEFAULT '10'::character varying,-------- Etat du signalement
+	moy_interv 	character varying(2) DEFAULT '00'::character varying,-------- Moyen d''intervention
+	type_inter 	character varying(254) DEFAULT '00'::character varying,------ Type d''intervention
+	att_met1 	character varying(2), --------------------------------------- Dédié au type de disjoncteur / type de ballast
+	att_met2 	character varying(2), --------------------------------------- Dédié au type de fusible / type d'amorce
+	att_met3 	character varying(2), --------------------------------------- Dédié au type de parasurtenseur / type de commande / type d'auto transformateur
+	att_met4 	character varying(2), --------------------------------------- Dédié au modele de lanterne / type de disjoncteur du départ (ajout)
+	att_met5 	character varying(10), -------------------------------------- Dédié au modèle de lampe / Type de fusible du départ (ajout)
+	att_met6 	character varying(2), --------------------------------------- Dédié à l'état de l'objet ciblé par l'intervention 
+	att_met7 	character varying(254), ------------------------------------- Dédié au nom du départ / aux options du support 
+	att_met8 	integer, ---------------------------------------------------- Dédié à la tension / pourcentage de puissance de fonctionnement
+	observ 		character varying(254),-------------------------------------- Commentaires divers
+	date_sai    	timestamp without time zone NOT NULL DEFAULT NOW(),---------- Date de la saisie de la donnée dans la base
+	date_maj    	timestamp without time zone,--------------------------------- Date de dernière mise à jour de la donnée
+	op_sai 		character varying(80),--------------------------------------- Opérateur de la saisie initiale de la donnée
+	id_noeud        integer NOT NULL--------------------------------------------- Identifiant du noeud sur lequel a lieu l'intervention (Pour foyer et départ, noeud = Support ou armoire)
+ );
+
+
+ --################################################################## MEDIA ########################################################
+ 
+-- Table servant à stocker les images et documents, en lien avec l'applicatif GEO.
+CREATE TABLE m_reseau_sec.an_ecl_media------------------------------------------------ Table de gestion des photos et documents dans GEO
+(
+	  gid serial 	NOT NULL, ---------------------------------------------------- Valeur par défaut ta séquence spécifique à cette table (nextval('[schéma].an_ecl_media_gid_seq'::regclass);)
+	  id 		integer, ----------------------------------------------------- Identifiant de cession
+	  media 	text, -------------------------------------------------------- Champ Média de GEO
+	  miniature 	bytea, ------------------------------------------------------- Champ miniature de GEO
+	  n_fichier 	text, -------------------------------------------------------- Nom du fichier
+	  t_fichier 	text --------------------------------------------------------- Type de média dans GEO
+);
 
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
@@ -325,18 +402,22 @@ CREATE TABLE m_reseau_sec.an_ecl_foyer -------------------------------------- Ob
 
 --############################################################ MODELE DE SUPPORT ##################################################
 
-INSERT INTO m_reseau_sec.an_ecl_modele_support --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
-VALUES ('1','Modèle par défaut','00',NULL,00,00, NULL ,now(),NULL);
+INSERT INTO m_reseau_sec.an_ecl_modele_support  
+VALUES ('1','Modèle par défaut','00',NULL,00,00, NULL ,now(),NULL),  --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
+VALUES ('2','Même modèle','00',NULL,00,00, NULL ,now(),NULL);
 
 --############################################################ MODELE DE LANTERNE ##################################################
 
-INSERT INTO m_reseau_sec.an_ecl_modele_lanterne --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
-VALUES ('1','Modèle par défault','00','00',NULL,'00',00,00, NULL ,now(),NULL);
+INSERT INTO m_reseau_sec.an_ecl_modele_lanterne 
+VALUES ('1','Modèle par défaut','00','00',NULL,'00',00,00, NULL ,now(),NULL), --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
+VALUES ('2','Même modèle','00','00',NULL,'00',00,00, NULL ,now(),NULL);
+
 
 --############################################################ MODELE DE LAMPE ##################################################
 
-INSERT INTO m_reseau_sec.an_ecl_modele_lampe --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
-VALUES ('1','Modèle par défault','00','0','00','00','00',NULL, NULL,now(),NULL);
+INSERT INTO m_reseau_sec.an_ecl_modele_lampe 
+VALUES ('1','Modèle par défaut','00','00','00','00','00',NULL, NULL,now(),NULL), --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
+VALUES ('2','Même modèle','00','00','00','00','00',NULL, NULL,now(),NULL);
 
 
 -- ###############################################################################################################################
@@ -345,28 +426,44 @@ VALUES ('1','Modèle par défault','00','0','00','00','00',NULL, NULL,now(),NULL
 -- ###                                                                                                                         ###
 -- ###############################################################################################################################
 
---############################################################ TYPE CABLE ##################################################
 
-CREATE TABLE m_reseau_sec.lt_ecl_type_cable
+
+--############################################################ SITUATION ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_situation
 (
   code character varying(2) NOT NULL,
   valeur character varying(80) NOT NULL,
-  CONSTRAINT lt_ecl_type_cable_pkey PRIMARY KEY (code)
+  CONSTRAINT lt_ecl_situation_pkey PRIMARY KEY (code)
 )
 WITH (
   OIDS=FALSE
 );
 
-INSERT INTO m_reseau_sec.lt_ecl_type_cable(code, valeur)
+INSERT INTO m_reseau_sec.lt_ecl_situation(code, valeur)
+    VALUES
+	('10','Actif'),
+	('11','Inactif'),
+	('12','Supprimé');
+	
+--############################################################ QUALITE DE GEOLOCALISATION ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_qualite_geolocalisation
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_qualite_geolocalisation_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_qualite_geolocalisation(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Aérien'),
-	('11','Aérien nu'),
-	('12','Aérien torsade EP'),
-	('20','Souterrain'),
-	('21','Souterrain blindé'),
-	('22','Souterrain RO2'),
-	('99','Autre');
+	('10','Classe A'),
+	('20','Classe B'),
+	('30','Classe C');
 
 --############################################################ COULEUR ECLAIRAGE ##################################################
 
@@ -383,8 +480,9 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_couleur_eclairage(code, valeur)
     VALUES
 	('00','Non-renseigné'),
-	('10','Jaune'),
-	('20','Blanc'),
+	('10','803'),
+	('20','942'),
+	('ZZ', 'Non-concerné');
 	('99','Autre');
 
 --############################################################ PRESENCE ##################################################
@@ -408,7 +506,6 @@ INSERT INTO m_reseau_sec.lt_ecl_presence(code, valeur)
 
 --############################################################ CULOT LAMPE ##################################################
 
-
 CREATE TABLE m_reseau_sec.lt_ecl_culot_lampe
 (
   code character varying(2) NOT NULL,
@@ -424,7 +521,7 @@ INSERT INTO m_reseau_sec.lt_ecl_culot_lampe(code, valeur)
 	('00','Non renseigné'),
 	('10','E27'),
 	('20','E40'),
-	('30','G24d'),
+	('30','G12'),
 	('99','Autre');
 
 --############################################################ TYPE LAMPE ##################################################
@@ -467,8 +564,21 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_type_auto_transformateur(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Puissance 1'),
-	('20','Puissance 2'),
+	('10','300V/250V 130VA'),
+	('11','300V/250V 200VA'),
+	('12','300V/250V 510VA'),
+	('20','300V/230V 130VA'),
+	('21','300V/230V 200VA'),
+	('22','300V/230V 510VA'),
+	('30','380V/250V 130VA'),
+	('31','380V/250V 200VA'),
+	('32','380V/250V 510VA'),
+	('33','380V/250V 600VA'),
+	('34','380V/250V 1260VA'),
+	('40','380V/230V 200VA'),
+	('41','380V/230V 510VA'),
+	('42','380V/230V 600VA'),
+	('43','380V/230V 1260VA'),
 	('99','Autre'),
 	('ZZ','Non concerné');
 
@@ -488,14 +598,13 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_type_amorceur(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Puissance 1'),
-	('20','Puissance 2'),
+	('10','Abel ATR'),
+	('20','STAR A50 48'),
+	('30','TRIDONIC ZRM 2-ES/C');
 	('99','Autre'),
 	('ZZ','Non concerné');
 
 --############################################################ TYPE BALLAST ##################################################
-
-
 
 CREATE TABLE m_reseau_sec.lt_ecl_type_ballast
 (
@@ -510,16 +619,15 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_type_ballast(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Puissance 1'),
-	('20','Puissance 2'),
+	('10','Ferromagnétique' ),
+	('20','Electronique'),
 	('30','Driver'),
 	('99','Autre'),
 	('ZZ','Non concerné');
 
+
+
 --############################################################ CLASSE ELECTRIQUE ##################################################
-
-
-
 
 CREATE TABLE m_reseau_sec.lt_ecl_classe_electrique
 (
@@ -559,29 +667,8 @@ INSERT INTO m_reseau_sec.lt_ecl_qualite_date(code, valeur)
 	('40','Mémoire'),
 	('50','Déduite');
 
---############################################################ MARQUE FIXATION ##################################################
-
-CREATE TABLE m_reseau_sec.lt_ecl_marque_fixation
-(
-  code character varying(2) NOT NULL,
-  valeur character varying(80) NOT NULL,
-  CONSTRAINT lt_ecl_marque_fixation_pkey PRIMARY KEY (code)
-)
-WITH (
-  OIDS=FALSE
-);
-
-INSERT INTO m_reseau_sec.lt_ecl_marque_fixation(code, valeur)
-    VALUES
-	('00','Non renseigné'),
-	('10','ECLATEC'),
-	('20','GHM'),
-	('99','Autre'),
-	('ZZ','Non concerné');
-
 
 --############################################################ EMPLACEMENT ##################################################
-
 CREATE TABLE m_reseau_sec.lt_ecl_emplacement
 (
   code character varying(2) NOT NULL,
@@ -595,8 +682,8 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_emplacement(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Trappe visite'),
-	('20','Luminaire'),
+	('10','Pied du support'),
+	('20','Lanterne'),
 	('ZZ','Non concerné');
 
 --############################################################ TYPE PARASURTENSEUR ##################################################
@@ -614,8 +701,8 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_type_parasurtenseur(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Absent'),
-	('20','type 1'),
+	('10','Pas de parasurtenseur'),
+	('20','Vario Var15EP25MR');
 	('99','Autre');
 
 --############################################################ TYPE LANTERNE ##################################################
@@ -635,10 +722,11 @@ INSERT INTO m_reseau_sec.lt_ecl_type_lanterne(code, valeur)
 	('00','Non renseigné'),
 	('10','Piéton'),
 	('20','Routier'),
+	('30','Projecteur'),
 	('99','Autre');
 
 --############################################################ DISJONCTEUR ##################################################
-
+DROP TABLE m_reseau_sec.lt_ecl_type_disjoncteur CASCADE;
 CREATE TABLE m_reseau_sec.lt_ecl_type_disjoncteur
 (
   code character varying(2) NOT NULL,
@@ -652,12 +740,16 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_type_disjoncteur(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Absent'),
-	('20','type 1'),
+	('10','Pas de disjoncteur'),
+	('20','40A 500Ma'),
+	('30','63A 500Ma'),
+	('31','63A 1000Ma'),
+	('40','Disjoncteur principal'),
 	('99','Autre');
 
 --############################################################ FUSIBLE ##################################################
 
+DROP TABLE m_reseau_sec.lt_ecl_type_fusible CASCADE;
 CREATE TABLE m_reseau_sec.lt_ecl_type_fusible
 (
   code character varying(2) NOT NULL,
@@ -671,8 +763,26 @@ WITH (
 INSERT INTO m_reseau_sec.lt_ecl_type_fusible(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Absent'),
-	('20','type 1'),
+	('10','Pas de fusible'),
+	('20','8,5x31,5 4A'),
+	('21','8,5x31,5 6A'),
+	('22','8,5x31,5 8A'),
+	('23','8,5x31,5 10A'),
+	('30','10x38 4A'),
+	('31','10x38 6A'),
+	('32','10x38 8A'),
+	('33','10x38 10A'),
+	('34','10x38 16A'),
+	('40','14x51 10A'),
+	('41','14x51 16A'),
+	('42','14x51 20A'),
+	('43','14x51 25A'),
+	('44','14x51 32A'),
+	('45','14x51 50A'),
+	('50','22x58 32A'),
+	('51','22x58 60A'),
+	('52','22x58 80A'),
+	('53','22x58 100A')
 	('99','Autre');
 
 --############################################################ MATERIAUX SUPPORTS ##################################################
@@ -701,7 +811,7 @@ INSERT INTO m_reseau_sec.lt_ecl_materiaux_supports(code, valeur)
 
 
 --############################################################ ETAT ##################################################
-
+DROP TABLE m_reseau_sec.lt_ecl_etat;
 CREATE TABLE m_reseau_sec.lt_ecl_etat
 (
   code character varying(2) NOT NULL,
@@ -718,29 +828,42 @@ INSERT INTO m_reseau_sec.lt_ecl_etat(code, valeur)
 	('10','Neuf'),
 	('20','Bon etat'),
 	('30','Etat moyen (dégradation partielle)'),
-	('40','A changer'),
+	('40','Vétuste'),
 	('ZZ','Non concerné');
 
---############################################################ ETAT FIXATION ##################################################
+	
+--############################################################ OPTION DU SUPPORT ##################################################
 
-CREATE TABLE m_reseau_sec.lt_ecl_etat_fixation
+CREATE TABLE m_reseau_sec.lt_ecl_options_support
 (
   code character varying(2) NOT NULL,
   valeur character varying(80) NOT NULL,
-  CONSTRAINT lt_ecl_etat_fixation_pkey PRIMARY KEY (code)
+  CONSTRAINT lt_ecl_option_support_pkey PRIMARY KEY (code)
 )
 WITH (
   OIDS=FALSE
 );
 
-INSERT INTO m_reseau_sec.lt_ecl_etat_fixation(code, valeur)
+INSERT INTO m_reseau_sec.lt_ecl_options_support(code, valeur)
     VALUES
 	('00','Non renseigné'),
-	('10','Tournée'),
-	('20','Arrachée'),
-	('30','A changer'),
+	('10','Caméra'),
+	('20','Oriflamme'),
+	('30','wi-fi'),
+	('40','Radar'),
+	('50','Panneau signalisation'),
+	('60','Prise guirlande festive'),
+	('70','Bluetooth'),
+	('80','Jardinière'),
+	('11','Détecteur de mouvement'),
+	('12','Feu tricolore'),
+	('13','Boîte piéton'),
+	('14','Traversée piétonne'),
+	('15','Miroir'),
+	('16','Projecteur'),
+	('17','Appel piéton'),
+	('99','Autre'),
 	('ZZ','Non concerné');
-
 
 
 --############################################################ TYPE SUPPORT ##################################################
@@ -828,7 +951,35 @@ VALUES
 	('30','Horloge standard'),
 	('40','Télégestion'),
 	('50','Radio BH-T'),
-	('60','SAGEME GSM'),
+	('60','SOGEME GSM'),
+	('99','Autre'),
+	('ZZ','Non concerné');
+
+--############################################################ Puissance de lampe ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_puissance_lampe
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_puissance_lampe_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_puissance_lampe(code, valeur)
+VALUES
+	('00','Non renseigné'),
+	('05','30'),
+	('10','35'),
+	('15','40'),
+	('20','60'),
+	('30','70'),
+	('40','100'),
+	('50','150'),
+	('60','250'),
+	('70','400'),
+	('80','1000'),
 	('99','Autre'),
 	('ZZ','Non concerné');
 
@@ -854,6 +1005,7 @@ VALUES
 	('50','Borne'),
 	('60','Panneau publicitaire'),
 	('70','Sous-marin'),
+	('80','Arrêt de bus'),
 	('99','Autre');
 
 --############################################################ SITUATION CABLE ##################################################
@@ -877,7 +1029,341 @@ VALUES
 	('20','Souterrain'),
 	('21','Souterrain blindé'),
 	('22','Souterrain R02'),
+	('30','Mural'),
 	('99','Autre');
+
+--############################################################ SECTION DE CABLE ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_section_cable
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_section_cable_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_section_cable(code, valeur)
+VALUES
+	('00','Non renseigné'),
+	('10','35'),
+	('11','25'),
+	('12','16'),
+	('20','10'),
+	('21','6'),
+	('22','4'),
+	('30','2,5'),
+	('99','Autre');
+	
+--############################################################ HAUTEUR TRAPPE ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_hauteur_trappe
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_hauteur_trappe_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_hauteur_trappe(code, valeur)
+VALUES
+	('00','Non renseigné'),
+	('10','Standard'),
+	('20','En hauteur'),
+	('ZZ','Non concerné');
+
+--############################################################ TYPE INTERVENTION ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_type_intervention
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_type_intervention_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+--DELETE FROM m_reseau_sec.lt_ecl_type_intervention WHERE code ='00'
+INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
+    VALUES
+			('00','-->'),
+			('10','Changement de disjoncteur'),
+			('11','Changement de fusible'),
+			('20','Changement de type de commande'),
+			('21','Changement de récepteur'),
+			('30','Contrôle électrique'),
+			('40','Nettoyage'),
+			('50','Réparation'),
+			('60','Ajout d''un départ'),
+			('80','Suppression de l''objet'),
+			('81','Désactivation de l''objet');
+			('99','Autre'),
+			('12','Changement de lanterne'),
+			('13','Changement de lampe'),
+			('15','Changement de ballast/driver'),
+			('16','Changement d''amorce'),
+			('17','Changement d''auto-transformateur'),
+			('70','Repositionnement lanterne/crosse'),
+			('31','Contrôle mécanique'),
+			('18','Ajout d''une option'),
+			('90','Suppression d''une option');
+
+			----------------------------------Type intervention ouvrage---------------------------------------
+
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux ouvrages
+			CREATE TABLE m_reseau_sec.lt_ecl_type_intervention_ouvrage
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_ecl_type_intervention_ouvrage_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_ouvrage(code, valeur)
+			    VALUES
+			('10','Changement de disjoncteur'),
+			('11','Changement de fusible'),
+			('20','Changement de type de commande'),
+			('30','Contrôle électrique'),
+			('40','Nettoyage'),
+			('50','Réparation'),
+			('60','Ajout d''un départ'),
+			('80','Suppression de l''objet'),
+			('81','Désactivation de l''objet'),
+			('82','Réactivation de l''objet'),
+			('21','Changement de récepteur'),
+			('99','Autre');
+
+
+			----------------------------------Type intervention Depart---------------------------------------
+
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux departs
+			CREATE TABLE m_reseau_sec.lt_ecl_type_intervention_depart
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_ecl_type_intervention_depart_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+
+			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_depart(code, valeur)
+			    VALUES
+			('10','Changement de disjoncteur'),
+			('11','Changement de fusible'),
+			('50','Réparation'),
+			('80','Suppression de l''objet'),
+			('81','Désactivation de l''objet'),
+			('82','Réactivation de l''objet'),
+			('99','Autre');
+
+			----------------------------------Type intervention foyer---------------------------------------
+			
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux foyers
+			CREATE TABLE m_reseau_sec.lt_ecl_type_intervention_foyer
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_ecl_type_intervention_foyer_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+
+			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_foyer(code, valeur)
+			    VALUES
+			('12','Changement de lanterne'),
+			('13','Changement de lampe'),
+			('15','Changement de ballast/driver'),
+			('16','Changement d''amorce'),
+			('17','Changement d''auto-transformateur'),
+			('40','Nettoyage'),
+			('50','Réparation'),
+			('70','Repositionnement lanterne/crosse'),
+			('80','Suppression de l''objet'),
+			('99','Autre');
+
+
+			----------------------------------Type intervention point d'intérêt---------------------------------------
+
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux points d'intérêts
+			CREATE TABLE m_reseau_sec.lt_ecl_type_intervention_pi
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_ecl_type_intervention_pi_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_pi(code, valeur)
+			    VALUES
+			('30','Contrôle électrique'),
+			('31','Contrôle mécanique'),
+			('40','Nettoyage'),
+			('50','Réparation'),
+			('80','Suppression de l''objet'),
+			('81','Désactivation de l''objet'),
+			('82','Réactivation de l''objet'),
+			('99','Autre');
+
+			----------------------------------Type intervention point lumineux---------------------------------------
+			
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux points lumineux
+			CREATE TABLE m_reseau_sec.lt_ecl_type_intervention_point_lumineux
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_ecl_type_intervention_point_lumineux_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+
+			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_point_lumineux(code, valeur)
+			    VALUES
+			('10','Changement de disjoncteur'),
+			('11','Changement de fusible'),
+			('18','Ajout d''une option'),
+			('90','Suppression d''une option'),
+			('19','Changement de parasurtenseur'),
+			('31','Contrôle mécanique'),
+			('40','Nettoyage'),
+			('50','Réparation'),
+			('80','Suppression de l''objet'),
+			('81','Désactivation de l''objet'),
+			('82','Réactivation de l''objet'),
+			('99','Autre');
+
+			----------------------------------Type intervention Câble---------------------------------------
+			
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux câbles
+			CREATE TABLE m_reseau_sec.lt_ecl_type_intervention_cables
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_ecl_type_intervention_cable_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+
+			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_cables(code, valeur)
+			    VALUES
+			('50','Réparation'),
+			('80','Suppression de l''objet'),
+			('81','Désactivation de l''objet'),
+			('82','Réactivation de l''objet'),
+			('99','Autre');
+
+--############################################################ ETAT SIGNALEMENT - Affichage ##################################################
+
+--- Afin que le ST ne puisse pas choisir ''Réglé par une intervention sur foyer / départ''
+
+CREATE TABLE m_reseau_sec.lt_ecl_etat_signalement_affichage
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_etat_signalement_affichage_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_etat_signalement_affichage(code, valeur)
+    VALUES
+('10','Soumis'),
+('30','Réglé'),
+('40','Classé sans suite'),
+('50','Pour information'),
+('60','Réglé par une intervention sur foyer / départ') ;
+
+
+--############################################################ SOURCE DE DEFAILLANCE ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_source_defaillance
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_source_defaillance_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_source_defaillance(code, valeur)
+    VALUES
+('00','Non renseigné'),
+('10','Vandalisme'),
+('30','Catastrophe naturelle'),
+('40','Accident'),
+('50','Inconnue'),
+('99','Autre') ;
+
+--############################################################ MOYEN D'INTERVENTION ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_moyen_intervention
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_moyen_intervention_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_moyen_intervention(code, valeur)
+    VALUES
+('00','Non renseigné'),
+('10','Avec nacelle'),
+('20','Sans nacelle');
+
+--############################################################ SIGNALEMENT OU INTERVENTION ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_signalement_intervention
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_signalement_intervention_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_signalement_intervention(code, valeur)
+    VALUES
+('10','Signalement'),
+('20','Intervention');
+
+
+--############################################################ TYPE DEFAILLANCE ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_type_defaillance
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_type_defaillance_pkey PRIMARY KEY (code)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_type_defaillance(code, valeur)
+    VALUES
+('00','Non renseigné'),
+('10','Foyer éteint'),
+('20','Lanterne tournée'),
+('30','Vasque cassée'),
+('40','Trappe abîmée'), 
+('50','Problème d''allumage'),
+('60','Phase ouverte'),
+('99','Autre');
 
 
 -- ###############################################################################################################################
@@ -895,8 +1381,7 @@ VALUES
 ALTER TABLE m_reseau_sec.an_ecl_depart
   ADD CONSTRAINT an_ecl_depart_pkey PRIMARY KEY(id_depart);
 
-
---############################################################ MODELE SUPPORT ##################################################
+--##################################################### MODELE SUPPORT ##################################################
 
 ALTER TABLE m_reseau_sec.an_ecl_modele_support
   ADD CONSTRAINT an_ecl_modele_support_pkey PRIMARY KEY(id_mod_sup);
@@ -910,10 +1395,10 @@ ALTER TABLE m_reseau_sec.an_ecl_modele_support
   ADD CONSTRAINT an_ecl_modele_support_dates_check CHECK (date_maj >= date_sai);
 
 ALTER TABLE m_reseau_sec.an_ecl_modele_support
-  ADD CONSTRAINT an_ecl_modele_support_ik_supp_check CHECK (ik_supp < 10 OR NULL::boolean);
+  ADD CONSTRAINT an_ecl_modele_support_ik_supp_check CHECK (ik_supp <= 10 OR NULL::boolean);
 
 ALTER TABLE m_reseau_sec.an_ecl_modele_support
-  ADD CONSTRAINT an_ecl_modele_support_ip_supp_check CHECK (ip_supp < 69 OR NULL::boolean);
+  ADD CONSTRAINT an_ecl_modele_support_ip_supp_check CHECK (ip_supp <= 69 OR NULL::boolean);
 
 --############################################################ NOEUD ##################################################
 
@@ -925,24 +1410,44 @@ ALTER TABLE m_reseau_sec.geo_ecl_noeud
   ADD CONSTRAINT geo_ecl_noeud_date_pose_check CHECK (dat_pos <= now());  
 
 ALTER TABLE m_reseau_sec.geo_ecl_noeud
+  ADD CONSTRAINT geo_ecl_noeud_date_donne_check CHECK (date_donne <= now());    
+
+ALTER TABLE m_reseau_sec.geo_ecl_noeud
+  ADD CONSTRAINT geo_ecl_noeud_dates_check CHECK (date_maj >= date_sai);
+
+ALTER TABLE m_reseau_sec.geo_ecl_noeud
   ADD CONSTRAINT geo_ecl_noeud_depart_fkey FOREIGN KEY (depart)
       REFERENCES m_reseau_sec.an_ecl_depart (id_depart) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET NULL; ------------------------------------------- Si le départ auquel est lié le noeud est supprimé, on met l'attribut à NULL
 
+ALTER TABLE m_reseau_sec.geo_ecl_noeud
+  ADD CONSTRAINT geo_ecl_noeud_lt_ecl_qualite_geolocalisation_XY_fkey FOREIGN KEY (qua_geo_XY)
+      REFERENCES m_reseau_sec.lt_ecl_qualite_geolocalisation (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- 
 
+ALTER TABLE m_reseau_sec.geo_ecl_noeud
+  ADD CONSTRAINT geo_ecl_noeud_lt_ecl_qualite_geolocalisation_Z_fkey FOREIGN KEY (qua_geo_Z)
+      REFERENCES m_reseau_sec.lt_ecl_qualite_geolocalisation (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- 
+
+ALTER TABLE m_reseau_sec.geo_ecl_noeud
+  ADD CONSTRAINT geo_ecl_noeud_lt_src_geom_fkey FOREIGN KEY (src_geom)
+      REFERENCES r_objet.lt_src_geom (code) MATCH SIMPLE; 
+
+ALTER TABLE m_reseau_sec.geo_ecl_noeud
+  ADD CONSTRAINT geo_ecl_noeud_lt_ecl_situation_fkey FOREIGN KEY (situation)
+      REFERENCES m_reseau_sec.lt_ecl_situation (code) MATCH SIMPLE;  
+
+ALTER TABLE m_reseau_sec.geo_ecl_noeud
+  ADD CONSTRAINT geo_ecl_noeud_lt_ecl_qualite_date_fkey FOREIGN KEY (qua_dat)
+      REFERENCES m_reseau_sec.lt_ecl_qualite_date (code) MATCH SIMPLE;  
 
 --############################################################ SUPPORT ##################################################
 ALTER TABLE m_reseau_sec.an_ecl_support
   ADD CONSTRAINT an_ecl_support_pkey PRIMARY KEY(id_supp);
 
 ALTER TABLE m_reseau_sec.an_ecl_support
-  ADD CONSTRAINT an_ecl_support_dates_check CHECK (date_maj >= date_sai);
-
-ALTER TABLE m_reseau_sec.an_ecl_support
   ADD CONSTRAINT an_ecl_support_haut_supp_check CHECK (haut_supp < 30::numeric); -------- Hauteur du support < 30 mètres (à définir avec service d'éclairage public)
-
-ALTER TABLE m_reseau_sec.an_ecl_support
-  ADD CONSTRAINT an_ecl_support_haut_trap_check CHECK (haut_trap < 30); ----------------- Hauteur de la trappe de visite < 30 mètres (à définir avec service d'éclairage public)
 
 ALTER TABLE m_reseau_sec.an_ecl_support
   ADD CONSTRAINT an_ecl_support_noeud_fkey FOREIGN KEY (id_supp)
@@ -954,33 +1459,10 @@ ALTER TABLE m_reseau_sec.an_ecl_support
      REFERENCES m_reseau_sec.an_ecl_modele_support (id_mod_sup) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT;
 
-ALTER TABLE m_reseau_sec.an_ecl_support
-  ADD CONSTRAINT an_ecl_support_lt_etat_fixa_fkey FOREIGN KEY (etat_fixa)
-      REFERENCES m_reseau_sec.lt_ecl_etat_fixation (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
 ALTER TABLE m_reseau_sec.an_ecl_support
   ADD CONSTRAINT an_ecl_support_lt_etat_supp_fkey FOREIGN KEY (etat_supp)
       REFERENCES m_reseau_sec.lt_ecl_etat (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
-
-ALTER TABLE m_reseau_sec.an_ecl_support
-  ADD CONSTRAINT an_ecl_support_etat_trappe_fkey FOREIGN KEY (etat_trappe)
-      REFERENCES m_reseau_sec.lt_ecl_etat (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
-ALTER TABLE m_reseau_sec.an_ecl_support
-  ADD CONSTRAINT an_ecl_support_loc_plat_fkey FOREIGN KEY (loc_plat)
-      REFERENCES m_reseau_sec.lt_ecl_emplacement (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
-
-ALTER TABLE m_reseau_sec.an_ecl_support
-  ADD CONSTRAINT an_ecl_support_loc_sy_el_fkey FOREIGN KEY (loc_sy_el)
-      REFERENCES m_reseau_sec.lt_ecl_emplacement (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
-
-ALTER TABLE m_reseau_sec.an_ecl_support
-  ADD CONSTRAINT an_ecl_support_marq_fixat_fkey FOREIGN KEY (marq_fixat)
-      REFERENCES m_reseau_sec.lt_ecl_marque_fixation (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
 ALTER TABLE m_reseau_sec.an_ecl_support
@@ -1003,6 +1485,11 @@ ALTER TABLE m_reseau_sec.an_ecl_support
       REFERENCES m_reseau_sec.lt_ecl_type_support (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
+ALTER TABLE m_reseau_sec.an_ecl_support
+  ADD CONSTRAINT an_ecl_support_haut_trap_fkey FOREIGN KEY (haut_trap)
+      REFERENCES m_reseau_sec.lt_ecl_hauteur_trappe (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
+
 
 --############################################################ MODELE LANTERNE ##################################################
 
@@ -1013,15 +1500,10 @@ ALTER TABLE m_reseau_sec.an_ecl_modele_lanterne
   ADD CONSTRAINT an_ecl_modele_lanterne_dates_check CHECK (date_maj >= date_sai);
 
 ALTER TABLE m_reseau_sec.an_ecl_modele_lanterne
-  ADD CONSTRAINT an_ecl_modele_lanterne_ik_lant_check CHECK (ik_lant < 10);
+  ADD CONSTRAINT an_ecl_modele_lanterne_ik_lant_check CHECK (ik_lant <= 10);
 
 ALTER TABLE m_reseau_sec.an_ecl_modele_lanterne
-  ADD CONSTRAINT an_ecl_modele_lanterne_ip_lant_check CHECK (ip_lant < 69);
-
-ALTER TABLE m_reseau_sec.an_ecl_modele_lanterne
-  ADD CONSTRAINT an_ecl_modele_lanterne_type_lanterne_fkey FOREIGN KEY (ty_lantern)
-      REFERENCES m_reseau_sec.lt_ecl_type_lanterne (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné' 
+  ADD CONSTRAINT an_ecl_modele_lanterne_ip_lant_check CHECK (ip_lant <= 69);
 
 ALTER TABLE m_reseau_sec.an_ecl_modele_lanterne
   ADD CONSTRAINT an_ecl_modele_lanterne_classe_electrique_fkey FOREIGN KEY (clas_el_ln)
@@ -1057,6 +1539,11 @@ ALTER TABLE m_reseau_sec.an_ecl_modele_lampe
       REFERENCES m_reseau_sec.lt_ecl_couleur_eclairage (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'  
 
+ALTER TABLE m_reseau_sec.an_ecl_modele_lampe
+  ADD CONSTRAINT an_ecl_modele_lampe_puissance_lampe_fkey FOREIGN KEY (puis_lam)
+      REFERENCES m_reseau_sec.lt_ecl_puissance_lampe (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'  
+
 --############################################################ FOYER ##################################################
 
 ALTER TABLE m_reseau_sec.an_ecl_foyer
@@ -1064,6 +1551,9 @@ ALTER TABLE m_reseau_sec.an_ecl_foyer
 
 ALTER TABLE m_reseau_sec.an_ecl_foyer
   ADD CONSTRAINT an_ecl_foyer_dates_check CHECK (date_maj >= date_sai);
+
+ALTER TABLE m_reseau_sec.an_ecl_foyer
+  ADD CONSTRAINT an_ecl_foyer_date_donne_check CHECK (date_donne <= now());   
 
 ALTER TABLE m_reseau_sec.an_ecl_foyer
   ADD CONSTRAINT an_ecl_foyer_haut_feu_check CHECK (haut_feu < 30); ------------------ Hauteur maximum du foyer = 30 mètres (à revoir avec service technique)
@@ -1087,7 +1577,7 @@ ALTER TABLE m_reseau_sec.an_ecl_foyer
       ON UPDATE CASCADE ON DELETE SET DEFAULT;  ------------------------------------------- Modèle par défaut ajouté automatiquement dans la table modèle
 
 ALTER TABLE m_reseau_sec.an_ecl_foyer
-  ADD CONSTRAINT an_ecl_foyer_etat_lanterne_fkey FOREIGN KEY (etat_lant)
+  ADD CONSTRAINT an_ecl_foyer_etat_foyer_fkey FOREIGN KEY (etat_foy)
       REFERENCES m_reseau_sec.lt_ecl_etat (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
@@ -1106,6 +1596,17 @@ ALTER TABLE m_reseau_sec.an_ecl_foyer
       REFERENCES m_reseau_sec.lt_ecl_type_auto_transformateur (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
+ALTER TABLE m_reseau_sec.an_ecl_foyer
+  ADD CONSTRAINT an_ecl_foyer_lt_ecl_situation_fkey FOREIGN KEY (situation)
+      REFERENCES m_reseau_sec.lt_ecl_situation (code) MATCH SIMPLE;       
+
+ALTER TABLE m_reseau_sec.an_ecl_foyer
+  ADD CONSTRAINT an_ecl_foyer_lt_ecl_type_lanterne_fkey FOREIGN KEY (ty_lantern)
+      REFERENCES m_reseau_sec.lt_ecl_type_lanterne (code) MATCH SIMPLE;      
+
+ALTER TABLE m_reseau_sec.an_ecl_foyer
+  ADD CONSTRAINT an_ecl_foyer_lt_ecl_emplacement_fkey FOREIGN KEY (loc_plat)
+      REFERENCES m_reseau_sec.lt_ecl_emplacement (code) MATCH SIMPLE;      
 
 --############################################################ OUVRAGE ELECTRIQUE ##################################################
 
@@ -1119,13 +1620,16 @@ ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
   ADD CONSTRAINT an_ecl_ouvrage_electrique_dates_check CHECK (date_maj >= date_sai);
 
 ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
-  ADD CONSTRAINT an_ecl_ouvrage_electrique_ik_ouvelec_check CHECK (ik_ouvelec < 10);
+  ADD CONSTRAINT an_ecl_ouvrage_electrique_ik_ouvelec_check CHECK (ik_ouvelec <= 10);
 
 ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
-  ADD CONSTRAINT an_ecl_ouvrage_electrique_ip_ouvelec_check CHECK (ip_ouvelec < 69);
+  ADD CONSTRAINT an_ecl_ouvrage_electrique_ip_ouvelec_check CHECK (ip_ouvelec <= 69);
 
 ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
-  ADD CONSTRAINT an_ecl_ouvrage_electrique_val_max_puis_mes_check CHECK (puis_mes < 1000);-- Puissance mesurée < ??? ( à défnir avec service technique)
+  ADD CONSTRAINT an_ecl_ouvrage_electrique_val_terre_check CHECK (val_terre <= 1000);
+
+ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
+  ADD CONSTRAINT an_ecl_ouvrage_electrique_val_max_puis_mes_check CHECK (puis_mes < 10000);-- Puissance mesurée < ??? ( à défnir avec service technique)
 
 ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
   ADD CONSTRAINT an_ecl_ouvrage_electrique_noeud_fkey FOREIGN KEY (id_ouvelec)
@@ -1135,11 +1639,6 @@ ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
 ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
   ADD CONSTRAINT an_ecl_ouvrage_electrique_etat_ouvel_fkey FOREIGN KEY (etat_ouvel)
       REFERENCES m_reseau_sec.lt_ecl_etat (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
-
-ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
-  ADD CONSTRAINT an_ecl_ouvrage_electrique_mis_terre_fkey FOREIGN KEY (mis_terre)
-      REFERENCES m_reseau_sec.lt_ecl_etat_mise_a_terre (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
 ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
@@ -1172,15 +1671,18 @@ ALTER TABLE m_reseau_sec.an_ecl_ouvrage_electrique
       REFERENCES m_reseau_sec.lt_ecl_type_ouvrage_electrique (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
-
 --############################################################ DEPART ##################################################
 
+----La PRIMARY KEY est au début de la section "contraintes"
 
 ALTER TABLE m_reseau_sec.an_ecl_depart
   ADD CONSTRAINT an_ecl_depart_dates_check CHECK (date_maj >= date_sai);
 
 ALTER TABLE m_reseau_sec.an_ecl_depart
-  ADD CONSTRAINT an_ecl_depart_val_max_tension_check CHECK (tension <= 3002); --------- la tension électrique est au maximum de 3002 VOLT à Compiègne sur l'éclairage public
+  ADD CONSTRAINT an_ecl_depart_date_donne_check CHECK (date_donne <= now());   
+
+ALTER TABLE m_reseau_sec.an_ecl_depart
+  ADD CONSTRAINT an_ecl_depart_val_max_tension_check CHECK (tension <= 3200); --------- la tension électrique est au maximum de 3200 VOLT à Compiègne sur l'éclairage public
 
 ALTER TABLE m_reseau_sec.an_ecl_depart
   ADD CONSTRAINT an_ecl_depart_id_ouvelec_fkey FOREIGN KEY (id_ouvelec)
@@ -1201,6 +1703,10 @@ ALTER TABLE m_reseau_sec.an_ecl_depart
   ADD CONSTRAINT an_ecl_depart_ty_fusible_fkey FOREIGN KEY (ty_fusible)
       REFERENCES m_reseau_sec.lt_ecl_type_fusible (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
+
+ALTER TABLE m_reseau_sec.an_ecl_depart
+  ADD CONSTRAINT an_ecl_depart_lt_ecl_situation_fkey FOREIGN KEY (situation)
+      REFERENCES m_reseau_sec.lt_ecl_situation (code) MATCH SIMPLE;    
 
 --############################################################ POINT D'INTERET ##################################################
 
@@ -1236,6 +1742,9 @@ ALTER TABLE m_reseau_sec.geo_ecl_cable
   ADD CONSTRAINT geo_ecl_cable_dates_check CHECK (date_maj >= date_sai);
 
 ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_cable_date_donne_check CHECK (date_donne <= now());    
+
+ALTER TABLE m_reseau_sec.geo_ecl_cable
   ADD CONSTRAINT geo_ecl_cable_date_pose_check CHECK (dat_pos_ca <= now());  
 
 ALTER TABLE m_reseau_sec.geo_ecl_cable
@@ -1258,44 +1767,278 @@ ALTER TABLE m_reseau_sec.geo_ecl_cable
       REFERENCES m_reseau_sec.lt_ecl_situation_cable(code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
 
+ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_noeud_lt_ecl_qualite_geolocalisation_XY_fkey FOREIGN KEY (qua_geo_XY)
+      REFERENCES m_reseau_sec.lt_ecl_qualite_geolocalisation (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- 
 
---############################################################ FOURREAU ##################################################
+ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_noeud_lt_ecl_qualite_geolocalisation_Z_fkey FOREIGN KEY (qua_geo_Z)
+      REFERENCES m_reseau_sec.lt_ecl_qualite_geolocalisation (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- 
 
-ALTER TABLE m_reseau_sec.an_ecl_fourreau
-  ADD CONSTRAINT an_ecl_fourreau_pkey PRIMARY KEY(id_fourr);
+ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_noeud_lt_src_geom_fkey FOREIGN KEY (src_geom)
+      REFERENCES r_objet.lt_src_geom (code) MATCH SIMPLE; ------------------------------------------- 
 
-ALTER TABLE m_reseau_sec.an_ecl_fourreau
-  ADD CONSTRAINT an_ecl_fourreau_dates_check CHECK (date_maj >= date_sai);
+ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_cable_lt_ecl_situation_fkey FOREIGN KEY (situation)
+      REFERENCES m_reseau_sec.lt_ecl_situation (code) MATCH SIMPLE;    
 
-ALTER TABLE m_reseau_sec.an_ecl_fourreau
-  ADD CONSTRAINT an_ecl_fourreau_etat_four_fkey FOREIGN KEY (etat_four)
+ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_cable_lt_ecl_qualite_date_fkey FOREIGN KEY (qua_dat)
+      REFERENCES m_reseau_sec.lt_ecl_qualite_date (code) MATCH SIMPLE;  
+
+ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_cable_lt_ecl_section_cable_fkey FOREIGN KEY (sect_cab)
+      REFERENCES m_reseau_sec.lt_ecl_section_cable (code) MATCH SIMPLE;  
+
+--############################################################ INTERVENTION ##################################################
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_pkey PRIMARY KEY (id_inter);
+
+ALTER TABLE m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_noeud_initial_fkey FOREIGN KEY (id_noeud)
+      REFERENCES m_reseau_sec.geo_ecl_noeud (id_noeud) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL; ----------------------------------------- Si le noeud auquel le câble était lié est supprimé, on met l'attribut à NULL
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_source_defaillance_fkey FOREIGN KEY (src_def)
+      REFERENCES m_reseau_sec.lt_ecl_source_defaillance (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT;
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_type_defaillance_fkey FOREIGN KEY (typ_def)
+      REFERENCES m_reseau_sec.lt_ecl_type_defaillance (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT;
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_lt_ecl_etat_signalement_affichage_fkey FOREIGN KEY (etat_sign)
+      REFERENCES m_reseau_sec.lt_ecl_etat_signalement_affichage (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT;      
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_lt_ecl_moyen_intervention_fkey FOREIGN KEY (moy_interv)
+      REFERENCES m_reseau_sec.lt_ecl_moyen_intervention (code) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; 
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_lt_ecl_etat_fkey FOREIGN KEY (att_met6)
       REFERENCES m_reseau_sec.lt_ecl_etat (code) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE SET DEFAULT; ------------------------------------------- Correspond à 'non renseigné'
+      ON UPDATE CASCADE ON DELETE SET DEFAULT; 
 
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_dates_check CHECK (date_maj >= date_sai);
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_date_realisation_check CHECK (now() >= dat_real);
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_dates_programation_signalement_check CHECK (dat_progra >= dat_signa);
+
+ALTER TABLE  m_reseau_sec.an_ecl_intervention
+  ADD CONSTRAINT an_ecl_intervention_dates_realisation_signalement_check CHECK (dat_real >= dat_signa);
+
+
+--############################################################ Erreur ##################################################
+
+ALTER TABLE  m_reseau_sec.an_ecl_erreur
+  ADD CONSTRAINT an_ecl_erreur_pkey PRIMARY KEY (id_erreur);
+  
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
 -- ###                                                         TRIGGER                                                         ###
 -- ###                                                                                                                         ###
 -- ###############################################################################################################################
 
+--############################################################ DEPART ##################################################
 
---############################################################ CABLE ##################################################
-
-
-CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_cable()
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_depart_insert_update()
   RETURNS trigger AS
 $BODY$
 BEGIN
 
-----On ajout les identifiants des noeuds auquels est relié le câble automatiquement. 
-----Un câble ne peut pas être relié à une armoire principale comme noeud final. 
+	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants de la table
 
-new.id_nd_ini= (SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud nd WHERE ST_equals(nd.geom,ST_StartPoint(NEW.geom)));
-new.id_nd_fin= (SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud nd WHERE ST_equals(nd.geom,ST_EndPoint(NEW.geom)));
+	---
+
+	IF (NEW.tension > 3200::integer) THEN -------------------------------------------------- Test si la tension du départ est bien inférieur à 3200 V, valeur max du réseau de Compiègne. 
+		NEW.tension=NULL;--------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure) -------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_depart, 'La tension doit être inférieure ou égale à 3200 V', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
+	END IF;
+
+	---
+
+	IF (NEW.date_donne >= now()::timestamp) THEN--------------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
+		NEW.date_donne=NULL;------------------------------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)---------------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_depart, 'La date de création de la donnée doit être inférieure à la date actuelle', now() );----- Ce message, qui apparaît dans GEO sur la fiche départ
+	END IF;
+	
+	---
+
+	IF (TG_OP ='UPDATE') THEN -------- Si c'est un UPDATE
+		NEW.date_maj = now();----- La date de dernière mise à jour devient la date actuelle
+	END IF; 
+
+	---
+
+	IF (TG_OP ='INSERT') THEN ------------------------------------------------------------------------------------ Si c'est un INSERT
+		NEW.date_donne = now();------------------------------------------------------------------------------- La date de la donnée est égale à la date actuelle, elle est modifiable par la suite dans GEO 
+		IF ((SELECT situation FROM m_reseau_sec.geo_ecl_noeud WHERE NEW.id_ouvelec = id_noeud) = '11') THEN--- Si le départ est ajouté à une armoire inactive 
+			NEW.situation='11'; -------------------------------------------------------------------------- Le départ est ajouté en inactif
+		END IF;	
+	END IF; 
+
+	
+RETURN NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t1_depart_insert_update
+  BEFORE INSERT OR UPDATE
+  ON m_reseau_sec.an_ecl_depart
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_depart_insert_update(); 
 
 
+  CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_depart_delete()
+  RETURNS trigger AS
+$BODY$
+DECLARE produit integer;
+BEGIN
+-- On empêche que ce soit supprimé, à la place on change la valeur de la situation vers ''Supprimé''
+
+	UPDATE m_reseau_sec.an_ecl_depart
+	SET
+	situation = '12' ----------------------- Situation = '12' équivaut à ''supprimé'' dans la liste de domaine lt_ecl_situation
+	WHERE OLD.id_depart=id_depart; --------- On utilise OLD puisque c'est un trigger DELETE
+
+	---
+
+	UPDATE m_reseau_sec.geo_ecl_noeud------- On UPDATE la table noeud
+	SET
+	depart = NULL -------------------------- On enlève les liens entre le départ inactif et les noeuds qui lui étaient reliés
+	WHERE depart = OLD.id_depart;
+
+	---
+
+	REFRESH MATERIALIZED VIEW m_reseau_sec.an_v_materialisee_noeud_armoire;-- on rafraichi la vue du "chemin d'électricité"
 
 RETURN NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t3_depart_delete ---- Le t2 est réservé au log.
+  BEFORE DELETE
+  ON m_reseau_sec.an_ecl_depart
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_depart_delete(); 
+
+
+
+--############################################################ FOYER ##################################################
+
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_foyer()
+  RETURNS trigger AS
+$BODY$
+DECLARE produit integer;
+BEGIN
+
+	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+
+	---
+
+	IF (NEW.haut_feu > 30) THEN ------------------------------------------------------ Si la hauteur de feu indiquée est supérieure à 30 mètres
+		NEW.haut_feu=NULL; ------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure) -------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_foyer, 'Un foyer ne peut pas être à plus de 30 mètres', now() );-- Ce message, qui apparaît dans GEO sur la fiche foyer
+	END IF;
+
+	---
+
+	IF (NEW.pct_fct > 100::numeric) THEN -------------------------------------------------------------------- Si le pourcentage de puissanc de fonctionnement de la lampe est > 100 %
+		NEW.pct_fct=NULL; ------------------------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure) ------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_foyer, 'Le % de puissance de fonctionnement ne peut pas dépasser les 100 %', now() ); --- Ce message, qui apparaît dans GEO sur la fiche foyer
+	END IF;
+
+	---
+
+	IF (NEW.date_donne >= now()::timestamp) THEN ----------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
+		NEW.date_donne=NULL; --------------------------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)------------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_foyer, 'La date de création de la donnée doit être inférieure à la date actuelle', now() );--- Ce message, qui apparaît dans GEO sur la fiche foyer
+	END IF;
+
+	---
+	
+	IF ((SELECT ty_lampe FROM m_reseau_sec.an_ecl_modele_lampe WHERE NEW.id_mod_lm = id_mod_lm) ='50') THEN-------------------------------------------------------------------- Si c'est une lampe LED (on va chercher dans la table modèle de lampe le type de lampe correspondant au modèle saisi dans la table foyer)
+		IF (NEW.loc_plat <> '20' OR NEW.ty_amorce <> 'ZZ' OR NEW.ty_ballast <> '30') THEN --------------------------------------------------------------------------------- Et que la localisation de la platine, le type d'amorce ou le type de ballast n'ont pas la bonne valeur (une seule possible pour les LED)
+			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+			VALUES
+			(NEW.id_foyer, 'Pour les LED, l''emplacement de la platine est automatiquement indiqué dans la lanterne et l''amorceur est en "non-concerné". ', now() );-- On créé ce message d'erreur qui s'affiche dans la fiche info du foyer dans GEO		
+		END IF;
+		
+		NEW.ty_ballast = '30';--------------------------------------------------------------------------------------------------------------------------------------------- Et on met la bonne valeur à ces 3 attributs
+		NEW.ty_amorce = 'ZZ';
+		NEW.loc_plat = '20';
+	END IF;
+
+	---
+
+	IF ((SELECT ty_lampe FROM m_reseau_sec.an_ecl_modele_lampe WHERE NEW.id_mod_lm = id_mod_lm) <>'50') THEN ---------------- Si le type de lampe n'est pas une LED (on va chercher dans la table modèle de lampe le type de lampe correspondant au modèle saisi dans la table foyer)
+		IF ( NEW.pct_fct IS NOT NULL ) THEN------------------------------------------------------------------------------ Et que le pourcentage de fonctionnement n'est pas NULL
+			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)---------------------------------------- On ajoute dans la table erreur
+			VALUES
+			(NEW.id_foyer, 'Seules les LED peuvent avoir un pourcentage de puissance de fonctionnement.', now() );--- Ce message, qui apparaît dans GEO sur la fiche foyer
+		END IF;
+
+		NEW.pct_fct = NULL; --------------------------------------------------------------------------------------------- Puis on surcorrige la saisie en attribuant la valeur NULL
+	END IF;
+
+	---
+
+	IF (TG_OP = 'UPDATE') THEN ----------- SI c'est un UPDATE
+
+		IF (((SELECT ty_lampe FROM m_reseau_sec.an_ecl_modele_lampe WHERE NEW.id_mod_lm = id_mod_lm) <>'50')
+		      AND ((SELECT ty_lampe FROM m_reseau_sec.an_ecl_modele_lampe WHERE OLD.id_mod_lm = id_mod_lm) ='50') --- SI l'on passe d'une lampe LED à une lampe pas LED (on va chercher dans la table modèle de lampe le type de lampe correspondant au modèle saisi dans la table foyer)
+		    )  THEN
+		   
+			   IF ( NEW.ty_ballast = '30' ) THEN ------------------------------------------------------------------- SI le ballast est resté sur la valeur 'Driver' (code = '30') alors qu'elle n'est possible que pour led LED
+				NEW.ty_ballast = '00'; ------------------------------------------------------------------------- Le type de ballast passe à Non renseigné (code = '00')
+			   END IF ; -------------------------------------------------------------------------------------------- FIN de condition
+			   
+			   IF (NEW.ty_amorce = 'ZZ') THEN ---------------------------------------------------------------------- SI que le type d'amorce et resté sur la valeur 'Non-concerné' (code ='ZZ') alors qu'elle n'est possible que pour led LED
+				NEW.ty_amorce = '00'; -------------------------------------------------------------------------- On attribue la valeur 'Non renseigné' (code = '00') au type d'amorce
+			   END IF;---------------------------------------------------------------------------------------------- FIN de condition
+		   
+		END IF;------------------------------------------------------------------------------------------------------ FIN de condition
+
+		NEW.date_maj = now(); -------- On attribue la date actuelle à la date de dernière mise à jour.
+		RETURN NEW;
+	END IF; ------------------------------ FIN de condition
+
+	---
+
+	IF (TG_OP ='INSERT') THEN --- SI c'est un INSERT
+		IF (NEW.op_sai <> 'ROCH SERVICE' AND NEW.op_sai <> 'ACEP CONTROLE' AND NEW.op_sai <> 'INEO RNO') THEN --- SI ce n'est pas des données d'un prestataire
+			NEW.date_donne = now(); ------------------------------------------------------------------------- On attribue à la date de la donnée la date actuelle. Elle sera modifiable par la suite dans GEO
+		END IF;-------------------------------------------------------------------------------------------------- FIN de condition
+		RETURN NEW;
+	END IF; --------------------- FIN de condition
 
 
 END;
@@ -1303,14 +2046,1110 @@ $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 
-  CREATE TRIGGER t_t1_cable
+  CREATE TRIGGER t_t1_foyer
+  BEFORE INSERT OR UPDATE
+  ON m_reseau_sec.an_ecl_foyer
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_foyer(); 
+
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_foyer_after()
+  RETURNS trigger AS
+$BODY$
+DECLARE produit integer;
+BEGIN
+-------- En AFTER on update le départ afin qu'il prenne en compte la nouvelle valeur de lampe dans le calcul de la puissance souscrite. 
+
+	UPDATE m_reseau_sec.an_ecl_support ---------------------------------------------------------------------------- On UPDATE le support du foyer en comptant le nombre de foyers qui lui sont raccrochés
+	SET
+	nbr_foyer = (SELECT count(*) ------------------------------------------------------------------------------------- On compte le nombre...
+		     FROM m_reseau_sec.an_ecl_foyer ---------------------------------------------------------------------- De foyer
+		     WHERE situation <> '12' AND situation <> '11' AND id_supp = NEW.id_supp) ---------------------------- Dont la situation n'est pas 'Inactif' (code = '11') ou 'Supprimer' (code ='12') ET dont le support est le même que le foyer ajouté.
+										 
+	WHERE NEW.id_supp=id_supp; ------------------------------------------------------------------------------------ Là ou le support est le même que celui du foyer saisi.
+
+	---
+
+	IF ((SELECT situation FROM m_reseau_sec.geo_ecl_noeud WHERE NEW.id_supp = id_noeud) = '11') THEN --- SI le support est 'Inactif' (situation code ='11')  
+		NEW.situation='11';------------------------------------------------------------------------- Le foyer devient inactif
+	END IF;--------------------------------------------------------------------------------------------- FIN de condition
+
+	---
+
+IF ( TG_OP = 'INSERT') THEN ------------------------- Si c'est un INSERT
+	UPDATE m_reseau_sec.an_ecl_depart ------------------------------------------------------ On update le départ
+			SET 
+			puis_sous = (SELECT SUM(val) ----------------------------------------------------------------------------------------- On passe sa puissance souscrite à la somme des valeurs...
+				     FROM m_reseau_sec.an_v_depart_puissance_souscrite ------------------------------------------------------- Prise dans la vue qui calcul les puissances souscrites...
+				     WHERE id_depart = (SELECT depart ------------------------------------------------------------------------ Où id_depart est dans la sélection des départs...
+							FROM m_reseau_sec.geo_ecl_noeud ------------------------------------------------------ Pris dans la table noeud
+							WHERE id_noeud = (SELECT id_supp ----------------------------------------------------- Où id_noeud est dans la sélection des supports
+									  FROM m_reseau_sec.an_ecl_support------------------------------------ Pris dans la table support
+									  WHERE id_supp = NEW.id_supp) --------------------------------------- Où id_supp est égale à l'identifiant du support auquel est lié le foyer saisi
+													   ))    
+			WHERE id_depart = (SELECT depart --------------------------------------- Là où l'id_depart est dans la sélection des départs 
+					   FROM m_reseau_sec.geo_ecl_noeud --------------------- Pris dans la table noeud
+					   WHERE id_noeud = (SELECT id_supp -------------------- Là où l'id_noeud est dans la sélection des supports 
+							     FROM m_reseau_sec.an_ecl_support--- Pris dans la table support
+							     WHERE id_supp = NEW.id_supp) ------ Là où le support est le support auquel est lié le foyer saisi.
+					  );
+
+	
+ELSIF ( TG_OP = 'UPDATE') THEN --------------------- SI c'est un UPDATE
+
+	IF (OLD.id_mod_lm <> NEW.id_mod_lm) THEN ---- Si l'ancienne et la nouvelle lampe sont différentes (Pour éviter que ça se lance à chaque changement sur un foyer)
+		UPDATE m_reseau_sec.an_ecl_depart---- On UPDATE le départ --> même procédé que si dessus.
+			SET 
+			puis_sous = (SELECT SUM(val) 
+				     FROM m_reseau_sec.an_v_depart_puissance_souscrite 
+				     WHERE id_depart = (SELECT depart 
+							FROM m_reseau_sec.geo_ecl_noeud 
+							WHERE id_noeud = (SELECT id_supp 
+									  FROM m_reseau_sec.an_ecl_support
+									  WHERE id_supp = NEW.id_supp)
+													   ))    
+			WHERE id_depart = (SELECT depart 
+					   FROM m_reseau_sec.geo_ecl_noeud 
+					   WHERE id_noeud = (SELECT id_supp 
+							     FROM m_reseau_sec.an_ecl_support
+							     WHERE id_supp = NEW.id_supp)
+					  );
+	END IF;
+	
+END IF;--------------------------------------------- FIN de condition
+
+
+RETURN NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t3_foyer_after --- t2 réservé à log
+  AFTER INSERT OR UPDATE
+  ON m_reseau_sec.an_ecl_foyer
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_foyer_after(); 
+
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_foyer_delete()
+  RETURNS trigger AS
+$BODY$
+DECLARE produit integer;
+BEGIN
+-- On empêche que ce soit supprimé, à la place on change la valeur de la situation vers ''Supprimé''
+
+UPDATE m_reseau_sec.an_ecl_foyer
+SET
+situation = '12' -------------------- Situation = '12' équivaut à ''supprimé'' dans la liste de domaine lt_ecl_situation
+WHERE OLD.id_foyer=id_foyer;--------- On utilise OLD puisque c'est un trigger DELETE
+RETURN NEW;
+
+UPDATE m_reseau_sec.an_ecl_support ------------ On UPDATE la table support
+	SET
+	nbr_foyer = (SELECT count(*) ------------------------------------------------------------------------------------- On compte le nombre...
+		     FROM m_reseau_sec.an_ecl_foyer ---------------------------------------------------------------------- De foyer
+		     WHERE situation <> '12' AND situation <> '11' AND id_supp = NEW.id_supp) ---------------------------- Dont la situation n'est pas 'Inactif' (code = '11') ou 'Supprimer' (code ='12') ET dont le support est le même que le foyer ajouté.
+	WHERE OLD.id_supp=id_supp;------------- Auquel est lié le foyer
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+  CREATE TRIGGER t_t4_foyer_delete
+  BEFORE DELETE
+  ON m_reseau_sec.an_ecl_foyer
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_foyer_delete(); 
+
+ 
+
+
+
+
+--############################################################ CABLE ##################################################
+
+
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_cable_before() 
+  RETURNS trigger AS
+$BODY$
+DECLARE geomzonesARC geometry;
+DECLARE geomzonesVILLE geometry;
+BEGIN
+
+	geomzonesARC = (SELECT ST_Union(geom) AS geom FROM m_reseau_sec.geo_ecp_z_dict WHERE gest = '01'); ---- On fait une UNION de toutes les zones de gestion ARC (code='01')
+	
+	geomzonesVILLE = (SELECT ST_Union(geom) AS geom FROM m_reseau_sec.geo_ecp_z_dict WHERE gest = '02');--- On fait une UNION de toutes les zones de gestion VILLE DE COMPIEGNE (code ='02')
+
+	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+
+---- Sélection d'un seul noeud s'il y en a plusieurs avec count(*) --> on ne prend pas les PI, il est impossible qu'il y ait d'autres noeuds superposés qu'un pi et autre chose
+
+
+	IF (NEW.date_donne >= now()::timestamp) THEN --------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
+		NEW.date_donne=NULL;-------------------------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_cab, 'La date de création de la donnée doit être inférieure à la date actuelle', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
+	END IF;
+
+	---
+
+	IF ((SELECT count(*) --------------------------------------------------------------------------------------------------------------------------------- Si le nombre de ...
+	     FROM m_reseau_sec.geo_ecl_noeud nd -------------------------------------------------------------------------------------------------------------- Noeuds
+	     WHERE ST_equals(nd.geom,ST_StartPoint(NEW.geom)) AND situation <> '12') < 2  ) THEN ------------------------------------------------------------- Dont la géométrie est égale au point de départ du câble et dont la situation n'est pas 'supprimé' (code='12') est strictement inférieur à 2
+	     
+		new.id_nd_ini= (SELECT id_noeud ----------------------------------------------------------------------------------------------------------------- On attribue au noeud initial du câble l'identifiant du noeud
+				FROM m_reseau_sec.geo_ecl_noeud nd 
+				WHERE ST_equals(nd.geom,ST_StartPoint(NEW.geom)) AND situation <> '12');--------------------------------------------------------- dont la géométrie est égale (ou valeur null s'il n'y en a pas).
+		
+	ELSE ---------------------------------------------------------------------------------------------------------------------------------------------------- Sinon (Donc s'il y a 2 noeuds, puisque plus ce n'est pas permis).
+	
+		new.id_nd_ini= (SELECT id_noeud ----------------------------------------------------------------------------------------------------------------- On attribue au noeud initial du câble l'identifiant du noeud...
+				FROM m_reseau_sec.geo_ecl_noeud nd 
+				WHERE ST_equals(nd.geom,ST_StartPoint(NEW.geom)) AND situation <> '12' ---------------------------------------------------------- Dont la géométrie est égale au point de départ du câble et dont la situation n'est pas 'supprimé' (code='12') 
+											 AND id_noeud NOT IN (SELECT id_pi FROM m_reseau_sec.an_ecl_pi)---------- ET qui n'est pas un point d'intérêt --> effectivement, seuls les points lumineux et les points d'intérêt peuvent être superposés, OR le lien câble / point lumineux est important pour certaines VUES contrairement au lien câble / Poibnt d'intérêt.
+			       );
+	END IF;
+
+	IF ((SELECT count(*) ------------------------------------------------------------------------------------------------------------------------------------ Voir commentaire ci-dessus, même fonctionnement
+	     FROM m_reseau_sec.geo_ecl_noeud nd 
+	     WHERE ST_equals(nd.geom,ST_EndPoint(NEW.geom)) AND situation <> '12') < 2  ) THEN 
+	     
+		new.id_nd_fin= (SELECT id_noeud 
+				FROM m_reseau_sec.geo_ecl_noeud nd 
+				WHERE ST_equals(nd.geom,ST_EndPoint(NEW.geom)) AND situation <> '12');
+		
+	ELSE 
+	
+		new.id_nd_fin= (SELECT id_noeud 
+				FROM m_reseau_sec.geo_ecl_noeud nd 
+				WHERE ST_equals(nd.geom,ST_EndPoint(NEW.geom)) AND situation <> '12' 
+											 AND id_noeud NOT IN (SELECT id_pi FROM m_reseau_sec.an_ecl_pi)
+			       );
+	END IF;
+
+	---
+
+	---- Un câble ne peut pas être relié à une armoire principale comme noeud final, donc si c'est le cas, on inverse le noeud final et le noeud initial
+	IF ((SELECT count(*) 
+	     FROM m_reseau_sec.geo_ecl_noeud nd 
+	     WHERE ST_equals(nd.geom,ST_EndPoint(NEW.geom)) AND situation <> '12') < 2  ) THEN ------------------ S'il y a au plus un noeud avec la même géométrie que le noeud final
+	     
+		IF ((SELECT id_noeud 
+		     FROM m_reseau_sec.geo_ecl_noeud nd 
+		     WHERE ST_equals(nd.geom,ST_EndPoint(NEW.geom))AND situation <> '12' ) IN (SELECT id_ouvelec 
+											       FROM m_reseau_sec.an_ecl_ouvrage_electrique 
+											       WHERE ty_ouvelec = '10')) THEN --------------- Si le noeud final est une armoire
+											 				      --------------- ON ECHANGE LES DEUX NOEUDS 
+			new.id_nd_ini= (SELECT id_noeud 
+					FROM m_reseau_sec.geo_ecl_noeud nd 
+					WHERE ST_equals(nd.geom,ST_EndPoint(NEW.geom)) AND situation <> '12'); ---- Noeud initial = noeud final
+					
+			new.id_nd_fin= (SELECT id_noeud 
+					FROM m_reseau_sec.geo_ecl_noeud nd 
+					WHERE ST_equals(nd.geom,ST_StartPoint(NEW.geom))AND situation <> '12');---- Noeud final = noeud initial
+
+		RETURN NEW ;
+		END IF ;
+		
+	ELSE	------------------------------------------------------------------------------------------------ S'il y a deux noeud avec la même géométrie que le noeud final
+	
+		RETURN NEW ;
+		
+	END IF ;
+
+	---
+
+IF (TG_OP ='UPDATE') THEN
+
+		NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
+
+	
+		IF (ST_Contains(geomzonesARC , NEW.geom)) THEN --------- Si le câble est dans la zone ARC --> à reprendre.
+			NEW.exploi_cab = 'ARC';
+			NEW.presta_cab = 'INEO';
+
+		ELSIF (ST_Contains(geomzonesVILLE , NEW.geom)) THEN --- à reprendre
+			NEW.exploi_cab= 'VILLE DE COMPIEGNE';
+			NEW.presta_cab = 'LESENS';
+
+		ELSE 
+
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_cab, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+		RETURN OLD ;
+		
+		END IF;
+
+	
+END IF; 
+
+---
+
+IF (TG_OP ='INSERT') THEN
+
+	NEW.date_donne = now();
+	NEW.qua_geo_Z = '30'; --- Classe C
+	NEW.qua_geo_XY = '30';--- Classe C
+	NEW.src_geom = '20'; ---- Orthophotographie
+	NEW.src_date = '2013';--- 
+	NEW.situation = '10';---- Actif
+
+	IF (ST_Contains(geomzonesARC , NEW.geom)) THEN -- à revoir
+		NEW.presta_cab= 'ARC';
+		NEW.exploi_cab = 'INEO';
+		
+	ELSIF (ST_Contains(geomzonesVILLE , NEW.geom)) THEN -- à revoir
+		NEW.exploi_cab= 'VILLE DE COMPIEGNE';
+		NEW.presta_cab = 'LESENS';
+
+	ELSE 
+
+	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+	VALUES
+	(NEW.id_cab, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+	RETURN OLD ;
+		
+	END IF;
+	
+END IF; 
+
+	
+RETURN NEW;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t1_cable_before_insert_update
   BEFORE INSERT OR UPDATE
   ON m_reseau_sec.geo_ecl_cable
   FOR EACH ROW
-  EXECUTE PROCEDURE m_reseau_sec.ft_m_cable(); 
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_cable_before(); 
 
 
- 
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_cable_after() 
+  RETURNS trigger AS
+$BODY$
+BEGIN
+
+  IF (NEW.id_nd_ini = NEW.id_nd_fin) THEN -----------On supprime les câble qui ont le même noeud final et initial
+	DELETE FROM m_reseau_sec.geo_ecl_cable
+	WHERE id_cab=new.id_cab;
+	
+	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+	VALUES
+	(NEW.id_cab, 'Un câble ne peut pas être relié deux fois au même nœud.', now() );
+END IF;
+
+RETURN NEW;
+
+ END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t3_cable_after_insert_update --- t2 réservé à log
+  AFTER INSERT OR UPDATE
+  ON m_reseau_sec.geo_ecl_cable
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_cable_after(); 
+
+
+--############################################################ MODELE SUPPORT ##################################################
+
+---- GEO retourne '' au lieu de NULL, on force donc la valeur null pour éviter la contrainte UNIQUE
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_modele_support()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+
+	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+
+	---
+
+	IF (new.nom_mod_su = '') THEN ---- On corrige le '' renvoyer par GEO eu lieu de NULL, car ce la pose des problèmes avec les noms UNIQUE
+
+		new.nom_mod_su=NULL;
+
+	END IF;
+
+	---
+
+	IF (NEW.ik_supp > 10::integer) THEN ---- On surcorrige et on met un message d'erreur si ik est supérieur à 10. le messages apparaît dans la fiche GEO
+			NEW.ik_supp=NULL;
+			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+			VALUES
+			(NEW.id_mod_sup, 'L''IK ne peut pas être supérieur à 10 ', now() );
+	END IF;
+
+	---
+
+	IF (NEW.ip_supp > 69::integer) THEN ---- On surcorrige et on met un message d'erreur si ip est supérieur à 69. le messages apparaît dans la fiche GEO
+			NEW.ip_supp=NULL;
+			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+			VALUES
+			(NEW.id_mod_sup, 'L''IP ne peut pas être supérieur à 69', now() );		
+	END IF;
+
+	---
+
+IF (TG_OP ='UPDATE') THEN
+
+	NEW.date_maj = now(); ---------- On attribue la date actuelle à la date de dernière mis à jour
+	
+END IF; 
+
+	---
+
+	RETURN NEW;
+
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t1_modele_support
+  BEFORE INSERT OR UPDATE
+  ON m_reseau_sec.an_ecl_modele_support
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_modele_support(); 
+
+
+--############################################################ MODELE LANTERNE ##################################################
+
+
+---- GEO retourne '' au lieu de NULL, on force donc la valeur null pour éviter la contrainte UNIQUE
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_modele_lanterne()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+
+	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+
+	---
+
+	IF (new.nom_mod_ln = '') THEN ---- On corrige le '' renvoyer par GEO eu lieu de NULL, car ce la pose des problèmes avec les noms UNIQUE
+
+		new.nom_mod_ln=NULL;
+
+	END IF;
+
+	---
+
+	IF (NEW.ik_lant > 10::integer) THEN ---- On surcorrige et on met un message d'erreur si ik est supérieur à 10. le messages apparaît dans la fiche GEO
+		NEW.ik_lant=NULL;
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_mod_ln, 'L''IK ne peut pas être supérieur à 10 ', now() );	
+	END IF;
+
+	---
+
+	IF (NEW.ip_lant > 69::integer) THEN  ---- On surcorrige et on met un message d'erreur si ip est supérieur à 69. le messages apparaît dans la fiche GEO
+		NEW.ip_lant=NULL;
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_mod_ln, 'L''IP ne peut pas être supérieur à 69', now() );	
+	END IF;
+
+	---
+
+IF (TG_OP ='UPDATE') THEN
+
+	NEW.date_maj = now(); ---------- On attribue la date actuelle à la date de dernière mis à jour
+	
+END IF; 
+
+	---
+
+	RETURN NEW;
+
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t1_modele_lanterne
+  BEFORE INSERT OR UPDATE
+  ON m_reseau_sec.an_ecl_modele_lanterne
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_modele_lanterne(); 
+
+
+--############################################################ MODELE LAMPE ##################################################
+
+---- GEO retourne '' au lieu de NULL, on force donc la valeur null pour éviter la contrainte UNIQUE
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_modele_lampe()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+
+	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+
+	IF (new.nom_mod_lm = '') THEN ---- On corrige le '' renvoyer par GEO eu lieu de NULL, car ce la pose des problèmes avec les noms UNIQUE
+		new.nom_mod_lm=NULL;
+	END IF;
+
+	IF (NEW.ty_lampe <> '10' OR NEW.cul_lamp <> '30') THEN --- La couleur d'éclairage ne peut changer qu'avec les lampes IM (code = 10) culot G12 (code=  30).
+		NEW.cou_ecl='ZZ';
+	END IF;
+
+	IF (NEW.ty_lampe <> '50') THEN --- Seule une lampe LED (code = 50) peut avoir un télégestion.
+		NEW.telgest='ZZ';
+	END IF;
+
+	IF (NEW.ty_lampe = '50' AND (NEW.cul_lamp = '30')) THEN --- Les LED ne peuvent pas avoir de culot G12
+		NEW.cul_lamp='00';
+	END IF;
+
+	IF (NEW.ty_lampe = '50' AND (NEW.puis_lam <> '05' AND NEW.puis_lam <> '15' AND NEW.puis_lam <> '20')) THEN --- Les LED (code = 50) ne peuvent avoir comme puissance que les code = 05, 15 ou 20.
+		NEW.puis_lam='00';
+	END IF;
+
+	IF (NEW.ty_lampe = '10' AND (NEW.puis_lam <> '10' AND NEW.puis_lam <> '30' AND NEW.puis_lam <> '40' AND NEW.puis_lam <> '50' AND NEW.puis_lam <> '60' AND NEW.puis_lam <> '70')) THEN
+		NEW.puis_lam='00';
+	END IF;
+
+	IF (NEW.ty_lampe = '20' AND (NEW.puis_lam <> '40' AND NEW.puis_lam <> '50' AND NEW.puis_lam <> '60' AND NEW.puis_lam <> '70' AND NEW.puis_lam <> '80' )) THEN
+		NEW.puis_lam='00';
+	END IF;
+
+
+IF (TG_OP ='UPDATE') THEN
+
+	NEW.date_maj = now(); ---------- On attribue la date actuelle à la date de dernière mise à jour
+	
+END IF; 
+
+	---
+
+	RETURN NEW;
+
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+  CREATE TRIGGER t_t1_modele_lampe
+  BEFORE INSERT OR UPDATE
+  ON m_reseau_sec.an_ecl_modele_lampe
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_modele_lampe(); 
+
+
+--############################################################ INTERVENTION ##################################################
+/*
+Liste de valeur des types d'interventions, pour information. --> sert à faire les conditions (IF) ci-dessous.
+('10','Changement de disjoncteur'),
+('11','Changement de fusible'),
+('12','Changement de lanterne'),
+('13','Changement de lampe'),
+('15','Changement de ballast'),
+('16','Changement d''amorce'),
+('17','Changement d''auto-transformateur'),
+('18','Ajout d''options'),
+('19','Changement de parasurtenseur'),
+('20','Changement de type de commande'),
+('30','Contrôle électrique'),
+('31','Contrôle mécanique'),
+('40','Nettoyage'),
+('50','Réparation'),
+('60','Ajout d''un départ'),
+('70','Repositionnement lanterne/crosse'),
+('80','Suppression de l'objet'),
+('81','Abandon de l''objet'),
+('90','Suppression d'une option'),
+('99','Autre');
+*/
+
+---- Selon le(s) type(s) d'intervention(s) on update les valeurs du noeud concerné.
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_intervention()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+
+	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+
+	---
+
+IF (TG_OP = 'INSERT') THEN
+
+	IF (NEW.type_si_in = '20') THEN --- Si lors de l'insertion c'est une intervention (sans passer par un signalement donc).
+		new.dat_real = now(); ----- La date de réalisation de l'intervention est égale à la date actuelle.
+		new.dat_signa = NULL;------ Et la date de signalement est nulle.
+	END IF;
+
+	IF ( NEW.type_si_in = '10' AND NEW.etat_sign = '30') THEN ----------------------------------------------- Si un signalement (type_si_in code =10) passe en réglé (etat_sign code= 30) sans intervention...
+
+		NEW.etat_sign = '10';----------------------------------------------------------------- Et on remet l'état du signalement comme il était avant.
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_inter, 'Le signalement ne peut-être réglé que s''il y a eu une intervention', now() );--- On ajoute un message d'erreur qui apparaît dans GEO
+
+		NEW.etat_sign = '10';----------------------------------------------------------------- Et on met l'état de signalement à 'soumis'.
+
+	END IF;
+
+	
+END IF;
+
+	---
+
+IF (TG_OP = 'UPDATE') THEN
+
+	IF ( NEW.type_si_in = '10' AND NEW.etat_sign = '30') THEN ----------------------------------------------- Si un signalement (type_si_in code =10) passe en réglé (etat_sign code= 30) sans intervention...
+
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_inter, 'Le signalement ne peut-être réglé que s''il y a eu une intervention', now() );--- On ajoute un message d'erreur qui apparaît dans GEO
+		
+		NEW.etat_sign = OLD.etat_sign ; ----------------------------------------------------------------- Et on remet l'état du signalement comme il était avant.
+		
+	END IF;
+
+	IF (NEW.type_si_in = '20' AND OLD.type_si_in = '10') THEN --- Si on passe d'un signalement à une intervention
+		NEW.dat_real = now();-------------------------------- La date de réalisation de l'intervention est égale à la date actuelle. 
+	END IF;
+
+	IF (OLD.type_si_in= '10' AND NEW.type_si_in='20') THEN --- Si on passe d'un signalement à une intervention.
+		new.etat_sign = '30'; ---------------------------- On passe l'état du signalement à 'Réglé' (code = 30)
+	END IF;
+
+	NEW.date_maj = now(); ---------- On attribue la date actuelle à la date de dernière mise à jour
+	
+END IF;
+
+	---
+
+	IF (NEW.dat_progra < NEW.dat_signa ) THEN -----------Si la date de progra est inférieur à la date de signalement, on surcorrige et on met un message d"erreur
+
+		NEW.dat_progra=NULL;
+
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_objet, 'La date de programmation ne peut pas être inférieure à la date de signalement', now() );
+
+	END IF;
+
+	---
+
+	IF (NEW.dat_real < NEW.dat_signa) THEN -----------Si la date de real est inférieur à la date de signalement, on surcorrige et on met un message d"erreur
+
+		NEW.dat_real=NULL;
+
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_objet, 'La date de réalisation de l''intervention ne peut pas être inférieure à la date de signalement', now() );
+
+	END IF;
+
+
+--- Les interventions peuvent porter sur plusieurs objets différents. 
+--- Ainsi, les attributs métier d'intervention ,au nombre de 8, servent à plusieurs types d'intervention à la fois.
+--- Voir doc pour plus de précision.
+
+
+
+
+---------------------------------------OUVRAGE ELECTRIQUE----------------------------------------
+IF (NEW.id_objet IN (SELECT id_ouvelec FROM m_reseau_sec.an_ecl_ouvrage_electrique)) THEN -------- Si c'est un ouvrage électrique
+
+	IF (NEW.id_noeud IS NULL) THEN 
+
+		new.id_noeud = NEW.id_objet; ----------------------------------------------------- On attribue à l'intervention un lien avec le noeud. (sert pour foyer et départ)
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%10%' ) THEN ---------------------------------------------------- Si c'est un changement de disjoncteur
+
+		UPDATE m_reseau_sec.an_ecl_ouvrage_electrique ------------------------------------ On change l'attribut dans la table 
+		SET 
+		ty_disjonc=NEW.att_met1
+		WHERE NEW.id_objet=id_ouvelec;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%11%') THEN ----------------------------------------------------- Si c'est un changement de fusible
+
+		UPDATE m_reseau_sec.an_ecl_ouvrage_electrique ------------------------------------ On change l'attribut dans la table 
+		SET 
+		ty_fusible=NEW.att_met2
+		WHERE NEW.id_objet=id_ouvelec;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%20%') THEN ----------------------------------------------------- Si c'est un changement de type de commande
+	
+		UPDATE m_reseau_sec.an_ecl_ouvrage_electrique ------------------------------------ On change l'attribut dans la table 
+		SET 
+		ty_comm=NEW.att_met3
+		WHERE NEW.id_objet=id_ouvelec AND ty_ouvelec = '10';
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%60%') THEN ----------------------------------------------------- Si c'est un ajout de départ
+
+		INSERT INTO m_reseau_sec.an_ecl_depart 
+			(id_ouvelec, nom_depart, tension, ty_disjonc, ty_fusible, etat_dep, op_sai)  --------------- On ajoute un départ 
+		VALUES 
+			(NEW.id_objet, NEW.att_met7, NEW.att_met7, NEW.att_met1, NEW.att_met2, '10', NEW.op_sai);
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%81%') THEN ----------------------------------------------------- Si c'est une désactivation de l'objet
+
+		UPDATE m_reseau_sec.geo_v_ouvrage_electrique ------------------------------------- On met l'attribut situation à 'Inactif' (code = 11) 
+		SET 
+		situation= '11'
+		WHERE NEW.id_objet=id_ouvelec;
+		
+	END IF;
+
+	---
+	
+	IF (NEW.type_inter LIKE '%80%') THEN ------------------------------------------------------ Si c'est une suppresion de l'objet
+
+		DELETE FROM m_reseau_sec.geo_v_ouvrage_electrique WHERE NEW.id_objet =id_ouvelec;-- On lance la suppression, qui changera en fait situation en 'Supprimé (code='12')
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%82%') THEN ----------------------------------------------------- Si c'est une réactivation de l'objet
+
+		UPDATE m_reseau_sec.geo_v_ouvrage_electrique ------------------------------------- On met l'attribut situation à 'Actif' (code = 10)
+		SET 
+		situation= '10'
+		WHERE NEW.id_objet=id_ouvelec;
+
+	END IF;
+
+	---
+
+	IF (NEW.att_met6 IS NOT NULL AND NEW.att_met6 != '00') THEN ------------------------------ Si l'état est renseigné on le change, sinon on garde l'ancien
+
+		UPDATE m_reseau_sec.geo_ecl_ouvrage_electrique  
+		SET 
+		etat_ouvel=NEW.att_met6
+		WHERE NEW.id_objet=id_ouvelec;
+
+	END IF;
+	
+END IF;
+
+---------------------------------------DEPART----------------------------------------
+
+IF (NEW.id_objet IN (SELECT id_depart FROM m_reseau_sec.an_ecl_depart)) THEN --------------------- Si c'est un départ
+
+
+	IF (NEW.id_noeud IS NULL) THEN
+
+		new.id_noeud = (SELECT id_ouvelec 
+				FROM m_reseau_sec.an_ecl_depart 
+				WHERE id_depart=NEW.id_objet) ; ---------------------------------- On attribue à l'intervention un lien avec le noeud auquel es rattaché le départ
+
+	END IF;
+
+	---
+
+	IF (NEW.att_met7 IS NOT NULL AND NEW.att_met7 <> '') THEN -------------------------------- Cet attribut correspond au signalement réglé lors de l'intervention sur le départ, le signalement ayant ou avoir lieu sur l'armoire entière.
+	
+		UPDATE m_reseau_sec.an_ecl_intervention ------------------------------------------ on indique que le signalement sélectionné est réglé.
+		SET 
+		etat_sign = '60'------------------------------------------------------------------ code = 60 --> ''Réglé par intervention sur foyer/départ''
+		WHERE id_inter = NEW.att_met7::integer;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%10%') THEN ----------------------------------------------------- Si c'est un changement de disjoncteur
+
+		UPDATE m_reseau_sec.an_ecl_depart ------------------------------------------------ On change l'attribut dans la table 
+		SET 
+		ty_disjonc=NEW.att_met1
+		WHERE NEW.id_objet=id_depart;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%11%') THEN----------------------------------------------------- Si c'est un changement de fusible
+
+		UPDATE m_reseau_sec.an_ecl_depart------------------------------------------------ On change l'attribut dans la table 
+		SET 
+		ty_fusible=NEW.att_met2
+		WHERE NEW.id_objet=id_depart;
+
+	END IF;
+
+	---
+
+	IF (NEW.att_met6 IS NOT NULL AND NEW.att_met6 != '00') THEN ----------------------------- Si l'état est renseigné on le change, sinon on garde l'ancien
+
+		UPDATE m_reseau_sec.an_ecl_depart 
+		SET 
+		etat_dep=NEW.att_met6
+
+		WHERE NEW.id_objet=id_depart;
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%81%') THEN----------------------------------------------------- Si c'est une désactivation de l'objet
+
+		UPDATE m_reseau_sec.an_ecl_depart ----------------------------------------------- On met l'attribut situation à 'Inactif' (code = 11) 
+		SET 
+		situation= '11'
+		WHERE NEW.id_objet=id_depart;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%80%') THEN----------------------------------------------------- Si c'est une suppression de l'objet
+
+
+		DELETE FROM m_reseau_sec.geo_v_point_lumineux WHERE NEW.id_objet =id_depart; -- On lance la suppression, qui changera en fait situation en 'Supprimé (code='12')
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%82%') THEN----------------------------------------------------- Si c'est une réactivation de l'objet
+
+		UPDATE m_reseau_sec.an_ecl_depart ----------------------------------------------- On met l'attribut situation à 'Actif' (code = 10)
+		SET 
+		situation= '10'
+		WHERE NEW.id_objet=id_depart;
+
+	END IF;
+
+	
+END IF;
+
+---------------------------------------POINT D'INTERET----------------------------------------
+
+IF (NEW.id_objet IN (SELECT id_pi FROM m_reseau_sec.an_ecl_pi)) THEN ---------------------------- Si c'est un PI
+
+	IF (NEW.id_noeud IS NULL) THEN
+		NEW.id_noeud = NEW.id_objet;
+	END IF;
+
+
+	IF (NEW.att_met6 IS NOT NULL AND NEW.att_met6 != '00') THEN ----------------------------- Si l'état est renseigné on le change, sinon on garde l'ancien
+		UPDATE m_reseau_sec.an_ecl_pi 
+		SET 
+		etat_pi=NEW.att_met6
+		WHERE NEW.id_objet=id_pi;
+	END IF;
+
+	IF (NEW.type_inter LIKE '%81%') THEN ---------------------------------------------------- Si c'est une désactivation de l'objet
+		UPDATE m_reseau_sec.geo_ecl_noeud ----------------------------------------------- On met l'attribut situation à 'Inactif' (code = 11)
+		SET 
+		situation= '11'
+		WHERE NEW.id_objet=id_noeud;
+	END IF;
+
+	IF (NEW.type_inter LIKE '%82%') THEN ---------------------------------------------------- Si c'est une réactivation de l'objet
+		UPDATE m_reseau_sec.geo_ecl_noeud ----------------------------------------------- On met l'attribut situation à 'Actif' (code = 10)
+		SET 
+		situation= '11'
+		WHERE NEW.id_objet=id_noeud;
+	END IF;
+	
+	IF (NEW.type_inter LIKE '%80%') THEN ---------------------------------------------------- Si c'est une suppression de l'objet
+		DELETE FROM m_reseau_sec.geo_v_pi WHERE NEW.id_objet =id_pi; --------------------On lance la suppression, qui changera en fait situation en 'Supprimé (code='12')
+	END IF;
+
+	
+END IF;
+---------------------------------------FOYER----------------------------------------
+
+IF (NEW.id_objet IN (SELECT id_foyer FROM m_reseau_sec.an_ecl_foyer)) THEN ---------------------- Si c'est un foyer
+
+	
+	IF (NEW.id_noeud IS NULL) THEN
+	
+		NEW.id_noeud = (SELECT id_supp FROM m_reseau_sec.an_ecl_foyer foy WHERE id_foyer = NEW.id_objet);
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%12%' AND NEW.att_met7 <> '2') THEN ---------------------------- Si c'est un changement de lanterne
+
+		UPDATE m_reseau_sec.an_ecl_foyer------------------------------------------------- On change l'attribut dans la table 
+		SET 
+		id_mod_ln=NEW.att_met7::integer
+		WHERE NEW.id_objet=id_foyer;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%13%' AND NEW.att_met8 <> 2 ) THEN ----------------------------- Si c'est un changement de lampe
+
+		UPDATE m_reseau_sec.an_ecl_foyer------------------------------------------------- On change l'attribut dans la table 
+		SET 
+		id_mod_lm=NEW.att_met8
+		WHERE NEW.id_objet=id_foyer;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%15%') THEN ----------------------------------------------------- Si c'est un changement de ballast
+
+		UPDATE m_reseau_sec.an_ecl_foyer-------------------------------------------------- On change l'attribut dans la table 
+		SET 
+		ty_ballast=NEW.att_met1
+		WHERE NEW.id_objet=id_foyer;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%16%') THEN ----------------------------------------------------- Si c'est un changement d'amorce
+
+		UPDATE m_reseau_sec.an_ecl_foyer-------------------------------------------------- On change l'attribut dans la table 
+		SET 
+		ty_amorce=NEW.att_met2
+		WHERE NEW.id_objet=id_foyer;
+
+	END IF;	
+
+	---
+
+	IF (NEW.type_inter LIKE '%17%') THEN ----------------------------------------------------- Si c'est un changement d'auto-transformateur
+
+		UPDATE m_reseau_sec.an_ecl_foyer ------------------------------------------------- On change l'attribut dans la table 
+		SET 
+		ty_auto_tr=NEW.att_met3
+		WHERE NEW.id_objet=id_foyer;
+
+	END IF;		
+
+	---
+
+	IF (NEW.att_met6 IS NOT NULL AND NEW.att_met6 != '00') THEN ---------------------------------------------- Si l'état est renseigné on le change, sinon on garde l'ancien
+
+		UPDATE m_reseau_sec.an_ecl_foyer  
+		SET 
+		etat_foy=NEW.att_met6
+		WHERE NEW.id_objet=id_foyer;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%80%') THEN ----------------------------------------------------- Si c'est une suppression de l'objet
+		
+		DELETE FROM m_reseau_sec.an_ecl_foyer WHERE NEW.id_objet =id_foyer;----------------- On lance la suppression, qui changera en fait situation en 'Supprimé (code='12')
+
+	END IF;
+
+	---
+
+	IF (NEW.att_met5 IS NOT NULL AND NEW.att_met5 <> '') THEN -------------------------------- Cet attribut correspond au signalement réglé lors de l'intervention sur le départ, le signalement ayant ou avoir lieu sur l'armoire entière.
+		
+		UPDATE m_reseau_sec.an_ecl_intervention ------------------------------------------ on indique que le signalement sélectionné est réglé.
+		SET 
+		etat_sign = '60' ----------------------------------------------------------------- code = 60 --> ''Réglé par intervention sur foyer/départ''
+		WHERE id_inter = NEW.att_met5::integer;
+
+	END IF; 
+	
+END IF;
+
+---------------------------------------POINT LUMINEUX----------------------------------------
+
+IF (NEW.id_objet IN (SELECT id_supp FROM m_reseau_sec.an_ecl_support)) THEN ---------------------- Si c'est un point lumineux
+
+	IF (NEW.id_noeud IS NULL) THEN
+	
+		NEW.id_noeud = NEW.id_objet;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%10%') THEN ----------------------------------------------------- Si c'est un changement de disjoncteur
+	
+		UPDATE m_reseau_sec.geo_v_point_lumineux ----------------------------------------- On change l'attribut dans la table 
+		SET 
+		ty_disjonc=NEW.att_met1
+		WHERE NEW.id_objet=id_supp;
+		
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%11%') THEN ----------------------------------------------------- Si c'est un changement de fusible
+	
+		UPDATE m_reseau_sec.geo_v_point_lumineux ----------------------------------------- On change l'attribut dans la table 
+		SET 
+		ty_fusible=NEW.att_met2
+		WHERE NEW.id_objet=id_supp;
+		
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%18%') THEN ----------------------------------------------------- Si c'est un ajout d'option
+	
+		UPDATE m_reseau_sec.geo_v_point_lumineux ----------------------------------------- On change l'attribut dans la table 
+		SET 
+		opt_supp=CONCAT (opt_supp, ';',NEW.att_met7)
+		WHERE NEW.id_objet=id_supp AND ty_supp = '10';
+
+	END IF;	
+
+	---
+
+	IF (NEW.type_inter LIKE '%19%') THEN ----------------------------------------------------- Si c'est un changement de parasurtenseur
+
+		UPDATE m_reseau_sec.geo_v_point_lumineux ----------------------------------------- On change l'attribut dans la table 
+		SET 
+		ty_parasu=NEW.att_met3
+		WHERE NEW.id_objet=id_supp;
+
+	END IF;	
+
+	---
+
+	IF (NEW.type_inter LIKE '%90%') THEN ----------------------------------------------------- Suppression d'une option
+
+		UPDATE m_reseau_sec.geo_v_point_lumineux ----------------------------------------- On change l'attribut dans la table 
+		SET 
+		opt_supp=REPLACE(opt_supp, NEW.att_met7, '')
+		WHERE NEW.id_objet=id_supp;
+
+	END IF;	
+
+	---
+
+	IF (NEW.att_met6 IS NOT NULL AND NEW.att_met6 != '00') THEN ------------------------------ Si l'état est renseigné on le change, sinon on garde l'ancien
+
+		UPDATE m_reseau_sec.geo_v_point_lumineux 
+		SET 
+		etat_supp = NEW.att_met6
+		WHERE NEW.id_objet=id_supp;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%82%') THEN ----------------------------------------------------- Si c'est une réactivation de l'objet
+	
+	UPDATE m_reseau_sec.geo_v_point_lumineux ------------------------------------------------- On met l'attribut situation à 'Actif' (code = 10) 
+		SET 
+		situation= '10'
+		WHERE NEW.id_objet=id_supp;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%81%') THEN------------------------------------------------------ Si c'est une désactivation de l'objet
+	
+		UPDATE m_reseau_sec.geo_v_point_lumineux ----------------------------------------- On met l'attribut situation à 'Inactif' (code = 11)
+		SET 
+		situation= '11'
+		WHERE NEW.id_objet=id_supp;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%80%') THEN ----------------------------------------------------- Si c'est une suppression de l'objet
+
+		DELETE FROM m_reseau_sec.geo_v_point_lumineux WHERE NEW.id_objet =id_supp; -------On lance la suppression, qui changera en fait situation en 'Supprimé (code='12')
+
+	END IF;
+	
+END IF;
+
+---------------------------------------CABLE----------------------------------------
+
+IF (NEW.id_objet IN (SELECT id_cab FROM m_reseau_sec.geo_ecl_cable)) THEN --------------------- Si c'est un PI
+
+	IF (NEW.att_met6 IS NOT NULL AND NEW.att_met6 != '00') THEN ---------------------------------------------- Si l'état est renseigné on le change, sinon on garde l'ancien
+
+		UPDATE m_reseau_sec.geo_ecl_cable 
+		SET 
+		etat_cable=NEW.att_met6
+		WHERE NEW.id_objet=id_cab;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%81%') THEN----------------------------------------------------- Si c'est une désactivation de l'objet
+	
+	UPDATE m_reseau_sec.geo_ecl_cable ------------------------------------------------------- On met l'attribut situation à 'Inactif' (code = 11)
+		SET 
+		situation= '11'
+		WHERE NEW.id_objet=id_cab;
+
+	END IF;
+
+	---
+
+	IF (NEW.type_inter LIKE '%82%') THEN ----------------------------------------------------- Si c'est une réactivation de l'objet
+	
+	UPDATE m_reseau_sec.geo_ecl_cable -------------------------------------------------------- On met l'attribut situation à 'Actif' (code = 10)
+		SET 
+		situation= '10'
+		WHERE NEW.id_objet=id_cab;
+
+	END IF;
+
+	---
+	
+	IF (NEW.type_inter LIKE '%80%') THEN ----------------------------------------------------- Si c'est une suppression de l'objet
+		DELETE FROM m_reseau_sec.geo_ecl_cable WHERE NEW.id_objet =id_cab;---------------- On lance la suppression, qui changera en fait situation en 'Supprimé (code='12')
+	END IF;
+	
+END IF;
+
+
+RETURN NEW;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+
+  CREATE TRIGGER t_t2_intervention_after
+  AFTER UPDATE OR INSERT
+  ON m_reseau_sec.an_ecl_intervention
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_intervention_after(); 
+
+
 
   
 -- ###############################################################################################################################
@@ -1318,126 +3157,82 @@ $BODY$
 -- ###                                                         SEQUENCE                                                        ###
 -- ###                                                                                                                         ###
 -- ###############################################################################################################################
-/*
+
+
+--############################################################ OBJETS ##################################################
+
+
+--Même séquence car GEO ne permet pas d'avoir plusieurs médias dans l'application, tous les objets avec des photos doivent dnc avoir des id différents. 
+--Exception faîte des 2x3 modèles (lanterne, lampe, support) insérés à la création de la base (id =1 et id=2). 
+
+DROP SEQUENCE m_reseau_sec.objet_seq;
+
+CREATE SEQUENCE m_reseau_sec.objet_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 3 ---- Car modèles id = 1 et modèle id = 2 existent pour les modèles de lampes / lanternes/ supports.
+  CACHE 1;
+  
+
+--############################################################ LOG ##################################################
+
+
+DROP SEQUENCE m_reseau_sec.ecl_log_seq;
+
+CREATE SEQUENCE m_reseau_sec.ecl_log_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+  
+
 --############################################################ MEDIA ##################################################
 
-
---Même séquence car GEO ne permet pas d'avoir plusieurs médias dans l'application, tout les objets avec des photos ne doivent donc pas avoir le même id. 
---Exception faîte des 3 modèles (lanterne, lampe, support) par défaut insérés à la création de la base (id =1 ). 
-
-DROP SEQUENCE m_reseau_sec.media_seq;
-
-CREATE SEQUENCE m_reseau_sec.media_seq
+CREATE SEQUENCE m_reseau_sec.an_ecl_media_gid_seq
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-  
-ALTER TABLE m_reseau_sec.media_seq
-  OWNER TO sig_read;
-GRANT ALL ON TABLE m_reseau_sec.media_seq TO sig_read;
-GRANT ALL ON TABLE m_reseau_sec.media_seq TO sig_temp; 
 
 
--------------------------------------------DEPART-----------------------------------------
-
-CREATE SEQUENCE m_reseau_sec.depart_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-  
-ALTER TABLE m_reseau_sec.depart_seq
-  OWNER TO sig_read;
-GRANT ALL ON TABLE m_reseau_sec.depart_seq TO sig_read;
-GRANT ALL ON TABLE m_reseau_sec.depart_seq TO sig_temp; 
-
-*/
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
 -- ###                                                        COMMENTAIRES                                                     ###
 -- ###                                                                                                                         ###
 -- ###############################################################################################################################
 
---############################################################ SUPPORT ##################################################
-
-COMMENT ON TABLE m_reseau_sec.an_ecl_support IS 'Table des supports de foyer';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.id_supp IS 'Identifiant du nœud lié au support';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.id_mod_sup IS 'Lien vers table modèle support';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_supp IS 'Type de support : mat, facade…etc.';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.opt_supp IS 'Option(s) du support, sous forme de liste déroulante dans l''application';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.entr_mass IS 'Entraxe du massif : séparation entre les deux bords intérieur servant à caler le mât';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_parasu IS 'Type de parasurtenseur';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.etat_supp IS 'Etat du support';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.haut_trap IS 'Hauteur de la trappe de visite, en mètres, si elle existe';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.etat_trappe IS 'Etat de la porte de la chambre de visite';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.loc_sy_el IS 'Emplacement du parasurtenseur et fusible/disjoncteur';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.loc_plat IS 'Emplacement de la platine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_disjonc IS 'Type du disjoncteur';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_fusible IS 'Type du fusible';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.marq_fixat IS 'Marque de la fixation';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.etat_fixa IS 'Etat de la fixation';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.cod_ral_f IS 'Code RAL de la fixation';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.haut_supp IS 'Hauteur du support';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_support.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
-
-
 --############################################################ MODELE SUPPORT ##################################################
 
-COMMENT ON TABLE m_reseau_sec.an_ecl_modele_support IS 'Modèle des différents supports';
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_modele_support IS 'Modèles des différents mâts';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.nom_mod_su IS 'Nom métier du modèle';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.id_mod_sup IS 'Numéro du modèle de support, interne à l''ARC';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.mat_supp IS 'Matériau du support';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.cod_ral_s IS 'Code RAL du support';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.ik_supp IS 'indice de protection face aux influences extérieures';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.ik_supp IS 'Indice de protection face aux influences extérieures';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.ip_supp IS 'Indice de protection aux chocs mécaniques';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_support.op_sai IS 'Opérateur de la saisie de la donnée';
 
 --############################################################ MODELE LANTERNE ##################################################
 
 COMMENT ON TABLE m_reseau_sec.an_ecl_modele_lanterne IS 'Modèles de lanternes existants ou ayant existés à Compiègne';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.id_mod_ln IS 'Numéro du modèle de lanterne interne à l''ARC';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.ty_lantern IS 'Type de la lanterne';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.nom_mod_ln IS 'Nom métier du modèle ';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.gar_lant IS 'Durée de garantie de la lanterne, en années';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.cod_ral_ln IS 'Code RAL de la lanterne';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.clas_el_ln IS 'Classe électrique de la lanterne';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.ik_lant IS 'indice de protection face aux influences extérieures';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.ik_lant IS 'Indice de protection face aux influences extérieures';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.ip_lant IS 'Indice de protection aux chocs mécaniques';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
-
---######################################FOYER########################################
-
-COMMENT ON TABLE m_reseau_sec.an_ecl_foyer IS 'Objet reposant sur un support, intégrant une source lumineuse';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_foyer IS 'Numéro du foyer interne à l''ARC';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_supp IS 'Identifiant du support sur lequel repose le foyer';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_mod_ln IS 'Lien vers la table modèle lanterne';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_mod_lm IS 'Lien vers table modèle lampe';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.etat_lant IS 'Etat de la lanterne';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.haut_feu IS 'Hauteur max de la lanterne par rapport au niveau de la chaussée';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.dat_pos_ln IS 'Date de la pose de la lanterne';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.etat_lamp IS 'Etat de la lampe';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.dat_pos_lm IS 'Date de pose de la lampe';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.pct_fct IS 'Puissance de la lampe en % de sa puissance maximale : uniquement pour les leds';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_ballast IS 'Type de ballast installé';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_amorce IS 'Type d''amorceur installé';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_auto_tr IS 'Type d''auto trasformateur installé';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.op_sai IS 'Opérateur de la saisie de la donnée';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.op_sai IS 'Opérateur de la saisie de la donnée';
 
 --######################################MODELE LAMPE########################################
 
@@ -1451,87 +3246,41 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.telgest IS 'Présence d''une 
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.cou_ecl IS 'Couleur d''éclairage de la lampe';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.gar_lamp IS 'Garantie de la lampe en années';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
-
---######################################OUVRAGE ELECTRIQUE########################################
-
-COMMENT ON TABLE m_reseau_sec.an_ecl_ouvrage_electrique IS 'Objet avec une arrivée d''électricité et un ou plusieurs départs.';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.id_ouvelec IS 'Identifiant du nœud lié à l''ouvrage';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.nom_ouv IS 'Nom métier de l''ouvrage';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.pdl_edf IS 'Numéro de référence EDF';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.n_com_edf IS 'Numéro du compteur EDF';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_ouvelec IS 'Type d''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.etat_ouvel IS 'Etat de l''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.mod_pos_ou IS 'Mode de pose de l''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.mis_terre  IS 'Présence d''une mise à la terre de l''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.val_terre IS 'Valeur globale de la terre';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ik_ouvelec IS 'Indice de protection face aux influences extérieures';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ip_ouvelec IS 'Indice de protection eux chocs mécaniques';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.puis_mes IS 'Puissance mesurée';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.puis_sous IS 'Puissance souscrite';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_comm IS 'Type de commande';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.pres_var IS 'Présence d''un variateur';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_disjonc IS 'Type du disjoncteur';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_fusible IS 'Type du fusible';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
-
---######################################DEPART########################################
-
-COMMENT ON TABLE m_reseau_sec.an_ecl_depart IS 'Objet intégré à une armoire et permettant le branchement d''un câble.';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.id_depart IS 'Numéro du depart interne à l''ARC';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.id_ouvelec IS 'Lien vers table armoire';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.nom_depart IS 'Nom du secteur déservi par le départ';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.etat_dep IS 'Etat du départ';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.tension IS 'Tension électrique en sortie';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.ty_disjonc IS 'Type du disjoncteur';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.ty_fusible IS 'Type du fusible';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.op_sai IS 'Opérateur de la saisie de la donnée';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
-
---######################################POINT D'INTERET########################################
-
-COMMENT ON TABLE m_reseau_sec.an_ecl_pi IS 'Objet réel ou abstrait indiquant un point ayant une importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''EP.';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.id_pi IS 'Identifiant du nœud lié au point d''interet';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.ty_pi IS 'Type de point d''intérêt';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.etat_pi IS 'Etat du point d''intérêt ';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.op_sai IS 'Opérateur de la saisie de la donnée';
 
 --######################################NOEUD########################################
 
-COMMENT ON TABLE m_reseau_sec.geo_ecl_noeud IS 'Objet ponctuel d''intérêt pour la connaissance patrimoniale du réseau.';
+COMMENT ON TABLE m_reseau_sec.geo_ecl_noeud IS 'Noeud ponctuel du réseau.';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.id_noeud IS 'Numéro du noeud interne à l''ARC';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.depart IS 'Depart auquel est relié le noeud';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.exploit_nd IS 'Exploitant du nœud';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.presta_nd IS 'Prestataire des travaux sur le nœud';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.commune IS 'Commune sur laquelle est situé le nœud';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.insee IS 'Code insee de la commune sur laquelle est situé le nœud';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.ent_pose IS 'Entreprise ayant posé l''ouvrage électrique';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.dat_pos IS 'Date de la pose';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.qua_dat IS 'Qualité de date de la pose';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.src_geom IS 'Source du référentiel géographique pour le positionnement du nœud';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.src_date IS 'Année du millésime du référentiel géographique de saisie';
-COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.prec IS 'Précision cartographique du noeud exprimée en cm';
-COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.ope_sai IS 'Opérateur de la saisie de la donnée nœud';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.op_sai IS 'Opérateur de la saisie attributaire de la donnée nœud';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.geom IS 'Géométrie du noeud';
-
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.observ IS 'Commentaires divers';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.qua_geo_XY IS 'Qualité de la géolocalisation planimétrique';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.qua_geo_Z IS 'Qualité de la géolocalisation altimétrique';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.op_sai_geo IS 'Opérateur de la géolocalisation';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.date_donne IS 'Horodatage de la production initiale de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
 
 --######################################CABLE########################################
 
-COMMENT ON TABLE m_reseau_sec.geo_ecl_cable IS 'Objet linéaire allant d''un nœud à un autre. Transporte l''électricité lorsque le réseau est sous tension.';
+COMMENT ON TABLE m_reseau_sec.geo_ecl_cable IS 'Objet linéaire allant d''un nœud à un autre.';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.id_cab IS 'Numéro du câble interne à l''ARC';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.id_nd_ini IS 'Lien vers l''identifiant du nœud initial du câble';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.id_nd_fin IS 'Lien vers l''identifiant du nœud final du câble';
-COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.fourreau IS 'Identifiant du fourreau dans lequel passe le câble';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.exploi_cab IS 'Exploitant du câble';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.presta_cab IS 'Prestataire des travaux sur le câble';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.etat_cable IS 'Etat du câble';
@@ -1545,23 +3294,145 @@ COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.insee2 IS 'Code insee de la commune
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.commune2 IS 'Commune sur laquelle est située le câble';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.src_geom IS 'Source du référentiel géographique pour le positionnement du nœud';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.src_date IS 'Année du millésime du référentiel géographique de saisie';
-COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.prec IS 'Précision cartographique moyenne du câble exprimée en cm';
-COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.date_maj IS 'Date de dernière mise à jour de la donnée';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.geom IS 'Géométrie du câble';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.op_sai IS 'Opérateur de la saisie de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.op_sai IS 'Opérateur de la saisie attributaire de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.qua_geo_XY IS 'Qualité de la géolocalisation planimétrique';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.qua_geo_Z IS 'Qualité de la géolocalisation altimétrique';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.op_sai_geo IS 'Opérateur de la géolocalisation';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.date_donne IS 'Horodatage de la production initiale de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.qua_dat IS 'Qualité de date de la pose';
 
---######################################FOURREAU########################################
+--############################################################ SUPPORT ##################################################
 
-COMMENT ON TABLE m_reseau_sec.an_ecl_fourreau IS 'Objet linéaire permettant de faire passer un ou plusieurs câble(s). ';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.id_fourr IS 'Numéro de fourreaut interne à l''ARC';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.nom_fourr IS 'Nom métier du fourreau';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.dat_pos_fr IS 'Date de pose du fourreau';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.place_libr IS 'possibilité de rajouter un câble';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.etat_four IS 'Etat du fourreau';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.op_sai IS 'Opérateur de la saisie de la donnée';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.date_sai IS 'Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_fourreau.date_maj IS 'Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d''origine';
+COMMENT ON TABLE m_reseau_sec.an_ecl_support IS 'Supports des foyers (sol, façade, mât...)';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.id_supp IS 'Identifiant du nœud lié au support';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.id_mod_sup IS 'Lien vers table modèle de support';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_supp IS 'Type de support : mat, facade…etc.';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.opt_supp IS 'Option(s) du support, sous forme de liste déroulante dans l''application';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_parasu IS 'Type de parasurtenseur';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.etat_supp IS 'Etat du support';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.haut_trap IS 'Hauteur de la trappe de visite : Standard ou En hauteur';;
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_disjonc IS 'Type du disjoncteur';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_fusible IS 'Type du fusible';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.haut_supp IS 'Hauteur du support';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_support.nbr_foyer IS 'Nombre de foyer, calculé automatiquement via trigger';
 
+--######################################POINT D'INTERET########################################
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_pi IS 'Objet réel ou abstrait indiquant un point d''importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''Eclairage Public.';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.id_pi IS 'Identifiant du nœud lié au point d''interet';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.ty_pi IS 'Type de point d''intérêt';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.etat_pi IS 'Etat du point d''intérêt ';
+
+--######################################OUVRAGE ELECTRIQUE########################################
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_ouvrage_electrique IS 'Objet avec une arrivée d''électricité et un ou plusieurs départs.';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.id_ouvelec IS 'Identifiant du nœud lié à l''ouvrage';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.nom_ouv IS 'Nom métier de l''ouvrage';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.pdl_edf IS 'Numéro de référence EDF';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.n_com_edf IS 'Numéro du compteur EDF';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_ouvelec IS 'Type d''ouvrage électrique';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.etat_ouvel IS 'Etat de l''ouvrage électrique';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.mod_pos_ou IS 'Mode de pose de l''ouvrage électrique';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.val_terre IS 'Valeur globale de la terre';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ik_ouvelec IS 'Indice de protection face aux influences extérieures';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ip_ouvelec IS 'Indice de protection eux chocs mécaniques';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.puis_mes IS 'Puissance mesurée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.puis_sous IS 'Puissance souscrite';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_comm IS 'Type de commande d''allumage';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.pres_var IS 'Présence d''un variateur';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_disjonc IS 'Type du disjoncteur';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_fusible IS 'Type du fusible';
+
+
+--######################################DEPART########################################
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_depart IS 'Objet intégré à un ouvrage électrique et permettant le branchement d''un câble.';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.id_depart IS 'Numéro du depart interne à l''ARC';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.id_ouvelec IS 'Lien vers table armoire';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.nom_depart IS 'Nom du secteur déservi par le départ';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.etat_dep IS 'Etat du départ';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.tension IS 'Tension électrique en sortie';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.ty_disjonc IS 'Type du disjoncteur';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.ty_fusible IS 'Type du fusible';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.observ IS 'Commentaires divers';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.op_sai IS 'Opérateur de la saisie initiale de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.puis_sous IS 'Puissance souscrite calculée via un trigger';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.date_donne IS 'Horodatage de la production initiale de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
+
+
+--######################################FOYER########################################
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_foyer IS 'Objet reposant sur un support, intégrant une source lumineuse';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_foyer IS 'Numéro du foyer interne à l''ARC';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_supp IS 'Identifiant du support sur lequel repose le foyer';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_mod_ln IS 'Lien vers la table modèle lanterne';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_mod_lm IS 'Lien vers table modèle lampe';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.etat_foy IS 'Etat du foyer';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.haut_feu IS 'Hauteur max de la lanterne par rapport au niveau de la chaussée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.dat_pos_ln IS 'Date de la pose de la lanterne';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.dat_pos_lm IS 'Date de pose de la lampe';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.pct_fct IS 'Puissance de la lampe en % de sa puissance maximale : uniquement pour les leds';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_ballast IS 'Type de ballast installé';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_amorce IS 'Type d''amorceur installé';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_auto_tr IS 'Type d''auto trasformateur installé';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.observ IS 'Commentaires divers';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.op_sai IS 'Opérateur de la saisie de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.date_donne IS 'Horodatage de la production initiale de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.loc_plat IS 'Localisation de la platine, pieds de support ou dans la lanterne'; 
+COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_lantern IS 'Type de lanterne : piéton ou routier'; 
+
+--######################################ERREUR########################################
+COMMENT ON TABLE m_reseau_sec.an_ecl_erreur IS 'Erreurs de saisies et messages d''erreur associés';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_erreur.id_erreur IS 'Numéro de l''erreur interne à l''ARC'; 
+COMMENT ON COLUMN m_reseau_sec.an_ecl_erreur.id_objet IS 'Identifiant de l''objet sur lequel l''erreur a été saisie'; 
+COMMENT ON COLUMN m_reseau_sec.an_ecl_erreur.message IS 'Message d''erreur destiné à l''utilisateur de l''application'; 
+COMMENT ON COLUMN m_reseau_sec.an_ecl_erreur.heure IS 'Date de la saisie de l''erreur'; 
+
+--######################################INTERVENTION########################################
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_intervention IS 'Interventions et signalements du service métier ';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.id_inter IS 'Numéro de l''intervention interne à l''ARC';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.id_objet IS 'Identifiant de l''objet concerné par l''intervention';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.type_si_in IS 'Signalement ou intervention';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.dat_signa IS 'Date du signalement';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.dat_progra IS 'Date de la programmation';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.dat_real IS 'Date de la réalisation de l''intervention';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.typ_def IS 'Type de défaillance';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.src_def IS 'Source de la défaillance';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.etat_sign IS 'Etat du signalement';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.moy_interv IS 'Moyen d''intervention';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.type_inter IS 'Type d''intervention';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met1 IS 'Attribut métier dédié au type de disjoncteur / type de ballast';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met2 IS 'Attribut métier Dédié au type de fusible / type d''amorce';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met3 IS 'Attribut métier Dédié au type de parasurtenseur / type de commande / type d''auto transformateur';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met4 IS 'Attribut métier Dédié à la mise en terre / modele de lanterne';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met5 IS 'Attribut métier Dédié au modèle de lampe';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met6 IS 'Attribut métier Dédié à l''état de l''objet ciblé par l''intervention ';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met7 IS 'Attribut métier Dédié au nom du départ / aux options du support ';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.att_met8 IS 'Attribut métier Dédié à la tension / pourcentage de puissance de fonctionnement';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.observ IS 'Commentaires divers';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.op_sai IS 'Opérateur de la saisie initiale de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.id_noeud IS 'Identifiant du noeud sur lequel a lieu l''intervention (Pour foyer et départ, noeud = Support ou armoire)';
+
+--######################################MEDIA########################################
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_media  IS 'Table de gestion des photos et documents dans GEO';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_media.gid IS 'Identifiant d''une ligne, interne à l''ARC';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_media.id IS 'Identifiant de l’objet lié';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_media.media IS 'Champ Média de GEO';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_media.miniature IS 'Champ miniature de GEO';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_media.n_fichier IS 'Nom du fichier GEO';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_media.t_fichier IS 'Type de média dans GEO';
