@@ -2186,8 +2186,7 @@ BEGIN
 
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
----- Sélection d'un seul noeud s'il y en a plusieurs avec count(*) --> on ne prend pas les PI, il est impossible qu'il y ait d'autres noeuds superposés qu'un pi et autre chose
-
+	---
 
 	IF (NEW.date_donne >= now()::timestamp) THEN --------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
 		NEW.date_donne=NULL;-------------------------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
@@ -2196,7 +2195,7 @@ BEGIN
 		(NEW.id_cab, 'La date de création de la donnée doit être inférieure à la date actuelle', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
 	END IF;
 
-	---
+        ---- Sélection d'un seul noeud s'il y en a plusieurs avec count(*) --> on ne prend pas les PI, il est impossible qu'il y ait d'autres noeuds superposés qu'un pi et autre chose
 
 	IF ((SELECT count(*) --------------------------------------------------------------------------------------------------------------------------------- Si le nombre de ...
 	     FROM m_reseau_sec.geo_ecl_noeud nd -------------------------------------------------------------------------------------------------------------- Noeuds
