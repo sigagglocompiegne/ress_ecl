@@ -20,7 +20,7 @@
 
 |Représentation| Nom de l'application |Résumé|
 |:---|:---|:---|
-|![picto](/doc/img/pei_bleu.png)|Eclairage public (ECL)|Cette application est dédiée à la gestion du réseau d'éclairage public de de l'ARC (zones de gestion ARC) et de la Ville de Compiègne.|
+|![picto](/doc/img/ecl_bleu.png)|Eclairage public (ECL)|Cette application est dédiée à la gestion du réseau d'éclairage public de de l'ARC (zones de gestion ARC) et de la Ville de Compiègne.|
 
 # Accès
 
