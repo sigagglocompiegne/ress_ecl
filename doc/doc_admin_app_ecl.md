@@ -227,4 +227,85 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 | type_inter                     |                   | x             | Type d'intervention                                                                                                                     | Formatage par une liste de domaine ( lt_intervention_point_lumineux  )           | Fiches informations des Fiches d'intervention |             |
 | type_si_in                     |                   | x             | Signalement ou intervention                                                                                                             | Formatage par une liste de domaine ( lt_ecl_signalement_intervention  )          | Fiches informations des Fiches d'intervention |             |
 
+### Table : 'att_met1' 
+| Fiche information           | Utilisé     | Particularité/Usage                                          |
+| --------------------------- | ----------- | ------------------------------------------------------------ |
+| Intervention câble          |             |                                                              |
+| Intervention point-lumineux | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
+| Intervention depart         | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
+| Intervention foyer          | x           | Formatage par une liste de domaine (lt_ecl_type_ballast)     |
+| Intervention PI             |             |                                                              |
+
+### Table : 'att_met2' 
+| Fiche information           | Utilisé     | Particularité/Usage                                      |
+| --------------------------- | ----------- | -------------------------------------------------------- |
+| Intervention câble          |             |                                                          |
+| Intervention point-lumineux | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) |
+| Intervention depart         | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( lt_ecl_amorceur )   |
+| Intervention PI             |             |                                                          |
+
+### Table : 'att_met3' 
+| Fiche information           | Utilisé     | Particularité/Usage                                                |
+| --------------------------- | ----------- | ------------------------------------------------------------------ |
+| Intervention câble          |             |                                                                    |
+| Intervention point-lumineux | x           | Formatage par une liste de domaine ( lt_ecl_type_parasurtenseur )  |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine ( lt_ecl_auto_transformateur  ) |
+| Intervention depart         |             |                                                                    |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( lt_ecl_auto_transformateur  ) |
+| Intervention PI             |             |                                                                    |
+
+### Table : 'att_met4' 
+| Fiche information           | Utilisé     | Particularité/Usage                                          |
+| --------------------------- | ----------- | ------------------------------------------------------------ |
+| Intervention câble          |             |                                                              |
+| Intervention point-lumineux |             |                                                              |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
+| Intervention depart         |             |                                                              |
+| Intervention foyer          |             |                                                              |
+| Intervention PI             |             |                                                              |
+
+### Table : 'att_met5' 
+| Fiche information           | Utilisé     | Particularité/Usage                                                                  |
+| --------------------------- | ----------- | ------------------------------------------------------------------------------------ |
+| Intervention câble          |             |                                                                                      |
+| Intervention point-lumineux |             |                                                                                      |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_fusible)                             |
+| Intervention depart         |             |                                                                                      |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( xapps_geo_v_ecl_intervention_liste_affichage  ) |
+| Intervention PI             |             |                                                                                      |
+
+### Table : 'att_met6' 
+| Fiche information           | Utilisé     | Particularité/Usage                               |
+| --------------------------- | ----------- | ------------------------------------------------- |
+| Intervention câble          | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
+| Intervention point-lumineux | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
+| Intervention depart         | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
+| Intervention foyer          | x           | Formatage par une liste de domaine (lt_ecl_etat ) |
+| Intervention PI             | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
+
+### Table : 'att_met7' 
+| Fiche information           | Utilisé     | Particularité/Usage                                                                  |
+| --------------------------- | ----------- | ------------------------------------------------------------------------------------ |
+| Intervention câble          |             |                                                                                      |
+| Intervention point-lumineux |             |                                                                                      |
+| Intervention ouvrage        | x           | nom du départ                                                                        |
+| Intervention depart         | x           | Formatage par une liste de domaine ( xapps_geo_v_ecl_intervention_liste_affichage  ) |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( an_ecl_modele_lanterne )                        |
+| Intervention PI             |             |                                                                                      |
+
+
+### Table : 'att_met8' 
+| Fiche information           | Utilisé     | Particularité/Usage                                         |
+| --------------------------- | ----------- | ----------------------------------------------------------- |
+| Intervention câble          |             |                                                             |
+| Intervention point-lumineux |             |                                                             |
+| Intervention ouvrage        | x           | Tension du départ                                           |
+| Intervention depart         |             |                                                             |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( an_ecl_modele_lampe  ) |
+| Intervention PI             |             |                                                             |
+
 
