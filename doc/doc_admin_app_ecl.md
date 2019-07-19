@@ -488,14 +488,12 @@ Filtre :
 | par géométrie | geom         |                   | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. Utilisé dans le domaine de valeur utilisant cette table. |
 
 ## Domaine de valeur : 'geo_v_ecl_ouvrage_electrique'
-
 | Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
 | ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés                                      |
 
 
 ## Domaine de valeur : 'an_ecl_depart'
-
 | Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
 | ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des départs supprimés                 
@@ -511,22 +509,22 @@ Filtre :
 ## Domaine de valeur : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
 | ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| par géométrie | geom         |                   | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
+| par géométrie | geom         |           x        | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
 
 
 
 ## Domaine de valeur : 'an_ecl_modele_support'
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tout sauf 'même modèle' | id_mod_sup (modèle de support) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_sup = 2), qui sert uniquement pour les interventions |
+| Tout sauf 'même modèle' | id_mod_sup (modèle de support) |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_sup = 2), qui sert uniquement pour les interventions |
 
 ## Domaine de valeur : 'an_ecl_modele_lanterne'
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tout sauf 'même modèle' | id_mod_ln (modèle de lanterne) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_ln = 2), qui sert uniquement pour les interventions |
+| Tout sauf 'même modèle' | id_mod_ln (modèle de lanterne) |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_ln = 2), qui sert uniquement pour les interventions |
 
 ## Domaine de valeur : 'an_ecl_modele_lanterne'
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
+| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |    x               | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
 
