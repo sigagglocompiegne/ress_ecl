@@ -249,9 +249,8 @@ END
 | geo_ecl_noeud           | id_noeud                                                  | 0…1      |
 
 
-
-## Table : `an_ecl_intervention`
 --> Intervention Foyer, Intervention Câble, Intervention Départ, intervention Points lumineux, Intervention PI, Intervention ouvrage  
+## Table : `an_ecl_intervention`
 | Atributs                       | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                              | Utilisation                                   | Exemple     |
 |:------------------------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
 |Champ_calcule|x||Dates|Formate l'affichage des différentes dates dans les fiches informations des interventions| Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI)||
@@ -391,7 +390,7 @@ END
 | armoires principales   | ty_ouvelec (type d'ouvrage)              |                   | Alphanumérique | La valeur de “ty_ouvelec” =est égale à                                                      | 10                                | On ne sélectionne que les armoires principales : sert au domaine de valeur des armoires principales. |
 | type d'ouvrage         | dat_signa (Date du signalement)          |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                            | une valeur listée de "ty_ouvelec" | Sert à la recherche : ''Recherche d'ouvrages électriques"                                            |
 | Nom de l'ouvrage       | type_si_in (Signalement ou intervention) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                            | une valeur listée de "nom_ouv"    | Sert à la rechercher : '' Rapport d'intervention'' afin de ne sélectionner que les interventions     |
-| Situation != supprimer | situation                                |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés sur la cartographie                                      |
+| Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés sur la cartographie                                      |
 
 | Géotables ou Tables                         | Champs de jointure (champs table - champs table liée)     | Type     |
 | ------------------------------------------- | --------------------------------------------------------- | -------- |
@@ -430,7 +429,7 @@ END
 | Départ                 | depart (départ auquel et relié le nœud) |                   | Alphanumérique | est égale à une valeur choisie par l'utilisateur parmi une liste                           | Une valeur de la liste de domaine : "xapps_geo_v_ecl_depart" | Sert à la recherche : ''Recherche de support"                          |
 | type de support        | ty_supp (type de support)               |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                           | une valeur listée de “ty_supp”                               | Sert à la recherche : ''Recherche de support"                          |
 | Support sans foyer     | id_supp                                 |                   | SQL            | {id_supp} NOT IN (SELECT id_supp FROM m_reseau_sec.an_ecl_foyer WHERE situation <> '12')   |                                                              | Sert à la recherche : "Recherche de support sans foyer''               |
-| Situation != supprimer | situation                               |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut                                            | 12                                                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
+| Situation != supprimer | situation                               |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                            | 12                                                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
 
 
 | Géotables ou Tables                               | Champs de jointure (champs table - champs table liée)     | Type     |
@@ -464,7 +463,7 @@ END
 | Nom                    | Attribut                        | Au chargement     | Type           | Condition                                                        | Valeur                       | Description                                                            |
 | ---------------------- | ------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------:| ---------------------------- | ---------------------------------------------------------------------- |
 | type_ PI               | ty_pi (type de point d'interet) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste | une valeur listée de “ty_pi” | Sert à la recherche : ''Recherche de point d'interet"                  |
-| Situation != supprimer | situation                       |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
+| Situation != supprimer | situation                       |      x             | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
 
 | Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
 | -------------------------------------------------- | --------------------------------------------------------- | -------- |
@@ -472,4 +471,62 @@ END
 | xapps_an_vmr_ecl_materialisee_noeud_armoire        | id_pi - id_noeud                                          | 1        |
 | an_ecl_intervention (intervention point d'interet) | id_pi - id_objet                                          | 0…n      |
 
+## Table : 'xapps_geo_v_ecl_intervention_liste_affichage'
+
+Filtres :
+| Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                                             |
+| -------------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-----------------:| ------------ | ------------------------------------------------------------------------------------------------------- |
+| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 00, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' sur la cartographie. |
+| Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements sur la cartographie.                        |
+| Pour rafaichissement domaine de valeur | geom                                     |                   | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.                               |
+
+## Table : 'xapps_geo_v_ecl_depart'
+
+Filtre :
+| Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
+| ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| par géométrie | geom         |                   | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. Utilisé dans le domaine de valeur utilisant cette table. |
+
+## Domaine de valeur : 'geo_v_ecl_ouvrage_electrique'
+
+| Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
+| ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés                                      |
+
+
+## Domaine de valeur : 'an_ecl_depart'
+
+| Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
+| ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des départs supprimés                 
+
+## Domaine de valeur : 'xapps_geo_v_ecl_intervention_liste_affichage'
+| Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                          |
+| -------------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-----------------:| ------------ | ------------------------------------------------------------------------------------ |
+| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 00, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' . |
+| Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements                          |
+| Pour rafaichissement domaine de valeur | geom                                     | x                 | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.            |
+
+
+## Domaine de valeur : 'xapps_geo_v_ecl_depart'
+| Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
+| ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| par géométrie | geom         |                   | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
+
+
+
+## Domaine de valeur : 'an_ecl_modele_support'
+| Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
+| ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tout sauf 'même modèle' | id_mod_sup (modèle de support) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_sup = 2), qui sert uniquement pour les interventions |
+
+## Domaine de valeur : 'an_ecl_modele_lanterne'
+| Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
+| ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tout sauf 'même modèle' | id_mod_ln (modèle de lanterne) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_ln = 2), qui sert uniquement pour les interventions |
+
+## Domaine de valeur : 'an_ecl_modele_lanterne'
+| Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
+| ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
 
