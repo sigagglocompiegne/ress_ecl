@@ -524,3 +524,378 @@ END
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |    x               | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
 
+## Médias : 'Media - ECL - Objets'
+
+| Source       | Taille        | Connexion                   | Lien de connexion                      | Média     | Miniature     | Type de media     | Nom du média     | Fichier origine     |
+| ------------ |:-------------:|:---------------------------:| -------------------------------------- | --------- | ------------- | ----------------- | ---------------- | ------------------- |
+| an_ecl_media | 450x450 60x60 | ECL - Gestion du patrimoine | /home/DOC_SIG_FIC/metiers/ress/ecl/doc | media     | miniature     | t_fichier         | n_fichier        |                     |
+
+Concerne tous les objets (Supports, foyers, départs, PI, ouvrages, câbles).
+
+## Médias : 'Media - ECL - Modèles'
+| Source              | Taille        | Connexion                   | Lien de connexion                      | Média     | Miniature     | Type de media     | Nom du média     | Fichier origine     |
+| ------------------- |:-------------:|:---------------------------:| -------------------------------------- | --------- | ------------- | ----------------- | ---------------- | ------------------- |
+| an_ecl_media_modele | 450x450 60x60 | ECL - Gestion du patrimoine | /home/DOC_SIG_FIC/metiers/ress/ecl/doc | media     | miniature     | t_fichier         | n_fichier        |                     |
+
+Concerne les modèles de lampe, de lanterne et de support.
+
+#Les fonctionnalités 
+
+## Recherche globale : `ECL - Recherche avancée d'une voie`
+
+Cette recherche permet à l'utilisateur de rechercher une voie en mode proposition de valeur (sans saisie manuelle). Cette recherche est issue de l'application Voie-Adresse. Se référer à ce dossier pour le détail de cette recherche. **La seule différence ici est que la vleur de la ville a été mise à 'Compiègne' par défaut**, afin de faciliter le travail du service d'éclairage public qui intervient principalement sur Compiègne.
+
+## Recherche globale : `ECL - Recherche avancée d'une adresse`
+Cette recherche permet à l'utilisateur de rechercher une adresse en mode proposition de valeur (sans saisie manuelle). Cette recherche est issue de l'application Voie-Adresse. Se référer à ce dossier pour le détail de cette recherche. **La seule différence ici est que la vleur de la ville a été mise à 'Compiègne' par défaut**, afin de faciliter le travail du service d'éclairage public qui intervient principalement sur Compiègne.
+
+**Les recherches ci-dessous existent, mais n'ont encore jamais été utilisées par le service technique, la documentation sera donc réalisée après les retours possibles du service. En l'absence d'utilisation, ces recherches pourront être supprimées, ou simplifiées pour celles éligibles au clic.**
+
+## Recherche : 'Recherche d'ouvrages électriques'
+Eligible au clic
+
+## Recherche : 'Recherche de départ'
+
+## Recherche : 'Recherche de support'
+Eligible au clic
+
+## Recherche : 'Recherche de foyer'
+
+## Recherche : 'Recherche de point-d'intérêt'
+Eligible au clic
+
+## Recherche : 'Recherche de câble'
+Eligible au clic
+
+## Tableau de bord 
+
+**Fin des recherches non testées par le service d'éclairage.**
+
+## Recherche : 'Recherche de modèle de support'
+Cette recherche permet à l'utilisateur de faire une recherche de tous les modèles de support existants, sauf le modèle id=2, utilisé uniquement dans l'application pour les interventions.
+
+    - Configuration :
+
+Source : an_ecl_modele_support
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| nom_mod_su   | x            | x              | x              | **                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+
+Filtres :
+
+| Nom                     | Attribut                    | Obligatoire    | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
+| ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tout sauf 'même modèle' | id_mod_sup (modèle de support) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
+
+Fiches d'information active : Fiche d'information Support (modèle)
+
+## Recherche : 'Recherche de modèle de lampe'
+Cette recherche permet à l'utilisateur de faire une recherche de tous les modèles de lampe existants, sauf le modèle id=2, utilisé uniquement dans l'application pour les interventions.
+
+    - Configuration :
+
+Source : an_ecl_modele_lampe
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| nom_mod_lm   | x            | x              | x              | **                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+
+Filtres :
+
+| Nom                     | Attribut                    | obligatoire     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
+| ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
+
+Fiches d'information active : Fiche d'information Lampe (modèle)
+
+## Recherche : 'Recherche de modèle de lanterne'
+Cette recherche permet à l'utilisateur de faire une recherche de tous les modèles de lanterne existants, sauf le modèle id=2, utilisé uniquement dans l'application pour les interventions.
+
+    - Configuration :
+
+Source : an_ecl_modele_lampe
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| nom_mod_ln   | x            | x              | x              |                           | x                     |
+
+(la détection des doublons n'est pas activée ici)
+
+Filtres :
+
+| Nom                     | Attribut                    | Obligatoire     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
+| ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tout sauf 'même modèle' | id_mod_ln (modèle de lanterne) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_ln = 2), qui sert uniquement pour les interventions |
+
+Fiches d'information active : Fiche d'information Lanterne (modèle)
+
+## Recherche : 'Rapport de signalement'
+Cette recherche permet à l'utilisateur rechercher de tous les signalements faits entre deux dates.
+
+    - Configuration :
+
+Source : an_ecl_intervention
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| Affiche-recherche-signalement  | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+La géométrie est récupérer via la relation avec la table geo_ecl_noeud.
+
+Filtres :
+
+| Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Etats                              | etat_sign                                |                   | Alphanumérique | La valeur de “etat_sign” =est égale à                                                          | 10 , 50 ou 40 | Sélectionne les interventions/signalements qui ne sont pas réglés (soumis, classé sans suite, pour information), de façon à les faire apparaître dans le rapport de signalement .  |
+| Dates signalement                  | dat_signa (Date du signalement)          |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur etune valeur choisie par l'utilisateur |               | Sert à la recherche : "Rapport de signalement", afin de faire apparaître tous les signalements réalisées entre deux dates.                                                         |
+| Signalement oui / intervention non | type_si_in (Signalement ou intervention) |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                         | 10            |                                                                                    |
+
+Fiches d'information active : sans objet
+
+## Recherche : 'Rapport d'intervention'
+Cette recherche permet à l'utilisateur rechercher de toutes les interventions faits entre deux dates.
+
+    - Configuration :
+
+Source : an_ecl_intervention
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| Affiche-recherche-signalement  | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+La géométrie est récupérer via la relation avec la table geo_ecl_noeud.
+
+Filtres :
+
+| Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dates intervention                 | dat_real (Date de réalisation des signalements)          |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur etune valeur choisie par l'utilisateur |               |                                                          |
+
+Fiches d'information active : sans objet
+
+## Recherche : 'Câble non-relié'
+Cette recherche permet à l'utilisateur de rechercher de tous les câbles non-reliés, que ce soit au noeud final, initial ou les deux.
+
+    - Configuration :
+
+Source : geo_ecl_cable
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| id_cab  | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+La géométrie est celle du câble.
+
+Filtres :
+| Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id_nd_fin est null | id_nd_fin (nœud final du câble)   |            | Alphanumérique | La valeur de “id_nd_fin” est | null | Recherche : "câble non relié" |
+| ------------------ | --------------------------------- |:----------:|:--------------:|:----------------------------:| ---- | ----------------------------- |
+| id_nd_ini est null | id_nd_ini (nœud initial du câble) |            | Alphanumérique | La valeur de “id_nd_ini” est | null | |
+
+
+Fiches d'information active : sans objet
+
+## Recherche : 'Noeud non-relié à un câble'
+Cette recherche permet à l'utilisateur rechercher de tous les noeuds qui ne sont pas reliés à des câbles.
+
+    - Configuration :
+
+Source : geo_ecl_noeud
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| id_noeud  | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+La géométrie est celle du noeud.
+
+Filtres :
+| Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
+| Non relié à un câble  |  id_noeud  |        | Alphanumérique | (id_noeud NOT IN (SELECT id_nd_ini FROM m_reseau_sec.geo_ecl_cable WHERE id_nd_ini IS NOT NULL AND situation <> '12') AND id_noeud NOT IN (SELECT id_nd_fin FROM m_reseau_sec.geo_ecl_cable WHERE id_nd_fin IS NOT NULL AND situation <> '12') AND situation <> '12' AND situation <> '11') |  |  |
+
+Fiches d'information active : sans objet
+
+## Recherche : 'Noeud non-relié à une armoire'
+Cette recherche permet à l'utilisateur de rechercher de tous les noeuds qui ne sont pas reliés à une armoire de façon attributaire.
+
+    - Configuration :
+
+Source : geo_ecl_noeud
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| id_noeud  | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+La géométrie est celle du noeud.
+
+Filtres :
+| Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
+|Depart null  |  depart     |   | Alphanumérique | la valeur est | null |  | |
+|Noeud n'est pas une armoire   |  id_noeud     |   | Alphanumérique | (id_noeud NOT IN (SELECT id_ouvelec FROM m_reseau_sec.an_ecl_ouvrage_electrique))|  |  | |
+| Situation != supprimer et inactif  |  situation    |   | Alphanumérique |  est différente de|  12, 11|  | |
+
+Fiches d'information active : sans objet
+
+## Recherche : 'Recherche des foyers dont la lampe n'est pas renseignée'
+Cette recherche permet à l'utilisateur de rechercher tous les foyers qui n'ont pas de lampe renseignée.
+
+    - Configuration :
+
+Source : an_ecl_foyer
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| id_foyer  | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+La géométrie est celle du support auquel est lié le foyer, via la relation avec la table "geo_ecl_noeud".
+
+Filtres :
+| Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
+|Si lampe par défaut   |  id_mod_lm     |   | Alphanumérique | est égale à| 1  |  | |
+| Situation != supprimer et inactif  |  situation    |   | Alphanumérique |  est différente de|  12, 11|  | |
+
+Fiches d'information active : 'Foyer (ECL)'
+
+## Recherche : ' Recherche de supports sans foyers'
+Cette recherche permet à l'utilisateur de rechercher tous les supports qui n'ont pas de foyer.
+
+    - Configuration :
+
+Source : geo_v_ecl_point_lumineux
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| Affiche_recherche | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+La géométrie est celle du noeud.
+
+Filtres :
+| Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
+|Support sans foyer   |  id_supp    |   | Alphanumérique | ({id_supp} NOT IN (SELECT id_supp FROM m_reseau_sec.an_ecl_foyer WHERE situation <> '12'))|   |  | |
+| Situation != supprimer  |  situation    |   | Alphanumérique |  est différente de|  12|  | |
+
+Fiches d'information active : 'Point lumineux (support)'
+
+## Recherche : ' Recherche d'erreur'
+Cette recherche permet à l'utilisateur de rechercher tous les supports qui n'ont pas de foyer.
+
+    - Configuration :
+
+Source : geo_v_ecl_point_lumineux
+
+| Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
+| ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
+| champ_calcule | x            | x              | x              |                        | x                     |
+
+(la détection des doublons n'est pas activée ici)
+Pas de géométrie.
+
+Filtres : Sans objet
+
+Fiches d'information active : sans objet
+
+
+## Modification géométrique d'ouvrage électrique 
+
+Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un ouvrage électrique. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
+
+    - Configuration :
+
+Source : geo_v_ecl_ouvrage_electrique
+
+    - Filtres : aucun
+    - Accrochage : 
+| Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
+| ---------------------------- |:---------:|:-------------------:| ------------------ |
+| geo_v_ecl_point_lumineux     | Nœud      |                     | 15                 |
+| geo_v_ecl_point_d'interet    | Nœud      |                     | 15                 |
+| geo_ecl_cable                | Nœud      |                     | 15                 |
+| geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
+
+    - Fiches d'information active : Fiche d'information 'Ouvrage electrique'
+    - Topologie : aucune
+
+## Modification géométrique d'un point lumineux
+Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un point lumineux. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
+
+    - Configuration :
+
+Source : geo_v_ecl_point_lumineux
+
+    - Filtres : aucun
+    - Accrochage : 
+| Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
+| ---------------------------- |:---------:|:-------------------:| ------------------ |
+| geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
+| geo_v_ecl_point_d'interet    | Nœud      |                     | 15                 |
+| geo_ecl_cable                | Nœud      |                     | 15                 |
+| geo_v_ecl_point_lumineux     | Nœud      |                     | 15                 |
+
+    - Fiches d'information active : Fiche d'information 'Point lumineux (support)'
+    - Topologie : aucune
+
+## Modification géométrique d'un point d'intérêt (ECL)
+Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un point lumineux. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
+
+    - Configuration :
+
+Source : geo_v_ecl_point_d'interet
+
+    - Filtres : aucun
+    - Accrochage : 
+| Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
+| ---------------------------- |:---------:|:-------------------:| ------------------ |
+| geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
+| geo_v_ecl_point_lumineux     | Nœud      |                     | 15                 |
+| geo_ecl_cable                | Nœud      |                     | 15                 |
+| geo_v_ecl_point_d'interet    | Nœud      |                     | 15                 |
+
+    - Fiches d'information active : Fiche d'information 'Point d'intérêt (PI)'
+    - Topologie : aucune
+
+## Modification géométrique d'un point d'intérêt (ECL)
+Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un câble. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
+
+    - Configuration :
+
+Source : geo_ecl_cable
+
+    - Filtres : aucun
+    - Accrochage : 
+| Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
+| ---------------------------- |:---------:|:-------------------:| ------------------ |
+| geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
+| geo_v_ecl_point_lumineux     | Nœud      |                     | 15                 |
+| geo_v_ecl_pi                 | Nœud      |                     | 15                 |
+
+    - Fiches d'information active : Fiche d'information 'Câble (ECL)'
+    - Topologie : aucune
+    
+    
+## Saisie attributaire d'un modèle de lampe 
+
+    - Fiches d'information active : Fiche d'information 'Lampe (modèle)'
+
+## Saisie attributaire d'un modèle de lanterne
+
+    - Fiches d'information active : Fiche d'information 'Lanterne (modèle)'
+
+## Saisie attributaire d'un modèle de lampe 
+
+    - Fiches d'information active : Fiche d'information 'Support (modèle)'
+
