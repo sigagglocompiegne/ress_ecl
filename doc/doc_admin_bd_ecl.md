@@ -318,5 +318,478 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |message|Message d'erreur destiné à l'utilisateur de l'application|character varying(254)| |
 |heure|Date de la saisie de l'erreur|timestamp without time zone| |
 
+# Listes de valeurs
 
+#### lt_ecl_classe_electrique
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Classe I|
+|20|Classe II|
+|30|Classe III|
 
+#### lt_ecl_couleur_eclairage
+|Code | Valeur |
+|:---|:---|  
+|00|Non-renseigné|
+|10|803|
+|20|942|
+|ZZ|Non-concerné|
+|99|Autre|
+
+#### lt_ecl_culot_lampe
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|E27|
+|20|E40|
+|30|G12|
+|99|Autre|
+
+#### lt_ecl_emplacement
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Pied du support|
+|20|Lanterne|
+|ZZ|Non concerné|
+
+#### lt_ecl_etat
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Neuf|
+|20|Bon etat|
+|30|Etat moyen (dégradation partielle)|
+|40|Vétuste|
+|ZZ|Non concerné|
+
+#### lt_ecl_etat_signalement_affichage
+|Code | Valeur |
+|:---|:---|  
+|10|Soumis|
+|30|Réglé|
+|40|Classé sans suite|
+|50|Pour information|
+|60|Réglé par une intervention sur foyer / départ|
+
+#### lt_ecl_hauteur_trappe
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Standard|
+|20|En hauteur|
+|ZZ|Non concerné|
+
+#### lt_ecl_materiaux_supports
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Acier|
+|20|Béton|
+|30|Bois|
+|40|Aluminium|
+|50|Fonte|
+|60|Fibre de verre|
+|99|Autre|
+
+#### lt_ecl_mode_pose_ouvrage_electrique
+|Code | Valeur |
+|:---|:---|  
+
+|00|Non renseigné|
+|10|Encastrée|
+|20|Saillie sur poste distribution publique|
+|30|Sur façade autre|
+|40|Sur socle|
+|50|Dans fosse|
+|60|Enterré|
+|99|Autre|
+
+#### lt_ecl_moyen_intervention
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Avec nacelle|
+|20|Sans nacelle|
+
+#### lt_ecl_options_support
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Caméra|
+|20|Oriflamme|
+|30|wi-fi|
+|40|Radar|
+|50|Panneau signalisation|
+|60|Prise guirlande festive|
+|70|Bluetooth|
+|80|Jardinière|
+|11|Détecteur de mouvement|
+|12|Feu tricolore|
+|13|Boîte piéton|
+|14|Traversée piétonne|
+|15|Miroir|
+|16|Projecteur|
+|17|Appel piéton|
+|99|Autre|
+|ZZ|Non concerné|
+
+#### lt_ecl_presence
+|Code | Valeur |
+|:---|:---|  
+|00|Non-renseigné|
+|10|Oui|
+|20|Non|
+
+#### lt_ecl_puissance_lampe
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|05|30|
+|10|35|
+|15|40|
+|20|60|
+|30|70|
+|40|100|
+|50|150|
+|60|250|
+|70|400|
+|80|1000|
+|99|Autre|
+|ZZ|Non concerné|
+
+#### lt_ecl_qualite_date
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Certaine|
+|20|Récolement|
+|30|Projet|
+|40|Mémoire|
+|50|Déduite|
+
+#### lt_ecl_qualite_geolocalisation
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Classe A|
+|20|Classe B|
+|30|Classe C|
+
+#### lt_ecl_section_cable
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|35|
+|11|25|
+|12|16|
+|20|10|
+|21|6|
+|22|4|
+|30|2,5|
+|99|Autre|
+
+#### lt_ecl_signalement_intervention
+|Code | Valeur |
+|:---|:---|  
+|10|Signalement|
+|20|Intervention|
+
+#### lt_ecl_situation
+|Code | Valeur |
+|:---|:---|  
+|10|Actif|
+|11|Inactif|
+|12|Supprimé|
+
+#### lt_ecl_situation_cable
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Aérien|
+|11|Aérien nu|
+|12|Aérien torsade EP|
+|20|Souterrain|
+|21|Souterrain blindé|
+|22|Souterrain R02|
+|30|Mural|
+|99|Autre|
+
+#### lt_ecl_source_defaillance
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Vandalisme|
+|30|Catastrophe naturelle|
+|40|Accident|
+|50|Inconnue|
+|99|Autre|
+
+#### lt_ecl_type_amorceur
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Abel ATR|
+|20|STAR A50 48|
+|30|TRIDONIC ZRM 2-ES/C|
+|99|Autre|
+|ZZ|Non concerné|
+
+#### lt_ecl_type_auto_transformateur
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|300V/250V 130VA|
+|11|300V/250V 200VA|
+|12|300V/250V 510VA|
+|20|300V/230V 130VA|
+|21|300V/230V 200VA|
+|22|300V/230V 510VA|
+|30|380V/250V 130VA|
+|31|380V/250V 200VA|
+|32|380V/250V 510VA|
+|33|380V/250V 600VA|
+|34|380V/250V 1260VA|
+|40|380V/230V 200VA|
+|41|380V/230V 510VA|
+|42|380V/230V 600VA|
+|43|380V/230V 1260VA|
+|99|Autre|
+|ZZ|Non concerné|
+
+#### lt_ecl_type_ballast
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Ferromagnétique|
+|20|Electronique|
+|30|Driver|
+|99|Autre|
+|ZZ|Non concerné|
+
+#### lt_ecl_type_commande
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Cellule photo-électrique|
+|20|Horloge astronomique|
+|30|Horloge standard|
+|40|Télégestion|
+|50|Radio BH-T|
+|60|SOGEME GSM|
+|99|Autre|
+|ZZ|Non concerné|
+
+#### lt_ecl_type_defaillance
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Foyer éteint|
+|20|Lanterne tournée|
+|30|Vasque cassée|
+|40|Trappe abîmée|
+|50|Problème d'allumage|
+|60|Phase ouverte|
+|99|Autre|
+
+#### lt_ecl_type_disjoncteur
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Pas de disjoncteur|
+|20|40A 500Ma|
+|30|63A 500Ma|
+|31|63A 1000Ma|
+|40|Disjoncteur principal|
+|99|Autre|
+
+#### lt_ecl_type_fusible
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Pas de fusible|
+|20|8,5x31,5 4A|
+|21|8,5x31,5 6A|
+|22|8,5x31,5 8A|
+|23|8,5x31,5 10A|
+|30|10x38 4A|
+|31|10x38 6A|
+|32|10x38 8A|
+|33|10x38 10A|
+|34|10x38 16A|
+|40|14x51 10A|
+|41|14x51 16A|
+|42|14x51 20A|
+|43|14x51 25A|
+|44|14x51 32A|
+|45|14x51 50A|
+|50|22x58 32A|
+|51|22x58 60A|
+|52|22x58 80A|
+|53|22x58 100A|
+|99|Autre|
+
+#### lt_ecl_type_intervention
+|Code | Valeur |
+|:---|:---|  
+|00|-->|
+|10|Changement de disjoncteur|
+|11|Changement de fusible|
+|20|Changement de type de commande|
+|21|Changement de récepteur|
+|30|Contrôle électrique|
+|40|Nettoyage|
+|50|Réparation|
+|60|Ajout d'un départ|
+|80|Suppression de l'objet|
+|81|Désactivation de l'objet|
+|99|Autre|
+|12|Changement de lanterne|
+|13|Changement de lampe|
+|15|Changement de ballast/driver|
+|16|Changement d'amorce|
+|17|Changement d'auto-transformateur|
+|70|Repositionnement lanterne/crosse|
+|31|Contrôle mécanique|
+|18|Ajout d'une option|
+|90|Suppression d'une option|
+
+#### lt_ecl_type_intervention_cables
+|Code | Valeur |
+|:---|:---|  
+|50|Réparation|
+|80|Suppression de l'objet|
+|81|Désactivation de l'objet|
+|82|Réactivation de l'objet|
+|99|Autre|
+
+#### lt_ecl_type_intervention_depart
+|Code | Valeur |
+|:---|:---|  
+|10|Changement de disjoncteur|
+|11|Changement de fusible|
+|50|Réparation|
+|80|Suppression de l'objet|
+|99|Autre|
+
+#### lt_ecl_type_intervention_foyer
+|Code | Valeur |
+|:---|:---|  
+|12|Changement de lanterne|
+|13|Changement de lampe|
+|15|Changement de ballast/driver|
+|16|Changement d'amorce|
+|17|Changement d'auto-transformateur|
+|40|Nettoyage|
+|50|Réparation|
+|70|Repositionnement lanterne/crosse|
+|80|Suppression de l'objet|
+|99|Autre|
+
+#### lt_ecl_type_intervention_ouvrage
+|Code | Valeur |
+|:---|:---|  
+|10|Changement de disjoncteur|
+|11|Changement de fusible|
+|20|Changement de type de commande|
+|30|Contrôle électrique|
+|40|Nettoyage|
+|50|Réparation|
+|60|Ajout d'un départ|
+|80|Suppression de l'objet|
+|81|Désactivation de l'objet|
+|82|Réactivation de l'objet|
+|21|Changement de récepteur|
+|99|Autre|
+
+#### lt_ecl_type_intervention_pi
+|Code | Valeur |
+|:---|:---|  
+|30|Contrôle électrique|
+|31|Contrôle mécanique|
+|40|Nettoyage|
+|50|Réparation|
+|80|Suppression de l'objet|
+|81|Désactivation de l'objet|
+|82|Réactivation de l'objet|
+|99|Autre|
+
+#### lt_ecl_type_intervention_point_lumineux
+|Code | Valeur |
+|:---|:---|  
+|10|Changement de disjoncteur|
+|11|Changement de fusible|
+|18|Ajout d'une option|
+|90|Suppression d'une option|
+|19|Changement de parasurtenseur|
+|31|Contrôle mécanique|
+|40|Nettoyage|
+|50|Réparation|
+|80|Suppression de l'objet|
+|81|Désactivation de l'objet|
+|82|Réactivation de l'objet|
+|83|Dépose / repose identique (accident)|
+|99|Autre|
+
+#### lt_ecl_type_lampe
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Iodure Métallique – IM|
+|20|Sodium Haute Pression – SHP|
+|30|Sodium Basse Pression – SBP|
+|40|Ballon Fluorescent – BF|
+|50|LED|
+|60|Fluo Compact – FC|
+|99|Autre|
+
+#### lt_ecl_type_lanterne
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Piéton|
+|20|Routier|
+|30|Projecteur|
+|99|Autre|
+
+#### lt_ecl_type_ouvrage_electrique
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Armoire|
+|11|Sous-armoire|
+|20|Transformateur|
+|99|Autre|
+
+#### lt_ecl_type_parasurtenseur
+|Code | Valeur |
+|:---|:---|  
+|00|Non renseigné|
+|10|Pas de parasurtenseur|
+|20|Vario Var15EP25MR|
+|99|Autre|
+
+#### lt_ecl_type_pi
+|Code | Valeur |
+|:---|:---| 
+|00|Non renseigné|
+|10|Chambre de tirage|
+|20|Tangente|
+|30|Remontée aérosouterraine|
+|40|Descente aérosouterraine|
+|50|Borne|
+|60|Panneau publicitaire|
+|70|Sous-marin|
+|80|Arrêt de bus|
+|99|Autre|
+
+#### lt_ecl_type_support
+|Code | Valeur |
+|:---|:---| 
+|00|Non renseigné|
+|10|Mât|
+|20|Façade|
+|30|Poteau réseau électrique BT|
+|40|Sol|
+|99|Autre|
