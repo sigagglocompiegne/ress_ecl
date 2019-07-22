@@ -694,6 +694,7 @@ Source : geo_ecl_cable
 La géométrie est celle du câble.
 
 Filtres :
+
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | id_nd_fin est null | id_nd_fin (nœud final du câble)   |            | Alphanumérique | La valeur de “id_nd_fin” est | null | Recherche : "câble non relié" |
@@ -718,6 +719,7 @@ Source : geo_ecl_noeud
 La géométrie est celle du noeud.
 
 Filtres :
+
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
 | Non relié à un câble  |  id_noeud  |        | Alphanumérique | (id_noeud NOT IN (SELECT id_nd_ini FROM m_reseau_sec.geo_ecl_cable WHERE id_nd_ini IS NOT NULL AND situation <> '12') AND id_noeud NOT IN (SELECT id_nd_fin FROM m_reseau_sec.geo_ecl_cable WHERE id_nd_fin IS NOT NULL AND situation <> '12') AND situation <> '12' AND situation <> '11') |  |  |
@@ -739,6 +741,7 @@ Source : geo_ecl_noeud
 La géométrie est celle du noeud.
 
 Filtres :
+
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
 |Depart null  |  depart     |   | Alphanumérique | la valeur est | null |  | |
@@ -762,6 +765,7 @@ Source : an_ecl_foyer
 La géométrie est celle du support auquel est lié le foyer, via la relation avec la table "geo_ecl_noeud".
 
 Filtres :
+
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
 |Si lampe par défaut   |  id_mod_lm     |   | Alphanumérique | est égale à| 1  |  | |
@@ -784,6 +788,7 @@ Source : geo_v_ecl_point_lumineux
 La géométrie est celle du noeud.
 
 Filtres :
+
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
 |Support sans foyer   |  id_supp    |   | Alphanumérique | ({id_supp} NOT IN (SELECT id_supp FROM m_reseau_sec.an_ecl_foyer WHERE situation <> '12'))|   |  | |
