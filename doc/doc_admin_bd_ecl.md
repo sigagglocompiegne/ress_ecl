@@ -91,6 +91,8 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |puis_sous|Puissance souscrite calculée via un trigger|integer| |
 
 #### an_ecl_foyer
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_foyer|Numéro du foyer interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
 |id_supp|Identifiant du support sur lequel repose le foyer|integer| |
 |id_mod_ln|Lien vers la table modèle lanterne|integer|1|
@@ -113,6 +115,8 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 
 #### an_ecl_intervention
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_inter|Numéro de l'intervention interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
 |id_objet|Identifiant de l'objet concerné par l'intervention|integer| |
 |type_si_in|Signalement ou intervention|character varying(2)|'10'::character varying|
@@ -139,26 +143,9 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |id_noeud|Identifiant du noeud sur lequel a lieu l'intervention (Pour foyer et départ, noeud = Support ou armoire)|integer| |
 
 
-
-### Classes d'objets de gestion
-
-#### an_ecl_media
-|gid|Identifiant d'une ligne, interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_media_gid_seq'::regclass)|
-|id|Identifiant de l’objet lié|integer| |
-|media|Champ Média de GEO|text| |
-|miniature|Champ miniature de GEO|bytea| |
-|n_fichier|Nom du fichier GEO|text| |
-|op_sai|Opérateur de saisie|text| |
-|date_sai|Date de saise|timestamp without time zone| |
-
-#### an_ecl_media_modele
-|gid|Identifiant du modèle + lettre (dans GEO cle_media)|integer|nextval('m_reseau_sec.an_ecl_media_modeles_gid_seq'::regclass)|
-|id|Identifiant de l’objet lié|character varying(5)| |
-|media|Champ Média de GEO|text| |
-|miniature|Champ miniature de GEO|bytea| |
-|n_fichier|Nom du fichier GEO|text| |
-
 #### an_ecl_modele_lanterne
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_mod_ln|Numéro du modèle de lanterne interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_modele_lanterne_id_mod_ln_seq'::regclass)|
 |nom_mod_ln|Nom métier du modèle |character varying(254)| |
 |gar_lant|Durée de garantie de la lanterne, en années|smallint| |
@@ -172,6 +159,8 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
 
 #### an_ecl_modele_lampe
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_mod_lm|Numéro du modèle de la lampe, interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_modele_lampe_id_mod_lm_seq'::regclass)|
 |nom_mod_lm|Nom métier du modèle|character varying(254)| |
 |ty_lampe|Type de lampe|character varying(2)|'00'::character varying|
@@ -186,6 +175,8 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
 
 #### an_ecl_modele_support
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_mod_sup|Numéro du modèle de support, interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_modele_support_id_mod_sup_seq'::regclass)|
 |nom_mod_su|Nom métier du modèle|character varying(254)| |
 |mat_supp|Matériau du support|character varying(2)|'00'::character varying|
@@ -198,6 +189,8 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
 
 #### an_ecl_ouvrage_electrique
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_ouvelec|Identifiant du nœud lié à l'ouvrage|integer| |
 |nom_ouv|Nom métier de l'ouvrage|character varying(254)| |
 |pdl_edf|Numéro de référence EDF|character varying(4)| |
@@ -216,11 +209,15 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |ty_fusible|Type du fusible|character varying(2)|'00'::character varying|
 
 #### an_ecl_pi
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_pi|Identifiant du nœud lié au point d'interet|integer| |
 |ty_pi|Type de point d'intérêt|character varying(2)|'00'::character varying|
 |etat_pi|Etat du point d'intérêt |character varying(2)|'00'::character varying|
 
 #### an_ecl_support
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_supp|Identifiant du nœud lié au support|integer| |
 |id_mod_sup|Lien vers table modèle de support|integer|1|
 |ty_supp|Type de support : mat, facade…etc.|character varying(2)|'00'::character varying|
@@ -234,7 +231,8 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |nbr_foyer|Nombre de foyer, calculé automatiquement via trigger|integer| |
 
 #### geo_ecl_cable
-
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_cab|Numéro du câble interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
 |id_nd_ini|Lien vers l'identifiant du nœud initial du câble|integer| |
 |id_nd_fin|Lien vers l'identifiant du nœud final du câble|integer| |
@@ -263,7 +261,9 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 
-####geo_ecl_noeud
+#### geo_ecl_noeud
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
 |id_noeud|Numéro du noeud interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
 |depart|Depart auquel est relié le noeud|integer| |
 |exploit_nd|Exploitant du nœud|character varying(254)| |
@@ -286,6 +286,29 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 
+
+
+### Classes d'objets de gestion
+
+#### an_ecl_media
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
+|gid|Identifiant d'une ligne, interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_media_gid_seq'::regclass)|
+|id|Identifiant de l’objet lié|integer| |
+|media|Champ Média de GEO|text| |
+|miniature|Champ miniature de GEO|bytea| |
+|n_fichier|Nom du fichier GEO|text| |
+|op_sai|Opérateur de saisie|text| |
+|date_sai|Date de saise|timestamp without time zone| |
+
+#### an_ecl_media_modele
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:---|:---|:---|:---|  
+|gid|Identifiant du modèle + lettre (dans GEO cle_media)|integer|nextval('m_reseau_sec.an_ecl_media_modeles_gid_seq'::regclass)|
+|id|Identifiant de l’objet lié|character varying(5)| |
+|media|Champ Média de GEO|text| |
+|miniature|Champ miniature de GEO|bytea| |
+|n_fichier|Nom du fichier GEO|text| |
 
 #### an_ecl_erreur
 |Nom attribut | Définition | Type  | Valeurs par défaut |
