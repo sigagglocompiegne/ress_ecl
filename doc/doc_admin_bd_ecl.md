@@ -6,13 +6,13 @@
   
 ### Généralités
 
-Dans le cadre de son axe prioritaire de développement autour de la connaissance patrimoniale et la gestion des réseaux, l’un des projets de l'ARC concerne plus particment lulière’éclairage public. Celui-ci constitue essentiellement, à faire évoluer la base de données existante, enrichir les données sur la ville de Compiègne et développer une application web. Cette BdD est donc vouée avant tout à la gestion du réseau par le service métier.
+Dans le cadre de son axe prioritaire de développement autour de la connaissance patrimoniale et la gestion des réseaux, l’un des projets de l'ARC concerne plus particulièrement l’éclairage public. Celui-ci constitue essentiellement, à faire évoluer la base de données existante, enrichir les données sur la ville de Compiègne et développer une application web pour le service métier concerné. Cette BdD est donc vouée avant tout à la gestion du réseau, bien que la dimension précision cartographique soit prise en compte (DT/DICT).
 
 Cette base de donnée s'inspire des modèles RAEPA et GR@CE, mais aussi de ceux du pays de Brest (https://geo.pays-de-brest.fr/espacedocumentaire/Documents/Public/CCTP_recolement.pdf), du syndicat d'énergie du finistère, du géojura, d'Alpes Sud, geomap...etc.
 
 Elle a été conçue au fur et à mesure des réunions avec le service d'éclairage public de la ville de Compiègne. Elle est donc adaptée à ses besoins spécifiques, et n'a pas vocation à être un standard valable dans chaque collectivité.  
 
-Le standard de données des réseaux, en cours de rédaction au moment de la réalisation de cette base, n'a pas été inégré. Cependant, la problématique DT/DICT est prise en compte, avec des métadonnées de classe de précision inspirées du RAEPA.
+Le standard de données des réseaux, en cours de rédaction au moment de la réalisation de cette base, n'a pas été inégré. Cependant, la problématique DT/DICT est prise en compte, avec des métadonnées de classe de précision tirées du RAEPA.
 
 
 ### Résumé fonctionnel
@@ -72,6 +72,21 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 
 Classe d'objet géographique et patrimoniale
 
+### an_ecl_depart
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
+|id_depart|Numéro du depart interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
+|id_ouvelec|Lien vers table armoire|integer| |
+|nom_depart|Nom du secteur déservi par le départ|character varying(254)| |
+|etat_dep|Etat du départ|character varying(2)|'00'::character varying|
+|tension|Tension électrique en sortie|integer| |
+|ty_disjonc|Type du disjoncteur|character varying(2)|'00'::character varying|
+|ty_fusible|Type du fusible|character varying(2)|'00'::character varying|
+|observ|Commentaires divers|character varying(254)| |
+|date_sai|Date de la saisie de la donnée dans la base|timestamp without time zone|now()|
+|date_maj|Date de dernière mise à jour de la donnée|timestamp without time zone| |
+|op_sai|Opérateur de la saisie initiale de la donnée|character varying(80)| |
+|situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
+|date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
+|puis_sous|Puissance souscrite calculée via un trigger|integer| |
 
