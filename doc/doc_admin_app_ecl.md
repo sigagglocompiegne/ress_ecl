@@ -92,7 +92,7 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 ## Table : `an_ecl_erreur`
 | Atributs      | Champ calculé     | Formatage     | Renommage                       | Particularité/Usage     | Utilisation                     | Exemple     |
 |:-------------:|:-----------------:|:-------------:| ------------------------------- | ----------------------- | ------------------------------- | ----------- |
-| Affichage_message_erreur  | x                 | x             | Message d'erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : ouvrages electrique,intervention cable, depart (ECL),  Foyer (ECL),  Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Support (modèle),  Intervention_PI  |    ![GeoCompiegnois](Affichage_message_erreur.JPG)         |
+| Affichage_message_erreur  | x                 | x             | Message d'erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : ouvrages electrique,intervention cable, depart (ECL),  Foyer (ECL),  Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Support (modèle),  Intervention_PI  |    ![GeoCompiegnois](img/Affichage_message_erreur.JPG)         |
 
 (1) Requête SQL permettant d'afficher temporairement un message d'erreur dans la fiche d'information. La durée est de 10 minutes pour que l'utilisateur ait le temps de se souvenir de la présence des messages d'erreur, mais dès qu'un update est fait sur l'objet, les messages d'erreurs sont effacés via les triggers.
  `CASE WHEN
@@ -106,23 +106,22 @@ ELSE ''
 END
 `
 ## Table : `an_ecl_foyer`
-| Atributs      | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                     | Utilisation                     | Exemple     |
-|:-------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------- | ----------- |
-| champ_calcule | x                 |               | Champ calculé                                                                                                                           |                                                                         | Recherche : Recherche de foyer  |             |
-| dat_pos_lm    |                   | x             | Date de pose de la lampe                                                                                                                |                                                                         | Fiche information : Foyer (ECL) |             |
-| dat_pos_ln    |                   | x             | Date de la pose de la lanterne                                                                                                          |                                                                         | Fiche information : Foyer (ECL) |             |
-| date_donne    |                   | x             | Date Donne                                                                                                                              |                                                                         | Fiche information : Foyer (ECL) |             |
-| date_maj      |                   | x             | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  |                                                                         | Fiche information : Foyer (ECL) |             |
-| date_sai      |                   | x             | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       |                                                                         | Fiche information : Foyer (ECL) |             |
-| etat_foy      |                   | x             | Etat du foyer                                                                                                                           | Formatage par une liste de domaine (  lt_ecl_etat)                      | Fiche information : Foyer (ECL) |             |
-| id_mod_lm     |                   | x             | Modèle de la lampe                                                                                                                      | Formatage par une liste de domaine ( an_ecl_modele_lampe)               | Fiche information : Foyer (ECL) |             |
-| id_mod_ln     |                   | x             | Modèle de la lanterne                                                                                                                   | Formatage par une liste de domaine ( an_ecl_modele_lanterne)            | Fiche information : Foyer (ECL) |             |
-| loc_plat      |                   | x             | Loc Plat                                                                                                                                | Formatage par une liste de domaine ( lt_ecl_emplacement (code))         | Fiche information : Foyer (ECL) |             |
-| situation     |                   | x             | Situation                                                                                                                               | Formatage par une liste de domaine ( lt_ecl_situation)                  | Fiche information : Foyer (ECL) |             |
-| ty_amorce     |                   | x             | Type d'amorceur installé                                                                                                                | Formatage par une liste de domaine ( lt_ecl_amorceur (code))            | Fiche information : Foyer (ECL) |             |
-| ty_auto_tr    |                   | x             | Type d'auto trasformateur installé                                                                                                      | Formatage par une liste de domaine ( lt_ecl_auto_transformateur (code)) | Fiche information : Foyer (ECL) |             |
-| ty_ballast    |                   | x             | Type de ballast installé                                                                                                                | Formatage par une liste de domaine ( lt_ecl_type_ballast (code))        | Fiche information : Foyer (ECL) |             |
-| ty_lantern    |                   | x             | Ty Lantern                                                                                                                              | Formatage par une liste de domaine ( lt_ecl_type_lanterne)              | Fiche information : Foyer (ECL) |             |
+| Atributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | Exemple     |
+|:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------------:|:-----------:|
+| date_donne   |                   | x             | Date de création de la donnée             |                                                                         | Fiche information : Foyer (ECL) |             |
+| date_maj     |                   | x             | Date de dernière mise à jour de la donnée |                                                                         | Fiche information : Foyer (ECL) |             |
+| date_sai     |                   | x             | Date de saisie dans l'application         |                                                                         | Fiche information : Foyer (ECL) |             |
+| etat_foy     |                   | x             | Etat du foyer                             | Formatage par une liste de domaine ( lt_ecl_etat)                       | Fiche information : Foyer (ECL) |             |
+| id_mod_lm    |                   | x             | Modèle de la lampe                        | Formatage par une liste de domaine ( an_ecl_modele_lampe)               | Fiche information : Foyer (ECL) |             |
+| id_mod_ln    |                   | x             | Modèle de la lanterne                     | Formatage par une liste de domaine ( an_ecl_modele_lanterne)            | Fiche information : Foyer (ECL) |             |
+| loc_plat     |                   | x             | Localisation de la platine                | Formatage par une liste de domaine ( lt_ecl_emplacement (code))         | Fiche information : Foyer (ECL) |             |
+| situation    |                   | x             | Situation                                 | Formatage par une liste de domaine ( lt_ecl_situation)                  | Fiche information : Foyer (ECL) |             |
+| ty_amorce    |                   | x             | Type d'amorceur installé                  | Formatage par une liste de domaine ( lt_ecl_amorceur (code))            | Fiche information : Foyer (ECL) |             |
+| ty_auto_tr   |                   | x             | Type d'auto trasformateur installé        | Formatage par une liste de domaine ( lt_ecl_auto_transformateur (code)) | Fiche information : Foyer (ECL) |             |
+| ty_ballast   |                   | x             | Type de ballast installé                  | Formatage par une liste de domaine ( lt_ecl_type_ballast (code))        | Fiche information : Foyer (ECL) |             |
+| ty_lantern   |                   | x             | Routier / piéton                          | Formatage par une liste de domaine ( lt_ecl_type_lanterne)              | Fiche information : Foyer (ECL) |             |
+
+  ### Filtres :m
 
 | Nom                    | Attribut                       | Au chargement     | Type           | Condition                                                        | Valeur                                       | Description                                                            |
 | ---------------------- | ------------------------------ |:-----------------:|:--------------:|:----------------------------------------------------------------:| -------------------------------------------- | ---------------------------------------------------------------------- |
@@ -130,6 +129,8 @@ END
 | Situation != supprimer | situation                      | x                 | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                                           | Empêche l'apparation des départ supprimés                              |
 | Modèle de lampe        | id_mod_lm (modèle de lampe)    |                   | Alphanumérique | est égale à une valeur choisie par l'utilisateur parmi une liste | est égale à une valeur listée de "id_mod_lm" | Recherche de foyer par un certain modèle de lampe                      |
 | Modèle de lanterne     | id_mod_ln (modèle de lanterne) |                   | Alphanumérique | est égale à une valeur choisie par l'utilisateur parmi une liste | est égale à une valeur listée de "id_mod_ln" | Recherche de foyer par un certain modèle de lanterne                   |
+
+  ### Relations :
 
 | Géotables ou Tables                      | Champs de jointure (champs table - champs table liée)     | Type     |
 | ---------------------------------------- | --------------------------------------------------------- | -------- |
@@ -140,6 +141,7 @@ END
 | an_ecl_erreur                            | id_foyer - id_objet                                       | 0…n      |
 
 
+  ### Particularités : 
 
 ## Table : `an_ecl_modele_lampe`
 | Atributs     | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                                                                                                                                                                      | Utilisation                              | Exemple     |
@@ -154,16 +156,21 @@ END
 | ty_lampe     |                   | x             | Type de lampe                                                                                                                           | Formatage par une liste de domaine ( lt_ecl_type_lampe )                                                                                                                                                                 | Fiche d'information : modèle lampe (ECL) |             |
 
 
+  ### Filtres :
+
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lampe, afin de l'actualiser en posant une contrainte. Technique ayant pour but d'éviter le besoin de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lampe apparaisse. |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lampe", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                           |
 
+  ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_media_modele     | cle_media - id                                            | 0…n      |
 
+
+  ### Particularités : 
 
 ## Table : `an_ecl_modele_lanterne`
 | Atributs     | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                                                                                                                                                                        | Utilisation                                 | Exemple     |
@@ -174,16 +181,22 @@ END
 | date_maj     |                   |     x          | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                                                                                                                                                                           | Fiche d'information : modèle lanterne (ECL) |             |
 | date_sai     |                   |         x      | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                                                                                                                                                                           | Fiche d'information : modèle lanterne (ECL) |             |
 
+
+  ### Filtres :
+
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lanterne, afin de l'actualiser en posant une contrainte qui oblige GEO à recalculer le domaine. Technique ayant pour but d'éviter le besoin de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lampe apparaisse. |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lanterne", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                                                                  |
+
+  ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_media_modele     | cle_media - id                                            | 0…n      |
 | an_ecl_erreur           | id_mod_sup - id_objet                                     | o…n      |
 
+  ### Particularités : 
 
 ## Table : `an_ecl_modele_support`
 
@@ -194,16 +207,20 @@ END
 | date_maj     |                   | x             | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                  | Fiche d'information :support ( modèle ) |             |
 | date_sai     |                   | x             | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                  | Fiche d'information :support ( modèle ) |             |
 
+  ### Filtres :
+
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de support", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
+
+  ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_media_modele     | cle_media - id                                            | 0…n      |
 | an_ecl_erreur           | id_mod_sup - id_objet                                     | o…n      |
 
-
+  ### Particularités : 
 
 ## Table : `geo_ecl_cable`
 | Atributs            | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                                                                               | Utilisation                     | Exemple     |
@@ -219,19 +236,22 @@ END
 | situation           |                   | x             | Situation                                                                                                                               | Formatage par une liste de domaine ( lt_ecl_situation )                                                                           | Fiche information : Câble (ECL) |             |
 | src_geom            |                   | x             | Source du référentiel géographique pour le positionnement du nœud                                                                       | Formatage par une liste de domaine ( lt_src_geom )                                                                                | Fiche information : Câble (ECL) |             |
 
+  ### Filtres :
+
 | Nom                    | Attribut                          | Au chargement     | Type           | Condition                                       | Valeur     | Description                               |
 | ---------------------- | --------------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ----------------------------------------- |
 | Situation != supprimer | situation                         | x                 | Alphanumérique | est différente de une(des) valeur(s) par défaut | 12         | Empêche l'apparation des départ supprimés |
 | id_nd_fin est null     | id_nd_fin (nœud final du câble)   |                   | Alphanumérique | La valeur de “id_nd_fin” est                    | null       | Recherche : "câble non relié"             |
 | id_nd_ini est null     | id_nd_ini (nœud initial du câble) |                   | Alphanumérique | La valeur de “id_nd_ini” est                    | null       | Recherche : "câble non relié"             |
 
+  ### Relations :
 
 | Géotables ou Tables                      | Champs de jointure (champs table - champs table liée)     | Type     |
 | ---------------------------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_intervention (Intervention câble) | id_cab - id_objet                                         | 0…n      |
 | xapps_an_v_ecl_tension_cable             | id_cab                                                    | 0…1      |
 
-
+  ### Particularités : 
 
 ## Table : `an_ecl_intervention`
 | Atributs                       | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                              | Utilisation                                   | Exemple     |
@@ -239,7 +259,7 @@ END
 | Affiche-recherche-intervention | x                 |               | Affiche-recherche-intervention                                                                                                          | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Rapport d'intervention            |             |
 | Affiche-recherche-signalement  | x                 |               | Affiche-recherche-signalement                                                                                                           | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Rapport de signalement            |             |
 
-
+  ### Filtres :
 
 | Nom                                | Attribut                                         | Au chargement     | Type           | Condition                                                                                       | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ------------------------------------------------ |:-----------------:|:--------------:|:-----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -249,11 +269,14 @@ END
 | Intervention oui / signalement non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 20            | Sert à la rechercher : '' Rapport d'intervention'' afin de ne sélectionner que les interventions                                                                                   |
 | Signalement oui / intervention non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 10            | Sert à la rechercher : '' Rapport de signalement'' afin de ne sélectionner que les signalements                                                                                    |
 
+  ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
 | geo_ecl_noeud           | id_noeud                                                  | 0…1      |
 
+
+  ### Particularités :
 
 --> Intervention Foyer, Intervention Câble, Intervention Départ, intervention Points lumineux, Intervention PI, Intervention ouvrage  
 ## Table : `an_ecl_intervention`
@@ -280,7 +303,6 @@ END
 | typ_def                        |                   | x             | Type de défaillance                                                                                                                     | Formatage par une liste de domaine ( lt_ecl_type_defaillance  )                  | Fiches informations des Fiches d'intervention |             |
 | type_inter                     |                   | x             | Type d'intervention                                                                                                                     | Formatage par une liste de domaine ( lt_intervention_point_lumineux  )           | Fiches informations des Fiches d'intervention |             |
 | type_si_in                     |                   | x             | Signalement ou intervention                                                                                                             | Formatage par une liste de domaine ( lt_ecl_signalement_intervention  )          | Fiches informations des Fiches d'intervention |             |
-
 
 
 ### Table : 'att_met1' 
@@ -364,12 +386,15 @@ END
 | Intervention foyer          | x           | Formatage par une liste de domaine ( an_ecl_modele_lampe  ) |
 | Intervention PI             |             |                                                             |
 
+  ### Filtres : Aucun.
+
+  ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_erreur           | id_noeud                                                  | 0…n      |
 
-
+  ### Particularités :
 
 ## Table : `geo_v_ecl_ouvrage_electrique`
 | Atributs       | Champ calculé     | Formatage     | Renommage                                               | Particularité/Usage                                                                                                               | Utilisation                                | Exemple     |
@@ -390,6 +415,8 @@ END
 | ty_fusible     |                   | x             | Type de fusible                                         | Formatage par une liste de domaine ( lt_ecl_type_fusible )                                                                        | Fiche information : Ouvrage electrique     |             |
 | ty_ouvelec     |                   | x             | Type d'ouvrage électrique                               | Formatage par une liste de domaine ( lt_ecl_type_ouvrage_electrique )                                                             | Fiche information : Ouvrage electrique     |             |
 
+  ### Filtres :
+
 | Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
 | ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | Etat                   | etat_ouvel                               |                   | Prédéfinis     | La valeur de “etat_ouvel” =est égale à une valeur choisie par l'utilisateur parmi une liste | une valeur listée de "etat_ouvel" | Sert à la recherche : ''Recherche d'ouvrages électriques"                                            |
@@ -397,6 +424,8 @@ END
 | type d'ouvrage         | dat_signa (Date du signalement)          |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                            | une valeur listée de "ty_ouvelec" | Sert à la recherche : ''Recherche d'ouvrages électriques"                                            |
 | Nom de l'ouvrage       | type_si_in (Signalement ou intervention) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                            | une valeur listée de "nom_ouv"    | Sert à la rechercher : '' Rapport d'intervention'' afin de ne sélectionner que les interventions     |
 | Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés sur la cartographie                                      |
+
+  ### Relations :
 
 | Géotables ou Tables                         | Champs de jointure (champs table - champs table liée)     | Type     |
 | ------------------------------------------- | --------------------------------------------------------- | -------- |
@@ -406,8 +435,7 @@ END
 | an_ecl_erreur                               | id_ouvelec - id_objet                                     | 0…n      |
 | an_ecl_intervention (intervention ouvrage)  | id_ouvelec - id_objet                                     | 0…n      |
 
-
-
+  ### Particularités :
 
 ## Table : `geo_v_ecl_point_lumineux`
 | Atributs                         | Champ calculé     | Formatage     | Renommage                                               | Particularité/Usage                                                                                                               | Utilisation                                  | Exemple     |
@@ -429,6 +457,8 @@ END
 | ty_parasu                        |                   | x             | Ty Parasu                                               | Formatage par une liste de domaine ( lt_ecl_type_parasurtenseur )                                                                 | Fiche information : Point lumineux (support) |             |
 | ty_supp                          |                   | x             | Type de support                                         | Formatage par une liste de domaine ( lt_ecl_type_support )                                                                        | Fiche information : Point lumineux (support) |             |
 
+  ### Filtres :
+
 | Nom                    | Attribut                                | Au chargement     | Type           | Condition                                                                                  | Valeur                                                       | Description                                                            |
 | ---------------------- | --------------------------------------- |:-----------------:|:--------------:|:------------------------------------------------------------------------------------------:| ------------------------------------------------------------ | ---------------------------------------------------------------------- |
 | Etat                   | etat_supp (état du support)             |                   | Prédéfinis     | La valeur de “etat_supp” =est égale à une valeur choisie par l'utilisateur parmi une liste | une valeur listée de "etat_supp"                             | Sert à la recherche : ''Recherche de support"                          |
@@ -437,6 +467,7 @@ END
 | Support sans foyer     | id_supp                                 |                   | SQL            | {id_supp} NOT IN (SELECT id_supp FROM m_reseau_sec.an_ecl_foyer WHERE situation <> '12')   |                                                              | Sert à la recherche : "Recherche de support sans foyer''               |
 | Situation != supprimer | situation                               |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                            | 12                                                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
 
+  ### Relations :
 
 | Géotables ou Tables                               | Champs de jointure (champs table - champs table liée)     | Type     |
 | ------------------------------------------------- | --------------------------------------------------------- | -------- |
@@ -448,6 +479,7 @@ END
 | an_ecl_foyer                                      | id_supp                                                   | 0…n      |
 | an_ecl_modele_support                             | id_mod_sup                                                | 1        |
 
+  ### Particularités :
 
 ## Table : `geo_v_ecl_pi`
 | Atributs          | Champ calculé     | Formatage     | Renommage                                               | Particularité/Usage                                                                                                               | Utilisation                              | Exemple     |
@@ -466,16 +498,22 @@ END
 | situation         |                   | x             | Situation générale : actif, inactif,supprimé            | Formatage par une liste de domaine ( lt_ecl_situation )                                                                           | Fiche information : Point intérêt (PI)   |             |
 | ty_pi             |                   | x             | Ty Pi                                                   | Formatage par une liste de domaine ( lt_ecl_type_pi )                                                                             | Fiche information : Point intérêt (PI)   |             |
 
+  ### Filtres :
+
 | Nom                    | Attribut                        | Au chargement     | Type           | Condition                                                        | Valeur                       | Description                                                            |
 | ---------------------- | ------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------:| ---------------------------- | ---------------------------------------------------------------------- |
 | type_ PI               | ty_pi (type de point d'interet) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste | une valeur listée de “ty_pi” | Sert à la recherche : ''Recherche de point d'interet"                  |
 | Situation != supprimer | situation                       |      x             | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
+
+  ### Relations :
 
 | Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
 | -------------------------------------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_media                                       | id_pi - id                                                | 0…n      |
 | xapps_an_vmr_ecl_materialisee_noeud_armoire        | id_pi - id_noeud                                          | 1        |
 | an_ecl_intervention (intervention point d'interet) | id_pi - id_objet                                          | 0…n      |
+
+  ### Particularités :
 
 ## Table : 'xapps_geo_v_ecl_intervention_liste_affichage'
 | Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                                             |
