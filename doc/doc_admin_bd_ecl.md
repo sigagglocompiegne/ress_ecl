@@ -320,6 +320,15 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 
 # Listes de valeurs
 
+
+Toutes les listes de valeur ont la même structure :
+
+| Nom attribut     | Définition         | Type                  |
+| ---------------- | ------------------ | --------------------- |
+| code             | Code de la liste   | character varying(2)  |
+| valeur           | Valeur de la liste | character varying(80) |
+
+
 #### lt_ecl_classe_electrique
 |Code | Valeur |
 |:---|:---|  
@@ -793,3 +802,19 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |30|Poteau réseau électrique BT|
 |40|Sol|
 |99|Autre|
+
+# Projet QGIS pour la gestion
+Un projet QGIS a été réalisé pour la gestion interne des données. Il est stocké ici : R:\Projets\Metiers\1902RESS-ARC-EvolBdd_Apps_ECL\2-PreEtude\Utilitaires_et_ressources dans l'attente d'être placé ici Y:\Ressources\4-Partage\3-Procedures\QGIS
+
+# Traitement automatisé mis en place (Workflow de l'ETL FME)
+ ## Initialisation des données - Etat 0
+ Les fichiers à utiliser ont été placés ici : R:\Projets\Metiers\1902RESS-ARC-EvolBdd_Apps_ECL\PASSAGE_PROD
+ 
+ ## Mise à jour régulière des données des prestataires extérieurs
+
+  Le processus est en cours de développement.
+  
+# Schéma fonctionnel
+  ## Modèle conceptuel simplifié
+  
+
