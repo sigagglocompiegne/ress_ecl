@@ -405,7 +405,6 @@ Toutes les listes de valeur ont la même structure :
 #### lt_ecl_mode_pose_ouvrage_electrique
 |Code | Valeur |
 |:---|:---|  
-
 |00|Non renseigné|
 |10|Encastrée|
 |20|Saillie sur poste distribution publique|
