@@ -121,7 +121,7 @@ END
 | ty_ballast   |                   | x             | Type de ballast installé                  | Formatage par une liste de domaine ( lt_ecl_type_ballast (code))        | Fiche information : Foyer (ECL) |             |
 | ty_lantern   |                   | x             | Routier / piéton                          | Formatage par une liste de domaine ( lt_ecl_type_lanterne)              | Fiche information : Foyer (ECL) |             |
 
-  ### Filtres :m
+  ### Filtres :
 
 | Nom                    | Attribut                       | Au chargement     | Type           | Condition                                                        | Valeur                                       | Description                                                            |
 | ---------------------- | ------------------------------ |:-----------------:|:--------------:|:----------------------------------------------------------------:| -------------------------------------------- | ---------------------------------------------------------------------- |
@@ -155,6 +155,7 @@ END
 | telgest      |                   | x             | Présence d'une télégestion                                                                                                              | Formatage par une liste de domaine ( lt_ecl_presence  )                                                                                                                                                                  | Fiche d'information : modèle lampe (ECL) |             |
 | ty_lampe     |                   | x             | Type de lampe                                                                                                                           | Formatage par une liste de domaine ( lt_ecl_type_lampe )                                                                                                                                                                 | Fiche d'information : modèle lampe (ECL) |             |
 
+(1)Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
 
   ### Filtres :
 
@@ -181,7 +182,8 @@ END
 | date_maj     |                   |     x          | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                                                                                                                                                                           | Fiche d'information : modèle lanterne (ECL) |             |
 | date_sai     |                   |         x      | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                                                                                                                                                                           | Fiche d'information : modèle lanterne (ECL) |             |
 
-
+ (1) Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
+ 
   ### Filtres :
 
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                                                                                                                                                                                  |
@@ -206,6 +208,8 @@ END
 | cod_ral_s    |                   |               | Code RAL du support                                                                                                                     |                                                                   | Fiche d'information :support ( modèle ) |             |
 | date_maj     |                   | x             | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                  | Fiche d'information :support ( modèle ) |             |
 | date_sai     |                   | x             | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                  | Fiche d'information :support ( modèle ) |             |
+
+ (1) Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
 
   ### Filtres :
 
@@ -235,6 +239,8 @@ END
 | situ_cab            |                   | x             | Situation physique du câble                                                                                                             | Formatage par une liste de domaine ( lt_ecl_situation_cable )                                                                     | Fiche information : Câble (ECL) |             |
 | situation           |                   | x             | Situation                                                                                                                               | Formatage par une liste de domaine ( lt_ecl_situation )                                                                           | Fiche information : Câble (ECL) |             |
 | src_geom            |                   | x             | Source du référentiel géographique pour le positionnement du nœud                                                                       | Formatage par une liste de domaine ( lt_src_geom )                                                                                | Fiche information : Câble (ECL) |             |
+
+(1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
   ### Filtres :
 
