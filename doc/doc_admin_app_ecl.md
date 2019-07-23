@@ -61,7 +61,7 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 ## Table : `an_ecl_depart`
 | Atributs          | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                          | Utilisation                        | Exemple                                            |
 |:-----------------:|:-----------------:|:-------------:|:--------------------------------------------:|:------------------------------------------------------------:|:----------------------------------:|:--------------------------------------------------:|
-| Affiche recherche | x                 |               | Affiche recherche                            |                                                              | Recherche : Recherche de départ    | ![GeoCompiegnois](img/Affiche_recherche_depart.JPG |
+| Affiche recherche | x                 |               | Affiche recherche                            |                                                              | Recherche : Recherche de départ    | ![GeoCompiegnois](img/Affiche_recherche_depart.JPG) |
 | date_donne        |                   | x             | Date de la donnée                            | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    |
 | date_maj          |                   | x             | Date de dernière mise à jour de la donnée    | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    |
 | date_sai          |                   | x             | Date de la saisie de la donnée dans la base  | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    |
@@ -70,11 +70,14 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 | ty_disjonc        |                   | x             | Type du disjoncteur                          | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Fiche d'information : Depart (ECL) |                                                    |
 | ty_fusible        |                   | x             | Type du fusible                              | Formatage par une liste de domaine (lt_ecl_type_fusible)     | Fiche d'information : Depart (ECL) |                                                    |
 
+  ### Filtres :
 
 |Nom|Attribut| Au chargement | Type | Condition |Valeur|Description|
 |:---|:---|:-:|:---:|:---:|:---|:---|
 |Nom de départ|nom_depart||Filtre à suggestion de valeur|Est égale à une valeur choisie par l'utilisateur|Valeur suggérée de "nom_depart"| Permet de faire une rechercher par nom de départ|
 |Situation != supprimer|situation|x|Alphanumerique|est différente de une(des) valeur(s) par défaut|12| Empêche l'apparation des départ supprimés|
+
+  ### Relations :
 
 | Géotables ou Tables          | Champs de jointure (champs table - champs table liée)     | Type     |
 | ---------------------------- | --------------------------------------------------------- | -------- |
@@ -84,15 +87,17 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 | an_ecl_intervention          | id_depart - id_objet                                      | 0…n      |
 
 
+  ### Particularités : 
+
 ## Table : `an_ecl_erreur`
 | Atributs      | Champ calculé     | Formatage     | Renommage                       | Particularité/Usage     | Utilisation                     | Exemple     |
 |:-------------:|:-----------------:|:-------------:| ------------------------------- | ----------------------- | ------------------------------- | ----------- |
-| champ_calcule | x                 | x             | Message d'erreur                |     (1)                    | Recherche : Recherche d' erreur |             |
+| Affichage_message_erreur  | x                 | x             | Message d'erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : ouvrages electrique,intervention cable, depart (ECL),  Foyer (ECL),  Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Support (modèle),  Intervention_PI  |    ![GeoCompiegnois](Affichage_message_erreur.JPG)         |
 
-(1) Requête SQL permettant d'afficher temporairement un message d'erreur dans la fiche d'information `
- CASE WHEN
+(1) Requête SQL permettant d'afficher temporairement un message d'erreur dans la fiche d'information. La durée est de 10 minutes pour que l'utilisateur ait le temps de se souvenir de la présence des messages d'erreur, mais dès qu'un update est fait sur l'objet, les messages d'erreurs sont effacés via les triggers.
+ `CASE WHEN
   extract(epoch from  now()::timestamp) - extract(epoch from
-{horodatage}::timestamp) <= 3 then 
+{horodatage}::timestamp) <= 600 then 
 '<table width=100%><td bgcolor="#FF000">
 <font size=6 color="#ffffff"><center><b>' ||
 {erreur} ||
