@@ -1,4 +1,3 @@
-
 ![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
 
 # Documentation technique de l'application d'éclairage public (ECL)
@@ -236,7 +235,7 @@ END
 ## Table : `geo_ecl_cable`
 | Atributs            | Champ calculé     | Formatage     | Renommage                                                         | Particularité/Usage                                                      | Utilisation                     |
 |:-------------------:|:-----------------:|:-------------:|:-----------------------------------------------------------------:|:------------------------------------------------------------------------:|:-------------------------------:|
-| $$                  | x                 |               | $$                                                                | Contient le caractère ' ' . (1)                                          | Recherche : Recherche de câble  |
+| Blanc | x |            | Blanc | Contient le caractère ' ' . (1)  | Recherche : Recherche de câble |
 | Affichage recherche | x                 |               | Affichage recherche                                               | Formate l'affichage d'un texte en fonction des attributs de la recherche | Recherche : Recherche de câble  |
 | etat_cable          |                   | x             | Etat du câble                                                     | Formatage par une liste de domaine ( lt_ecl_etat )                       | Fiche information : Câble (ECL) |
 | qua_geo_xy          |                   | x             | Qua Geo Xy                                                        | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )    | Fiche information : Câble (ECL) |
@@ -1892,6 +1891,7 @@ IMPORTANT : L'édition des données jointes est désactivée.
 Modèle d'impression : aucun
 
 
+
 ## Fiche information :      Intervention_PI
 
 Source : Intervention_PI (an_ecl_intervention)
@@ -1939,7 +1939,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
 | Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%  |         |  Par défaut |
-| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                 | 2                     | "lt_ecl_etat"                             | Par défaut |
+| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                  | 2                     | "lt_ecl_etat"                             | Par défaut |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1950,3 +1950,4 @@ Modèle d'impression : aucun
 Ces 3 fiches information sont uniquement composée d'une miniature de la photo des modèles, s'il y en a une, rien n'est éditable. Elles sont utilisée dans les fiches informations du foyer / du support afin d'empêcher un lien direct entre un objet précis et une fiche de modèle éditable. 
 Le but est d'imposer une prise de consience avant une modification d'un modèle qui agira sur tous les objets ayant le même modèle.
 
+              
