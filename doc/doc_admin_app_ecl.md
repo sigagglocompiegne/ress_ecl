@@ -1,3 +1,4 @@
+
 ![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
 
 # Documentation technique de l'application d'éclairage public (ECL)
@@ -144,16 +145,17 @@ END
   ### Particularités : 
 
 ## Table : `an_ecl_modele_lampe`
-| Atributs     | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                                                                                                                                                                      | Utilisation                              | Exemple     |
-|:------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- | ----------- |
-| cle_media    | x                 |               | cle_media                                                                                                                               | Correspond à l'id de l'objet avec LM en préfixe. Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente. | Relation  avec an_ecl_media_modele.      |             |
-| cou_ecl      |                   | x             | Couleur d'éclairage de la lampe                                                                                                         | Formatage par une liste de domaine ( lt_ecl_couleur_eclairage )                                                                                                                                                          | Fiche d'information : modèle lampe (ECL) |             |
-| cul_lamp     |                   | x             | Culot de la lampe                                                                                                                       | Formatage par une liste de domaine ( lt_ecl_culot_lampe )                                                                                                                                                                | Fiche d'information : modèle lampe (ECL) |             |
-| date_maj     |                   | x             | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                                                                                                                                                                         | Fiche d'information : modèle lampe (ECL) |             |
-| date_sai     |                   | x             | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                                                                                                                                                                         | Fiche d'information : modèle lampe (ECL) |             |
-| puis_lam     |                   | x             | Puissance de la lampe                                                                                                                   | Formatage par une liste de domaine ( lt_ecl_puissance_lampe  )                                                                                                                                                           | Fiche d'information : modèle lampe (ECL) |             |
-| telgest      |                   | x             | Présence d'une télégestion                                                                                                              | Formatage par une liste de domaine ( lt_ecl_presence  )                                                                                                                                                                  | Fiche d'information : modèle lampe (ECL) |             |
-| ty_lampe     |                   | x             | Type de lampe                                                                                                                           | Formatage par une liste de domaine ( lt_ecl_type_lampe )                                                                                                                                                                 | Fiche d'information : modèle lampe (ECL) |             |
+| Atributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
+|:-------------:|:-----------------:|:-------------:|:--------------------------------------------:|:---------------------------------------------------------------:|:----------------------------------------:|
+| Affichage_nom | x                 |               |                                              | Formate l'affichage d'une recherche                             | Recherche : recherche de foyer           |
+| cle_media     | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LM en préfixe. (1)            | Relation avec an_ecl_media_modele.       |
+| cou_ecl       |                   | x             | Couleur d'éclairage de la lampe              | Formatage par une liste de domaine ( lt_ecl_couleur_eclairage ) | Fiche d'information : modèle lampe (ECL) |
+| cul_lamp      |                   | x             | Culot de la lampe                            | Formatage par une liste de domaine ( lt_ecl_culot_lampe )       | Fiche d'information : modèle lampe (ECL) |
+| date_maj      |                   | x             | Date de dernière mise à jour                 | Les heures ne sont pas affichées                                | Fiche d'information : modèle lampe (ECL) |
+| date_sai      |                   | x             | Date de saisie de l'information dans la base | Les heures ne sont pas affichées                                | Fiche d'information : modèle lampe (ECL) |
+| puis_lam      |                   | x             | Puissance de la lampe                        | Formatage par une liste de domaine ( lt_ecl_puissance_lampe )   | Fiche d'information : modèle lampe (ECL) |
+| telgest       |                   | x             | Présence d'une télégestion                   | Formatage par une liste de domaine ( lt_ecl_presence )          | Fiche d'information : modèle lampe (ECL) |
+| ty_lampe      |                   | x             | Type de lampe                                | Formatage par une liste de domaine ( lt_ecl_type_lampe )        | Fiche d'information : modèle lampe (ECL) |
 
 (1)Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
 
@@ -174,13 +176,18 @@ END
   ### Particularités : 
 
 ## Table : `an_ecl_modele_lanterne`
-| Atributs     | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                                                                                                                                                                        | Utilisation                                 | Exemple     |
-|:------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ----------- |
-| clas_el_ln   |                   | x             | Classe électrique de la lanterne                                                                                                        | Formatage par une liste de domaine ( lt_ecl_type_lampe )                                                                                                                                                                   | Fiche d'information : modèle lanterne (ECL) |             |
-| cle_media    | x                 |               | cle_media                                                                                                                               | Correspond à l'id de l'objet avec LN en préfixe. Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente. | Relation  avec an_ecl_media_modele.         |             |
-| cod_ral_ln   |                   |               | Code RAL de la lanterne                                                                                                                 |                                                                                                                                                                                                                            | Fiche d'information : modèle lanterne (ECL) |             |
-| date_maj     |                   |     x          | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                                                                                                                                                                           | Fiche d'information : modèle lanterne (ECL) |             |
-| date_sai     |                   |         x      | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                                                                                                                                                                           | Fiche d'information : modèle lanterne (ECL) |             |
+| Atributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
+|:-------------:|:-----------------:|:-------------:|:--------------------------------------------:|:---------------------------------------------------------------:|:----------------------------------------:|
+| Affichage_nom | x                 |               |                                              | Formate l'affichage d'une recherche                             | Recherche : recherche de foyer           |
+| cle_media     | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LM en préfixe. (1)            | Relation avec an_ecl_media_modele.       |
+| cou_ecl       |                   | x             | Couleur d'éclairage de la lampe              | Formatage par une liste de domaine ( lt_ecl_couleur_eclairage ) | Fiche d'information : modèle lampe (ECL) |
+| cul_lamp      |                   | x             | Culot de la lampe                            | Formatage par une liste de domaine ( lt_ecl_culot_lampe )       | Fiche d'information : modèle lampe (ECL) |
+| date_maj      |                   | x             | Date de dernière mise à jour                 | Les heures ne sont pas affichées                                | Fiche d'information : modèle lampe (ECL) |
+| date_sai      |                   | x             | Date de saisie de l'information dans la base | Les heures ne sont pas affichées                                | Fiche d'information : modèle lampe (ECL) |
+| puis_lam      |                   | x             | Puissance de la lampe                        | Formatage par une liste de domaine ( lt_ecl_puissance_lampe )   | Fiche d'information : modèle lampe (ECL) |
+| telgest       |                   | x             | Présence d'une télégestion                   | Formatage par une liste de domaine ( lt_ecl_presence )          | Fiche d'information : modèle lampe (ECL) |
+| ty_lampe      |                   | x             | Type de lampe                                | Formatage par une liste de domaine ( lt_ecl_type_lampe )        | Fiche d'information : modèle lampe (ECL) |
+
 
  (1) Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
  
@@ -202,12 +209,12 @@ END
 
 ## Table : `an_ecl_modele_support`
 
-| Atributs     | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                               | Utilisation                             | Exemple     |
-|:------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------- | ----------- |
-| cle_media    | x                 |               | cle_media                                                                                                                               |                                                                   |                                         |             |
-| cod_ral_s    |                   |               | Code RAL du support                                                                                                                     |                                                                   | Fiche d'information :support ( modèle ) |             |
-| date_maj     |                   | x             | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                  | Fiche d'information :support ( modèle ) |             |
-| date_sai     |                   | x             | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                  | Fiche d'information :support ( modèle ) |             |
+| Atributs     | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                              | Utilisation                             |
+|:------------:|:-----------------:|:-------------:|:--------------------------------------------:|:----------------------------------------------------------------:|:---------------------------------------:|
+| cle_media    | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LN en préfixe.                 |                                         |
+| date_maj     |                   | x             | Date de dernière mise à jour                 | Les heures ne sont pas affichées                                 | Fiche d'information :support ( modèle ) |
+| date_sai     |                   | x             | Date de saisie de l'information dans la base | Les heures ne sont pas affichées                                 | Fiche d'information :support ( modèle ) |
+| mat_supp     |                   | x             | support                                      | Formatage par une liste de domaine ( lt_ecl_materiaux_supports ) | Fiche d'information :support ( modèle ) |
 
  (1) Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
 
@@ -215,7 +222,7 @@ END
 
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de support", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
+| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de support", afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
 
   ### Relations :
 
@@ -227,18 +234,21 @@ END
   ### Particularités : 
 
 ## Table : `geo_ecl_cable`
-| Atributs            | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                                                                               | Utilisation                     | Exemple     |
-|:-------------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | ----------- |
-| $$                  | x                 |               | $$                                                                                                                                      | Contient le caractère ' ' . Pour gérer le fait que GEO affiche en haut de la fiche info le 1er  champ du résultat d'une recherche | Recherche : Recherche de câble  |             |
-| Affichage recherche | x                 |               | Affichage recherche                                                                                                                     | Formate l'affichage d'un texte en fonction des attributs de la recherche                                                          | Recherche : Recherche de câble  |             |
-| champ_calcule_1     | x                 |               | Champ calculé 1                                                                                                                         | Permet de lier deux champs qui détermine l'affichage du câble sur la carte                                                        | Cartographie : ECL              |             |
-| etat_cable          |                   | x             | Etat du câble                                                                                                                           | Formatage par une liste de domaine ( lt_ecl_etat )                                                                                | Fiche information : Câble (ECL) |             |
-| qua_geo_xy          |                   | x             | Qua Geo Xy                                                                                                                              | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation  )                                                            | Fiche information : Câble (ECL) |             |
-| qua_geo_z           |                   | x             | Qua Geo Z                                                                                                                               | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation  )                                                            | Fiche information : Câble (ECL) |             |
-| sect_cab            |                   | x             | Section du câble                                                                                                                        | Formatage par une liste de domaine ( lt_ecl_section_cable  )                                                                      | Fiche information : Câble (ECL) |             |
-| situ_cab            |                   | x             | Situation physique du câble                                                                                                             | Formatage par une liste de domaine ( lt_ecl_situation_cable )                                                                     | Fiche information : Câble (ECL) |             |
-| situation           |                   | x             | Situation                                                                                                                               | Formatage par une liste de domaine ( lt_ecl_situation )                                                                           | Fiche information : Câble (ECL) |             |
-| src_geom            |                   | x             | Source du référentiel géographique pour le positionnement du nœud                                                                       | Formatage par une liste de domaine ( lt_src_geom )                                                                                | Fiche information : Câble (ECL) |             |
+| Atributs            | Champ calculé     | Formatage     | Renommage                                                         | Particularité/Usage                                                      | Utilisation                     |
+|:-------------------:|:-----------------:|:-------------:|:-----------------------------------------------------------------:|:------------------------------------------------------------------------:|:-------------------------------:|
+| $$                  | x                 |               | $$                                                                | Contient le caractère ' ' . (1)                                          | Recherche : Recherche de câble  |
+| Affichage recherche | x                 |               | Affichage recherche                                               | Formate l'affichage d'un texte en fonction des attributs de la recherche | Recherche : Recherche de câble  |
+| etat_cable          |                   | x             | Etat du câble                                                     | Formatage par une liste de domaine ( lt_ecl_etat )                       | Fiche information : Câble (ECL) |
+| qua_geo_xy          |                   | x             | Qua Geo Xy                                                        | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )    | Fiche information : Câble (ECL) |
+| qua_geo_z           |                   | x             | Qua Geo Z                                                         | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )    | Fiche information : Câble (ECL) |
+| sect_cab            |                   | x             | Section du câble                                                  | Formatage par une liste de domaine ( lt_ecl_section_cable )              | Fiche information : Câble (ECL) |
+| situ_cab            |                   | x             | Situation physique du câble                                       | Formatage par une liste de domaine ( lt_ecl_situation_cable )            | Fiche information : Câble (ECL) |
+| situation           |                   | x             | Situation                                                         | Formatage par une liste de domaine ( lt_ecl_situation )                  | Fiche information : Câble (ECL) |
+| src_geom            |                   | x             | Source du référentiel géographique pour le positionnement du nœud | Formatage par une liste de domaine ( lt_src_geom )                       | Fiche information : Câble (ECL) |
+| dat_pos_ca          |                   | x             | Date de pose du câble                                             | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
+| date_donne          |                   | x             | Date de création de la donnée                                     | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
+| date_maj            |                   | x             | Date de la mise à jour                                            | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
+| date_sai            |                   | x             | Date de saisie dans la base                                       | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
 
 (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
@@ -283,83 +293,87 @@ END
 
 
   ### Particularités :
-
---> Intervention Foyer, Intervention Câble, Intervention Départ, intervention Points lumineux, Intervention PI, Intervention ouvrage  
-## Table : `an_ecl_intervention`
-| Atributs     | Champ calculé     | Formatage     | Renommage     | Particularité/Usage                                                                      | Utilisation                                                                        | Exemple     |
-|:------------:|:-----------------:|:-------------:|:-------------:|:----------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------:|:-----------:|
-| Dates        | x                 |               | Dates         | Formate l'affichage des différentes dates dans les fiches informations des interventions | Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI) |             |
-| att_met1                       |                   | x             | Attribut métier dédié au type de disjoncteur / type de ballast                                                                          | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| att_met2                       |                   | x             | Attribut métier Dédié au type de fusible / type d'amorce                                                                                | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| att_met3                       |                   | x             | Attribut métier Dédié au type de parasurtenseur / type de commande / type d'auto transformateur                                         | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| att_met4                       |                   | x             | Attribut métier Dédié à la mise en terre / modele de lanterne                                                                           | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| att_met5                       |                   | x             | Attribut métier Dédié au modèle de lampe                                                                                                | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| att_met6                       |                   | x             | Attribut métier Dédié à l'état de l'objet ciblé par l'intervention                                                                      | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| att_met7                       |                   | x             | Attribut métier Dédié au nom du départ / aux options du support                                                                         | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| att_met8                       |                   | x             | Attribut métier Dédié à la tension / pourcentage de puissance de fonctionnement                                                         | Formatage par une liste de domaine (Voir tableau ci-après)                       | Fiche information (Voir tableau ci-après)     |             |
-| dat_progra                     |                   | x             | Date de la programmation                                                                                                                | Les heures ne sont pas affichées                                                 | Fiches informations des Fiches d'intervention |             |
-| dat_real                       |                   | x             | Date de la réalisation de l'intervention                                                                                                | Les heures ne sont pas affichées                                                 | Fiches informations des Fiches d'intervention |             |
-| dat_signa                      |                   | x             | Date du signalement                                                                                                                     | Les heures ne sont pas affichées                                                 | Fiches informations des Fiches d'intervention |             |
-| date_maj                       |                   |  x            | Horodatage correspondant à la date de mise à jour de la donnée sans intégration du décalage horaire par rapport au méridient d'origine  | Les heures ne sont pas affichées                                                 | Fiches informations des Fiches d'intervention |             |
-| date_sai                       |                   |  x            | Horodatage correspondant à la date de saisie de la donnée sans intégration du décalage horaire par rapport au méridient d'origine       | Les heures ne sont pas affichées                                                 | Fiches informations des Fiches d'intervention |             |
-| etat_sign                      |                   | x             | Etat du signalement                                                                                                                     | Formatage par une liste de domaine ( lt_ecl_etat_signalement_affichage )        | Fiches informations des Fiches d'intervention |             |
-| moy_interv                     |                   | x             | Moyen d'intervention                                                                                                                    | Formatage par une liste de domaine ( lt_ecl_moyen_intervention  )                | Fiches informations des Fiches d'intervention |             |
-| src_def                        |                   | x             | Source de la défaillance                                                                                                                | Formatage par une liste de domaine ( lt_ecl_source_defaillance  )                | Fiches informations des Fiches d'intervention |             |
-| TRI -                          | x                 |               | TRI -                                                                                                                                   |                                                                                  | Fiches informations des Fiches d'intervention |             |
-| typ_def                        |                   | x             | Type de défaillance                                                                                                                     | Formatage par une liste de domaine ( lt_ecl_type_defaillance  )                  | Fiches informations des Fiches d'intervention |             |
-| type_inter                     |                   | x             | Type d'intervention                                                                                                                     | Formatage par une liste de domaine ( lt_intervention_point_lumineux  )           | Fiches informations des Fiches d'intervention |             |
-| type_si_in                     |                   | x             | Signalement ou intervention                                                                                                             | Formatage par une liste de domaine ( lt_ecl_signalement_intervention  )          | Fiches informations des Fiches d'intervention |             |
+   
+ ## Intervention Foyer, Intervention Câble, Intervention Départ, Intervention Points lumineux, Intervention PI, Intervention ouvrage  
+   ### Table : `an_ecl_intervention`
+ | Atributs     | Champ calculé     | Formatage     | Renommage                                | Particularité/Usage                                                                      | Utilisation                                                                                                                         |
+|:------------:|:-----------------:|:-------------:|:----------------------------------------:|:----------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| Dates        | x                 |               | Dates                                    | Formate l'affichage des différentes dates dans les fiches informations des interventions | Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI)                                                  |
+| att_met1     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| att_met2     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| att_met3     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| att_met4     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| att_met5     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| att_met6     |                   | x             | Etat de l'objet après l'intervention     | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| att_met7     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| att_met8     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
+| dat_progra   |                   | x             | Date de la programmation                 | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| dat_real     |                   | x             | Date de la réalisation de l'intervention | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| dat_signa    |                   | x             | Date du signalement                      | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| date_maj     |                   | x             | Date de la dernière mise à jour          | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| date_sai     |                   | x             | Date de la saisie initiale dans la base  | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| etat_sign    |                   | x             | Etat du signalement                      | Formatage par une liste de domaine ( lt_ecl_etat_signalement_affichage )                 | Fiches informations des Fiches d'intervention                                                                                       |
+| moy_interv   |                   | x             | Moyen d'intervention                     | Formatage par une liste de domaine ( lt_ecl_moyen_intervention )                         | Fiches informations des Fiches d'intervention                                                                                       |
+| src_def      |                   | x             | Source de la défaillance                 | Formatage par une liste de domaine ( lt_ecl_source_defaillance )                         | Fiches informations des Fiches d'intervention                                                                                       |
+| TRI -        | x                 |               | TRI -                                    |                                                                                          | Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI)                                                  |
+| typ_def      |                   | x             | Type de défaillance                      | Formatage par une liste de domaine ( lt_ecl_type_defaillance )                           | Fiches informations des Fiches d'intervention                                                                                       |
+| type_inter   |                   | x             | Type d'intervention                      | Formatage par une liste de domaine ( lt_intervention_point_lumineux )                    | Fiches informations des Fiches d'intervention +  Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI) |
+| type_si_in   |                   | x             | Signalement ou intervention              | Formatage par une liste de domaine ( lt_ecl_signalement_intervention )                   | Fiches informations des Fiches d'intervention                                                                                       |
 
 
 ### Table : 'att_met1' 
-| Fiche information           | Utilisé     | Particularité/Usage                                          |
-| --------------------------- | ----------- | ------------------------------------------------------------ |
-| Intervention câble          |             |                                                              |
-| Intervention point-lumineux | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
-| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
-| Intervention depart         | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
-| Intervention foyer          | x           | Formatage par une liste de domaine (lt_ecl_type_ballast)     |
-| Intervention PI             |             |                                                              |
+| Fiche information           | Utilisé     | Particularité/Usage                                          | Label                |
+|:---------------------------:|:-----------:|:------------------------------------------------------------:|:--------------------:|
+| Intervention câble          |             |                                                              | Inutilisé            |
+| Intervention point-lumineux | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Type de disjoncteur  |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Type de disjoncteur  |
+| Intervention depart         | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Type de disjoncteur  |
+| Intervention foyer          | x           | Formatage par une liste de domaine (lt_ecl_type_ballast)     | Type de ballast      |
+| Intervention PI             |             |                                                              | Inutilisé            |
+
 
 ### Table : 'att_met2' 
-| Fiche information           | Utilisé     | Particularité/Usage                                      |
-| --------------------------- | ----------- | -------------------------------------------------------- |
-| Intervention câble          |             |                                                          |
-| Intervention point-lumineux | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) |
-| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) |
-| Intervention depart         | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) |
-| Intervention foyer          | x           | Formatage par une liste de domaine ( lt_ecl_amorceur )   |
-| Intervention PI             |             |                                                          |
+| Fiche information           | Utilisé     | Particularité/Usage                                      | Label            |
+|:---------------------------:|:-----------:|:--------------------------------------------------------:|:----------------:|
+| Intervention câble          |             |                                                          | Inutilisé        |
+| Intervention point-lumineux | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) | Type de fusible  |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) | Type de fusible  |
+| Intervention depart         | x           | Formatage par une liste de domaine (lt_ecl_type_fusible) | Type de fusible  |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( lt_ecl_amorceur )   | Type d'amorce    |
+| Intervention PI             |             |                                                          | Inutilisé        |
+
 
 ### Table : 'att_met3' 
-| Fiche information           | Utilisé     | Particularité/Usage                                                |
-| --------------------------- | ----------- | ------------------------------------------------------------------ |
-| Intervention câble          |             |                                                                    |
-| Intervention point-lumineux | x           | Formatage par une liste de domaine ( lt_ecl_type_parasurtenseur )  |
-| Intervention ouvrage        | x           | Formatage par une liste de domaine ( lt_ecl_auto_transformateur  ) |
-| Intervention depart         |             |                                                                    |
-| Intervention foyer          | x           | Formatage par une liste de domaine ( lt_ecl_auto_transformateur  ) |
-| Intervention PI             |             |                                                                    |
+| Fiche information           | Utilisé     | Particularité/Usage                                               | Label                   |
+|:---------------------------:|:-----------:|:-----------------------------------------------------------------:|:-----------------------:|
+| Intervention câble          |             |                                                                   | Inutilisé               |
+| Intervention point-lumineux | x           | Formatage par une liste de domaine ( lt_ecl_type_parasurtenseur ) | Type de parasurtenseur  |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine ( lt_ecl_auto_transformateur ) | Type de commande        |
+| Intervention depart         |             |                                                                   | Inutilisé               |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( lt_ecl_auto_transformateur ) | Auto transformateur     |
+| Intervention PI             |             |                                                                   | Inutilisé               |
+
 
 ### Table : 'att_met4' 
-| Fiche information           | Utilisé     | Particularité/Usage                                          |
-| --------------------------- | ----------- | ------------------------------------------------------------ |
-| Intervention câble          |             |                                                              |
-| Intervention point-lumineux |             |                                                              |
-| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) |
-| Intervention depart         |             |                                                              |
-| Intervention foyer          |             |                                                              |
-| Intervention PI             |             |                                                              |
+| Fiche information           | Utilisé     | Particularité/Usage                                          | Label                                 |
+|:---------------------------:|:-----------:|:------------------------------------------------------------:|:-------------------------------------:|
+| Intervention câble          |             |                                                              | Inutilisé                             |
+| Intervention point-lumineux |             |                                                              | Inutilisé                             |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Type de disjoncteur du départ ajouté  |
+| Intervention depart         |             |                                                              | Inutilisé                             |
+| Intervention foyer          |             |                                                              | Inutilisé                             |
+| Intervention PI             |             |                                                              | Inutilisé                             |
 
 ### Table : 'att_met5' 
-| Fiche information           | Utilisé     | Particularité/Usage                                                                  |
-| --------------------------- | ----------- | ------------------------------------------------------------------------------------ |
-| Intervention câble          |             |                                                                                      |
-| Intervention point-lumineux |             |                                                                                      |
-| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_fusible)                             |
-| Intervention depart         |             |                                                                                      |
-| Intervention foyer          | x           | Formatage par une liste de domaine ( xapps_geo_v_ecl_intervention_liste_affichage  ) |
-| Intervention PI             |             |                                                                                      |
+| Fiche information           | Utilisé     | Particularité/Usage                                                                 | Label                                     |
+|:---------------------------:|:-----------:|:-----------------------------------------------------------------------------------:|:-----------------------------------------:|
+| Intervention câble          |             |                                                                                     | Inutilisé                                 |
+| Intervention point-lumineux |             |                                                                                     |  Inutilisé                                |
+| Intervention ouvrage        | x           | Formatage par une liste de domaine (lt_ecl_type_fusible)                            | Type de fusible du départ ajouté          |
+| Intervention depart         |             |                                                                                     | Inutilisé                                 |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( xapps_geo_v_ecl_intervention_liste_affichage ) | Signalement réglé lors de l'intervention  |
+| Intervention PI             |             |                                                                                     | Inutilisé                                 |
+
 
 ### Table : 'att_met6' 
 | Fiche information           | Utilisé     | Particularité/Usage                               |
@@ -372,25 +386,27 @@ END
 | Intervention PI             | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
 
 ### Table : 'att_met7' 
-| Fiche information           | Utilisé     | Particularité/Usage                                                                  |
-| --------------------------- | ----------- | ------------------------------------------------------------------------------------ |
-| Intervention câble          |             |                                                                                      |
-| Intervention point-lumineux |             |                                                                                      |
-| Intervention ouvrage        | x           | nom du départ                                                                        |
-| Intervention depart         | x           | Formatage par une liste de domaine ( xapps_geo_v_ecl_intervention_liste_affichage  ) |
-| Intervention foyer          | x           | Formatage par une liste de domaine ( an_ecl_modele_lanterne )                        |
-| Intervention PI             |             |                                                                                      |
+| Fiche information           | Utilisé     | Particularité/Usage                                                                 | Label                                     |
+|:---------------------------:|:-----------:|:-----------------------------------------------------------------------------------:|:-----------------------------------------:|
+| Intervention câble          |             |                                                                                     | Inutilisé                                 |
+| Intervention point-lumineux |             |                                                                                     |  Options du support                       |
+| Intervention ouvrage        | x           |                                                                                     | Nom du départ                             |
+| Intervention depart         | x           | Formatage par une liste de domaine ( xapps_geo_v_ecl_intervention_liste_affichage ) | Signalement réglé lors de l'intervention  |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( an_ecl_modele_lanterne )                       | Modèle de lanterne                        |
+| Intervention PI             |             |                                                                                     | Inutilisé                                 |
+
 
 
 ### Table : 'att_met8' 
-| Fiche information           | Utilisé     | Particularité/Usage                                         |
-| --------------------------- | ----------- | ----------------------------------------------------------- |
-| Intervention câble          |             |                                                             |
-| Intervention point-lumineux |             |                                                             |
-| Intervention ouvrage        | x           | Tension du départ                                           |
-| Intervention depart         |             |                                                             |
-| Intervention foyer          | x           | Formatage par une liste de domaine ( an_ecl_modele_lampe  ) |
-| Intervention PI             |             |                                                             |
+| Fiche information           | Utilisé     | Particularité/Usage                                        | Label                     |
+|:---------------------------:|:-----------:|:----------------------------------------------------------:|:-------------------------:|
+| Intervention câble          |             |                                                            | Inutilisé                 |
+| Intervention point-lumineux |             |                                                            |  Inutilisé                |
+| Intervention ouvrage        | x           |                                                            | Tension du départ ajouté  |
+| Intervention depart         |             |                                                            | Tension                   |
+| Intervention foyer          | x           | Formatage par une liste de domaine ( an_ecl_modele_lampe ) | Modèle de lampe           |
+| Intervention PI             |             |                                                            | Inutilisé                 |
+
 
   ### Filtres : Aucun.
 
@@ -403,23 +419,27 @@ END
   ### Particularités :
 
 ## Table : `geo_v_ecl_ouvrage_electrique`
-| Atributs       | Champ calculé     | Formatage     | Renommage                                               | Particularité/Usage                                                                                                               | Utilisation                                | Exemple     |
-|:--------------:|:-----------------:|:-------------:| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------- |
-| $$             | x                 |               | $$                                                      | Contient le caractère ' ' . Pour gérer le fait que GEO affiche en haut de la fiche info le 1er  champ du résultat d'une recherche |                                            |             |
-| affiche_result | x                 |               | affiche_result                                          | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée.                                                  | Recherche : Recherche d'ouvrage électrique |             |
-| depart         |                   | x             | Numéro de départ auquel est lié le noeud                | Formatage par une liste de domaine ( an_ecl_depart )                                                                              | Fiche information : Ouvrage electrique     |             |
-| etat_ouvel     |                   | x             | Etat de l'ouvrage électrique                            | Formatage par une liste de domaine ( lt_ecl_etat )                                                                                | Fiche information : Ouvrage electrique     |             |
-| mod_pos_ou     |                   | x             | Mode de pose de l'ouvrage                               | Formatage par une liste de domaine ( lt_ecl_mode_pose_ouvrage_electrique )                                                        | Fiche information : Ouvrage electrique     |             |
-| pres_var       |                   | x             | Pres Var                                                | Formatage par une liste de domaine ( lt_ecl_presence  )                                                                           | Fiche information : Ouvrage electrique     |             |
-| qua_dat        |                   | x             | Qualité de la date de pose de l'ouvrage                 | Formatage par une liste de domaine ( lt_ecl_qualite_date  )                                                                       | Fiche information : Ouvrage electrique     |             |
-| qua_geo_xy     |                   | x             | Classe de la géolocalisation en XY                      | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation  )                                                            | Fiche information : Ouvrage electrique     |             |
-| qua_geo_z      |                   | x             | Classe de la géolocalisation en Z                       | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation  )                                                            | Fiche information : Ouvrage electrique     |             |
-| situation      |                   | x             | Situation générale : actif, inactif,supprimé            | Formatage par une liste de domaine ( lt_ecl_situation )                                                                           | Fiche information : Ouvrage electrique     |             |
-| src_geom       |                   | x             | Source utilisée pour la géolocalisation                 | Formatage par une liste de domaine ( lt_src_geom )                                                                                | Fiche information : Ouvrage electrique     |             |
-| ty_comm        |                   | x             | Type de commande                                        | Formatage par une liste de domaine ( lt_ecl_type_commande )                                                                       | Fiche information : Ouvrage electrique     |             |
-| ty_disjonc     |                   | x             | Type de disjoncteur                                     | Formatage par une liste de domaine ( lt_ecl_type_disjoncteur )                                                                    | Fiche information : Ouvrage electrique     |             |
-| ty_fusible     |                   | x             | Type de fusible                                         | Formatage par une liste de domaine ( lt_ecl_type_fusible )                                                                        | Fiche information : Ouvrage electrique     |             |
-| ty_ouvelec     |                   | x             | Type d'ouvrage électrique                               | Formatage par une liste de domaine ( lt_ecl_type_ouvrage_electrique )                                                             | Fiche information : Ouvrage electrique     |             |
+| Atributs       | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                              | Utilisation                                |
+|:--------------:|:-----------------:|:-------------:|:--------------------------------------------:|:--------------------------------------------------------------------------------:|:------------------------------------------:|
+| Blanc          | x                 |               | Blanc                                        | Contient le caractère ' ' .                                                      |                                            |
+| affiche_result | x                 |               | affiche_result                               | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Recherche d'ouvrage électrique |
+| depart         |                   | x             | Numéro de départ auquel est lié le nœud      | Formatage par une liste de domaine ( an_ecl_depart )                             | Fiche information : Ouvrage electrique     |
+| etat_ouvel     |                   | x             | Etat de l'ouvrage électrique                 | Formatage par une liste de domaine ( lt_ecl_etat )                               | Fiche information : Ouvrage electrique     |
+| mod_pos_ou     |                   | x             | Mode de pose de l'ouvrage                    | Formatage par une liste de domaine ( lt_ecl_mode_pose_ouvrage_electrique )       | Fiche information : Ouvrage electrique     |
+| pres_var       |                   | x             | Présence d'un variateur                      | Formatage par une liste de domaine ( lt_ecl_presence )                           | Fiche information : Ouvrage electrique     |
+| qua_dat        |                   | x             | Qualité de la date de pose de l'ouvrage      | Formatage par une liste de domaine ( lt_ecl_qualite_date )                       | Fiche information : Ouvrage electrique     |
+| qua_geo_xy     |                   | x             | Classe de la géolocalisation en XY           | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )            | Fiche information : Ouvrage electrique     |
+| qua_geo_z      |                   | x             | Classe de la géolocalisation en Z            | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )            | Fiche information : Ouvrage electrique     |
+| situation      |                   | x             | Situation générale : actif, inactif,supprimé | Formatage par une liste de domaine ( lt_ecl_situation )                          | Fiche information : Ouvrage electrique     |
+| src_geom       |                   | x             | Source utilisée pour la géolocalisation      | Formatage par une liste de domaine ( lt_src_geom )                               | Fiche information : Ouvrage electrique     |
+| ty_comm        |                   | x             | Type de commande                             | Formatage par une liste de domaine ( lt_ecl_type_commande )                      | Fiche information : Ouvrage electrique     |
+| ty_disjonc     |                   | x             | Type de disjoncteur                          | Formatage par une liste de domaine ( lt_ecl_type_disjoncteur )                   | Fiche information : Ouvrage electrique     |
+| ty_fusible     |                   | x             | Type de fusible                              | Formatage par une liste de domaine ( lt_ecl_type_fusible )                       | Fiche information : Ouvrage electrique     |
+| ty_ouvelec     |                   | x             | Type d'ouvrage électrique                    | Formatage par une liste de domaine ( lt_ecl_type_ouvrage_electrique )            | Fiche information : Ouvrage electrique     |
+| date_maj       |                   | x             | Date de la mise à jour                       | L'heure n'est pas affichée                                                       | Fiche information : Câble (ECL)            |
+| date_sai       |                   | x             | Date de saisie dans la base                  | L'heure n'est pas affichée                                                       | Fiche information : Câble (ECL)            |
+| dat_pos        |                   | x             | Date de pose                                 | L'heure n'est pas affichée                                                       | Fiche information : Câble (ECL)            |
+| date_donne     |                   | x             | Date de création de la donnée                | L'heure n'est pas affichée                                                       | Fiche information : Câble (ECL)            |
 
  (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
@@ -446,24 +466,31 @@ END
   ### Particularités :
 
 ## Table : `geo_v_ecl_point_lumineux`
-| Atributs                         | Champ calculé     | Formatage     | Renommage                                               | Particularité/Usage                                                                                                               | Utilisation                                  | Exemple     |
-|:--------------------------------:|:-----------------:|:-------------:| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- | ----------- |
-| $$                               | x                 |               | $$                                                      | Contient le caractère ' ' . Pour gérer le fait que GEO affiche en haut de la fiche info le 1er  champ du résultat d'une recherche | Recherche : Recherche de support             |             |
-| Affiche_recherche                | x                 |               | Affiche_recherche                                       | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée.                                                  | Recherche : Recherche de support             |             |
-| depart                           |                   | x             | Numéro de départ auquel est lié le noeud                | Formatage par une liste de domaine ( an_ecl_depart )                                                                              | Fiche information : Point lumineux (support) |             |
-| etat_supp                        |                   | x             | Etat general du support                                 | Formatage par une liste de domaine ( lt_ecl_etat )                                                                                | Fiche information : Point lumineux (support) |             |
-| haut_trap                        |                   | x             | Haut Trap                                               | Formatage par une liste de domaine ( lt_ecl_hauteur_trappe  )                                                                     | Fiche information : Point lumineux (support) |             |
-| id_mod_sup                       |                   | x             | Identifiant du modèle du support                        | Formatage par une liste de domaine ( an_ecl_modele_support )                                                                      | Fiche information : Point lumineux (support) |             |
-| opt_supp                         |                   | x             | Opt Supp                                                | Formatage par une liste de domaine ( lt_ecl_options_support  ) - attribut multivalué.                                             | Fiche information : Point lumineux (support) |             |
-| qua_dat                          |                   | x             | Qua Dat                                                 | Formatage par une liste de domaine ( lt_ecl_qualite_date )                                                                        | Fiche information : Point lumineux (support) |             |
-| qua_geo_xy                       |                   | x             | Classe de la géolocalisation en XY                      | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )                                                             | Fiche information : Point lumineux (support) |             |
-| qua_geo_z                        |                   | x             | Classe de la géolocalisation en Z                       | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )                                                             | Fiche information : Point lumineux (support) |             |
-| situation                        |                   | x             | Situation générale : actif, inactif,supprimé            | Formatage par une liste de domaine ( lt_ecl_situation )                                                                           | Fiche information : Point lumineux (support) |             |
-| src_geom                         |                   | x             | Source utilisée pour la géolocalisation                 | Formatage par une liste de domaine ( lt_src_geom )                                                                                | Fiche information : Point lumineux (support) |             |
-| ty_disjonc                       |                   | x             | Ty Disjonc                                              | Formatage par une liste de domaine ( lt_ecl_type_disjoncteur )                                                                    | Fiche information : Point lumineux (support) |             |
-| ty_fusible                       |                   | x             | Type de fusible installé                                | Formatage par une liste de domaine ( lt_ecl_type_fusible )                                                                        | Fiche information : Point lumineux (support) |             |
-| ty_parasu                        |                   | x             | Ty Parasu                                               | Formatage par une liste de domaine ( lt_ecl_type_parasurtenseur )                                                                 | Fiche information : Point lumineux (support) |             |
-| ty_supp                          |                   | x             | Type de support                                         | Formatage par une liste de domaine ( lt_ecl_type_support )                                                                        | Fiche information : Point lumineux (support) |             |
+| Atributs                         | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                                  | Utilisation                                  |
+|:--------------------------------:|:-----------------:|:-------------:|:--------------------------------------------:|:------------------------------------------------------------------------------------:|:--------------------------------------------:|
+| Pour affichage qualité fct(date) |                   |               | Pour affichage qualité fct(date)             | Identifie les données non mises à jour depuis plus de deux ans                       | Cartographie                                 |
+| Blanc                            | x                 |               | Blanc                                        | Contient le caractère ' '                                                            | Recherche : Recherche de support             |
+| Affiche_recherche                | x                 |               | Affiche_recherche                            | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée.     | Recherche : Recherche de support             |
+| depart                           |                   | x             | Numéro de départ auquel est lié le noeud     | Formatage par une liste de domaine ( an_ecl_depart )                                 | Fiche information : Point lumineux (support) |
+| etat_supp                        |                   | x             | Etat general du support                      | Formatage par une liste de domaine ( lt_ecl_etat )                                   | Fiche information : Point lumineux (support) |
+| haut_trap                        |                   | x             | Hauteur de la trappe                         | Formatage par une liste de domaine ( lt_ecl_hauteur_trappe )                         | Fiche information : Point lumineux (support) |
+| id_mod_sup                       |                   | x             | Identifiant du modèle du support             | Formatage par une liste de domaine ( an_ecl_modele_support )                         | Fiche information : Point lumineux (support) |
+| opt_supp                         |                   | x             | Options du support                           | Formatage par une liste de domaine ( lt_ecl_options_support ) - attribut multivalué. | Fiche information : Point lumineux (support) |
+| qua_dat                          |                   | x             | Qualité de la date de pose                   | Formatage par une liste de domaine ( lt_ecl_qualite_date )                           | Fiche information : Point lumineux (support) |
+| qua_geo_xy                       |                   | x             | Classe de la géolocalisation en XY           | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )                | Fiche information : Point lumineux (support) |
+| qua_geo_z                        |                   | x             | Classe de la géolocalisation en Z            | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )                | Fiche information : Point lumineux (support) |
+| situation                        |                   | x             | Situation générale : actif, inactif,supprimé | Formatage par une liste de domaine ( lt_ecl_situation )                              | Fiche information : Point lumineux (support) |
+| src_geom                         |                   | x             | Source utilisée pour la géolocalisation      | Formatage par une liste de domaine ( lt_src_geom )                                   | Fiche information : Point lumineux (support) |
+| ty_disjonc                       |                   | x             | Type de disjoncteur                          | Formatage par une liste de domaine ( lt_ecl_type_disjoncteur )                       | Fiche information : Point lumineux (support) |
+| ty_fusible                       |                   | x             | Type de fusible installé                     | Formatage par une liste de domaine ( lt_ecl_type_fusible )                           | Fiche information : Point lumineux (support) |
+| ty_parasu                        |                   | x             | Type de parasurtenseur                       | Formatage par une liste de domaine ( lt_ecl_type_parasurtenseur )                    | Fiche information : Point lumineux (support) |
+| ty_supp                          |                   | x             | Type de support                              | Formatage par une liste de domaine ( lt_ecl_type_support )                           | Fiche information : Point lumineux (support) |
+| date_maj                         |                   | x             | Date de la mise à jour                       | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
+| date_sai                         |                   | x             | Date de saisie dans la base                  | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
+| dat_pos                          |                   | x             | Date de pose                                 | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
+| date_donne                       |                   | x             | Date de création de la donnée                | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
+
+ (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
   ### Filtres :
 
@@ -490,21 +517,22 @@ END
   ### Particularités :
 
 ## Table : `geo_v_ecl_pi`
-| Atributs          | Champ calculé     | Formatage     | Renommage                                               | Particularité/Usage                                                                                                               | Utilisation                              | Exemple     |
-|:-----------------:|:-----------------:|:-------------:| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ----------- |
-| $$                | x                 |               | $$                                                      | Contient le caractère ' ' . Pour gérer le fait que GEO affiche en haut de la fiche info le 1er  champ du résultat d'une recherche | Recherche : Recherche de point d'interet |             |
-| Affiche_recherche | x                 |               | Affiche_recherche                                       | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée.                                                  | Recherche : Recherche de point d'interet |             |
-| dat_pos           |                   | x             | Date de pose du le point d'interet                      | Les heures ne sont pas affichées                                                                                                  | Fiche information : Point intérêt (PI)   |             |
-| date_donne        |                   | x             | Date de la donnée                                       | Les heures ne sont pas affichées                                                                                                  | Fiche information : Point intérêt (PI)   |             |
-| date_maj          |                   | x             | Date de dernière mise à jour de la donnée               | Les heures ne sont pas affichées                                                                                                  | Fiche information : Point intérêt (PI)   |             |
-| date_sai          |                   | x             | Date de la saisie de la donnée dans la base             | Les heures ne sont pas affichées                                                                                                  | Fiche information : Point intérêt (PI)   |             |
-| depart            |                   | x             | Numéro de départ auquel est lié le noeud                | Formatage par une liste de domaine ( an_ecl_depart )                                                                              | Fiche information : Point intérêt (PI)   |             |
-| etat_pi           |                   | x             | Etat Pi                                                 | Formatage par une liste de domaine ( lt_ecl_etat )                                                                                | Fiche information : Point intérêt (PI)   |             |
-| qua_dat           |                   | x             | Qualité de la date de pose du le point d'interet        | Formatage par une liste de domaine ( lt_ecl_qualite_date )                                                                        | Fiche information : Point intérêt (PI)   |             |
-| qua_geo_xy        |                   | x             | Classe de la géolocalisation en XY                      | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )                                                             | Fiche information : Point intérêt (PI)   |             |
-| qua_geo_z         |                   | x             | Classe de la géolocalisation en Z                       | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )                                                             | Fiche information : Point intérêt (PI)   |             |
-| situation         |                   | x             | Situation générale : actif, inactif,supprimé            | Formatage par une liste de domaine ( lt_ecl_situation )                                                                           | Fiche information : Point intérêt (PI)   |             |
-| ty_pi             |                   | x             | Ty Pi                                                   | Formatage par une liste de domaine ( lt_ecl_type_pi )                                                                             | Fiche information : Point intérêt (PI)   |             |
+| Atributs          | Champ calculé     | Formatage     | Renommage                                        | Particularité/Usage                                                              | Utilisation                              |
+|:-----------------:|:-----------------:|:-------------:|:------------------------------------------------:|:--------------------------------------------------------------------------------:|:----------------------------------------:|
+| Blanc             | x                 |               | Blanc                                            | Contient le caractère ' ' .                                                      | Recherche : Recherche de point d'interet |
+| Affiche_recherche | x                 |               | Affiche_recherche                                | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Recherche de point d'interet |
+| dat_pos           |                   | x             | Date de pose du le point d'interet               | Les heures ne sont pas affichées                                                 | Fiche information : Point intérêt (PI)   |
+| date_donne        |                   | x             | Date de la donnée                                | Les heures ne sont pas affichées                                                 | Fiche information : Point intérêt (PI)   |
+| date_maj          |                   | x             | Date de dernière mise à jour de la donnée        | Les heures ne sont pas affichées                                                 | Fiche information : Point intérêt (PI)   |
+| date_sai          |                   | x             | Date de la saisie de la donnée dans la base      | Les heures ne sont pas affichées                                                 | Fiche information : Point intérêt (PI)   |
+| depart            |                   | x             | Numéro de départ auquel est lié le noeud         | Formatage par une liste de domaine ( an_ecl_depart )                             | Fiche information : Point intérêt (PI)   |
+| etat_pi           |                   | x             | Etat du point d'intérêt                          | Formatage par une liste de domaine ( lt_ecl_etat )                               | Fiche information : Point intérêt (PI)   |
+| qua_dat           |                   | x             | Qualité de la date de pose du le point d'interet | Formatage par une liste de domaine ( lt_ecl_qualite_date )                       | Fiche information : Point intérêt (PI)   |
+| qua_geo_xy        |                   | x             | Classe de la géolocalisation en XY               | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )            | Fiche information : Point intérêt (PI)   |
+| qua_geo_z         |                   | x             | Classe de la géolocalisation en Z                | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )            | Fiche information : Point intérêt (PI)   |
+| situation         |                   | x             | Situation générale : actif, inactif,supprimé     | Formatage par une liste de domaine ( lt_ecl_situation )                          | Fiche information : Point intérêt (PI)   |
+| ty_pi             |                   | x             | Type de point d'intérêt                          | Formatage par une liste de domaine ( lt_ecl_type_pi )                            | Fiche information : Point intérêt (PI)   |
+
 
   ### Filtres :
 
@@ -516,10 +544,12 @@ END
   ### Relations :
 
 | Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
-| -------------------------------------------------- | --------------------------------------------------------- | -------- |
+|:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
 | an_ecl_media                                       | id_pi - id                                                | 0…n      |
 | xapps_an_vmr_ecl_materialisee_noeud_armoire        | id_pi - id_noeud                                          | 1        |
 | an_ecl_intervention (intervention point d'interet) | id_pi - id_objet                                          | 0…n      |
+| an_ecl_errreur                                     | id_pi - id_objet                                          | 0…n      |
+
 
   ### Particularités :
 
@@ -968,38 +998,40 @@ Source : an_ecl_modele_lampe
 | -------------------- | ---- | --------------- | --------------------------- |
 | dans le gabarit      |      | 600 * 650       | Vertical                    |
 
-| Nom de la section     | Sous-section        | Attributs     | Position label     | Agencement attribut     | Visibilité conditionnelle        | Fichie liée     | Ajout de données autorisé     | Description                                               |
-| --------------------- | ------------------- | ------------- | ------------------ | ----------------------- | -------------------------------- | --------------- | ----------------------------- | --------------------------------------------------------- |
-| Caractéristiques      |                     |               | par défaut         | Vertical                |                                  |                 |                               | Caréctéristiques métier du modèle de lampe                |
-|                       |                     | nom_mod_lm    |                    |                         |                                  |                 |                               |                                                           |
-|                       |                     | gar_lamp      |                    |                         |                                  |                 |                               |                                                           |
-|                       |                     | ty_lampe      |                    |                         |                                  |                 |                               |                                                           |
-|                       |                     | puis_lam      |                    |                         |                                  |                 |                               |                                                           |
-|                       |                     | cul_lamp      |                    |                         |                                  |                 |                               |                                                           |
-|                       | Télégestion         |               | par défaut         | Vertical                | ty_lampe == 50                   |                 |                               |                                                           |
-|                       |                     | telgest       |                    |                         |                                  |                 |                               |                                                           |
-|                       | Couleur d'éclairage |               | par défaut         | Vertical                | ty_lampe == 10 && cul_lamp == 30 |                 |                               |                                                           |
-|                       |                     | cou_ecl       |                    |                         |                                  |                 |                               |                                                           |
-| (vide)                |                     | op_sai        | par défaut         | Vertical                | id_mod_lm < 0                    |                 |                               | Pour que l'opérateur de saisie se remplisse correctement. |
-| Photothèque           |                     |               | par défaut         | Vertical                | id_mod_lm != NULL                |                 |                               | Photos et documents associés                              |
-|                       |                     | miniature     |                    |                         |                                  |                 |                               |                                                           |
-|                       |                     | n_fichier     |                    |                         |                                  |                 |                               |                                                           |
-
+| Nom de la section     | Sous-section        | Attributs     | Position label     | Agencement attribut     | Visibilité conditionnelle        | Fichie liée     | Ajout de données autorisé     | Description                                |
+|:---------------------:|:-------------------:|:-------------:|:------------------:|:-----------------------:|:--------------------------------:|:---------------:|:-----------------------------:|:------------------------------------------:|
+| Caractéristiques      |                     |               | par défaut         | Vertical                |                                  |                 |                               | Caréctéristiques métier du modèle de lampe |
+|                       |                     | nom_mod_lm    |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | gar_lamp      |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | ty_lampe      |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | puis_lam      |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | cul_lamp      |                    |                         |                                  |                 |                               |                                            |
+|                       | Télégestion         |               | par défaut         | Vertical                | ty_lampe == 50                   |                 |                               |                                            |
+|                       |                     | telgest       |                    |                         |                                  |                 |                               |                                            |
+|                       | Couleur d'éclairage |               | par défaut         | Vertical                | ty_lampe == 10 && cul_lamp == 30 |                 |                               |                                            |
+|                       |                     | cou_ecl       |                    |                         |                                  |                 |                               |                                            |
+| Métadonnées           |                     |               |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | date_maj      |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | date_sai      |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | op_sai        |                    |                         |                                  |                 |                               |                                            |
+| Photothèque           |                     |               | par défaut         | Vertical                | id_mod_lm != NULL                |                 |                               | Photos et documents associés               |
+|                       |                     | miniature     |                    |                         |                                  |                 |                               |                                            |
+|                       |                     | n_fichier     |                    |                         |                                  |                 |                               |                                            |
 
     - Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                              | Obligatoire     | Valeur par défaut     | Liste de domaine                   | Représentation     |
-| ----------------------------------------------------- | --------------- | --------------------- | ---------------------------------- | ------------------ |
-| Nom Mod Lm ( nom_mod_lm )   STRING                    |                 |                       |                                    | Par défaut         |
-| Type de lampe ( ty_lampe )   STRING                   | x               | 0                     | "lt_ecl_type_lampe"                | Par défaut         |
-| Puissance de la lampe ( puis_lam )   STRING           | x               | 0                     | "lt_ecl_puissance_lampe (code)"    | Par défaut         |
-| Culot de la lampe ( cul_lamp )   STRING               | x               | 0                     | "lt_ecl_culot_lampe"               | Par défaut         |
-| Présence d'une télégestion ( telgest )   STRING       | x               | 0                     | "lt_ecl_presence (code)"           | Par défaut         |
-| Couleur d'éclairage de la lampe ( cou_ecl )   STRING  | x               | 0                     | "lt_ecl_couleur_eclairage (code)"  | Par défaut         |
-| Garantie de la lampe en années ( gar_lamp )   INTEGER |                 |                       |                                    | Par défaut         |
-| Op Sai ( op_sai )   STRING                            |                 | %USER_LOGIN%          |                                    | Par défaut         |
+| Attribut                                                         | Obligatoire     | Valeur par défaut     | Liste de domaine                  |
+|:----------------------------------------------------------------:|:---------------:|:---------------------:|:---------------------------------:|
+| Nom du modèle de lampe ( nom_mod_lm )   STRING                   |                 |                       |                                   |
+| Type de lampe ( ty_lampe )   STRING                              | x               | 0                     | "lt_ecl_type_lampe"               |
+| Puissance de la lampe ( puis_lam )   STRING                      | x               | 0                     | "lt_ecl_puissance_lampe (code)"   |
+| Culot de la lampe ( cul_lamp )   STRING                          | x               | 0                     | "lt_ecl_culot_lampe"              |
+| Présence d'une télégestion ( telgest )   STRING                  | x               | 0                     | "lt_ecl_presence (code)"          |
+| Couleur d'éclairage de la lampe ( cou_ecl )   STRING             | x               | 0                     | "lt_ecl_couleur_eclairage (code)" |
+| Garantie de la lampe en années ( gar_lamp )   INTEGER            |                 |                       |                                   |
+| Opérateur de la saisie initiale de la donnée ( op_sai )   STRING |                 | %USER_LOGIN%          |                                   |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1017,39 +1049,38 @@ Source : an_ecl_modele_lanterne
 | -------------------- | --------------- | --------------------------- |
 | dans le gabarit      | 530 *650        | Vertical                    |
 
-| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle                                | Fichie liée     | Ajout de données autorisé     | Description                                               |
-| --------------------- | ---------------- | ---------------- | ------------------ | ----------------------- | -------------------------------------------------------- | --------------- | ----------------------------- | --------------------------------------------------------- |
-| Caractéristiques      |                  |                  | par défaut         | Vertical                |                                                          |                 |                               | Caréctéristiques métier du modèle de lampe                |
-|                       |                  | nom_mod_ln       |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | gar_lant         |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | clas_el_ln       |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | cod_ral_ln       |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | ik_lant          |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | ip_lant          |                    |                         |                                                          |                 |                               |                                                           |
-|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_ln != NULL && (ik_lant == NULL || ip_lant ==NULL) |                 |                               |                                                           |
-|                       |                  | Message d'erreur |                    |                         |                                                          |                 |                               |                                                           |
-| (vide)                |                  | op_sai           | par défaut         | Vertical                | id_mod_lm < 0                                            |                 |                               | Pour que l'opérateur de saisie se remplisse correctement. |
-| Photothèque           |                  |                  | par défaut         | Vertical                | id_mod_lm != NULL                                        |                 |                               | Photos et documents associés                              |
-|                       |                  | miniature        |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | n_fichier        |                    |                         |                                                          |                 |                               |                                                           |
-| Métadonnées           |                  |                  | par défaut         | Vertical                | id_mod_lm != NULL                                        |                 |                               | métadonnées de l'entité                                   |
-|                       |                  | op_sai           |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | date_sai         |                    |                         |                                                          |                 |                               |                                                           |
-|                       |                  | date_maj         |                    |                         |                                                          |                 |                               |                                                           |
+| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle                               | Fichie liée     | Ajout de données autorisé     | Description                                |
+|:---------------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|:-------------------------------------------------------:|:---------------:|:-----------------------------:|:------------------------------------------:|
+| Caractéristiques      |                  |                  | par défaut         | Vertical                |                                                         |                 |                               | Caréctéristiques métier du modèle de lampe |
+|                       |                  | nom_mod_ln       |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | gar_lant         |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | clas_el_ln       |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | cod_ral_ln       |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | ik_lant          |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | ip_lant          |                    |                         |                                                         |                 |                               |                                            |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_ln != NULL && (ik_lant == NULL ||ip_lant ==NULL) |                 |                               |                                            |
+|                       |                  | Message d'erreur |                    |                         |                                                         |                 |                               |                                            |
+| Photothèque           |                  |                  | par défaut         | Vertical                | id_mod_lm != NULL                                       |                 |                               | Photos et documents associés               |
+|                       |                  | miniature        |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | n_fichier        |                    |                         |                                                         |                 |                               |                                            |
+| Métadonnées           |                  |                  | par défaut         | Vertical                | id_mod_lm != NULL                                       |                 |                               | métadonnées de l'entité                    |
+|                       |                  | op_sai           |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | date_sai         |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | date_maj         |                    |                         |                                                         |                 |                               |                                            |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_ln != NULL                                       |                 |                               |                                            |
+|                       |                  | Message d'erreur |                    |                         |                                                         |                 |                               |                                            |
 
 
     - Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
-| Attribut                                                                   | Obligatoire     | Valeur par défaut     | Liste de domaine            | Représentation     |
-| -------------------------------------------------------------------------- | --------------- | --------------------- | --------------------------- | ------------------ |
-| Nom Mod Ln ( nom_mod_ln )   STRING                                         |                 |                       |                             | Par défaut         |
-| Durée de garantie de la lanterne, en années ( gar_lant )   INTEGER         |                 |                       |                             | Par défaut         |
-| Code RAL de la lanterne ( cod_ral_ln )   STRING                            |                 |                       |                             | Par défaut         |
-| Classe électrique de la lanterne ( clas_el_ln )   STRING                   |      x           | 0                     | "lt_ecl_classe_electrique"  | Par défaut         |
-| indice de protection face aux influences extérieures ( ik_lant )   INTEGER |                 |                       |                             | Par défaut         |
-| Indice de protection aux chocs mécaniques ( ip_lant )   INTEGER            |                 |                       |                             | Par défaut         |
-| Op Sai ( op_sai )   STRING                                                 |                 | %USER_LOGIN%          |                             | Par défaut         |
+| Atributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                      | Utilisation                                               |
+|:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:--------------------------------------------------------:|:---------------------------------------------------------:|
+| clas_el_ln   |                   | x             | Classe électrique de la lanterne          | Formatage par une liste de domaine ( lt_ecl_type_lampe ) | Fiche d'information : modèle lanterne (ECL) / Foyer (ECL) |
+| cle_media    | x                 |               | cle_media                                 | Correspond à l'id de l'objet avec LN en préfixe. (1)     | Relation avec an_ecl_media_modele.                        |
+| cod_ral_ln   |                   |               | Code RAL de la lanterne                   |                                                          | Fiche d'information : modèle lanterne (ECL) / Foyer (ECL) |
+| date_maj     |                   | x             | Date de dernière mise à jour              | Les heures ne sont pas affichées                         | Fiche d'information : modèle lanterne (ECL)               |
+| date_sai     |                   | x             | Date de saisie de la donnée dans la base  | Les heures ne sont pas affichées                         | Fiche d'information : modèle lanterne (ECL)               |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1068,26 +1099,27 @@ Source : an_ecl_modele_support
 | dans le gabarit      | 570*650         | Vertical                    |
 
 
-| Nom de la section     | Sous-section     | Attributs         | Position label     | Agencement attribut     | Visibilité conditionnelle                                 | Fichie liée     | Ajout de données autorisé     | Description                                               |
-| --------------------- | ---------------- | ----------------- | ------------------ | ----------------------- | --------------------------------------------------------- | --------------- | ----------------------------- | --------------------------------------------------------- |
-| Caractéristiques      |                  | Caractéristiques  | par défaut         | Vertical                |                                                           |                 |                               | Caréctéristiques métier du modèle de support              |
-|                       |                  | nom_mod_su        |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | mat_supp          |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | ik_supp           |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | ip_supp           |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | cod_ral_s         |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | observ            |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | op_sai            |                    |                         |                                                           |                 |                               |                                                           |
-|                       | (vide)           |                   | par défaut         | Vertical                | id_mod_sup != NULL && (ik_supp == NULL || ip_supp ==NULL) |                 |                               |                                                           |
-|                       |                  | Message d'erreur  |                    |                         |                                                           |                 |                               |                                                           |
-| Photothèque           |                  |                   | par défaut         | Vertical                | id_mod_sup!= NULL                                         |                 |                               | Photos et documents associés                              |
-|                       |                  | miniature         |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | n_fichier         |                    |                         |                                                           |                 |                               |                                                           |
-| Métadonnées           |                  |                   | par défaut         | Vertical                | id_mod_sup != NULL                                        |                 |                               | métadonnées de l'entité                                   |
-|                       |                  | op_sai            |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | date_sai          |                    |                         |                                                           |                 |                               |                                                           |
-|                       |                  | date_maj          |                    |                         |                                                           |                 |                               |                                                           |
-| (vide)                |                  | op_sai            | par défaut         | Vertical                | id_mod_lm < 0                                             |                 |                               | Pour que l'opérateur de saisie se remplisse correctement. |
+| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle              | Fichie liée     | Ajout de données autorisé     | Description                                               |
+|:---------------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|:--------------------------------------:|:---------------:|:-----------------------------:|:---------------------------------------------------------:|
+| Caractéristiques      |                  | Caractéristiques | par défaut         | Vertical                |                                        |                 |                               | Caréctéristiques métier du modèle de support              |
+|                       |                  | nom_mod_su       |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | mat_supp         |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | ik_supp          |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | ip_supp          |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | cod_ral_s        |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | observ           |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | op_sai           |                    |                         |                                        |                 |                               |                                                           |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_sup != NULL && (ik_supp == NULL |                 | ip_supp ==NULL)               |                                                           |
+|                       |                  | Message d'erreur |                    |                         |                                        |                 |                               |                                                           |
+| Photothèque           |                  |                  | par défaut         | Vertical                | id_mod_sup!= NULL                      |                 |                               | Photos et documents associés                              |
+|                       |                  | miniature        |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | n_fichier        |                    |                         |                                        |                 |                               |                                                           |
+| Métadonnées           |                  |                  | par défaut         | Vertical                | id_mod_sup != NULL                     |                 |                               | métadonnées de l'entité                                   |
+|                       |                  | op_sai           |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | date_sai         |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | date_maj         |                    |                         |                                        |                 |                               |                                                           |
+| (vide)                |                  | op_sai           | par défaut         | Vertical                | id_mod_lm < 0                          |                 |                               | Pour que l'opérateur de saisie se remplisse correctement. |
+
 
 
 
@@ -1095,15 +1127,15 @@ Source : an_ecl_modele_support
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                                                   | Obligatoire     | Valeur par défaut     | Liste de domaine             | Représentation     |
-| -------------------------------------------------------------------------- | --------------- | --------------------- | ---------------------------- | ------------------ |
-| Nom Mod Su ( nom_mod_su )   STRING                                         |                 |                       |                              | Par défaut         |
-| Matériau du support ( mat_supp )   STRING                                  | x               | 0                     | "lt_ecl_materiaux_supports"  | Par défaut         |
-| indice de protection face aux influences extérieures ( ik_supp )   INTEGER |                 |                       |                              | Par défaut         |
-| Indice de protection aux chocs mécaniques ( ip_supp )   INTEGER            |                 |                       |                              | Par défaut         |
-| Op Sai ( op_sai )   STRING                                                 |                 | %USER_LOGIN%          |                              | Par défaut         |
-| Code RAL du support ( cod_ral_s )   STRING                                 |                 |                       |                              | Par défaut         |
-| Commentaires divers ( observ )   STRING                                    |                 |                       |                              | Par défaut         |
+| Attribut                                                                   | Obligatoire     | Valeur par défaut     | Liste de domaine            | Représentation     |
+|:--------------------------------------------------------------------------:|:---------------:|:---------------------:|:---------------------------:|:------------------:|
+| Nom Mod Su ( nom_mod_su )   STRING                                         |                 |                       |                             | Par défaut         |
+| Matériau du support ( mat_supp )   STRING                                  | x               | 0                     | "lt_ecl_materiaux_supports" | Par défaut         |
+| indice de protection face aux influences extérieures ( ik_supp )   INTEGER |                 |                       |                             | Par défaut         |
+| Indice de protection aux chocs mécaniques ( ip_supp )   INTEGER            |                 |                       |                             | Par défaut         |
+| Op Sai ( op_sai )   STRING                                                 |                 | %USER_LOGIN%          |                             | Par défaut         |
+| Code RAL du support ( cod_ral_s )   STRING                                 |                 |                       |                             | Par défaut         |
+| Commentaires divers ( observ )   STRING                                    |                 |                       |                             | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1122,54 +1154,57 @@ Source : geo_ecl_cable
 | dans le gabarit      | 530*300         | Onglet                      |
 
 
-| Nom de la section     | Sous-section     | Attributs         | Position label     | Agencement attribut     | Visibilité conditionnelle     | Fichie liée        | Ajout de données autorisé     | Description                                         |
-| --------------------- | ---------------- | ----------------- | ------------------ | ----------------------- | ----------------------------- | ------------------ | ----------------------------- | --------------------------------------------------- |
-| Caractéristiques      |                  | Caractéristiques  | par défaut         | Vertical                |                               |                    |                               | Caréctéristiques métier de l'objet                  |
-|                       |                  | etat_cable        |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | situ_cab          |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | sect_cab          |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | observ            |                    |                         |                               |                    |                               |                                                     |
-|                       | (vide)           |                   | par défaut         | Vertical                | id_cab != NULL                |                    |                               |                                                     |
-|                       |                  | tension           |                    |                         |                               |                    |                               |                                                     |
-| Photothèque           |                  |                   | par défaut         | Vertical                | id_cab != NULL                |                    |                               | Photos et documents associés                        |
-|                       |                  | miniature         |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | n_fichier         |                    |                         |                               |                    |                               |                                                     |
-| Métadonnées           |                  |                   | par défaut         | Vertical                | id_cab != NULL                |                    |                               | métadonnées de l'entité                             |
-|                       |                  | situation         |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | qua_geo_xy        |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | qua_geo_z         |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | date_donne        |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | date_sai          |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | date_maj          |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | op_sai            |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | op_sai_geo        |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | src_geom          |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | src_date          |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | insee1            |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | commune1          |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | insee2            |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | commune2          |                    |                         |                               |                    |                               |                                                     |
-| Intervention          |                  |                   | par défaut         | Vertical                | id_cab != NULL                | intervention câble | x                             | Données de an_ecl_intervention en lien avec l'objet |
-|                       |                  | dates             |                    |                         |                               |                    |                               |                                                     |
-|                       |                  | type_inter        |                    |                         |                               |                    |                               |                                                     |
-
+| Nom de la section     | Sous-section     | Attributs     | Position label     | Agencement attribut     | Visibilité conditionnelle     | Fichie liée        | Ajout de données autorisé     | Description                                         |
+|:---------------------:|:----------------:|:-------------:|:------------------:|:-----------------------:|:-----------------------------:|:------------------:|:-----------------------------:|:---------------------------------------------------:|
+| Caractéristiques      |                  |               | par défaut         | Vertical                |                               |                    |                               | Caréctéristiques métier de l'objet                  |
+|                       |                  | etat_cable    |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | situ_cab      |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | sect_cab      |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | observ        |                    |                         |                               |                    |                               |                                                     |
+|                       | (vide)           |               | par défaut         | Vertical                | id_cab != NULL                |                    |                               |                                                     |
+|                       |                  | tension       |                    |                         |                               |                    |                               |                                                     |
+|                       | (vide)           |               | par défaut         | Vertical                | id_cab != NULL                |                    |                               |                                                     |
+|                       |                  | message       |                    |                         |                               |                    |                               |                                                     |
+| Photothèque           |                  |               | par défaut         | Vertical                | id_cab != NULL                |                    |                               | Photos et documents associés                        |
+|                       |                  | miniature     |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | n_fichier     |                    |                         |                               |                    |                               |                                                     |
+| Métadonnées           |                  |               | par défaut         | Vertical                | id_cab != NULL                |                    |                               | métadonnées de l'entité                             |
+|                       |                  | situation     |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | qua_geo_xy    |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | qua_geo_z     |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | date_donne    |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | date_sai      |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | date_maj      |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | op_sai        |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | op_sai_geo    |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | src_geom      |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | src_date      |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | insee1        |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | commune1      |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | insee2        |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | commune2      |                    |                         |                               |                    |                               |                                                     |
+|                       | (vide)           |               | par défaut         | Vertical                | id_cab != NULL                |                    |                               |                                                     |
+|                       |                  | message       |                    |                         |                               |                    |                               |                                                     |
+| Intervention          |                  |               | par défaut         | Vertical                | id_cab != NULL                | intervention câble | x                             | Données de an_ecl_intervention en lien avec l'objet |
+|                       |                  | dates         |                    |                         |                               |                    |                               |                                                     |
+|                       |                  | type_inter    |                    |                         |                               |                    |                               |                                                     |
 
     - Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                                     | Obligatoire     | Valeur par défaut     | Liste de domaine                 | Représentation     |
-| ------------------------------------------------------------ | --------------- | --------------------- | -------------------------------- | ------------------ |
-| Exploitant du câble ( exploi_cab )   STRING                  |                 |                       |                                  | Par défaut         |
-| Prestataire des travaux sur le câble ( presta_cab )   STRING |                 |                       |                                  | Par défaut         |
-| Etat du câble ( etat_cable )   STRING                        | x               | 0                     | "lt_ecl_etat"                    | Par défaut         |
-| Situation physique du câble ( situ_cab )   STRING            | x               | 0                     | "lt_ecl_situation_cable"         | Par défaut         |
-| Date de pose du câble ( dat_pos_ca )   TIMESTAMP             |                 |                       |                                  | Par défaut         |
-| Section du câble ( sect_cab )   STRING                       | x               | 0                     | "lt_ecl_section_cable (valeur)"  | Par défaut         |
-| Commentaires divers ( observ )   STRING                      |                 |                       |                                  | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                                  | Par défaut         |
-| Date Donne ( date_donne )   TIMESTAMP                        |                 |                       |                                  | Par défaut         |
-| Qua Dat ( qua_dat )   STRING                                 |                 | 0                     |                                  | Par défaut         |
+| Attribut                                                     | Obligatoire     | Valeur par défaut     | Liste de domaine                | Représentation     |
+|:------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------------:|:------------------:|
+| Exploitant du câble ( exploi_cab )   STRING                  |                 |                       |                                 | Par défaut         |
+| Prestataire des travaux sur le câble ( presta_cab )   STRING |                 |                       |                                 | Par défaut         |
+| Etat du câble ( etat_cable )   STRING                        | x               | 0                     | "lt_ecl_etat"                   | Par défaut         |
+| Situation physique du câble ( situ_cab )   STRING            | x               | 0                     | "lt_ecl_situation_cable"        | Par défaut         |
+| Date de pose du câble ( dat_pos_ca )   TIMESTAMP             |                 |                       |                                 | Par défaut         |
+| Section du câble ( sect_cab )   STRING                       | x               | 0                     | "lt_ecl_section_cable (valeur)" | Par défaut         |
+| Commentaires divers ( observ )   STRING                      |                 |                       |                                 | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                                 | Par défaut         |
+| Date de création de la donnée ( date_donne )   TIMESTAMP     |                 |                       |                                 | Par défaut         |
+| Qualité de la date de pose ( qua_dat )   STRING              |                 | 0                     |                                 | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1188,59 +1223,60 @@ Source : geo_v_ecl_point_d'interet
 | dans le gabarit      | 850*550         | Onglet                      |
 
 
-| Nom de la section     | Sous-section     | Attributs     | Position label     | Agencement attribut     | Visibilité conditionnelle     | Fichie liée        |
-| --------------------- | ---------------- | ------------- | ------------------ | ----------------------- | ----------------------------- | ------------------ |
-| Caractéristiques      |                  |               | par défaut         | Vertical                |                               |                    |
-|                       |                  | ty_pi         |                    |                         |                               |                    |
-|                       |                  | etat_pi       |                    |                         |                               |                    |
-|                       |                  | observ        |                    |                         |                               |                    |
-|                       | Courant          |               | par défaut         | Vertical                |                               |                    |
-|                       |                  | depart        |                    |                         |                               |                    |
-|                       |                  | amont_cour    |                    |                         |                               |                    |
-| Photothèque           |                  |               | par défaut         | Vertical                | id_pi != NULL                 |                    |
-|                       |                  | miniature     |                    |                         |                               |                    |
-|                       |                  | n_fichier     |                    |                         |                               |                    |
-| Métadonnées           |                  |               | par défaut         | Vertical                | id_pi != NULL                 |                    |
-|                       |                  | situation     |                    |                         |                               |                    |
-|                       |                  | qua_geo_xy    |                    |                         |                               |                    |
-|                       |                  | qua_geo_z     |                    |                         |                               |                    |
-|                       |                  | date_donne    |                    |                         |                               |                    |
-|                       |                  | date_sai      |                    |                         |                               |                    |
-|                       |                  | date_maj      |                    |                         |                               |                    |
-|                       |                  | op_sai        |                    |                         |                               |                    |
-|                       |                  | op_sai_geo    |                    |                         |                               |                    |
-|                       |                  | src_geom      |                    |                         |                               |                    |
-|                       |                  | src_date      |                    |                         |                               |                    |
-| Intervention          |                  |               | par défaut         | Vertical                | id_pi != NULL                 | intervention câble |
-|                       |                  | dates         |                    |                         |                               |                    |
-|                       |                  | type_inter    |                    |                         |                               |                    |
-| Contrat               |                  |               | par défaut         | Vertical                | id_pi != NULL                 |                    |
-|                       |                  | exploit_nd    |                    |                         |                               |                    |
-|                       |                  | presta_nd     |                    |                         |                               |                    |
-|                       |                  | ent_pose      |                    |                         |                               |                    |
-|                       |                  | dat_pos       |                    |                         |                               |                    |
-|                       |                  | qua_dat       |                    |                         |                               |                    |
-|                       |                  | commune       |                    |                         |                               |                    |
-|                       |                  | insee         |                    |                         |                               |                    |
-
+| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle     | Fichie liée     |
+|:---------------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|:-----------------------------:|:---------------:|
+| Caractéristiques      |                  |                  | par défaut         | Vertical                |                               |                 |
+|                       |                  | ty_pi            |                    |                         |                               |                 |
+|                       |                  | etat_pi          |                    |                         |                               |                 |
+|                       |                  | observ           |                    |                         |                               |                 |
+|                       | Courant          |                  | par défaut         | Vertical                |                               |                 |
+|                       |                  | depart           |                    |                         |                               |                 |
+|                       |                  | amont_cour       |                    |                         |                               |                 |
+| Photothèque           |                  |                  | par défaut         | Vertical                | id_pi != NULL                 |                 |
+|                       |                  | miniature        |                    |                         |                               |                 |
+|                       |                  | n_fichier        |                    |                         |                               |                 |
+| Métadonnées           |                  |                  | par défaut         | Vertical                | id_pi != NULL                 |                 |
+|                       |                  | situation        |                    |                         |                               |                 |
+|                       |                  | qua_geo_xy       |                    |                         |                               |                 |
+|                       |                  | qua_geo_z        |                    |                         |                               |                 |
+|                       |                  | date_donne       |                    |                         |                               |                 |
+|                       |                  | date_sai         |                    |                         |                               |                 |
+|                       |                  | date_maj         |                    |                         |                               |                 |
+|                       |                  | op_sai           |                    |                         |                               |                 |
+|                       |                  | op_sai_geo       |                    |                         |                               |                 |
+|                       |                  | src_geom         |                    |                         |                               |                 |
+|                       |                  | src_date         |                    |                         |                               |                 |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_pi != NULL                 |                 |
+|                       |                  | Message d'erreur |                    |                         |                               |                 |
+| Intervention          |                  |                  | par défaut         | Vertical                | id_pi != NULL                 | intervention PI |
+|                       |                  | dates            |                    |                         |                               |                 |
+|                       |                  | type_inter       |                    |                         |                               |                 |
+| Contrat               |                  |                  | par défaut         | Vertical                | id_pi != NULL                 |                 |
+|                       |                  | exploit_nd       |                    |                         |                               |                 |
+|                       |                  | presta_nd        |                    |                         |                               |                 |
+|                       |                  | ent_pose         |                    |                         |                               |                 |
+|                       |                  | dat_pos          |                    |                         |                               |                 |
+|                       |                  | qua_dat          |                    |                         |                               |                 |
+|                       |                  | commune          |                    |                         |                               |                 |
+|                       |                  | insee            |                    |                         |                               |                 |
 
     - Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                                              | Obligatoire     | Valeur par défaut     | Liste de domaine                      | Représentation     |
-| --------------------------------------------------------------------- | --------------- | --------------------- | ------------------------------------- | ------------------ |
-| Ty Pi ( ty_pi )   STRING                                              | x               | 99                    | "lt_ecl_type_pi"                      | Par défaut         |
-| Etat Pi ( etat_pi )   STRING                                          | x               | 0                     | "lt_ecl_etat"                         | Par défaut         |
-| Numéro de départ auquel est lié le noeud ( depart )   INTEGER         |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"  | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING               |                 | %USER_LOGIN%          |                                       | Par défaut         |
-| Commentaires divers ( observ )   STRING                               |                 |                       |                                       | Par défaut         |
-| Date de la donnée ( date_donne )   TIMESTAMP                          |                 |                       |                                       | Par défaut         |
-| Exploit Nd ( exploit_nd )   STRING                                    |                 |                       |                                       | Par défaut         |
-| Presta Nd ( presta_nd )   STRING                                      |                 |                       |                                       | Par défaut         |
-| Entreprise ayant posé le point d'interet ( ent_pose )   STRING        |                 |                       |                                       | Par défaut         |
-| Qualité de la date de pose du le point d'interet ( qua_dat )   STRING | x               | 0                     | "lt_ecl_qualite_date (code)"          | Par défaut         |
-| Date de pose du le point d'interet ( dat_pos )   TIMESTAMP            |                 |                       |                                       | Par défaut         |
+| Attribut                                                              | Obligatoire     | Valeur par défaut     | Liste de domaine                     | Représentation     |
+|:---------------------------------------------------------------------:|:---------------:|:---------------------:|:------------------------------------:|:------------------:|
+| Type de point d'intérêt ( ty_pi )   STRING                            | x               | 99                    | "lt_ecl_type_pi"                     | Par défaut         |
+| Etat du point d'intérêt ( etat_pi )   STRING                          | x               | 0                     | "lt_ecl_etat"                        | Par défaut         |
+| Numéro de départ auquel est lié le noeud ( depart )   INTEGER         |                 |                       | "xapps_geo_v_ecl_depart (id_depart)" | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING               |                 | %USER_LOGIN%          |                                      | Par défaut         |
+| Commentaires divers ( observ )   STRING                               |                 |                       |                                      | Par défaut         |
+| Date de la donnée ( date_donne )   TIMESTAMP                          |                 |                       |                                      | Par défaut         |
+| Exploit Nd ( exploit_nd )   STRING                                    |                 |                       |                                      | Par défaut         |
+| Presta Nd ( presta_nd )   STRING                                      |                 |                       |                                      | Par défaut         |
+| Entreprise ayant posé le point d'interet ( ent_pose )   STRING        |                 |                       |                                      | Par défaut         |
+| Qualité de la date de pose du le point d'interet ( qua_dat )   STRING | x               | 0                     | "lt_ecl_qualite_date (code)"         | Par défaut         |
+| Date de pose du le point d'interet ( dat_pos )   TIMESTAMP            |                 |                       |                                      | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1258,76 +1294,71 @@ Source : an_ecl_foyer
 | -------------------- | --------------- | --------------------------- |
 | dans le gabarit      | 530*650         | Onglet                      |
 
-| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle                                                                                              | Fichie liée              | Ajout de données autorisé     |
-| --------------------- | ---------------- | ---------------- | ------------------ | ----------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------ | ----------------------------- |
-| Foyer                 |                  |                  | par défaut         | Vertical                |                                                                                                                        |                          |                               |
-|                       |                  | id_mod_ln        |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | id_mod_lm        |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | etat_foy         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | pct_fct          |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | ty_lantern       |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | observ           |                    |                         |                                                                                                                        |                          |                               |
-|                       | Platine          |                  | par défaut         | Vertical                |                                                                                                                        |                          |                               |
-|                       |                  | loc_plat         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | ty_amorce        |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | ty_ballast       |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | ty_auto_tr       |                    |                         |                                                                                                                        |                          |                               |
-|                       | (vide)           |                  | par défaut         | Vertical                | id_foyer != NULL && (haut_feu == NULL || pct_fct ==NULL || (ty_ballast =='ZZ' && ty_amorce=='ZZ' && loc_plat == '20')) |                          |                               |
-|                       |                  | Message d'erreur |                    |                         |                                                                                                                        |                          |                               |
-| Lanterne              |                  |                  | par défaut         | Vertical                | id_foyer != NULL                                                                                                       | Lanterne (modèle :photo) |                               |
-|                       |                  | nom_mod_ln       |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | gar_lant         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | cod_ral_ln       |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | clas_el_ln       |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | ik_lant          |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | ip_lant          |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | observ           |                    |                         |                                                                                                                        |                          |                               |
-| Lampe                 |                  |                  | par défaut         | Vertical                | id_foyer != NULL                                                                                                       | Lampe (modèle : photo)   |                               |
-|                       |                  | nom_mod_lm       |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | ty_lampe         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | puis_lam         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | cul_lamp         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | telgest          |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | cou_ecl          |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | gar_lamp         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | observ           |                    |                         |                                                                                                                        |                          |                               |
-| Photothèque           |                  |                  | par défaut         | Vertical                | id_foyer != NULL                                                                                                       |                          |                               |
-|                       |                  | miniature        |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | n_fichier        |                    |                         |                                                                                                                        |                          |                               |
-| Métadonnées           |                  |                  | par défaut         | Vertical                | id_foyer != NULL                                                                                                       |                          |                               |
-|                       |                  | situation        |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | date_donne       |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | date_sai         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | date_maj         |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | op_sai           |                    |                         |                                                                                                                        |                          |                               |
-|                       | (vide)           |                  |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | Message d'erreur |                    |                         |                                                                                                                        |                          |                               |
-| Intervention          |                  |                  | par défaut         | Vertical                | id_foyer != NULL                                                                                                       | intervention foyer       | x                             |
-|                       |                  | dates            |                    |                         |                                                                                                                        |                          |                               |
-|                       |                  | type_inter       |                    |                         |                                                                                                                        |                          |                               |
+| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle             | Fichie liée              | Ajout de données autorisé     |
+|:---------------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|:-------------------------------------:|:------------------------:|:-----------------------------:|
+| Foyer                 |                  |                  | par défaut         | Vertical                |                                       |                          |                               |
+|                       |                  | id_mod_ln        |                    |                         |                                       |                          |                               |
+|                       |                  | etat_foy         |                    |                         |                                       |                          |                               |
+|                       |                  | ty_lantern       |                    |                         |                                       |                          |                               |
+|                       |                  | observ           |                    |                         |                                       |                          |                               |
+|                       | Platine          |                  | par défaut         | Vertical                |                                       |                          |                               |
+|                       |                  | loc_plat         |                    |                         |                                       |                          |                               |
+|                       |                  | ty_amorce        |                    |                         |                                       |                          |                               |
+|                       |                  | ty_ballast       |                    |                         |                                       |                          |                               |
+|                       |                  | ty_auto_tr       |                    |                         |                                       |                          |                               |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_foyer != NULL && (haut_feu == NULL |                          | pct_fct ==NULL                |
+|                       |                  | Message d'erreur |                    |                         |                                       |                          |                               |
+| Lanterne              |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      | Lanterne (modèle :photo) |                               |
+|                       |                  | nom_mod_ln       |                    |                         |                                       |                          |                               |
+|                       |                  | gar_lant         |                    |                         |                                       |                          |                               |
+|                       |                  | cod_ral_ln       |                    |                         |                                       |                          |                               |
+|                       |                  | clas_el_ln       |                    |                         |                                       |                          |                               |
+|                       |                  | ik_lant          |                    |                         |                                       |                          |                               |
+|                       |                  | ip_lant          |                    |                         |                                       |                          |                               |
+|                       |                  | observ           |                    |                         |                                       |                          |                               |
+| Lampe                 |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      | Lampe (modèle : photo)   |                               |
+|                       |                  | nom_mod_lm       |                    |                         |                                       |                          |                               |
+|                       |                  | ty_lampe         |                    |                         |                                       |                          |                               |
+|                       |                  | puis_lam         |                    |                         |                                       |                          |                               |
+|                       |                  | cul_lamp         |                    |                         |                                       |                          |                               |
+|                       |                  | telgest          |                    |                         |                                       |                          |                               |
+|                       |                  | cou_ecl          |                    |                         |                                       |                          |                               |
+|                       |                  | gar_lamp         |                    |                         |                                       |                          |                               |
+|                       |                  | observ           |                    |                         |                                       |                          |                               |
+| Photothèque           |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      |                          |                               |
+|                       |                  | miniature        |                    |                         |                                       |                          |                               |
+|                       |                  | n_fichier        |                    |                         |                                       |                          |                               |
+| Métadonnées           |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      |                          |                               |
+|                       |                  | situation        |                    |                         |                                       |                          |                               |
+|                       |                  | date_donne       |                    |                         |                                       |                          |                               |
+|                       |                  | date_sai         |                    |                         |                                       |                          |                               |
+|                       |                  | date_maj         |                    |                         |                                       |                          |                               |
+|                       |                  | op_sai           |                    |                         |                                       |                          |                               |
+|                       | (vide)           |                  |                    |                         |                                       |                          |                               |
+|                       |                  | Message d'erreur |                    |                         |                                       |                          |                               |
+| Intervention          |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      | intervention foyer       | x                             |
+|                       |                  | Dates            |                    |                         |                                       |                          |                               |
+|                       |                  | type_inter       |                    |                         |                                       |                          |                               |
 
 
     - Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                                                               | Obligatoire     | Valeur par défaut     | Liste de domaine              | Représentation     |
-| -------------------------------------------------------------------------------------- | --------------- | --------------------- | ----------------------------- | ------------------ |
-| Modèle de la lanterne ( id_mod_ln )   INTEGER                                          | x               | 1                     | "an_ecl_modele_lanterne"      | Par défaut         |
-| Modèle de la lampe ( id_mod_lm )   INTEGER                                             | x               | 1                     | "an_ecl_modele_lampe"         | Par défaut         |
-| Hauteur max de la lanterne par rapport au niveau de la chaussée ( haut_feu )   INTEGER |                 | 0                     |                               | Par défaut         |
-| Date de la pose de la lanterne ( dat_pos_ln )   TIMESTAMP                              |                 |                       |                               | Par défaut         |
-| Pourcentage de puissance de fonctionnement ( pct_fct )   BIGDECIMAL                    |                 |                       |                               | Par défaut         |
-| Date de pose de la lampe ( dat_pos_lm )   TIMESTAMP                                    |                 |                       |                               | Par défaut         |
-| Type de ballast installé ( ty_ballast )   STRING                                       | x               | 0                     | "lt_ecl_type_ballast (code)"  | Par défaut         |
-| Type d'amorceur installé ( ty_amorce )   STRING                                        | x               | 0                     | "lt_ecl_amorceur (code)"      | Par défaut         |
-| Type d'auto trasformateur installé ( ty_auto_tr )   STRING                             |                 | 0                     |                               | Par défaut         |
-| Commentaires divers ( observ )   STRING                                                |                 |                       |                               | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING                                |                 | %USER_LOGIN%          |                               | Par défaut         |
-| Etat du foyer ( etat_foy )   STRING                                                    | x               | 0                     | "lt_ecl_etat"                 | Par défaut         |
-| Loc Plat ( loc_plat )   STRING                                                         | x               | 0                     | "lt_ecl_emplacement (code)"   | Par défaut         |
-| Ty Lantern ( ty_lantern )   STRING                                                     | x               | 0                     | "lt_ecl_type_lanterne"        | Par défaut         |
-| Date Donne ( date_donne )   TIMESTAMP                                                  |                 |                       |                               | Par défaut         |
+| Attribut                                                            | Obligatoire     | Valeur par défaut     | Liste de domaine             | Représentation     |
+|:-------------------------------------------------------------------:|:---------------:|:---------------------:|:----------------------------:|:------------------:|
+| Modèle de la lanterne ( id_mod_ln )   INTEGER                       | x               | 1                     | "an_ecl_modele_lanterne"     | Par défaut         |
+| Modèle de la lampe ( id_mod_lm )   INTEGER                          | x               | 1                     | "an_ecl_modele_lampe"        | Par défaut         |
+| Pourcentage de puissance de fonctionnement ( pct_fct )   BIGDECIMAL |                 |                       |                              | Par défaut         |
+| Type de ballast installé ( ty_ballast )   STRING                    | x               | 0                     | "lt_ecl_type_ballast (code)" | Par défaut         |
+| Type d'amorceur installé ( ty_amorce )   STRING                     | x               | 0                     | "lt_ecl_amorceur (code)"     | Par défaut         |
+| Type d'auto trasformateur installé ( ty_auto_tr )   STRING          |                 | 0                     |                              | Par défaut         |
+| Commentaires divers ( observ )   STRING                             |                 |                       |                              | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING             |                 | %USER_LOGIN%          |                              | Par défaut         |
+| Etat du foyer ( etat_foy )   STRING                                 | x               | 0                     | "lt_ecl_etat"                | Par défaut         |
+|  Localisation de la platine  ( loc_plat )   STRING                  | x               | 0                     | "lt_ecl_emplacement (code)"  | Par défaut         |
+|  Type de lanterne  ( ty_lantern )   STRING                          | x               | 0                     | "lt_ecl_type_lanterne"       | Par défaut         |
+|  Date de création de la donnée  ( date_donne )   TIMESTAMP          |                 |                       |                              | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1345,89 +1376,89 @@ Source : geo_v_ecl_ouvrage_electrique
 | -------------------- | --------------- | --------------------------- |
 | dans le gabarit      | 925*550         | Onglet                      |
 
-| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle                                                                                 | Fichie liée        | Ajout de données autorisé     |
-| --------------------- | ---------------- | ---------------- | ------------------ | ----------------------- | --------------------------------------------------------------------------------------------------------- | ------------------ | ----------------------------- |
-| Caractéristiques      |                  |                  | par défaut         | Vertical                |                                                                                                           |                    |                               |
-|                       |                  | ty_ouvelec       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | nom_ouv          |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | mod_pos_ou       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | etat_ouvel       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | etat_ouvel       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | ty_disjonc       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | ty_fusible       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | pres_var         |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | observ           |                    |                         |                                                                                                           |                    |                               |
-|                       | Commande         |                  | par défaut         | Vertical                | ty_ouvelec == '10'                                                                                        |                    |                               |
-|                       |                  | ty_comm          |                    |                         |                                                                                                           |                    |                               |
-|                       | Consommation     |                  | par défaut         | Vertical                | ty_ouvelec == '10'                                                                                        |                    |                               |
-|                       |                  | pdl_edf          |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | n_com_edf        |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | puis_mes         |                    |                         |                                                                                                           |                    |                               |
-|                       | (vide)           |                  | par défaut         | Vertical                | id_ouvelec != NULL && 
-  (ik_ouvelec == NULL || ip_ouvelec == NULL || puis_mes ==NULL || val_terre==NULL) |                    |                               |
-|                       |                  | Message d'erreur |                    |                         |                                                                                                           |                    |                               |
-| Départ(s)             |                  |                  | par défaut         | Vertical                | id_ouvelec != NULL                                                                                        | Depart (ECL)       | x                             |
-|                       |                  | nom_depart       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | puis_sous        |                    |                         |                                                                                                           |                    |                               |
-| Courant               |                  |                  | par défaut         | Vertical                | ty_ouvelec != '10'                                                                                        |                    |                               |
-|                       |                  | depart           |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | amont_cour       |                    |                         |                                                                                                           |                    |                               |
-| Photothèque           |                  |                  | par défaut         | Vertical                | id_ouvelec != NULL                                                                                        |                    |                               |
-|                       |                  | miniature        |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | n_fichier        |                    |                         |                                                                                                           |                    |                               |
-| Métadonnées           |                  |                  | par défaut         | Vertical                | id_ouvelec != NULL                                                                                        |                    |                               |
-|                       |                  | situation        |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | qua_geo_xy       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | qua_geo_z        |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | date_donne       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | date_sai         |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | date_maj         |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | op_sai           |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | op_sai_geo       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | src_geom         |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | src_date         |                    |                         |                                                                                                           |                    |                               |
-| Intervention          |                  |                  | par défaut         | Vertical                | id_ouvelec != NULL                                                                                        | intervention câble | x                             |
-|                       |                  | dates            |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | type_inter       |                    |                         |                                                                                                           |                    |                               |
-| Contrat               |                  |                  | par défaut         | Vertical                | id_ouvelec != NULL                                                                                        |                    |                               |
-|                       |                  | exploit_nd       |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | presta_nd        |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | ent_pose         |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | dat_pos          |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | qua_dat          |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | commune          |                    |                         |                                                                                                           |                    |                               |
-|                       |                  | insee            |                    |                         |                                                                                                           |                    |                               |
+| Nom de la section     | Sous-section     | Attributs          | Position label     | Agencement attribut     | Visibilité conditionnelle     | Fichie liée        | Ajout de données autorisé     |
+|:---------------------:|:----------------:|:------------------:|:------------------:|:-----------------------:|:-----------------------------:|:------------------:|:-----------------------------:|
+| Caractéristiques      |                  |                    | Par défaut         | Vertical                |                               |                    |                               |
+|                       |                  | ty_ouvelec         |                    |                         |                               |                    |                               |
+|                       |                  | nom_ouv            |                    |                         |                               |                    |                               |
+|                       |                  | mod_pos_ou         |                    |                         |                               |                    |                               |
+|                       |                  | etat_ouvel         |                    |                         |                               |                    |                               |
+|                       |                  | etat_ouvel         |                    |                         |                               |                    |                               |
+|                       |                  | ty_disjonc         |                    |                         |                               |                    |                               |
+|                       |                  | ty_fusible         |                    |                         |                               |                    |                               |
+|                       |                  | pres_var           |                    |                         |                               |                    |                               |
+|                       |                  | observ             |                    |                         |                               |                    |                               |
+|                       | Commande         |                    | Par défaut         | Vertical                | ty_ouvelec == '10'            |                    |                               |
+|                       |                  | ty_comm            |                    |                         |                               |                    |                               |
+|                       | Consommation     |                    | Par défaut         | Vertical                | ty_ouvelec == '10'            |                    |                               |
+|                       |                  | pdl_edf            |                    |                         |                               |                    |                               |
+|                       |                  | n_com_edf          |                    |                         |                               |                    |                               |
+|                       |                  | puis_mes           |                    |                         |                               |                    |                               |
+|                       | (vide)           |                    | Par défaut         | Vertical                | id_ouvelec != NULL &&         |                    |                               |
+| (ik_ouvelec == NULL   |                  | ip_ouvelec == NULL |                    | puis_mes ==NULL         |                               | val_terre==NULL)   |                               |
+|                       |                  | Message d'erreur   |                    |                         |                               |                    |                               |
+| Départ(s)             |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            | Depart (ECL)       | x                             |
+|                       |                  | nom_depart         |                    |                         |                               |                    |                               |
+|                       |                  | puis_sous          |                    |                         |                               |                    |                               |
+| Courant               |                  |                    | Par défaut         | Vertical                | ty_ouvelec != '10'            |                    |                               |
+|                       |                  | depart             |                    |                         |                               |                    |                               |
+|                       |                  | amont_cour         |                    |                         |                               |                    |                               |
+| Photothèque           |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            |                    |                               |
+|                       |                  | miniature          |                    |                         |                               |                    |                               |
+|                       |                  | n_fichier          |                    |                         |                               |                    |                               |
+| Métadonnées           |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            |                    |                               |
+|                       |                  | situation          |                    |                         |                               |                    |                               |
+|                       |                  | qua_geo_xy         |                    |                         |                               |                    |                               |
+|                       |                  | qua_geo_z          |                    |                         |                               |                    |                               |
+|                       |                  | date_donne         |                    |                         |                               |                    |                               |
+|                       |                  | date_sai           |                    |                         |                               |                    |                               |
+|                       |                  | date_maj           |                    |                         |                               |                    |                               |
+|                       |                  | op_sai             |                    |                         |                               |                    |                               |
+|                       |                  | op_sai_geo         |                    |                         |                               |                    |                               |
+|                       |                  | src_geom           |                    |                         |                               |                    |                               |
+|                       |                  | src_date           |                    |                         |                               |                    |                               |
+|                       | (vide)           |                    | Par défaut         | Vertical                | id_ouvelec != NULL            |                    |                               |
+|                       |                  | Message d'erreur   |                    |                         |                               |                    |                               |
+| Intervention          |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            | intervention câble | x                             |
+|                       |                  | dates              |                    |                         |                               |                    |                               |
+|                       |                  | type_inter         |                    |                         |                               |                    |                               |
+| Contrat               |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            |                    |                               |
+|                       |                  | exploit_nd         |                    |                         |                               |                    |                               |
+|                       |                  | presta_nd          |                    |                         |                               |                    |                               |
+|                       |                  | ent_pose           |                    |                         |                               |                    |                               |
+|                       |                  | dat_pos            |                    |                         |                               |                    |                               |
+|                       |                  | qua_dat            |                    |                         |                               |                    |                               |
+|                       |                  | commune            |                    |                         |                               |                    |                               |
+|                       |                  | insee              |                    |                         |                               |                    |                               |
 
 
     - Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                                      | Obligatoire     | Valeur par défaut     | Liste de domaine                       | Représentation     |
-| ------------------------------------------------------------- | --------------- | --------------------- | -------------------------------------- | ------------------ |
-| Nom de l'ouvrage ( nom_ouv )   STRING                         |                 |                       |                                        | Par défaut         |
-| Type d'ouvrage électrique ( ty_ouvelec )   STRING             | x               | 0                     | "lt_ecl_type_ouvrage_electrique"       | Par défaut         |
-| Etat de l'ouvrage électrique ( etat_ouvel )   STRING          | x               | 0                     | "lt_ecl_etat"                          | Par défaut         |
-| Mode de pose de l'ouvrage ( mod_pos_ou )   STRING             | x               | 0                     | "lt_ecl_mode_pose_ouvrage_electrique"  | Par défaut         |
-| Type de commande ( ty_comm )   STRING                         | x               | 0                     | "lt_ecl_type_commande"                 | Par défaut         |
-| Pdl Edf ( pdl_edf )   STRING                                  |                 |                       |                                        | Par défaut         |
-| N Com Edf ( n_com_edf )   STRING                              |                 |                       |                                        | Par défaut         |
-| Valeur de la terre en ohm ( val_terre )   LONG                |                 |                       |                                        | Par défaut         |
-| Ik Ouvelec ( ik_ouvelec )   INTEGER                           |                 |                       |                                        | Par défaut         |
-| Ip Ouvelec ( ip_ouvelec )   INTEGER                           |                 |                       |                                        | Par défaut         |
-| Puis Mes ( puis_mes )   INTEGER                               |                 |                       |                                        | Par défaut         |
-| Pres Var ( pres_var )   STRING                                | x               | 0                     | "lt_ecl_presence (code)"               | Par défaut         |
-| Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 0                     | "lt_ecl_type_disjoncteur"              | Par défaut         |
-| Type de fusible ( ty_fusible )   STRING                       | x               | 0                     | "lt_ecl_type_fusible"                  | Par défaut         |
-| Numéro de départ auquel est lié le noeud ( depart )   INTEGER |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"   | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING       |                 | %USER_LOGIN%          |                                        | Par défaut         |
-| Commentaires divers ( observ )   STRING                       |                 |                       |                                        | Par défaut         |
-| Date de la donnée ( date_donne )   TIMESTAMP                  |                 |                       |                                        | Par défaut         |
-| Prestataire intervenant sur l'objet ( presta_nd )   STRING    |                 |                       |                                        | Par défaut         |
-| Exploitant de l'objet ( exploit_nd )   STRING                 |                 |                       |                                        | Par défaut         |
-| Entreprise de pose ( ent_pose )   STRING                      |                 |                       |                                        | Par défaut         |
-| Date de pose de l'ouvrage ( dat_pos )   TIMESTAMP             |                 |                       |                                        | Par défaut         |
-| Qualité de la date de pose de l'ouvrage ( qua_dat )   STRING  | x               | 0                     | "lt_ecl_qualite_date (code)"           | Par défaut         |
+| Attribut                                                      | Obligatoire     | Valeur par défaut     | Liste de domaine                      | Représentation     |
+|:-------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------------------:|:------------------:|
+| Nom de l'ouvrage ( nom_ouv )   STRING                         |                 |                       |                                       | Par défaut         |
+| Type d'ouvrage électrique ( ty_ouvelec )   STRING             | x               | 0                     | "lt_ecl_type_ouvrage_electrique"      | Par défaut         |
+| Etat de l'ouvrage électrique ( etat_ouvel )   STRING          | x               | 0                     | "lt_ecl_etat"                         | Par défaut         |
+| Mode de pose de l'ouvrage ( mod_pos_ou )   STRING             | x               | 0                     | "lt_ecl_mode_pose_ouvrage_electrique" | Par défaut         |
+| Type de commande ( ty_comm )   STRING                         | x               | 0                     | "lt_ecl_type_commande"                | Par défaut         |
+| Pdl Edf ( pdl_edf )   STRING                                  |                 |                       |                                       | Par défaut         |
+| Numéro de compteur EDF ( n_com_edf )   STRING                 |                 |                       |                                       | Par défaut         |
+| Valeur de la terre en ohm ( val_terre )   LONG                |                 |                       |                                       | Par défaut         |
+| Puis Mes ( puis_mes )   INTEGER                               |                 |                       |                                       | Par défaut         |
+| Pres Var ( pres_var )   STRING                                | x               | 0                     | "lt_ecl_presence (code)"              | Par défaut         |
+| Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 0                     | "lt_ecl_type_disjoncteur"             | Par défaut         |
+| Type de fusible ( ty_fusible )   STRING                       | x               | 0                     | "lt_ecl_type_fusible"                 | Par défaut         |
+| Numéro de départ auquel est lié le noeud ( depart )   INTEGER |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"  | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
+| Commentaires divers ( observ )   STRING                       |                 |                       |                                       | Par défaut         |
+| Date de la donnée ( date_donne )   TIMESTAMP                  |                 |                       |                                       | Par défaut         |
+| Prestataire intervenant sur l'objet ( presta_nd )   STRING    |                 |                       |                                       | Par défaut         |
+| Exploitant de l'objet ( exploit_nd )   STRING                 |                 |                       |                                       | Par défaut         |
+| Entreprise de pose ( ent_pose )   STRING                      |                 |                       |                                       | Par défaut         |
+| Date de pose de l'ouvrage ( dat_pos )   TIMESTAMP             |                 |                       |                                       | Par défaut         |
+| Qualité de la date de pose de l'ouvrage ( qua_dat )   STRING  | x               | 0                     | "lt_ecl_qualite_date (code)"          | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1447,7 +1478,7 @@ Source : an_ecl_depart
 
 
 | Nom de la section     | Sous-section      | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle            | Fichie liée         | Ajout de données autorisé     |
-| --------------------- | ----------------- | ---------------- | ------------------ | ----------------------- | ------------------------------------ | ------------------- | ----------------------------- |
+|:---------------------:|:-----------------:|:----------------:|:------------------:|:-----------------------:|:------------------------------------:|:-------------------:|:-----------------------------:|
 | Caractéristiques      |                   |                  | par défaut         | Vertical                |                                      |                     |                               |
 |                       |                   | nom_depart       |                    |                         |                                      |                     |                               |
 |                       |                   | etat_dep         |                    |                         |                                      |                     |                               |
@@ -1457,9 +1488,9 @@ Source : an_ecl_depart
 |                       |                   | puis_sous        |                    |                         |                                      |                     |                               |
 |                       |                   | observ           |                    |                         |                                      |                     |                               |
 |                       | Ouvrage du départ |                  | par défaut         | Vertical                |                                      |                     |                               |
-|                       |                   | nom_ouv |                    |                         |                                      |                     |                               |
+|                       |                   | nom_ouv          |                    |                         |                                      |                     |                               |
 |                       | Options           |                  | par défaut         | Vertical                |                                      |                     |                               |
-|                       |                   | opt_supp          |                    |                         |                                      |                     |                               |
+|                       |                   | opt_supp         |                    |                         |                                      |                     |                               |
 |                       | (vide)            |                  | par défaut         | Vertical                | id_depart != NULL && tension == NULL |                     |                               |
 |                       |                   | Message d'erreur |                    |                         |                                      |                     |                               |
 | Photothèque           |                   |                  | par défaut         | Vertical                |                                      |                     |                               |
@@ -1480,16 +1511,16 @@ Source : an_ecl_depart
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                                     | Obligatoire     | Valeur par défaut     | Liste de domaine           | Représentation     |
-| ------------------------------------------------------------ | --------------- | --------------------- | -------------------------- | ------------------ |
-| Etat du départ ( etat_dep )   STRING                         | x               | 0                     | "lt_ecl_etat"              | Par défaut         |
-| Tension électrique en sortie ( tension )   INTEGER           |                 |                       |                            | Par défaut         |
-| Type du disjoncteur ( ty_disjonc )   STRING                  | x               | 0                     | "lt_ecl_type_disjoncteur"  | Par défaut         |
-| Type du fusible ( ty_fusible )   STRING                      | x               | 0                     | "lt_ecl_type_fusible"      | Par défaut         |
-| Nom du secteur déservi par le départ ( nom_depart )   STRING |                 |                       |                            | Par défaut         |
-| Commentaires divers ( observ )   STRING                      |                 |                       |                            | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                            | Par défaut         |
-| Date Donne ( date_donne )   TIMESTAMP                        |                 |                       |                            | Par défaut         |
+  | Attribut                                                     | Obligatoire     | Valeur par défaut     | Liste de domaine          | Représentation     |
+|:------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------:|:------------------:|
+| Etat du départ ( etat_dep )   STRING                         | x               | 0                     | "lt_ecl_etat"             | Par défaut         |
+| Tension électrique en sortie ( tension )   INTEGER           |                 |                       |                           | Par défaut         |
+| Type du disjoncteur ( ty_disjonc )   STRING                  | x               | 0                     | "lt_ecl_type_disjoncteur" | Par défaut         |
+| Type du fusible ( ty_fusible )   STRING                      | x               | 0                     | "lt_ecl_type_fusible"     | Par défaut         |
+| Nom du secteur déservi par le départ ( nom_depart )   STRING |                 |                       |                           | Par défaut         |
+| Commentaires divers ( observ )   STRING                      |                 |                       |                           | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                           | Par défaut         |
+| Date de création de la donnée ( date_donne )   TIMESTAMP     |                 |                       |                           | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1522,8 +1553,8 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 | Attribut                                | Obligatoire     | Valeur par défaut     | Liste de domaine     | Représentation     |
 | --------------------------------------- | --------------- | --------------------- | -------------------- | ------------------ |
-| Opérateur de saisie ( op_sai )   STRING |                 | %USER_LOGIN%          |                      | Par défaut         |
-| Date de saise ( date_sai )   TIMESTAMP  |                 | %CURRENT_DATE%        |                      | Par défaut         |
+| Opérateur de saisie ( op_sai )   STRING |                 | %USER_LOGIN%          |                      | Par défaut         |
+| Date de saise ( date_sai )   TIMESTAMP  |                 | %CURRENT_DATE%        |                      | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1577,19 +1608,19 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 | Attribut                                                          | Obligatoire     | Valeur par défaut     | Liste de domaine                          | Représentation     |
 | ----------------------------------------------------------------- | --------------- | --------------------- | ----------------------------------------- | ------------------ |
-| Signalement ou intervention ( type_si_in )   STRING               | x               | 10                    | "lt_ecl_signalement_intervention (code)"  | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                          | x               | 0                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                     | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
-| Etat du signalement ( etat_sign )   STRING                        | x               | 10                    | "lt_ecl_etat_signalement"                 | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                      | x               | 0                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                       | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
-| Type de disjoncteur ( att_met1 )   STRING                         | x               | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
-| Type de fusible ( att_met2 )   STRING                             | x               | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
-| Type de parasurtenseur ( att_met3 )   STRING                      | x               | 0                     | "lt_ecl_type_parasurtenseur"              | Par défaut         |
-| Etat du point lumineux après l'intervention ( att_met6 )   STRING | x               | 0                     | "lt_ecl_etat"                             | Par défaut         |
-| Commentaires divers ( observ )   STRING                           |                 |                       |                                           | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING           |                 | %USER_LOGIN%          |                                           | Par défaut         |
-| Options du support ( att_met7 )   STRING                          | x               | 0                     | "lt_ecl_options_support (code)"           | Par défaut         |
+| Signalement ou intervention ( type_si_in )   STRING               | x               | 10                    | "lt_ecl_signalement_intervention (code)"  | Par défaut         |
+| Type de défaillance ( typ_def )   STRING                          | x               | 0                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
+| Source de la défaillance ( src_def )   STRING                     | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
+| Etat du signalement ( etat_sign )   STRING                        | x               | 10                    | "lt_ecl_etat_signalement"                 | Par défaut         |
+| Moyen d'intervention ( moy_interv )   STRING                      | x               | 0                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
+| Type d'intervention ( type_inter )   STRING                       | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
+| Type de disjoncteur ( att_met1 )   STRING                         | x               | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
+| Type de fusible ( att_met2 )   STRING                             | x               | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
+| Type de parasurtenseur ( att_met3 )   STRING                      | x               | 0                     | "lt_ecl_type_parasurtenseur"              | Par défaut         |
+| Etat du point lumineux après l'intervention ( att_met6 )   STRING | x               | 0                     | "lt_ecl_etat"                             | Par défaut         |
+| Commentaires divers ( observ )   STRING                           |                 |                       |                                           | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING           |                 | %USER_LOGIN%          |                                           | Par défaut         |
+| Options du support ( att_met7 )   STRING                          | x               | 0                     | "lt_ecl_options_support (code)"           | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1647,22 +1678,22 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 | Attribut                                                     | Obligatoire     | Valeur par défaut     | Liste de domaine                          | Représentation     |
 | ------------------------------------------------------------ | --------------- | --------------------- | ----------------------------------------- | ------------------ |
-| Signalement ou intervention ( type_si_in )   STRING          | x               | 10                    | "lt_ecl_signalement_intervention (code)"  | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                     | x               | 0                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
-| Etat du signalement ( etat_sign )   STRING                   | x               | 10                    | "lt_ecl_etat_signalement"                 | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                 | x               | 0                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                  | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
-| Commentaires divers ( observ )   STRING                      |                 |                       |                                           | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                                           | Par défaut         |
-| Type de disjoncteur ( att_met1 )   STRING                    |                 | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
-| Type de fusible ( att_met2 )   STRING                        |                 | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
-| Type de commande ( att_met3 )   STRING                       |                 | 0                     | "lt_ecl_type_commande"                    | Par défaut         |
-| Type de disjoncteur du départ ajouté ( att_met4 )   STRING   |                 | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
-| Type de fusible du départ ajouté ( att_met5 )   STRING       |                 | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
-| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING |                 | 0                     | "lt_ecl_etat"                             | Par défaut         |
-| Tension du départ ajouté ( att_met8 )   INTEGER              |                 |                       |                                           | Par défaut         |
-| Nom du départ ( att_met7 )   STRING                          |                 |                       |                                           | Par défaut         |
+| Signalement ou intervention ( type_si_in )   STRING          | x               | 10                    | "lt_ecl_signalement_intervention (code)"  | Par défaut         |
+| Type de défaillance ( typ_def )   STRING                     | x               | 0                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
+| Source de la défaillance ( src_def )   STRING                | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
+| Etat du signalement ( etat_sign )   STRING                   | x               | 10                    | "lt_ecl_etat_signalement"                 | Par défaut         |
+| Moyen d'intervention ( moy_interv )   STRING                 | x               | 0                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
+| Type d'intervention ( type_inter )   STRING                  | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
+| Commentaires divers ( observ )   STRING                      |                 |                       |                                           | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                                           | Par défaut         |
+| Type de disjoncteur ( att_met1 )   STRING                    |                 | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
+| Type de fusible ( att_met2 )   STRING                        |                 | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
+| Type de commande ( att_met3 )   STRING                       |                 | 0                     | "lt_ecl_type_commande"                    | Par défaut         |
+| Type de disjoncteur du départ ajouté ( att_met4 )   STRING   |                 | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
+| Type de fusible du départ ajouté ( att_met5 )   STRING       |                 | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
+| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING |                 | 0                     | "lt_ecl_etat"                             | Par défaut         |
+| Tension du départ ajouté ( att_met8 )   INTEGER              |                 |                       |                                           | Par défaut         |
+| Nom du départ ( att_met7 )   STRING                          |                 |                       |                                           | Par défaut         |
 
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1716,18 +1747,18 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 | Attribut                                                                              | Obligatoire     | Valeur par défaut     | Liste de domaine                                       | Représentation     |
 | ------------------------------------------------------------------------------------- | --------------- | --------------------- | ------------------------------------------------------ | ------------------ |
-| Signalement ou intervention ( type_si_in )   STRING                                   | x               | 10                    | "lt_ecl_signalement_intervention (code)"               | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                                              | x               | 0                     | "lt_ecl_type_defaillance (code)"                       | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                                         | x               | 0                     | "lt_ecl_source_defaillance (code)"                     | Par défaut         |
-| Etat du signalement ( etat_sign )   STRING                                            | x               | 10                    | "lt_ecl_etat_signalement"                              | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                                          | x               | 0                     | "lt_ecl_moyen_intervention (code)"                     | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                                           | x               | 0                     | "lt_intervention_point_lumineux (code)"                | Par défaut         |
-| Commentaires divers ( observ )   STRING                                               |                 |                       |                                                        | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING                               |                 | %USER_LOGIN%          |                                                        | Par défaut         |
-| Type de disjoncteur ( att_met1 )   STRING                                             |                 | 0                     | "lt_ecl_type_disjoncteur"                              | Par défaut         |
-| Type de fusible ( att_met2 )   STRING                                                 |                 | 0                     | "lt_ecl_type_fusible"                                  | Par défaut         |
-| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING                          |                 | 0                     | "lt_ecl_etat"                                          | Par défaut         |
-| Nom du départ  ( att_met7 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
+| Signalement ou intervention ( type_si_in )   STRING                                   | x               | 10                    | "lt_ecl_signalement_intervention (code)"               | Par défaut         |
+| Type de défaillance ( typ_def )   STRING                                              | x               | 0                     | "lt_ecl_type_defaillance (code)"                       | Par défaut         |
+| Source de la défaillance ( src_def )   STRING                                         | x               | 0                     | "lt_ecl_source_defaillance (code)"                     | Par défaut         |
+| Etat du signalement ( etat_sign )   STRING                                            | x               | 10                    | "lt_ecl_etat_signalement"                              | Par défaut         |
+| Moyen d'intervention ( moy_interv )   STRING                                          | x               | 0                     | "lt_ecl_moyen_intervention (code)"                     | Par défaut         |
+| Type d'intervention ( type_inter )   STRING                                           | x               | 0                     | "lt_intervention_point_lumineux (code)"                | Par défaut         |
+| Commentaires divers ( observ )   STRING                                               |                 |                       |                                                        | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING                               |                 | %USER_LOGIN%          |                                                        | Par défaut         |
+| Type de disjoncteur ( att_met1 )   STRING                                             |                 | 0                     | "lt_ecl_type_disjoncteur"                              | Par défaut         |
+| Type de fusible ( att_met2 )   STRING                                                 |                 | 0                     | "lt_ecl_type_fusible"                                  | Par défaut         |
+| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING                          |                 | 0                     | "lt_ecl_etat"                                          | Par défaut         |
+| Nom du départ  ( att_met7 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
 
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1787,21 +1818,21 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 | Attribut                                                                                               | Obligatoire     | Valeur par défaut     | Liste de domaine                                       | Représentation     |
 | ------------------------------------------------------------------------------------------------------ | --------------- | --------------------- | ------------------------------------------------------ | ------------------ |
-| Signalement ou intervention ( type_si_in )   STRING                                                    | x               | 10                    | "lt_ecl_signalement_intervention (code)"               | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                                                               | x               | 0                     | "lt_ecl_type_defaillance (code)"                       | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                                                          | x               | 0                     | "lt_ecl_source_defaillance (code)"                     | Par défaut         |
-| Etat du signalement ( etat_sign )   STRING                                                             | x               | 10                    | "lt_ecl_etat_signalement"                              | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                                                           | x               | 0                     | "lt_ecl_moyen_intervention (code)"                     | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                                                            | x               | 0                     | "lt_intervention_point_lumineux (code)"                | Par défaut         |
-| Commentaires divers ( observ )   STRING                                                                |                 |                       |                                                        | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING                                                |                 | %USER_LOGIN%          |                                                        | Par défaut         |
-| Attribut métier dédié au type de parasurtenseur  ( att_met3 )   STRING                                 |                 | 0                     | "lt_ecl_auto_transformateur (code)"                    | Par défaut         |
-| Attribut métier Dédié au type d'amorce ( att_met2 )   STRING                                           |                 | 0                     | "lt_ecl_amorceur (code)"                               | Par défaut         |
-| Attribut métier dédié au type de disjoncteur / type de ballast ( att_met1 )   STRING                   |                 | 0                     | "lt_ecl_type_ballast (code)"                           | Par défaut         |
-| Attribut métier Dédié au nom du départ / aux options du support ( att_met7 )   STRING                  |                 | 2                     | "an_ecl_modele_lanterne"                               | Par défaut         |
-| Attribut métier Dédié à la tension / pourcentage de puissance de fonctionnement ( att_met8 )   INTEGER |                 | 2                     | "an_ecl_modele_lampe (intervention)"                   | Par défaut         |
-| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING               |                 | 0                     | "lt_ecl_etat"                                          | Par défaut         |
-| Attribut métier Dédié au modèle de lampe ( att_met5 )   STRING                                         |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
+| Signalement ou intervention ( type_si_in )   STRING                                                    | x               | 10                    | "lt_ecl_signalement_intervention (code)"               | Par défaut         |
+| Type de défaillance ( typ_def )   STRING                                                               | x               | 0                     | "lt_ecl_type_defaillance (code)"                       | Par défaut         |
+| Source de la défaillance ( src_def )   STRING                                                          | x               | 0                     | "lt_ecl_source_defaillance (code)"                     | Par défaut         |
+| Etat du signalement ( etat_sign )   STRING                                                             | x               | 10                    | "lt_ecl_etat_signalement"                              | Par défaut         |
+| Moyen d'intervention ( moy_interv )   STRING                                                           | x               | 0                     | "lt_ecl_moyen_intervention (code)"                     | Par défaut         |
+| Type d'intervention ( type_inter )   STRING                                                            | x               | 0                     | "lt_intervention_point_lumineux (code)"                | Par défaut         |
+| Commentaires divers ( observ )   STRING                                                                |                 |                       |                                                        | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING                                                |                 | %USER_LOGIN%          |                                                        | Par défaut         |
+| Attribut métier dédié au type de parasurtenseur  ( att_met3 )   STRING                                 |                 | 0                     | "lt_ecl_auto_transformateur (code)"                    | Par défaut         |
+| Attribut métier Dédié au type d'amorce ( att_met2 )   STRING                                           |                 | 0                     | "lt_ecl_amorceur (code)"                               | Par défaut         |
+| Attribut métier dédié au type de disjoncteur / type de ballast ( att_met1 )   STRING                   |                 | 0                     | "lt_ecl_type_ballast (code)"                           | Par défaut         |
+| Attribut métier Dédié au nom du départ / aux options du support ( att_met7 )   STRING                  |                 | 2                     | "an_ecl_modele_lanterne"                               | Par défaut         |
+| Attribut métier Dédié à la tension / pourcentage de puissance de fonctionnement ( att_met8 )   INTEGER |                 | 2                     | "an_ecl_modele_lampe (intervention)"                   | Par défaut         |
+| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING               |                 | 0                     | "lt_ecl_etat"                                          | Par défaut         |
+| Attribut métier Dédié au modèle de lampe ( att_met5 )   STRING                                         |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
 
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1836,10 +1867,8 @@ Source : Intervention_cable (an_ecl_intervention)
 | Signalement           |                  |                  | par défaut         | Vertical                | type_si_in == '10'            |                 |                               |
 |                       |                  |  typ_def         |                    |                         |                               |                 |                               |
 |                       |                  | src_def          |                    |                         |                               |                 |                               |
-|                       |                  | etat_sign        |                    |                         |                               |                 |                               |
-| Intervention          |                  |                  | par défaut         | Vertical                | type_si_in == '20'            |                 |                               |
-|                       |                  | type_inter       |                    |                         |                               |                 |                               |
-|                       |                  | att_met6         |                    |                         |                               |                 |                               |
+|                       |                  | etat_sign        |                    |                         |      
+
 
     - Saisie :
 
@@ -1847,15 +1876,15 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 | Attribut                                                                                 | Obligatoire     | Valeur par défaut     | "lt_ecl_signalement_intervention (code)"  | Par défaut |
 | ---------------------------------------------------------------------------------------- | --------------- | --------------------- | ----------------------------------------- | ---------- |
-| Signalement ou intervention ( type_si_in )   STRING                                      | x               | 10                    | "lt_ecl_type_defaillance (code)"          | Par défaut |
-| Type de défaillance ( typ_def )   STRING                                                 | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
-| Source de la défaillance ( src_def )   STRING                                            | x               | 0                     | "lt_ecl_etat_signalement"                 | Par défaut |
-| Etat du signalement ( etat_sign )   STRING                                               | x               | 10                    | "lt_ecl_moyen_intervention (code)"        | Par défaut |
-| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
-| Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
-| Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%          | "lt_ecl_auto_transformateur (code)"       | Par défaut |
-| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                 | 2                     | "lt_ecl_etat"                             | Par défaut |
+| Signalement ou intervention ( type_si_in )   STRING                                      | x               | 10                    | "lt_ecl_type_defaillance (code)"          | Par défaut |
+| Type de défaillance ( typ_def )   STRING                                                 | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
+| Source de la défaillance ( src_def )   STRING                                            | x               | 0                     | "lt_ecl_etat_signalement"                 | Par défaut |
+| Etat du signalement ( etat_sign )   STRING                                               | x               | 10                    | "lt_ecl_moyen_intervention (code)"        | Par défaut |
+| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
+| Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
+| Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%          | "lt_ecl_auto_transformateur (code)"       | Par défaut |
+| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                 | 2                     | "lt_ecl_etat"                             | Par défaut |
 
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1902,16 +1931,15 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 | Attribut                                                                                 | Obligatoire     | Valeur par défaut     | "lt_ecl_signalement_intervention (code)"  | Par défaut |
 | ---------------------------------------------------------------------------------------- | --------------- | --------------------- | ----------------------------------------- | ---------- |
-| Signalement ou intervention ( type_si_in )   STRING                                      | x               | 10                    | "lt_ecl_type_defaillance (code)"          | Par défaut |
-| Type de défaillance ( typ_def )   STRING                                                 | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
-| Source de la défaillance ( src_def )   STRING                                            | x               | 0                     | "lt_ecl_etat_signalement"                 | Par défaut |
-| Etat du signalement ( etat_sign )   STRING                                               | x               | 10                    | "lt_ecl_moyen_intervention (code)"        | Par défaut |
-| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
-| Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
-| Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%          | "lt_ecl_auto_transformateur (code)"       | Par défaut |
-| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                 | 2                     | "lt_ecl_etat"                             | Par défaut |
-
+| Signalement ou intervention ( type_si_in )   STRING                                      | x               | 10                    | "lt_ecl_type_defaillance (code)"          | Par défaut |
+| Type de défaillance ( typ_def )   STRING                                                 | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
+| Source de la défaillance ( src_def )   STRING                                            | x               | 0                     | "lt_ecl_etat_signalement"                 | Par défaut |
+| Etat du signalement ( etat_sign )   STRING                                               | x               | 10                    | "lt_ecl_moyen_intervention (code)"        | Par défaut |
+| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
+| Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
+| Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%  |         |  Par défaut |
+| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                 | 2                     | "lt_ecl_etat"                             | Par défaut |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
