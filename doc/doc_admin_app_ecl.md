@@ -339,7 +339,7 @@ END
 | type_si_in   |                   | x             | Signalement ou intervention              | Formatage par une liste de domaine ( lt_ecl_signalement_intervention )                   | Fiches informations des Fiches d'intervention                                                                                       |
 
 
-* ### Table : 'att_met1' 
+* ### 'att_met1' 
 | Fiche information           | Utilisé     | Particularité/Usage                                          | Label                |
 |:---------------------------:|:-----------:|:------------------------------------------------------------:|:--------------------:|
 | Intervention câble          |             |                                                              | Inutilisé            |
@@ -350,7 +350,7 @@ END
 | Intervention PI             |             |                                                              | Inutilisé            |
 
 
-* ### Table : 'att_met2' 
+* ### 'att_met2' 
 | Fiche information           | Utilisé     | Particularité/Usage                                      | Label            |
 |:---------------------------:|:-----------:|:--------------------------------------------------------:|:----------------:|
 | Intervention câble          |             |                                                          | Inutilisé        |
@@ -361,7 +361,7 @@ END
 | Intervention PI             |             |                                                          | Inutilisé        |
 
 
-* ### Table : 'att_met3' 
+* ### 'att_met3' 
 | Fiche information           | Utilisé     | Particularité/Usage                                               | Label                   |
 |:---------------------------:|:-----------:|:-----------------------------------------------------------------:|:-----------------------:|
 | Intervention câble          |             |                                                                   | Inutilisé               |
@@ -372,7 +372,7 @@ END
 | Intervention PI             |             |                                                                   | Inutilisé               |
 
 
-* ### Table : 'att_met4' 
+* ### 'att_met4' 
 | Fiche information           | Utilisé     | Particularité/Usage                                          | Label                                 |
 |:---------------------------:|:-----------:|:------------------------------------------------------------:|:-------------------------------------:|
 | Intervention câble          |             |                                                              | Inutilisé                             |
@@ -382,7 +382,7 @@ END
 | Intervention foyer          |             |                                                              | Inutilisé                             |
 | Intervention PI             |             |                                                              | Inutilisé                             |
 
-* ### Table : 'att_met5' 
+* ### 'att_met5' 
 | Fiche information           | Utilisé     | Particularité/Usage                                                                 | Label                                     |
 |:---------------------------:|:-----------:|:-----------------------------------------------------------------------------------:|:-----------------------------------------:|
 | Intervention câble          |             |                                                                                     | Inutilisé                                 |
@@ -393,7 +393,7 @@ END
 | Intervention PI             |             |                                                                                     | Inutilisé                                 |
 
 
-* ### Table : 'att_met6' 
+* ###  'att_met6' 
 | Fiche information           | Utilisé     | Particularité/Usage                               |
 | --------------------------- | ----------- | ------------------------------------------------- |
 | Intervention câble          | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
@@ -403,7 +403,7 @@ END
 | Intervention foyer          | x           | Formatage par une liste de domaine (lt_ecl_etat ) |
 | Intervention PI             | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
 
-* ### Table : 'att_met7' 
+* ###  'att_met7' 
 | Fiche information           | Utilisé     | Particularité/Usage                                                                 | Label                                     |
 |:---------------------------:|:-----------:|:-----------------------------------------------------------------------------------:|:-----------------------------------------:|
 | Intervention câble          |             |                                                                                     | Inutilisé                                 |
@@ -415,7 +415,7 @@ END
 
 
 
-* ### Table : 'att_met8' 
+* ###  'att_met8' 
 | Fiche information           | Utilisé     | Particularité/Usage                                        | Label                     |
 |:---------------------------:|:-----------:|:----------------------------------------------------------:|:-------------------------:|
 | Intervention câble          |             |                                                            | Inutilisé                 |
@@ -435,7 +435,7 @@ END
 | an_ecl_erreur           | id_noeud                                                  |0...n      |
 
   * ### Particularités :
-  * Ces tables doivent être séparées 
+  * Ces tables interventions doivent être séparées dans Géo afin que l'affichage puisse se faire selon un domaine de valeur précis, différent selon l'objet de l'intervention. (cf tableau ci-dessus)
 
 ## Table : `geo_v_ecl_ouvrage_electrique`
 | Attributs       | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                              | Utilisation                                |
@@ -685,11 +685,12 @@ Concerne tous les objets (Supports, foyers, départs, PI, ouvrages, câbles).
 
 Concerne les modèles de lampe, de lanterne et de support.
 
-#Les fonctionnalités 
 * ### Relations : 
 	Aucune
 * ### Particularités :
 	Aucune
+	
+# Les fonctionnalités 	
 	
 ## Recherche globale : `ECL - Recherche avancée d'une voie`
 
@@ -1081,7 +1082,7 @@ Source : geo_ecl_cable
 
 ## Saisie attributaire d'un modèle de lampe 
 
-    - Fiches d'information active :
+* ### Fiches d'information active :
 	Fiche d'information 'Support (modèle)'
 
 
@@ -1159,7 +1160,7 @@ Source : an_ecl_modele_lanterne
 |                       |                  | cod_ral_ln       |                    |                         |                                                         |                 |                               |                                            |
 |                       |                  | ik_lant          |                    |                         |                                                         |                 |                               |                                            |
 |                       |                  | ip_lant          |                    |                         |                                                         |                 |                               |                                            |
-|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_ln != NULL && (ik_lant == NULL ||ip_lant ==NULL) |                 |                               |                                            |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_ln != NULL && (ik_lant == NULL `||` ip_lant ==NULL) |                 |                               |                                            |
 |                       |                  | Affichage_message_erreur |                    |                         |                                                         |                 |                               |                                            |
 | Photothèque           |                  |                  | par défaut         | Vertical                | id_mod_lm != NULL                                       |                 |                               | Photos et documents associés               |
 |                       |                  | miniature        |                    |                         |                                                         |                 |                               |                                            |
@@ -1175,6 +1176,7 @@ Source : an_ecl_modele_lanterne
 * ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
+
 | Attributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                      | Utilisation                                               |
 |:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:--------------------------------------------------------:|:---------------------------------------------------------:|
 | clas_el_ln   |                   | x             | Classe électrique de la lanterne          | Formatage par une liste de domaine ( lt_ecl_type_lampe ) | Fiche d'information : modèle lanterne (ECL) / Foyer (ECL) |
@@ -1717,11 +1719,43 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 
 
-
-
 ## Fiche information :     Media - Fiche objet ECL
 
 Source : an_ecl_media
+
+* ### Statistique : 
+	Aucune
+  
+* ### Représentation : 
+  
+| Mode d'ouverture     | Taille (px)     | Agencement des sections     |
+| -------------------- | --------------- | --------------------------- |
+| dans le gabarit      | 530*650         | Onglet                      |
+
+
+| Nom de la section     | Sous-section     | Attributs     | Position label     | Agencement attribut     | Visibilité conditionnelle     | Fichie liée     |
+| --------------------- | ---------------- | ------------- | ------------------ | ----------------------- | ----------------------------- | --------------- |
+| (vide)                |                  |               | Par défaut         | Vertical                |                               |                 |
+|                       |                  | op_sai        |                    |                         |                               |                 |
+|                       |                  | dat_sai       |                    |                         |                               |                 |
+
+
+* ### Saisie :
+
+Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
+
+| Attribut                                | Obligatoire     | Valeur par défaut     | Liste de domaine     | Représentation     |
+| --------------------------------------- | --------------- | --------------------- | -------------------- | ------------------ |
+| Opérateur de saisie ( op_sai )   STRING |                 | %USER_LOGIN%          |                      | Par défaut         |
+| Date de saise ( date_sai )   TIMESTAMP  |                 | %CURRENT_DATE%        |                      | Par défaut         |
+
+IMPORTANT : L'édition des données jointes est désactivée.
+
+Modèle d'impression : aucun
+
+## Fiche information :     Media - Fiche modèle
+
+Source : an_ecl_media_modele
 
 * ### Statistique : 
 	Aucune
