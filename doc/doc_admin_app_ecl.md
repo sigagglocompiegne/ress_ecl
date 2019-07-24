@@ -421,6 +421,8 @@ END
 | ty_fusible     |                   | x             | Type de fusible                                         | Formatage par une liste de domaine ( lt_ecl_type_fusible )                                                                        | Fiche information : Ouvrage electrique     |             |
 | ty_ouvelec     |                   | x             | Type d'ouvrage électrique                               | Formatage par une liste de domaine ( lt_ecl_type_ouvrage_electrique )                                                             | Fiche information : Ouvrage electrique     |             |
 
+ (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
+
   ### Filtres :
 
 | Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
