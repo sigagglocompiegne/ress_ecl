@@ -1,5 +1,6 @@
             
-                                                   ![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
+![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
+
 # Documentation technique de l'application d'éclairage public (ECL)
 
 * Statut
@@ -60,7 +61,7 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 ## Table : `an_ecl_depart`
 
 | Attributs          | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                          | Utilisation                        | 
-|:-----------------:|:-----------------:|:-------------:|:--------------------------------------------:|:------------------------------------------------------------:|:----------------------------------:|:--------------------------------------------------:|
+|:-----------------:|:-----------------:|:-------------:|:--------------------------------------------:|:------------------------------------------------------------:|:----------------------------------:|
 | Affiche recherche | x                 |               | Affiche recherche                            |  Formate l’affichage d’une recherche                                                            | Recherche : Recherche de départ    | 
 | date_donne        |                   | x             | Date de la donnée                            | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    
 | date_maj          |                   | x             | Date de dernière mise à jour de la donnée    | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    
@@ -88,11 +89,12 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 
 
   * ### Particularités :
-  *  La recherche de départ utilise aussi un champ calculé de la table geo_v_ecl_ouvrage_electrique.
+  *  Les départs sont *obligatoirement* rattachés à une armoire.
+  
 
 ## Table : `an_ecl_erreur`
 | Attributs      | Champ calculé     | Formatage     | Renommage                       | Particularité/Usage     | Utilisation                     | 
-|:-------------:|:-----------------:|:-------------:| ------------------------------- | ----------------------- | ------------------------------- | ----------- |
+|:-------------:|:-----------------:|:-------------:| ------------------------------- | ----------------------- | ------------------------------- |
 | Affichage_message_erreur  | x                 | x             | Affichage_message_erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : Multiples (2)     |    
 
 (1) Requête SQL permettant d'afficher temporairement un Affichage_message_erreur dans la fiche d'information. La durée est de 10 minutes pour que l'utilisateur ait le temps de se souvenir de la présence des messages d'erreur, mais dès qu'un update est fait sur l'objet, les messages d'erreurs sont effacés via les triggers. Requête SQL :
@@ -170,6 +172,7 @@ END
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 00          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lampe. (1) |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lampe", afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                           |
+
 (1) Afin d'actualiser le domaine en posant une contrainte. Technique ayant pour but d'éviter de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lampe apparaisse dans le domaine.
 
   * ### Relations :
@@ -204,6 +207,7 @@ END
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 00          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lanterne. |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lanterne", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                                                                  |
+
 (1) Afin d'actualiser le domaine en posant une contrainte. Technique ayant pour but d'éviter de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lanterne apparaisse dans le domaine.
 
   * ### Relations :
