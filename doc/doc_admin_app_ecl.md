@@ -1,5 +1,5 @@
-                                                                         ![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
-
+            
+                                                   ![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
 # Documentation technique de l'application d'éclairage public (ECL)
 
 * Statut
@@ -58,6 +58,7 @@
 Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les besoins de l'application. Les autres données servant d'habillage (pour la cartographie ou les recherches) sont listées dans les autres parties ci-après. Le tableau ci-dessous présente uniquement les changements (type de champ, formatage du résultat, ...) ou les ajouts (champs calculés, filtre, ...) non présents dans la donnée source. 
 
 ## Table : `an_ecl_depart`
+
 | Attributs          | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                          | Utilisation                        | 
 |:-----------------:|:-----------------:|:-------------:|:--------------------------------------------:|:------------------------------------------------------------:|:----------------------------------:|:--------------------------------------------------:|
 | Affiche recherche | x                 |               | Affiche recherche                            |  Formate l’affichage d’une recherche                                                            | Recherche : Recherche de départ    | 
@@ -65,28 +66,28 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 | date_maj          |                   | x             | Date de dernière mise à jour de la donnée    | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    
 | date_sai          |                   | x             | Date de la saisie de la donnée dans la base  | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    
 | etat_dep          |                   | x             | Etat du départ                               | Formatage par une liste de domaine ( lt_ecl_etat)            | Fiche d'information : Depart (ECL) |                                                    
-| situation         |                   | x             | Situation                                    | Formatage par une liste de domaine ( lt_ecl_situation)       | Fiche d'information : Depart (ECL) | Supprimé, inactif ou actif                         |
+| situation         |                   | x             | Situation                                    | Formatage par une liste de domaine ( lt_ecl_situation)       | Fiche d'information : Depart (ECL) | 
 | ty_disjonc        |                   | x             | Type du disjoncteur                          | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Fiche d'information : Depart (ECL) |                                                    
 | ty_fusible        |                   | x             | Type du fusible                              | Formatage par une liste de domaine (lt_ecl_type_fusible)     | Fiche d'information : Depart (ECL) |                                                    
 
-  ### Filtres :
+  * ### Filtres :
 
 |Nom|Attribut| Au chargement | Type | Condition |Valeur|Description|
 |:---|:---|:-:|:---:|:---:|:---|:---|
 |Nom de départ|nom_depart||Filtre à suggestion de valeur|Est égale à une valeur choisie par l'utilisateur|Valeur suggérée de "nom_depart"| Permet de faire une recherche par nom de départ|
 |Situation != supprimer|situation|x|Alphanumérique|est différente de une (des) valeur(s) par défaut|12| Empêche l’apparition des départs supprimés|
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables          | Champs de jointure (champs table - champs table liée)     | Type     |
 | ---------------------------- | --------------------------------------------------------- | -------- |
 | geo_v_ecl_ouvrage_electrique | id_ouvelec                                                | 1        |
-| geo_ecl_noeud                | id_ouvelec  - id_noeud                                    | 0…n      |
-| an_ecl_erreur                | id_depart - id_objet                                      | 0…n      |
-| an_ecl_intervention          | id_depart - id_objet                                      | 0…n      |
+| geo_ecl_noeud                | id_ouvelec  - id_noeud                                    |0...n      |
+| an_ecl_erreur                | id_depart - id_objet                                      |0...n      |
+| an_ecl_intervention          | id_depart - id_objet                                      |0...n      |
 
 
-  ### Particularités :
+  * ### Particularités :
   *  La recherche de départ utilise aussi un champ calculé de la table geo_v_ecl_ouvrage_electrique.
 
 ## Table : `an_ecl_erreur`
@@ -110,7 +111,7 @@ END
 (2) Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Intervention_PI, Intervention câble, Lanterne (modèle)
 
 ## Table : `an_ecl_foyer`
-| Atributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | 
+| Attributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | 
 |:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------------:|
 | date_donne   |                   | x             | Date de création de la donnée             |  Les heures ne sont pas affichées                                                                       | Fiche information : Foyer (ECL) |             |
 | date_maj     |                   | x             | Date de dernière mise à jour de la donnée |  Les heures ne sont pas affichées                                                                          | Fiche information : Foyer (ECL) |             |
@@ -125,7 +126,7 @@ END
 | ty_ballast   |                   | x             | Type de ballast installé                  | Formatage par une liste de domaine ( lt_ecl_type_ballast (code))        | Fiche information : Foyer (ECL) |             |
 | ty_lantern   |                   | x             | Routier / piéton                          | Formatage par une liste de domaine ( lt_ecl_type_lanterne)              | Fiche information : Foyer (ECL) |             |
 
-### Filtres :
+* ### Filtres :
 
 | Nom                    | Attribut                       | Au chargement     | Type           | Condition                                                        | Valeur                                       | Description                                                            |
 | ---------------------- | ------------------------------ |:-----------------:|:--------------:|:----------------------------------------------------------------:| -------------------------------------------- | ---------------------------------------------------------------------- |
@@ -134,22 +135,22 @@ END
 | Modèle de lampe        | id_mod_lm (modèle de lampe)    |                   | Alphanumérique | est égale à une valeur choisie par l'utilisateur parmi une liste | est égale à une valeur listée de "id_mod_lm" | Recherche de foyer par un certain modèle de lampe                      |
 | Modèle de lanterne     | id_mod_ln (modèle de lanterne) |                   | Alphanumérique | est égale à une valeur choisie par l'utilisateur parmi une liste | est égale à une valeur listée de "id_mod_ln" | Recherche de foyer par un certain modèle de lanterne                   |
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables                      | Champs de jointure (champs table - champs table liée)     | Type     |
 | ---------------------------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_modele_lanterne                   | id_mod_ln                                                 | 1        |
 | an_ecl_modele_lampe                      | id_mod_lm                                                 | 1        |
-| geo_ecl_noeud                            | id_supp - id_noeud                                        | 0…n      |
-| an_ecl_intervention (Intervention Foyer) | id_depart - id_objet                                      | 0…n      |
-| an_ecl_erreur                            | id_foyer - id_objet                                       | 0…n      |
+| geo_ecl_noeud                            | id_supp - id_noeud                                        |0...n      |
+| an_ecl_intervention (Intervention Foyer) | id_depart - id_objet                                      |0...n      |
+| an_ecl_erreur                            | id_foyer - id_objet                                       |0...n      |
 
 
-  ### Particularités : 
+  * ### Particularités : 
   * Les foyers sont *obligatoirement* rattachés à un support. 
 
 ## Table : `an_ecl_modele_lampe`
-| Atributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
+| Attributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
 |:-------------:|:-----------------:|:-------------:|:--------------------------------------------:|:---------------------------------------------------------------:|:----------------------------------------:|
 | Affichage_nom | x                 |               |                                              | Formate l'affichage d'une recherche                             | Recherche : recherche de foyer           |
 | cle_media     | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LM en préfixe. (1)            | Relation avec an_ecl_media_modele.       |
@@ -163,26 +164,26 @@ END
 
 (1)Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
 
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lampe. (1) |
+| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 00          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lampe. (1) |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lampe", afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                           |
 (1) Afin d'actualiser le domaine en posant une contrainte. Technique ayant pour but d'éviter de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lampe apparaisse dans le domaine.
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
-| an_ecl_media_modele     | cle_media - id                                            | 0…n      |
+| an_ecl_media_modele     | cle_media - id                                            |0...n      |
 
 
-  ### Particularités : 
+  * ### Particularités : 
   * La table est en fait un domaine de valeur avec plusieurs caractéristiques. Elle est éditable par les agents du service métier directement via l'application.
 
 ## Table : `an_ecl_modele_lanterne`
-| Atributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
+| Attributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
 |:-------------:|:-----------------:|:-------------:|:--------------------------------------------:|:---------------------------------------------------------------:|:----------------------------------------:|
 | Affichage_nom | x                 |               |                                              | Formate l'affichage d'une recherche                             | Recherche : recherche de foyer           |
 | cle_media     | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LN en préfixe. (1)            | Relation avec an_ecl_media_modele.       |
@@ -197,27 +198,27 @@ END
 
  (1) Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
  
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lanterne. |
+| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 00          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lanterne. |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lanterne", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                                                                  |
 (1) Afin d'actualiser le domaine en posant une contrainte. Technique ayant pour but d'éviter de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lanterne apparaisse dans le domaine.
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
-| an_ecl_media_modele     | cle_media - id                                            | 0…n      |
+| an_ecl_media_modele     | cle_media - id                                            |0...n      |
 | an_ecl_erreur           | id_mod_sup - id_objet                                     | o…n      |
 
-  ### Particularités : 
+  * ### Particularités : 
   * La table est en fait un domaine de valeur avec plusieurs caractéristiques. Elle est éditable par les agents du service métier directement via l'application.
 
 ## Table : `an_ecl_modele_support`
 
-| Atributs     | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                              | Utilisation                             |
+| Attributs     | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                              | Utilisation                             |
 |:------------:|:-----------------:|:-------------:|:--------------------------------------------:|:----------------------------------------------------------------:|:---------------------------------------:|
 | cle_media    | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LN en préfixe.                 |                                         |
 | date_maj     |                   | x             | Date de dernière mise à jour                 | Les heures ne sont pas affichées                                 | Fiche d'information :support ( modèle ) |
@@ -226,24 +227,24 @@ END
 
  (1) Les autres types de modèles ont le même type d'attribut avec un préfixe différent. Cela permet de tous les relier à la même table modèle malgré leur séquence différente.
 
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de support", afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
-| an_ecl_media_modele     | cle_media - id                                            | 0…n      |
+| an_ecl_media_modele     | cle_media - id                                            |0...n      |
 | an_ecl_erreur           | id_mod_sup - id_objet                                     | o…n      |
 
-  ### Particularités : 
+  * ### Particularités : 
   * La table est en fait un domaine de valeur avec plusieurs caractéristiques. Elle est éditable par les agents du service métier directement via l'application.
 
 ## Table : `geo_ecl_cable`
-| Atributs            | Champ calculé     | Formatage     | Renommage                                                         | Particularité/Usage                                                      | Utilisation                     |
+| Attributs            | Champ calculé     | Formatage     | Renommage                                                         | Particularité/Usage                                                      | Utilisation                     |
 |:-------------------:|:-----------------:|:-------------:|:-----------------------------------------------------------------:|:------------------------------------------------------------------------:|:-------------------------------:|
 | Blanc | x |            | Blanc | Contient le caractère ' ' . (1)  | Recherche : Recherche de câble |
 | Affichage recherche | x                 |               | Affichage recherche                                               | Formate l'affichage d'une recherche | Recherche : Recherche de câble  |
@@ -261,7 +262,7 @@ END
 
 (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                    | Attribut                          | Au chargement     | Type           | Condition                                       | Valeur     | Description                               |
 | ---------------------- | --------------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ----------------------------------------- |
@@ -269,24 +270,24 @@ END
 | id_nd_fin est null     | id_nd_fin (nœud final du câble)   |                   | Alphanumérique | La valeur de “id_nd_fin” est                    | null       | Recherche : "câble non relié"             |
 | id_nd_ini est null     | id_nd_ini (nœud initial du câble) |                   | Alphanumérique | La valeur de “id_nd_ini” est                    | null       | Recherche : "câble non relié"             |
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables                      | Champs de jointure (champs table - champs table liée)     | Type     |
 | ---------------------------------------- | --------------------------------------------------------- | -------- |
-| an_ecl_intervention (Intervention câble) | id_cab - id_objet                                         | 0…n      |
-| xapps_an_v_ecl_tension_cable             | id_cab                                                    | 0…1      |
+| an_ecl_intervention (Intervention câble) | id_cab - id_objet                                         |0...n      |
+| xapps_an_v_ecl_tension_cable             | id_cab                                                    | 00…1      |
 
-  ### Particularités : 
+  * ### Particularités : 
   * Un câble ne peut pas être relié en ses deux extrémités au même nœud.
   * L'attribut tension est transmise au câble en fonction du départ auquel est lié le nœud référencer en tant que nœud final du câble.
 
 ## Table : `an_ecl_intervention`
-| Atributs                       | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                              | Utilisation                                   | Exemple     |
+| Attributs                       | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                              | Utilisation                                   | Exemple     |
 |:------------------------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
 | Affiche-recherche-intervention | x                 |               | Affiche-recherche-intervention                                                                                                          | Formate l'affichage d'une recherche. | Recherche : Rapport d'intervention            |             |
 | Affiche-recherche-signalement  | x                 |               | Affiche-recherche-signalement                                                                                                           | Formate l'affichage d'une recherche. | Recherche : Rapport de signalement            |             |
 
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                                | Attribut                                         | Au chargement     | Type           | Condition                                                                                       | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ------------------------------------------------ |:-----------------:|:--------------:|:-----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -296,20 +297,20 @@ END
 | Intervention oui / signalement non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 20            | Sélectionne uniquement les interventions                                                                                   |
 | Signalement oui / intervention non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 10            | Sélectionne uniquement les signalements                                                                                    |
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
-| geo_ecl_noeud           | id_noeud                                                  | 0…1      |
+| geo_ecl_noeud           | id_noeud                                                  | 00…1      |
 
 
-  ### Particularités :
+  * ### Particularités :
   * Cette table a été insérée 7 fois dans GEO. La version présentée ici est celle servant aux recherches et à la cartographie.
   * Les 6 autres tables sont présentées d'un seul tenant ci-dessous.
    
  ## Intervention Foyer, Intervention Câble, Intervention Départ, Intervention Points lumineux, Intervention PI, Intervention ouvrage  
-   ### Table : `an_ecl_intervention`
- | Atributs     | Champ calculé     | Formatage     | Renommage                                | Particularité/Usage                                                                      | Utilisation                                                                                                                         |
+   * ### Table : `an_ecl_intervention`
+ | Attributs     | Champ calculé     | Formatage     | Renommage                                | Particularité/Usage                                                                      | Utilisation                                                                                                                         |
 |:------------:|:-----------------:|:-------------:|:----------------------------------------:|:----------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | Dates        | x                 |               | Dates                                    | Formate l'affichage des différentes dates dans les fiches informations des interventions | Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI)                                                  |
 | att_met1     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
@@ -334,7 +335,7 @@ END
 | type_si_in   |                   | x             | Signalement ou intervention              | Formatage par une liste de domaine ( lt_ecl_signalement_intervention )                   | Fiches informations des Fiches d'intervention                                                                                       |
 
 
-### Table : 'att_met1' 
+* ### Table : 'att_met1' 
 | Fiche information           | Utilisé     | Particularité/Usage                                          | Label                |
 |:---------------------------:|:-----------:|:------------------------------------------------------------:|:--------------------:|
 | Intervention câble          |             |                                                              | Inutilisé            |
@@ -345,7 +346,7 @@ END
 | Intervention PI             |             |                                                              | Inutilisé            |
 
 
-### Table : 'att_met2' 
+* ### Table : 'att_met2' 
 | Fiche information           | Utilisé     | Particularité/Usage                                      | Label            |
 |:---------------------------:|:-----------:|:--------------------------------------------------------:|:----------------:|
 | Intervention câble          |             |                                                          | Inutilisé        |
@@ -356,7 +357,7 @@ END
 | Intervention PI             |             |                                                          | Inutilisé        |
 
 
-### Table : 'att_met3' 
+* ### Table : 'att_met3' 
 | Fiche information           | Utilisé     | Particularité/Usage                                               | Label                   |
 |:---------------------------:|:-----------:|:-----------------------------------------------------------------:|:-----------------------:|
 | Intervention câble          |             |                                                                   | Inutilisé               |
@@ -367,7 +368,7 @@ END
 | Intervention PI             |             |                                                                   | Inutilisé               |
 
 
-### Table : 'att_met4' 
+* ### Table : 'att_met4' 
 | Fiche information           | Utilisé     | Particularité/Usage                                          | Label                                 |
 |:---------------------------:|:-----------:|:------------------------------------------------------------:|:-------------------------------------:|
 | Intervention câble          |             |                                                              | Inutilisé                             |
@@ -377,7 +378,7 @@ END
 | Intervention foyer          |             |                                                              | Inutilisé                             |
 | Intervention PI             |             |                                                              | Inutilisé                             |
 
-### Table : 'att_met5' 
+* ### Table : 'att_met5' 
 | Fiche information           | Utilisé     | Particularité/Usage                                                                 | Label                                     |
 |:---------------------------:|:-----------:|:-----------------------------------------------------------------------------------:|:-----------------------------------------:|
 | Intervention câble          |             |                                                                                     | Inutilisé                                 |
@@ -388,7 +389,7 @@ END
 | Intervention PI             |             |                                                                                     | Inutilisé                                 |
 
 
-### Table : 'att_met6' 
+* ### Table : 'att_met6' 
 | Fiche information           | Utilisé     | Particularité/Usage                               |
 | --------------------------- | ----------- | ------------------------------------------------- |
 | Intervention câble          | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
@@ -398,7 +399,7 @@ END
 | Intervention foyer          | x           | Formatage par une liste de domaine (lt_ecl_etat ) |
 | Intervention PI             | x           | Formatage par une liste de domaine (lt_ecl_etat)  |
 
-### Table : 'att_met7' 
+* ### Table : 'att_met7' 
 | Fiche information           | Utilisé     | Particularité/Usage                                                                 | Label                                     |
 |:---------------------------:|:-----------:|:-----------------------------------------------------------------------------------:|:-----------------------------------------:|
 | Intervention câble          |             |                                                                                     | Inutilisé                                 |
@@ -410,7 +411,7 @@ END
 
 
 
-### Table : 'att_met8' 
+* ### Table : 'att_met8' 
 | Fiche information           | Utilisé     | Particularité/Usage                                        | Label                     |
 |:---------------------------:|:-----------:|:----------------------------------------------------------:|:-------------------------:|
 | Intervention câble          |             |                                                            | Inutilisé                 |
@@ -421,19 +422,19 @@ END
 | Intervention PI             |             |                                                            | Inutilisé                 |
 
 
-  ### Filtres : Aucun.
+  * ### Filtres : Aucun.
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
-| an_ecl_erreur           | id_noeud                                                  | 0…n      |
+| an_ecl_erreur           | id_noeud                                                  |0...n      |
 
-  ### Particularités :
+  * ### Particularités :
   * Ces tables doivent être séparées 
 
 ## Table : `geo_v_ecl_ouvrage_electrique`
-| Atributs       | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                              | Utilisation                                |
+| Attributs       | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                              | Utilisation                                |
 |:--------------:|:-----------------:|:-------------:|:--------------------------------------------:|:--------------------------------------------------------------------------------:|:------------------------------------------:|
 | Blanc          | x                 |               | Blanc                                        | Contient le caractère ' ' .                                                      |                                            |
 | affiche_result | x                 |               | affiche_result                               | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Recherche d'ouvrage électrique |
@@ -457,7 +458,7 @@ END
 
  (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
 | ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -467,21 +468,21 @@ END
 | Nom de l'ouvrage       | type_si_in (Signalement ou intervention) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                            | une valeur listée de "nom_ouv"    | Sert à la rechercher : '' Rapport d'intervention'' afin de ne sélectionner que les interventions     |
 | Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés sur la cartographie                                      |
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables                         | Champs de jointure (champs table - champs table liée)     | Type     |
 | ------------------------------------------- | --------------------------------------------------------- | -------- |
-| **an_ecl_depart**                           | id_ouvelec                                                | 0…n      |
-| an_ecl_media                                | id_ouvelec - id                                           | 0…n      |
+| **an_ecl_depart**                           | id_ouvelec                                                |0...n      |
+| an_ecl_media                                | id_ouvelec - id                                           |0...n      |
 | xapps_an_vmr_ecl_materialisee_noeud_armoire | id_ouvelec - id_noeud                                     | 1        |
-| an_ecl_erreur                               | id_ouvelec - id_objet                                     | 0…n      |
-| an_ecl_intervention (intervention ouvrage)  | id_ouvelec - id_objet                                     | 0…n      |
+| an_ecl_erreur                               | id_ouvelec - id_objet                                     |0...n      |
+| an_ecl_intervention (intervention ouvrage)  | id_ouvelec - id_objet                                     |0...n      |
 
-  ### Particularités :
+  * ### Particularités :
   Aucune
 
 ## Table : `geo_v_ecl_point_lumineux`
-| Atributs                         | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                                  | Utilisation                                  |
+| Attributs                         | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                                  | Utilisation                                  |
 |:--------------------------------:|:-----------------:|:-------------:|:--------------------------------------------:|:------------------------------------------------------------------------------------:|:--------------------------------------------:|
 | Pour affichage qualité fct(date) |                   |               | Pour affichage qualité fct(date)             | Identifie les données non mises à jour depuis plus de deux ans                       | Cartographie                                 |
 | Blanc                            | x                 |               | Blanc                                        | Contient le caractère ' '                                                            | Recherche : Recherche de support             |
@@ -507,7 +508,7 @@ END
 
  (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                    | Attribut                                | Au chargement     | Type           | Condition                                                                                  | Valeur                                                       | Description                                                            |
 | ---------------------- | --------------------------------------- |:-----------------:|:--------------:|:------------------------------------------------------------------------------------------:| ------------------------------------------------------------ | ---------------------------------------------------------------------- |
@@ -517,23 +518,23 @@ END
 | Support sans foyer     | id_supp                                 |                   | SQL            | {id_supp} NOT IN (SELECT id_supp FROM m_reseau_sec.an_ecl_foyer WHERE situation <> '12')   |                                                              | Sert à la recherche : "Recherche de support sans foyer''               |
 | Situation != supprimer | situation                               |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                            | 12                                                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables                               | Champs de jointure (champs table - champs table liée)     | Type     |
 | ------------------------------------------------- | --------------------------------------------------------- | -------- |
-| an_ecl_media                                      | id_supp - id                                           | 0…n      |
+| an_ecl_media                                      | id_supp - id                                           |0...n      |
 | xapps_an_vmr_ecl_materialisee_noeud_armoire       | id_supp - id_noeud                                     | 1        |
-| an_ecl_erreur                                     | id_supp - id_objet                                     | 0…n      |
-| an_ecl_intervention (intervention point lumineux) | id_supp - id_objet                                     | 0…n      |
-| xapps_geo_v_ecl_depart                            | depart - id_depart                                        | 0…1      |
-| an_ecl_foyer                                      | id_supp                                                   | 0…n      |
+| an_ecl_erreur                                     | id_supp - id_objet                                     |0...n      |
+| an_ecl_intervention (intervention point lumineux) | id_supp - id_objet                                     |0...n      |
+| xapps_geo_v_ecl_depart                            | depart - id_depart                                        | 00…1      |
+| an_ecl_foyer                                      | id_supp                                                   |0...n      |
 | an_ecl_modele_support                             | id_mod_sup                                                | 1        |
 
-  ### Particularités :
+  * ### Particularités :
 Aucune
 
 ## Table : `geo_v_ecl_pi`
-| Atributs          | Champ calculé     | Formatage     | Renommage                                        | Particularité/Usage                                                              | Utilisation                              |
+| Attributs          | Champ calculé     | Formatage     | Renommage                                        | Particularité/Usage                                                              | Utilisation                              |
 |:-----------------:|:-----------------:|:-------------:|:------------------------------------------------:|:--------------------------------------------------------------------------------:|:----------------------------------------:|
 | Blanc             | x                 |               | Blanc                                            | Contient le caractère ' ' .                                                      | Recherche : Recherche de point d'interet |
 | Affiche_recherche | x                 |               | Affiche_recherche                                | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Recherche de point d'interet |
@@ -550,31 +551,31 @@ Aucune
 | ty_pi             |                   | x             | Type de point d'intérêt                          | Formatage par une liste de domaine ( lt_ecl_type_pi )                            | Fiche information : Point intérêt (PI)   |
 
 
-  ### Filtres :
+  * ### Filtres :
 
 | Nom                    | Attribut                        | Au chargement     | Type           | Condition                                                        | Valeur                       | Description                                                            |
 | ---------------------- | ------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------:| ---------------------------- | ---------------------------------------------------------------------- |
 | type_ PI               | ty_pi (type de point d'interet) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste | une valeur listée de “ty_pi” | Sert à la recherche : ''Recherche de point d'interet"                  |
 | Situation != supprimer | situation                       |      x             | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
 
-  ### Relations :
+  * ### Relations :
 
 | Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
 |:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
-| an_ecl_media                                       | id_pi - id                                                | 0…n      |
+| an_ecl_media                                       | id_pi - id                                                |0...n      |
 | xapps_an_vmr_ecl_materialisee_noeud_armoire        | id_pi - id_noeud                                          | 1        |
-| an_ecl_intervention (intervention point d'interet) | id_pi - id_objet                                          | 0…n      |
-| an_ecl_errreur                                     | id_pi - id_objet                                          | 0…n      |
+| an_ecl_intervention (intervention point d'interet) | id_pi - id_objet                                          |0...n      |
+| an_ecl_errreur                                     | id_pi - id_objet                                          |0...n      |
 
 
-  ### Particularités :
+  * ### Particularités :
 
 ## Table : 'xapps_geo_v_ecl_intervention_liste_affichage'
 
 * ### Filtres :
 | Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                                             |
 | -------------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-----------------:| ------------ | ------------------------------------------------------------------------------------------------------- |
-| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 00, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' sur la cartographie. |
+| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 000, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' sur la cartographie. |
 | Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements sur la cartographie.                        |
 | Pour rafaichissement domaine de valeur | geom                                     |                   | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.                               |
 
@@ -585,7 +586,7 @@ Aucune
 ## Table : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
 | ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| par géométrie | geom         |                   | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. Utilisé dans le domaine de valeur utilisant cette table. |
+| par géométrie | geom         |                   | Spatial  | est différente de | 000, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. Utilisé dans le domaine de valeur utilisant cette table. |
 * ### Relations : 
 	Aucune
 * ### Particularités :
@@ -614,7 +615,7 @@ Aucune
 ## Domaine de valeur : 'xapps_geo_v_ecl_intervention_liste_affichage'
 | Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                          |
 | -------------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-----------------:| ------------ | ------------------------------------------------------------------------------------ |
-| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 00, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' . |
+| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 000, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' . |
 | Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements                          |
 | Pour rafaichissement domaine de valeur | geom                                     | x                 | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.            |
 
@@ -626,7 +627,7 @@ Aucune
 ## Domaine de valeur : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
 | ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| par géométrie | geom         |           x        | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
+| par géométrie | geom         |           x        | Spatial  | est différente de | 000, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
 
 * ### Relations : 
 	Aucune
@@ -720,6 +721,7 @@ Source : an_ecl_modele_support
 | nom_mod_su   | x            | x              | x              |                         | x                     |
 
 Tri : nom_mod_su (Alphabétique) 
+
 (la détection des doublons n'est pas activée ici)
 
 * ### Filtres :
@@ -740,7 +742,9 @@ Source : an_ecl_modele_lampe
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | nom_mod_lm   | x            | x              | x              |                         | x                     |
+
 Tri : nom_mod_lm (Alphabétique)
+
 (la détection des doublons n'est pas activée ici)
 
 * ### Filtres :
@@ -761,7 +765,9 @@ Source : an_ecl_modele_lampe
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | nom_mod_ln   | x            | x              | x              |                           | x                     |
+
 Tri : nom_mod_ln (Alphabétique) 
+
 (la détection des doublons n'est pas activée ici)
 
 * ### Filtres :
@@ -782,8 +788,11 @@ Source : an_ecl_intervention
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | Affiche-recherche-signalement  | x            | x              | x              |                        | x                     |
+
 Tri : id_inter (ascendant) 
+
 (la détection des doublons n'est pas activée ici)
+
 La géométrie est récupérer via la relation avec la table geo_ecl_noeud.
 
 * ### Filtres :
@@ -806,8 +815,11 @@ Source : an_ecl_intervention
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | Affiche-recherche-signalement  | x            | x              | x              |                        | x                     |
+
 Tri : id_inter (ascendant) 
+
 (la détection des doublons n'est pas activée ici)
+
 La géométrie est récupérer via la relation avec la table geo_ecl_noeud.
 
 * ### Filtres :
@@ -828,8 +840,11 @@ Source : geo_ecl_cable
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_cab  | x            | x              | x              |                        | x                     |
+
 Tri : pas de tri.
+
 (la détection des doublons n'est pas activée ici)
+
 La géométrie est celle du câble.
 
 * ### Filtres :
@@ -852,8 +867,11 @@ Source : geo_ecl_noeud
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_noeud  | x            | x              | x              |                        | x                     |
+
 Tri : pas de tri.
+
 (la détection des doublons n'est pas activée ici)
+
 La géométrie est celle du noeud.
 
 * ### Filtres :
@@ -874,8 +892,11 @@ Source : geo_ecl_noeud
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_noeud  | x            | x              | x              |                        | x                     |
+
 Tri : pas de tri.
+
 (la détection des doublons n'est pas activée ici)
+
 La géométrie est celle du noeud.
 
 * ### Filtres :
@@ -898,8 +919,11 @@ Source : an_ecl_foyer
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_foyer  | x            | x              | x              |                        | x                     |
+
 Tri : pas de tri.
+
 (la détection des doublons n'est pas activée ici)
+
 La géométrie est celle du support auquel est lié le foyer, via la relation avec la table "geo_ecl_noeud".
 
 * ### Filtres :
@@ -920,9 +944,12 @@ Source : geo_v_ecl_point_lumineux
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
-| Affiche_recherche | x            | x              | x              |                        | x                     |
-Tri : pas de tri.
-(la détection des doublons n'est pas activée ici)
+| Affiche_recherche | x            | x              | x              |                        | x                     | 
+
+Tri : pas de tri.        
+
+(la détection des doublons n'est pas activée ici)  
+
 La géométrie est celle du noeud.
 
 * ### Filtres :
@@ -944,8 +971,11 @@ Source : geo_v_ecl_point_lumineux
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | champ_calcule | x            | x              | x              |                        | x                     |
+
 Tri : pas de tri.
+
 (la détection des doublons n'est pas activée ici)
+
 Pas de géométrie.
 
 * ### Filtres : Sans objet
@@ -1091,11 +1121,11 @@ Sont présents ici uniquement les attributs éditables ou disposant d'un mode de
 | Attribut                                                         | Obligatoire     | Valeur par défaut     | Liste de domaine                  |
 |:----------------------------------------------------------------:|:---------------:|:---------------------:|:---------------------------------:|
 | Nom du modèle de lampe ( nom_mod_lm )   STRING                   |                 |                       |                                   |
-| Type de lampe ( ty_lampe )   STRING                              | x               | 0                     | "lt_ecl_type_lampe"               |
-| Puissance de la lampe ( puis_lam )   STRING                      | x               | 0                     | "lt_ecl_puissance_lampe (code)"   |
-| Culot de la lampe ( cul_lamp )   STRING                          | x               | 0                     | "lt_ecl_culot_lampe"              |
-| Présence d'une télégestion ( telgest )   STRING                  | x               | 0                     | "lt_ecl_presence (code)"          |
-| Couleur d'éclairage de la lampe ( cou_ecl )   STRING             | x               | 0                     | "lt_ecl_couleur_eclairage (code)" |
+| Type de lampe ( ty_lampe )   STRING                              | x               | 00                     | "lt_ecl_type_lampe"               |
+| Puissance de la lampe ( puis_lam )   STRING                      | x               | 00                     | "lt_ecl_puissance_lampe (code)"   |
+| Culot de la lampe ( cul_lamp )   STRING                          | x               | 00                     | "lt_ecl_culot_lampe"              |
+| Présence d'une télégestion ( telgest )   STRING                  | x               | 00                     | "lt_ecl_presence (code)"          |
+| Couleur d'éclairage de la lampe ( cou_ecl )   STRING             | x               | 00                     | "lt_ecl_couleur_eclairage (code)" |
 | Garantie de la lampe en années ( gar_lamp )   INTEGER            |                 |                       |                                   |
 | Opérateur de la saisie initiale de la donnée ( op_sai )   STRING |                 | %USER_LOGIN%          |                                   |
 
@@ -1141,7 +1171,7 @@ Source : an_ecl_modele_lanterne
 * ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
-| Atributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                      | Utilisation                                               |
+| Attributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                      | Utilisation                                               |
 |:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:--------------------------------------------------------:|:---------------------------------------------------------:|
 | clas_el_ln   |                   | x             | Classe électrique de la lanterne          | Formatage par une liste de domaine ( lt_ecl_type_lampe ) | Fiche d'information : modèle lanterne (ECL) / Foyer (ECL) |
 | cle_media    | x                 |               | cle_media                                 | Correspond à l'id de l'objet avec LN en préfixe. (1)     | Relation avec an_ecl_media_modele.                        |
@@ -1194,7 +1224,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                                   | Obligatoire     | Valeur par défaut     | Liste de domaine            | Représentation     |
 |:--------------------------------------------------------------------------:|:---------------:|:---------------------:|:---------------------------:|:------------------:|
 | Nom Mod Su ( nom_mod_su )   STRING                                         |                 |                       |                             | Par défaut         |
-| Matériau du support ( mat_supp )   STRING                                  | x               | 0                     | "lt_ecl_materiaux_supports" | Par défaut         |
+| Matériau du support ( mat_supp )   STRING                                  | x               | 00                     | "lt_ecl_materiaux_supports" | Par défaut         |
 | indice de protection face aux influences extérieures ( ik_supp )   INTEGER |                 |                       |                             | Par défaut         |
 | Indice de protection aux chocs mécaniques ( ip_supp )   INTEGER            |                 |                       |                             | Par défaut         |
 | Op Sai ( op_sai )   STRING                                                 |                 | %USER_LOGIN%          |                             | Par défaut         |
@@ -1262,14 +1292,14 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 |:------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------------:|:------------------:|
 | Exploitant du câble ( exploi_cab )   STRING                  |                 |                       |                                 | Par défaut         |
 | Prestataire des travaux sur le câble ( presta_cab )   STRING |                 |                       |                                 | Par défaut         |
-| Etat du câble ( etat_cable )   STRING                        | x               | 0                     | "lt_ecl_etat"                   | Par défaut         |
-| Situation physique du câble ( situ_cab )   STRING            | x               | 0                     | "lt_ecl_situation_cable"        | Par défaut         |
+| Etat du câble ( etat_cable )   STRING                        | x               | 00                     | "lt_ecl_etat"                   | Par défaut         |
+| Situation physique du câble ( situ_cab )   STRING            | x               | 00                     | "lt_ecl_situation_cable"        | Par défaut         |
 | Date de pose du câble ( dat_pos_ca )   TIMESTAMP             |                 |                       |                                 | Par défaut         |
-| Section du câble ( sect_cab )   STRING                       | x               | 0                     | "lt_ecl_section_cable (valeur)" | Par défaut         |
+| Section du câble ( sect_cab )   STRING                       | x               | 00                     | "lt_ecl_section_cable (valeur)" | Par défaut         |
 | Commentaires divers ( observ )   STRING                      |                 |                       |                                 | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                                 | Par défaut         |
 | Date de création de la donnée ( date_donne )   TIMESTAMP     |                 |                       |                                 | Par défaut         |
-| Qualité de la date de pose ( qua_dat )   STRING              |                 | 0                     |                                 | Par défaut         |
+| Qualité de la date de pose ( qua_dat )   STRING              |                 | 00                     |                                 | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1332,7 +1362,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                              | Obligatoire     | Valeur par défaut     | Liste de domaine                     | Représentation     |
 |:---------------------------------------------------------------------:|:---------------:|:---------------------:|:------------------------------------:|:------------------:|
 | Type de point d'intérêt ( ty_pi )   STRING                            | x               | 99                    | "lt_ecl_type_pi"                     | Par défaut         |
-| Etat du point d'intérêt ( etat_pi )   STRING                          | x               | 0                     | "lt_ecl_etat"                        | Par défaut         |
+| Etat du point d'intérêt ( etat_pi )   STRING                          | x               | 00                     | "lt_ecl_etat"                        | Par défaut         |
 | Numéro de départ auquel est lié le noeud ( depart )   INTEGER         |                 |                       | "xapps_geo_v_ecl_depart (id_depart)" | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING               |                 | %USER_LOGIN%          |                                      | Par défaut         |
 | Commentaires divers ( observ )   STRING                               |                 |                       |                                      | Par défaut         |
@@ -1340,7 +1370,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Exploit Nd ( exploit_nd )   STRING                                    |                 |                       |                                      | Par défaut         |
 | Presta Nd ( presta_nd )   STRING                                      |                 |                       |                                      | Par défaut         |
 | Entreprise ayant posé le point d'interet ( ent_pose )   STRING        |                 |                       |                                      | Par défaut         |
-| Qualité de la date de pose du le point d'interet ( qua_dat )   STRING | x               | 0                     | "lt_ecl_qualite_date (code)"         | Par défaut         |
+| Qualité de la date de pose du le point d'interet ( qua_dat )   STRING | x               | 00                     | "lt_ecl_qualite_date (code)"         | Par défaut         |
 | Date de pose du le point d'interet ( dat_pos )   TIMESTAMP            |                 |                       |                                      | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1415,14 +1445,14 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Modèle de la lanterne ( id_mod_ln )   INTEGER                       | x               | 1                     | "an_ecl_modele_lanterne"     | Par défaut         |
 | Modèle de la lampe ( id_mod_lm )   INTEGER                          | x               | 1                     | "an_ecl_modele_lampe"        | Par défaut         |
 | Pourcentage de puissance de fonctionnement ( pct_fct )   BIGDECIMAL |                 |                       |                              | Par défaut         |
-| Type de ballast installé ( ty_ballast )   STRING                    | x               | 0                     | "lt_ecl_type_ballast (code)" | Par défaut         |
-| Type d'amorceur installé ( ty_amorce )   STRING                     | x               | 0                     | "lt_ecl_amorceur (code)"     | Par défaut         |
-| Type d'auto trasformateur installé ( ty_auto_tr )   STRING          |                 | 0                     |                              | Par défaut         |
+| Type de ballast installé ( ty_ballast )   STRING                    | x               | 00                     | "lt_ecl_type_ballast (code)" | Par défaut         |
+| Type d'amorceur installé ( ty_amorce )   STRING                     | x               | 00                     | "lt_ecl_amorceur (code)"     | Par défaut         |
+| Type d'auto trasformateur installé ( ty_auto_tr )   STRING          |                 | 00                     |                              | Par défaut         |
 | Commentaires divers ( observ )   STRING                             |                 |                       |                              | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING             |                 | %USER_LOGIN%          |                              | Par défaut         |
-| Etat du foyer ( etat_foy )   STRING                                 | x               | 0                     | "lt_ecl_etat"                | Par défaut         |
-|  Localisation de la platine  ( loc_plat )   STRING                  | x               | 0                     | "lt_ecl_emplacement (code)"  | Par défaut         |
-|  Type de lanterne  ( ty_lantern )   STRING                          | x               | 0                     | "lt_ecl_type_lanterne"       | Par défaut         |
+| Etat du foyer ( etat_foy )   STRING                                 | x               | 00                     | "lt_ecl_etat"                | Par défaut         |
+|  Localisation de la platine  ( loc_plat )   STRING                  | x               | 00                     | "lt_ecl_emplacement (code)"  | Par défaut         |
+|  Type de lanterne  ( ty_lantern )   STRING                          | x               | 00                     | "lt_ecl_type_lanterne"       | Par défaut         |
 |  Date de création de la donnée  ( date_donne )   TIMESTAMP          |                 |                       |                              | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1504,17 +1534,17 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                      | Obligatoire     | Valeur par défaut     | Liste de domaine                      | Représentation     |
 |:-------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------------------:|:------------------:|
 | Nom de l'ouvrage ( nom_ouv )   STRING                         |                 |                       |                                       | Par défaut         |
-| Type d'ouvrage électrique ( ty_ouvelec )   STRING             | x               | 0                     | "lt_ecl_type_ouvrage_electrique"      | Par défaut         |
-| Etat de l'ouvrage électrique ( etat_ouvel )   STRING          | x               | 0                     | "lt_ecl_etat"                         | Par défaut         |
-| Mode de pose de l'ouvrage ( mod_pos_ou )   STRING             | x               | 0                     | "lt_ecl_mode_pose_ouvrage_electrique" | Par défaut         |
-| Type de commande ( ty_comm )   STRING                         | x               | 0                     | "lt_ecl_type_commande"                | Par défaut         |
+| Type d'ouvrage électrique ( ty_ouvelec )   STRING             | x               | 00                     | "lt_ecl_type_ouvrage_electrique"      | Par défaut         |
+| Etat de l'ouvrage électrique ( etat_ouvel )   STRING          | x               | 00                     | "lt_ecl_etat"                         | Par défaut         |
+| Mode de pose de l'ouvrage ( mod_pos_ou )   STRING             | x               | 00                     | "lt_ecl_mode_pose_ouvrage_electrique" | Par défaut         |
+| Type de commande ( ty_comm )   STRING                         | x               | 00                     | "lt_ecl_type_commande"                | Par défaut         |
 | Pdl Edf ( pdl_edf )   STRING                                  |                 |                       |                                       | Par défaut         |
 | Numéro de compteur EDF ( n_com_edf )   STRING                 |                 |                       |                                       | Par défaut         |
 | Valeur de la terre en ohm ( val_terre )   LONG                |                 |                       |                                       | Par défaut         |
 | Puis Mes ( puis_mes )   INTEGER                               |                 |                       |                                       | Par défaut         |
-| Pres Var ( pres_var )   STRING                                | x               | 0                     | "lt_ecl_presence (code)"              | Par défaut         |
-| Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 0                     | "lt_ecl_type_disjoncteur"             | Par défaut         |
-| Type de fusible ( ty_fusible )   STRING                       | x               | 0                     | "lt_ecl_type_fusible"                 | Par défaut         |
+| Pres Var ( pres_var )   STRING                                | x               | 00                     | "lt_ecl_presence (code)"              | Par défaut         |
+| Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 00                     | "lt_ecl_type_disjoncteur"             | Par défaut         |
+| Type de fusible ( ty_fusible )   STRING                       | x               | 00                     | "lt_ecl_type_fusible"                 | Par défaut         |
 | Numéro de départ auquel est lié le noeud ( depart )   INTEGER |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"  | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
 | Commentaires divers ( observ )   STRING                       |                 |                       |                                       | Par défaut         |
@@ -1523,7 +1553,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Exploitant de l'objet ( exploit_nd )   STRING                 |                 |                       |                                       | Par défaut         |
 | Entreprise de pose ( ent_pose )   STRING                      |                 |                       |                                       | Par défaut         |
 | Date de pose de l'ouvrage ( dat_pos )   TIMESTAMP             |                 |                       |                                       | Par défaut         |
-| Qualité de la date de pose de l'ouvrage ( qua_dat )   STRING  | x               | 0                     | "lt_ecl_qualite_date (code)"          | Par défaut         |
+| Qualité de la date de pose de l'ouvrage ( qua_dat )   STRING  | x               | 00                     | "lt_ecl_qualite_date (code)"          | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1578,10 +1608,10 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
   | Attribut                                                     | Obligatoire     | Valeur par défaut     | Liste de domaine          | Représentation     |
 |:------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------:|:------------------:|
-| Etat du départ ( etat_dep )   STRING                         | x               | 0                     | "lt_ecl_etat"             | Par défaut         |
+| Etat du départ ( etat_dep )   STRING                         | x               | 00                     | "lt_ecl_etat"             | Par défaut         |
 | Tension électrique en sortie ( tension )   INTEGER           |                 |                       |                           | Par défaut         |
-| Type du disjoncteur ( ty_disjonc )   STRING                  | x               | 0                     | "lt_ecl_type_disjoncteur" | Par défaut         |
-| Type du fusible ( ty_fusible )   STRING                      | x               | 0                     | "lt_ecl_type_fusible"     | Par défaut         |
+| Type du disjoncteur ( ty_disjonc )   STRING                  | x               | 00                     | "lt_ecl_type_disjoncteur" | Par défaut         |
+| Type du fusible ( ty_fusible )   STRING                      | x               | 00                     | "lt_ecl_type_fusible"     | Par défaut         |
 | Nom du secteur déservi par le départ ( nom_depart )   STRING |                 |                       |                           | Par défaut         |
 | Commentaires divers ( observ )   STRING                      |                 |                       |                           | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                           | Par défaut         |
@@ -1662,20 +1692,20 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                      | Obligatoire     | Valeur par défaut     | Liste de domaine                      | Représentation     |
 |:-------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------------------:|:------------------:|
 | Identifiant du modèle du support ( id_mod_sup )   INTEGER     | x               | 1                     | "an_ecl_modele_support"               | Par défaut         |
-| Type de support ( ty_supp )   STRING                          | x               | 0                     | "lt_ecl_type_support"                 | Par défaut         |
+| Type de support ( ty_supp )   STRING                          | x               | 00                     | "lt_ecl_type_support"                 | Par défaut         |
 | Opitions du support ( opt_supp )   STRING                     |                 |                       | "lt_ecl_options_support (code)"       | Par défaut         |
-| Type de parasurtenseur ( ty_parasu )   STRING                 | x               | 0                     | "lt_ecl_type_parasurtenseur"          | Par défaut         |
-| Etat general du support ( etat_supp )   STRING                | x               | 0                     | "lt_ecl_etat"                         | Par défaut         |
-| Hauteur de la trappe ( haut_trap )   STRING                   | x               | 0                     | "lt_ecl_hauteur_trappe (code)"        | Par défaut         |
-| Type de fusible installé ( ty_fusible )   STRING              | x               | 0                     | "lt_ecl_type_fusible"                 | Par défaut         |
+| Type de parasurtenseur ( ty_parasu )   STRING                 | x               | 00                     | "lt_ecl_type_parasurtenseur"          | Par défaut         |
+| Etat general du support ( etat_supp )   STRING                | x               | 00                     | "lt_ecl_etat"                         | Par défaut         |
+| Hauteur de la trappe ( haut_trap )   STRING                   | x               | 00                     | "lt_ecl_hauteur_trappe (code)"        | Par défaut         |
+| Type de fusible installé ( ty_fusible )   STRING              | x               | 00                     | "lt_ecl_type_fusible"                 | Par défaut         |
 | Hauteur du support ( haut_supp )   INTEGER                    |                 |                       |                                       | Par défaut         |
-| Qualité de la date de pose ( qua_dat )   STRING               | x               | 0                     | "lt_ecl_qualite_date (code)"          | Par défaut         |
+| Qualité de la date de pose ( qua_dat )   STRING               | x               | 00                     | "lt_ecl_qualite_date (code)"          | Par défaut         |
 | Date de pose ( dat_pos )   TIMESTAMP                          |                 |                       |                                       | Par défaut         |
 | Entreprise de pose ( ent_pose )   STRING                      |                 |                       |                                       | Par défaut         |
 | Numéro de départ auquel est lié le noeud ( depart )   INTEGER |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"  | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
 | Commentaires divers ( observ )   STRING                       |                 |                       |                                       | Par défaut         |
-| Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 0                     | "lt_ecl_type_disjoncteur"             | Par défaut         |
+| Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 00                     | "lt_ecl_type_disjoncteur"             | Par défaut         |
 | Date de la donnée ( date_donne )   TIMESTAMP                  |                 |                       |                                       | Par défaut         |
 | Exploitant de l'objet ( exploit_nd )   STRING                 |                 |                       |                                       | Par défaut         |
 | Prestataire intervenant sur l'objet ( presta_nd )   STRING    |                 |                       |                                       | Par défaut         |
@@ -1769,18 +1799,18 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                          | Obligatoire     | Valeur par défaut     | Liste de domaine                          | Représentation     |
 | ----------------------------------------------------------------- | --------------- | --------------------- | ----------------------------------------- | ------------------ |
 | Signalement ou intervention ( type_si_in )   STRING               | x               | 10                    | "lt_ecl_signalement_intervention (code)"  | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                          | x               | 0                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                     | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
+| Type de défaillance ( typ_def )   STRING                          | x               | 00                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
+| Source de la défaillance ( src_def )   STRING                     | x               | 00                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
 | Etat du signalement ( etat_sign )   STRING                        | x               | 10                    | "lt_ecl_etat_signalement"                 | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                      | x               | 0                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                       | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
-| Type de disjoncteur ( att_met1 )   STRING                         | x               | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
-| Type de fusible ( att_met2 )   STRING                             | x               | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
-| Type de parasurtenseur ( att_met3 )   STRING                      | x               | 0                     | "lt_ecl_type_parasurtenseur"              | Par défaut         |
-| Etat du point lumineux après l'intervention ( att_met6 )   STRING | x               | 0                     | "lt_ecl_etat"                             | Par défaut         |
+| Moyen d'intervention ( moy_interv )   STRING                      | x               | 00                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
+| Type d'intervention ( type_inter )   STRING                       | x               | 00                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
+| Type de disjoncteur ( att_met1 )   STRING                         | x               | 00                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
+| Type de fusible ( att_met2 )   STRING                             | x               | 00                     | "lt_ecl_type_fusible"                     | Par défaut         |
+| Type de parasurtenseur ( att_met3 )   STRING                      | x               | 00                     | "lt_ecl_type_parasurtenseur"              | Par défaut         |
+| Etat du point lumineux après l'intervention ( att_met6 )   STRING | x               | 00                     | "lt_ecl_etat"                             | Par défaut         |
 | Commentaires divers ( observ )   STRING                           |                 |                       |                                           | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING           |                 | %USER_LOGIN%          |                                           | Par défaut         |
-| Options du support ( att_met7 )   STRING                          | x               | 0                     | "lt_ecl_options_support (code)"           | Par défaut         |
+| Options du support ( att_met7 )   STRING                          | x               | 00                     | "lt_ecl_options_support (code)"           | Par défaut         |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
@@ -1840,19 +1870,19 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                     | Obligatoire     | Valeur par défaut     | Liste de domaine                          | Représentation     |
 | ------------------------------------------------------------ | --------------- | --------------------- | ----------------------------------------- | ------------------ |
 | Signalement ou intervention ( type_si_in )   STRING          | x               | 10                    | "lt_ecl_signalement_intervention (code)"  | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                     | x               | 0                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
+| Type de défaillance ( typ_def )   STRING                     | x               | 00                     | "lt_ecl_type_defaillance (code)"          | Par défaut         |
+| Source de la défaillance ( src_def )   STRING                | x               | 00                     | "lt_ecl_source_defaillance (code)"        | Par défaut         |
 | Etat du signalement ( etat_sign )   STRING                   | x               | 10                    | "lt_ecl_etat_signalement"                 | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                 | x               | 0                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                  | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
+| Moyen d'intervention ( moy_interv )   STRING                 | x               | 00                     | "lt_ecl_moyen_intervention (code)"        | Par défaut         |
+| Type d'intervention ( type_inter )   STRING                  | x               | 00                     | "lt_intervention_point_lumineux (code)"   | Par défaut         |
 | Commentaires divers ( observ )   STRING                      |                 |                       |                                           | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                                           | Par défaut         |
-| Type de disjoncteur ( att_met1 )   STRING                    |                 | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
-| Type de fusible ( att_met2 )   STRING                        |                 | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
-| Type de commande ( att_met3 )   STRING                       |                 | 0                     | "lt_ecl_type_commande"                    | Par défaut         |
-| Type de disjoncteur du départ ajouté ( att_met4 )   STRING   |                 | 0                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
-| Type de fusible du départ ajouté ( att_met5 )   STRING       |                 | 0                     | "lt_ecl_type_fusible"                     | Par défaut         |
-| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING |                 | 0                     | "lt_ecl_etat"                             | Par défaut         |
+| Type de disjoncteur ( att_met1 )   STRING                    |                 | 00                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
+| Type de fusible ( att_met2 )   STRING                        |                 | 00                     | "lt_ecl_type_fusible"                     | Par défaut         |
+| Type de commande ( att_met3 )   STRING                       |                 | 00                     | "lt_ecl_type_commande"                    | Par défaut         |
+| Type de disjoncteur du départ ajouté ( att_met4 )   STRING   |                 | 00                     | "lt_ecl_type_disjoncteur"                 | Par défaut         |
+| Type de fusible du départ ajouté ( att_met5 )   STRING       |                 | 00                     | "lt_ecl_type_fusible"                     | Par défaut         |
+| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING |                 | 00                     | "lt_ecl_etat"                             | Par défaut         |
 | Tension du départ ajouté ( att_met8 )   INTEGER              |                 |                       |                                           | Par défaut         |
 | Nom du départ ( att_met7 )   STRING                          |                 |                       |                                           | Par défaut         |
 
@@ -1909,16 +1939,16 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                                              | Obligatoire     | Valeur par défaut     | Liste de domaine                                       | Représentation     |
 | ------------------------------------------------------------------------------------- | --------------- | --------------------- | ------------------------------------------------------ | ------------------ |
 | Signalement ou intervention ( type_si_in )   STRING                                   | x               | 10                    | "lt_ecl_signalement_intervention (code)"               | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                                              | x               | 0                     | "lt_ecl_type_defaillance (code)"                       | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                                         | x               | 0                     | "lt_ecl_source_defaillance (code)"                     | Par défaut         |
+| Type de défaillance ( typ_def )   STRING                                              | x               | 00                     | "lt_ecl_type_defaillance (code)"                       | Par défaut         |
+| Source de la défaillance ( src_def )   STRING                                         | x               | 00                     | "lt_ecl_source_defaillance (code)"                     | Par défaut         |
 | Etat du signalement ( etat_sign )   STRING                                            | x               | 10                    | "lt_ecl_etat_signalement"                              | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                                          | x               | 0                     | "lt_ecl_moyen_intervention (code)"                     | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                                           | x               | 0                     | "lt_intervention_point_lumineux (code)"                | Par défaut         |
+| Moyen d'intervention ( moy_interv )   STRING                                          | x               | 00                     | "lt_ecl_moyen_intervention (code)"                     | Par défaut         |
+| Type d'intervention ( type_inter )   STRING                                           | x               | 00                     | "lt_intervention_point_lumineux (code)"                | Par défaut         |
 | Commentaires divers ( observ )   STRING                                               |                 |                       |                                                        | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING                               |                 | %USER_LOGIN%          |                                                        | Par défaut         |
-| Type de disjoncteur ( att_met1 )   STRING                                             |                 | 0                     | "lt_ecl_type_disjoncteur"                              | Par défaut         |
-| Type de fusible ( att_met2 )   STRING                                                 |                 | 0                     | "lt_ecl_type_fusible"                                  | Par défaut         |
-| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING                          |                 | 0                     | "lt_ecl_etat"                                          | Par défaut         |
+| Type de disjoncteur ( att_met1 )   STRING                                             |                 | 00                     | "lt_ecl_type_disjoncteur"                              | Par défaut         |
+| Type de fusible ( att_met2 )   STRING                                                 |                 | 00                     | "lt_ecl_type_fusible"                                  | Par défaut         |
+| Etat de l'ouvrage après l'intervention ( att_met6 )   STRING                          |                 | 00                     | "lt_ecl_etat"                                          | Par défaut         |
 | Nom du départ  ( att_met7 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
 
 
@@ -1981,19 +2011,19 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                       | Obligatoire     | Valeur par défaut     | Liste de domaine                                      | Représentation     |
 |:--------------------------------------------------------------:|:---------------:|:---------------------:|:-----------------------------------------------------:|:------------------:|
 | Signalement ou intervention ( type_si_in ) STRING              | x               | 10                    | "lt_ecl_signalement_intervention (code)"              | Par défaut         |
-| Type de défaillance ( typ_def ) STRING                         | x               | 0                     | "lt_ecl_type_defaillance (code)"                      | Par défaut         |
-| Source de la défaillance ( src_def ) STRING                    | x               | 0                     | "lt_ecl_source_defaillance (code)"                    | Par défaut         |
+| Type de défaillance ( typ_def ) STRING                         | x               | 00                     | "lt_ecl_type_defaillance (code)"                      | Par défaut         |
+| Source de la défaillance ( src_def ) STRING                    | x               | 00                     | "lt_ecl_source_defaillance (code)"                    | Par défaut         |
 | Etat du signalement ( etat_sign ) STRING                       | x               | 10                    | "lt_ecl_etat_signalement"                             | Par défaut         |
-| Moyen d'intervention ( moy_interv ) STRING                     | x               | 0                     | "lt_ecl_moyen_intervention (code)"                    | Par défaut         |
-| Type d'intervention ( type_inter ) STRING                      | x               | 0                     | "lt_intervention_point_lumineux (code)"               | Par défaut         |
+| Moyen d'intervention ( moy_interv ) STRING                     | x               | 00                     | "lt_ecl_moyen_intervention (code)"                    | Par défaut         |
+| Type d'intervention ( type_inter ) STRING                      | x               | 00                     | "lt_intervention_point_lumineux (code)"               | Par défaut         |
 | Commentaires divers ( observ ) STRING                          |                 |                       |                                                       | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai ) STRING          |                 | %USER_LOGIN%          |                                                       | Par défaut         |
-| Auto transformateur ( att_met3 )   STRING                      |                 | 0                     | "lt_ecl_auto_transformateur (code)"                   | Par défaut         |
-| Type d'amorce ( att_met2 )   STRING                            |                 | 0                     | "lt_ecl_amorceur (code)"                              | Par défaut         |
-| Type de ballast ( att_met1 )   STRING                          |                 | 0                     | "lt_ecl_type_ballast (code)"                          | Par défaut         |
+| Auto transformateur ( att_met3 )   STRING                      |                 | 00                     | "lt_ecl_auto_transformateur (code)"                   | Par défaut         |
+| Type d'amorce ( att_met2 )   STRING                            |                 | 00                     | "lt_ecl_amorceur (code)"                              | Par défaut         |
+| Type de ballast ( att_met1 )   STRING                          |                 | 00                     | "lt_ecl_type_ballast (code)"                          | Par défaut         |
 | Modèle de lanterne ( att_met7 )   STRIN                        |                 | 2                     | "an_ecl_modele_lanterne"                              | Par défaut         |
 | Modèle de lampe ( att_met8 )   INTEGER                         |                 | 2                     | "an_ecl_modele_lampe (intervention)"                  | Par défaut         |
-| Etat de l'objet après l'intervention ( att_met6 )   STRING     |                 | 0                     | "lt_ecl_etat"                                         | Par défaut         |
+| Etat de l'objet après l'intervention ( att_met6 )   STRING     |                 | 00                     | "lt_ecl_etat"                                         | Par défaut         |
 | Signalement réglé lors de l'intervention ( att_met5 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)" | Par défaut         |
 
 
@@ -2039,11 +2069,11 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                                                 | Obligatoire     | Valeur par défaut     | "lt_ecl_signalement_intervention (code)"  | Par défaut |
 | ---------------------------------------------------------------------------------------- | --------------- | --------------------- | ----------------------------------------- | ---------- |
 | Signalement ou intervention ( type_si_in )   STRING                                      | x               | 10                    | "lt_ecl_type_defaillance (code)"          | Par défaut |
-| Type de défaillance ( typ_def )   STRING                                                 | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
-| Source de la défaillance ( src_def )   STRING                                            | x               | 0                     | "lt_ecl_etat_signalement"                 | Par défaut |
+| Type de défaillance ( typ_def )   STRING                                                 | x               | 00                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
+| Source de la défaillance ( src_def )   STRING                                            | x               | 00                     | "lt_ecl_etat_signalement"                 | Par défaut |
 | Etat du signalement ( etat_sign )   STRING                                               | x               | 10                    | "lt_ecl_moyen_intervention (code)"        | Par défaut |
-| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
-| Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
+| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 00                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
+| Type d'intervention ( type_inter )   STRING                                              | x               | 00                     |                                           | Par défaut |
 | Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%          | "lt_ecl_auto_transformateur (code)"       | Par défaut |
 | Etat de l'objet après l'intervention ( att_met6 )   STRING|                 | 2                     | "lt_ecl_etat"                             | Par défaut |
@@ -2095,11 +2125,11 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Attribut                                                                                 | Obligatoire     | Valeur par défaut     | "lt_ecl_signalement_intervention (code)"  | Par défaut |
 | ---------------------------------------------------------------------------------------- | --------------- | --------------------- | ----------------------------------------- | ---------- |
 | Signalement ou intervention ( type_si_in )   STRING                                      | x               | 10                    | "lt_ecl_type_defaillance (code)"          | Par défaut |
-| Type de défaillance ( typ_def )   STRING                                                 | x               | 0                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
-| Source de la défaillance ( src_def )   STRING                                            | x               | 0                     | "lt_ecl_etat_signalement"                 | Par défaut |
+| Type de défaillance ( typ_def )   STRING                                                 | x               | 00                     | "lt_ecl_source_defaillance (code)"        | Par défaut |
+| Source de la défaillance ( src_def )   STRING                                            | x               | 00                     | "lt_ecl_etat_signalement"                 | Par défaut |
 | Etat du signalement ( etat_sign )   STRING                                               | x               | 10                    | "lt_ecl_moyen_intervention (code)"        | Par défaut |
-| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 0                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
-| Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
+| Moyen d'intervention ( moy_interv )   STRING                                             | x               | 00                     | "lt_intervention_point_lumineux (code)"   | Par défaut |
+| Type d'intervention ( type_inter )   STRING                                              | x               | 00                     |                                           | Par défaut |
 | Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%  |         |  Par défaut |
 | Etat de l'objet après l'intervention ( att_met6 )   STRING |                  | 2                     | "lt_ecl_etat"                             | Par défaut |
