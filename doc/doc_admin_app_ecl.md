@@ -20,7 +20,7 @@
 
 |Représentation| Nom de l'application |Résumé|
 |:---|:---|:---|
-|![picto](/doc/img/ecl_bleu.png)|Eclairage public (ECL)|Cette application est dédiée à la gestion du réseau d'éclairage public de l'ARC (zones de gestion ARC) et de la Ville de Compiègne.|
+|![pictogramme de l'application d'éclairage public](/doc/img/ecl_bleu.png)|Eclairage public (ECL)|Cette application est dédiée à la gestion du réseau d'éclairage public de l'ARC (zones de gestion ARC) et de la Ville de Compiègne.|
 
 # Accès
 
@@ -32,50 +32,49 @@
 
 * **Prestataires**
 
-Sans objet
+	Sans objet
 
 * **Personnel du service d'éclairage public - Groupe ECL-Edit**
 
-|Fonctionnalités|Lecture|Ecriture|Précisions|
-|:---|:-:|:-:|:---|
-|Toutes|x|x|L'ensemble des fonctionnalités (recherches, cartographie, fiches d'informations, ...) sont accessibles par tous les utilisateurs connectés (en écriture pour les fonctions concernées).|
+	|Fonctionnalités|Lecture|Écriture|Précisions|
+	|:---|:-:|:-:|:---|
+	|Toutes|x|x|L'ensemble des fonctionnalités (recherches, cartographies, fiches d'informations, ...) sont accessibles par 	tous les utilisateurs connectés (en écriture pour les fonctions concernées).|
 
-* **Personnel de l'ARC ou de la ville- Groupe ECL-consult / Reseau-consult**
-
- ** A redefinir avec le service métier + service SIG **
+* **Personnel de l'ARC ou de la ville- Groupe ECL-consult / Réseau-consult**
+	  * A redéfinir avec le service métier + service SIG *
  
-|Fonctionnalités|Lecture|Ecriture|Précisions|
-|:---|:-:|:-:|:---|
-|Toutes les fiches informations|||L'ensemble des fiches d'informations ne sont pas accessibles aux personnes extérieures au service d'éclairage public.|
-|Cartographie|x||L'ensemble des données sont visibles aux personnes extérieures au service d'éclairage public.|
-|Recherches|x||L'ensemble des recherches ne sont pas visibles aux personnes extérieures au service d'éclairage public.|
+	|Fonctionnalités|Lecture|Écriture|Précisions|
+	|:---|:-:|:-:|:---|
+	|Toutes les fiches informations|||L'ensemble des fiches d'informations ne sont pas accessibles aux personnes extérieures au service d'éclairage public.|
+	|Cartographie|x||L'ensemble des données sont visibles aux personnes extérieures au service d'éclairage public.|
+	|Recherches|x||L'ensemble des recherches ne sont pas visibles aux personnes extérieures au service d'éclairage public.|
 
 * **Autres profils**
 
-Sans objet
+	Sans objet
 
 # Les données
 
 Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les besoins de l'application. Les autres données servant d'habillage (pour la cartographie ou les recherches) sont listées dans les autres parties ci-après. Le tableau ci-dessous présente uniquement les changements (type de champ, formatage du résultat, ...) ou les ajouts (champs calculés, filtre, ...) non présents dans la donnée source. 
-*/ Table faîte à partir d'un macro excel, fichier excel à retrouver dans... /*
+
 ## Table : `an_ecl_depart`
-| Atributs          | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                          | Utilisation                        | Exemple                                            |
+| Attributs          | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                          | Utilisation                        | 
 |:-----------------:|:-----------------:|:-------------:|:--------------------------------------------:|:------------------------------------------------------------:|:----------------------------------:|:--------------------------------------------------:|
-| Affiche recherche | x                 |               | Affiche recherche                            |                                                              | Recherche : Recherche de départ    | ![GeoCompiegnois](img/Affiche_recherche_depart.JPG) |
-| date_donne        |                   | x             | Date de la donnée                            | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    |
-| date_maj          |                   | x             | Date de dernière mise à jour de la donnée    | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    |
-| date_sai          |                   | x             | Date de la saisie de la donnée dans la base  | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    |
-| etat_dep          |                   | x             | Etat du départ                               | Formatage par une liste de domaine ( lt_ecl_etat)            | Fiche d'information : Depart (ECL) |                                                    |
+| Affiche recherche | x                 |               | Affiche recherche                            |  Formate l’affichage d’une recherche                                                            | Recherche : Recherche de départ    | 
+| date_donne        |                   | x             | Date de la donnée                            | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    
+| date_maj          |                   | x             | Date de dernière mise à jour de la donnée    | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    
+| date_sai          |                   | x             | Date de la saisie de la donnée dans la base  | Les heures ne sont pas affichées                             | Fiche d'information : Depart (ECL) |                                                    
+| etat_dep          |                   | x             | Etat du départ                               | Formatage par une liste de domaine ( lt_ecl_etat)            | Fiche d'information : Depart (ECL) |                                                    
 | situation         |                   | x             | Situation                                    | Formatage par une liste de domaine ( lt_ecl_situation)       | Fiche d'information : Depart (ECL) | Supprimé, inactif ou actif                         |
-| ty_disjonc        |                   | x             | Type du disjoncteur                          | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Fiche d'information : Depart (ECL) |                                                    |
-| ty_fusible        |                   | x             | Type du fusible                              | Formatage par une liste de domaine (lt_ecl_type_fusible)     | Fiche d'information : Depart (ECL) |                                                    |
+| ty_disjonc        |                   | x             | Type du disjoncteur                          | Formatage par une liste de domaine (lt_ecl_type_disjoncteur) | Fiche d'information : Depart (ECL) |                                                    
+| ty_fusible        |                   | x             | Type du fusible                              | Formatage par une liste de domaine (lt_ecl_type_fusible)     | Fiche d'information : Depart (ECL) |                                                    
 
   ### Filtres :
 
 |Nom|Attribut| Au chargement | Type | Condition |Valeur|Description|
 |:---|:---|:-:|:---:|:---:|:---|:---|
-|Nom de départ|nom_depart||Filtre à suggestion de valeur|Est égale à une valeur choisie par l'utilisateur|Valeur suggérée de "nom_depart"| Permet de faire une rechercher par nom de départ|
-|Situation != supprimer|situation|x|Alphanumerique|est différente de une(des) valeur(s) par défaut|12| Empêche l'apparation des départ supprimés|
+|Nom de départ|nom_depart||Filtre à suggestion de valeur|Est égale à une valeur choisie par l'utilisateur|Valeur suggérée de "nom_depart"| Permet de faire une recherche par nom de départ|
+|Situation != supprimer|situation|x|Alphanumérique|est différente de une (des) valeur(s) par défaut|12| Empêche l’apparition des départs supprimés|
 
   ### Relations :
 
@@ -87,14 +86,16 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 | an_ecl_intervention          | id_depart - id_objet                                      | 0…n      |
 
 
-  ### Particularités : 
+  ### Particularités :
+  *  La recherche de départ utilise aussi un champ calculé de la table geo_v_ecl_ouvrage_electrique.
 
 ## Table : `an_ecl_erreur`
-| Atributs      | Champ calculé     | Formatage     | Renommage                       | Particularité/Usage     | Utilisation                     | Exemple     |
+| Attributs      | Champ calculé     | Formatage     | Renommage                       | Particularité/Usage     | Utilisation                     | 
 |:-------------:|:-----------------:|:-------------:| ------------------------------- | ----------------------- | ------------------------------- | ----------- |
-| Affichage_message_erreur  | x                 | x             | Affichage_message_erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : ouvrages electrique,intervention cable, depart (ECL),  Foyer (ECL),  Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Support (modèle),  Intervention_PI  |    ![GeoCompiegnois](img/Affichage_message_erreur.JPG)         |
+| Affichage_message_erreur  | x                 | x             | Affichage_message_erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : Multiples (2)     |    
 
-(1) Requête SQL permettant d'afficher temporairement un Affichage_message_erreur dans la fiche d'information. La durée est de 10 minutes pour que l'utilisateur ait le temps de se souvenir de la présence des messages d'erreur, mais dès qu'un update est fait sur l'objet, les messages d'erreurs sont effacés via les triggers.
+(1) Requête SQL permettant d'afficher temporairement un Affichage_message_erreur dans la fiche d'information. La durée est de 10 minutes pour que l'utilisateur ait le temps de se souvenir de la présence des messages d'erreur, mais dès qu'un update est fait sur l'objet, les messages d'erreurs sont effacés via les triggers. Requête SQL :
+
  `CASE WHEN
   extract(epoch from  now()::timestamp) - extract(epoch from
 {horodatage}::timestamp) <= 600 then 
@@ -105,12 +106,15 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 ELSE '' 
 END
 `
+
+(2) Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Intervention_PI, Intervention câble, Lanterne (modèle)
+
 ## Table : `an_ecl_foyer`
-| Atributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | Exemple     |
-|:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------------:|:-----------:|
-| date_donne   |                   | x             | Date de création de la donnée             |                                                                         | Fiche information : Foyer (ECL) |             |
-| date_maj     |                   | x             | Date de dernière mise à jour de la donnée |                                                                         | Fiche information : Foyer (ECL) |             |
-| date_sai     |                   | x             | Date de saisie dans l'application         |                                                                         | Fiche information : Foyer (ECL) |             |
+| Atributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | 
+|:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------------:|
+| date_donne   |                   | x             | Date de création de la donnée             |  Les heures ne sont pas affichées                                                                       | Fiche information : Foyer (ECL) |             |
+| date_maj     |                   | x             | Date de dernière mise à jour de la donnée |  Les heures ne sont pas affichées                                                                          | Fiche information : Foyer (ECL) |             |
+| date_sai     |                   | x             | Date de saisie dans l'application         |    Les heures ne sont pas affichées                                                                        | Fiche information : Foyer (ECL) |             |
 | etat_foy     |                   | x             | Etat du foyer                             | Formatage par une liste de domaine ( lt_ecl_etat)                       | Fiche information : Foyer (ECL) |             |
 | id_mod_lm    |                   | x             | Modèle de la lampe                        | Formatage par une liste de domaine ( an_ecl_modele_lampe)               | Fiche information : Foyer (ECL) |             |
 | id_mod_ln    |                   | x             | Modèle de la lanterne                     | Formatage par une liste de domaine ( an_ecl_modele_lanterne)            | Fiche information : Foyer (ECL) |             |
@@ -121,12 +125,12 @@ END
 | ty_ballast   |                   | x             | Type de ballast installé                  | Formatage par une liste de domaine ( lt_ecl_type_ballast (code))        | Fiche information : Foyer (ECL) |             |
 | ty_lantern   |                   | x             | Routier / piéton                          | Formatage par une liste de domaine ( lt_ecl_type_lanterne)              | Fiche information : Foyer (ECL) |             |
 
-  ### Filtres :
+### Filtres :
 
 | Nom                    | Attribut                       | Au chargement     | Type           | Condition                                                        | Valeur                                       | Description                                                            |
 | ---------------------- | ------------------------------ |:-----------------:|:--------------:|:----------------------------------------------------------------:| -------------------------------------------- | ---------------------------------------------------------------------- |
 | Si lampe par défaut    | id_mod_lm (modèle de lampe)    |                   | Alphanumérique | est égale à une valeur par défaut                                | 1                                            | Filtre pour la recherche ''Foyer dont la lampe n'est pas renseignée''. |
-| Situation != supprimer | situation                      | x                 | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                                           | Empêche l'apparation des départ supprimés                              |
+| Situation != supprimer | situation                      | x                 | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                                           | Empêche l’apparition des départ supprimés                              |
 | Modèle de lampe        | id_mod_lm (modèle de lampe)    |                   | Alphanumérique | est égale à une valeur choisie par l'utilisateur parmi une liste | est égale à une valeur listée de "id_mod_lm" | Recherche de foyer par un certain modèle de lampe                      |
 | Modèle de lanterne     | id_mod_ln (modèle de lanterne) |                   | Alphanumérique | est égale à une valeur choisie par l'utilisateur parmi une liste | est égale à une valeur listée de "id_mod_ln" | Recherche de foyer par un certain modèle de lanterne                   |
 
@@ -142,6 +146,7 @@ END
 
 
   ### Particularités : 
+  * Les foyers sont *obligatoirement* rattachés à un support. 
 
 ## Table : `an_ecl_modele_lampe`
 | Atributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
@@ -162,8 +167,9 @@ END
 
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                                                                                                                                        |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lampe, afin de l'actualiser en posant une contrainte. Technique ayant pour but d'éviter le besoin de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lampe apparaisse. |
-| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lampe", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                           |
+| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lampe. (1) |
+| Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lampe", afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                           |
+(1) Afin d'actualiser le domaine en posant une contrainte. Technique ayant pour but d'éviter de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lampe apparaisse dans le domaine.
 
   ### Relations :
 
@@ -173,12 +179,13 @@ END
 
 
   ### Particularités : 
+  * La table est en fait un domaine de valeur avec plusieurs caractéristiques. Elle est éditable par les agents du service métier directement via l'application.
 
 ## Table : `an_ecl_modele_lanterne`
 | Atributs      | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                             | Utilisation                              |
 |:-------------:|:-----------------:|:-------------:|:--------------------------------------------:|:---------------------------------------------------------------:|:----------------------------------------:|
 | Affichage_nom | x                 |               |                                              | Formate l'affichage d'une recherche                             | Recherche : recherche de foyer           |
-| cle_media     | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LM en préfixe. (1)            | Relation avec an_ecl_media_modele.       |
+| cle_media     | x                 |               | cle_media                                    | Correspond à l'id de l'objet avec LN en préfixe. (1)            | Relation avec an_ecl_media_modele.       |
 | cou_ecl       |                   | x             | Couleur d'éclairage de la lampe              | Formatage par une liste de domaine ( lt_ecl_couleur_eclairage ) | Fiche d'information : modèle lampe (ECL) |
 | cul_lamp      |                   | x             | Culot de la lampe                            | Formatage par une liste de domaine ( lt_ecl_culot_lampe )       | Fiche d'information : modèle lampe (ECL) |
 | date_maj      |                   | x             | Date de dernière mise à jour                 | Les heures ne sont pas affichées                                | Fiche d'information : modèle lampe (ECL) |
@@ -194,8 +201,9 @@ END
 
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                                                                                                                                                                                  |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lanterne, afin de l'actualiser en posant une contrainte qui oblige GEO à recalculer le domaine. Technique ayant pour but d'éviter le besoin de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lampe apparaisse. |
+| Domaine de valeur       | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est supérieure ou égale à                       | 0          | Filtre activé au chargement du domaine de valeur utilisant la table an_ecl_modele_lanterne. |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |                   | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Utilisé sur la recherche '' recherche d'un modèle de lanterne", afin de ne pas fair apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions                                                                                                                                                                  |
+(1) Afin d'actualiser le domaine en posant une contrainte. Technique ayant pour but d'éviter de recharger l'application pour qu'une nouvelle valeur ajoutée par l'utilisateur dans la table an_ecl_modele_lanterne apparaisse dans le domaine.
 
   ### Relations :
 
@@ -205,6 +213,7 @@ END
 | an_ecl_erreur           | id_mod_sup - id_objet                                     | o…n      |
 
   ### Particularités : 
+  * La table est en fait un domaine de valeur avec plusieurs caractéristiques. Elle est éditable par les agents du service métier directement via l'application.
 
 ## Table : `an_ecl_modele_support`
 
@@ -231,12 +240,13 @@ END
 | an_ecl_erreur           | id_mod_sup - id_objet                                     | o…n      |
 
   ### Particularités : 
+  * La table est en fait un domaine de valeur avec plusieurs caractéristiques. Elle est éditable par les agents du service métier directement via l'application.
 
 ## Table : `geo_ecl_cable`
 | Atributs            | Champ calculé     | Formatage     | Renommage                                                         | Particularité/Usage                                                      | Utilisation                     |
 |:-------------------:|:-----------------:|:-------------:|:-----------------------------------------------------------------:|:------------------------------------------------------------------------:|:-------------------------------:|
 | Blanc | x |            | Blanc | Contient le caractère ' ' . (1)  | Recherche : Recherche de câble |
-| Affichage recherche | x                 |               | Affichage recherche                                               | Formate l'affichage d'un texte en fonction des attributs de la recherche | Recherche : Recherche de câble  |
+| Affichage recherche | x                 |               | Affichage recherche                                               | Formate l'affichage d'une recherche | Recherche : Recherche de câble  |
 | etat_cable          |                   | x             | Etat du câble                                                     | Formatage par une liste de domaine ( lt_ecl_etat )                       | Fiche information : Câble (ECL) |
 | qua_geo_xy          |                   | x             | Qua Geo Xy                                                        | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )    | Fiche information : Câble (ECL) |
 | qua_geo_z           |                   | x             | Qua Geo Z                                                         | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )    | Fiche information : Câble (ECL) |
@@ -267,22 +277,24 @@ END
 | xapps_an_v_ecl_tension_cable             | id_cab                                                    | 0…1      |
 
   ### Particularités : 
+  * Un câble ne peut pas être relié en ses deux extrémités au même nœud.
+  * L'attribut tension est transmise au câble en fonction du départ auquel est lié le nœud référencer en tant que nœud final du câble.
 
 ## Table : `an_ecl_intervention`
 | Atributs                       | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                              | Utilisation                                   | Exemple     |
 |:------------------------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
-| Affiche-recherche-intervention | x                 |               | Affiche-recherche-intervention                                                                                                          | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Rapport d'intervention            |             |
-| Affiche-recherche-signalement  | x                 |               | Affiche-recherche-signalement                                                                                                           | Formate l'affichage d'un texte en fonction des attributs de l'entité recherchée. | Recherche : Rapport de signalement            |             |
+| Affiche-recherche-intervention | x                 |               | Affiche-recherche-intervention                                                                                                          | Formate l'affichage d'une recherche. | Recherche : Rapport d'intervention            |             |
+| Affiche-recherche-signalement  | x                 |               | Affiche-recherche-signalement                                                                                                           | Formate l'affichage d'une recherche. | Recherche : Rapport de signalement            |             |
 
   ### Filtres :
 
 | Nom                                | Attribut                                         | Au chargement     | Type           | Condition                                                                                       | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ------------------------------------------------ |:-----------------:|:--------------:|:-----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Etats                              | etat_sign                                        |                   | Alphanumérique | La valeur de “etat_sign” =est égale à                                                           | 10 , 50 ou 40 | Sélectionne les interventions/signalements qui ne sont pas réglés (soumis, classé sans suite, pour information), de façon à les faire apparaître dans le rapport de signalement .  |
-| Dates_intervention                 | dat_real (Date de réalisation de l'intervention) |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur et une valeur choisie par l'utilisateur |               | Sert à la recherche : "Rapport d'intervention", afin de faire apparaître toutes les interventions réalisées entre deux dates.                                                      |
-| Dates signalement                  | dat_signa (Date du signalement)                  |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur etune valeur choisie par l'utilisateur  |               | Sert à la recherche : "Rapport de signalement", afin de faire apparaître tous les signalements réalisées entre deux dates.                                                         |
-| Intervention oui / signalement non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 20            | Sert à la rechercher : '' Rapport d'intervention'' afin de ne sélectionner que les interventions                                                                                   |
-| Signalement oui / intervention non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 10            | Sert à la rechercher : '' Rapport de signalement'' afin de ne sélectionner que les signalements                                                                                    |
+| Etats                              | etat_sign                                        |                   | Alphanumérique | La valeur de “etat_sign” =est égale à                                                           | 10 , 50 ou 40 | Sélectionne les interventions/signalements qui ne sont pas réglés (soumis, classé sans suite, pour information).  |
+| Dates_intervention                 | dat_real (Date de réalisation de l'intervention) |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur et une valeur choisie par l'utilisateur |               |Sélectionne toutes les interventions réalisées entre deux dates.                                                      |
+| Dates signalement                  | dat_signa (Date du signalement)                  |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur etune valeur choisie par l'utilisateur  |               | Sélectionne tous les signalements réalisées entre deux dates.                                                         |
+| Intervention oui / signalement non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 20            | Sélectionne uniquement les interventions                                                                                   |
+| Signalement oui / intervention non | type_si_in (Signalement ou intervention)         |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                          | 10            | Sélectionne uniquement les signalements                                                                                    |
 
   ### Relations :
 
@@ -292,6 +304,8 @@ END
 
 
   ### Particularités :
+  * Cette table a été insérée 7 fois dans GEO. La version présentée ici est celle servant aux recherches et à la cartographie.
+  * Les 6 autres tables sont présentées d'un seul tenant ci-dessous.
    
  ## Intervention Foyer, Intervention Câble, Intervention Départ, Intervention Points lumineux, Intervention PI, Intervention ouvrage  
    ### Table : `an_ecl_intervention`
@@ -416,6 +430,7 @@ END
 | an_ecl_erreur           | id_noeud                                                  | 0…n      |
 
   ### Particularités :
+  * Ces tables doivent être séparées 
 
 ## Table : `geo_v_ecl_ouvrage_electrique`
 | Atributs       | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                              | Utilisation                                |
@@ -463,6 +478,7 @@ END
 | an_ecl_intervention (intervention ouvrage)  | id_ouvelec - id_objet                                     | 0…n      |
 
   ### Particularités :
+  Aucune
 
 ## Table : `geo_v_ecl_point_lumineux`
 | Atributs                         | Champ calculé     | Formatage     | Renommage                                    | Particularité/Usage                                                                  | Utilisation                                  |
@@ -514,6 +530,7 @@ END
 | an_ecl_modele_support                             | id_mod_sup                                                | 1        |
 
   ### Particularités :
+Aucune
 
 ## Table : `geo_v_ecl_pi`
 | Atributs          | Champ calculé     | Formatage     | Renommage                                        | Particularité/Usage                                                              | Utilisation                              |
@@ -553,27 +570,46 @@ END
   ### Particularités :
 
 ## Table : 'xapps_geo_v_ecl_intervention_liste_affichage'
+
+* ### Filtres :
 | Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                                             |
 | -------------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-----------------:| ------------ | ------------------------------------------------------------------------------------------------------- |
 | Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 00, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' sur la cartographie. |
 | Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements sur la cartographie.                        |
 | Pour rafaichissement domaine de valeur | geom                                     |                   | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.                               |
 
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
 ## Table : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
 | ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | par géométrie | geom         |                   | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. Utilisé dans le domaine de valeur utilisant cette table. |
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
 
 ## Domaine de valeur : 'geo_v_ecl_ouvrage_electrique'
 | Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
 | ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés                                      |
+| Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l’apparition des ouvrages supprimés                                      |
 
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
 
 ## Domaine de valeur : 'an_ecl_depart'
 | Nom                    | Attribut                                 | Au chargement     | Type           | Condition                                                                                   | Valeur                            | Description                                                                                          |
 | ---------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-------------------------------------------------------------------------------------------:| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des départs supprimés                 
+| Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l’apparition des départs supprimés          
+
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune       
 
 ## Domaine de valeur : 'xapps_geo_v_ecl_intervention_liste_affichage'
 | Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                          |
@@ -582,28 +618,49 @@ END
 | Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements                          |
 | Pour rafaichissement domaine de valeur | geom                                     | x                 | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.            |
 
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
 
 ## Domaine de valeur : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
 | ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | par géométrie | geom         |           x        | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
 
-
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
 
 ## Domaine de valeur : 'an_ecl_modele_support'
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tout sauf 'même modèle' | id_mod_sup (modèle de support) |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_sup = 2), qui sert uniquement pour les interventions |
 
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
+
 ## Domaine de valeur : 'an_ecl_modele_lanterne'
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tout sauf 'même modèle' | id_mod_ln (modèle de lanterne) |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_ln = 2), qui sert uniquement pour les interventions |
 
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
+
 ## Domaine de valeur : 'an_ecl_modele_lanterne'
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tout sauf 'même modèle' | id_mod_lm (modèle de lampe) |    x               | Alphanumérique | est différente de une(des) valeur(s) par défaut | 2          | Afin de ne pas faire apparaître le modèle intitulé 'même modèle' (id_mod_lm = 2), qui sert uniquement pour les interventions |
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
 
 ## Médias : 'Media - ECL - Objets'
 
@@ -612,7 +669,10 @@ END
 | an_ecl_media | 450x450 60x60 | ECL - Gestion du patrimoine | /home/DOC_SIG_FIC/metiers/ress/ecl/doc | media     | miniature     | t_fichier         | n_fichier        |                     |
 
 Concerne tous les objets (Supports, foyers, départs, PI, ouvrages, câbles).
-
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
 ## Médias : 'Media - ECL - Modèles'
 | Source              | Taille        | Connexion                   | Lien de connexion                      | Média     | Miniature     | Type de media     | Nom du média     | Fichier origine     |
 | ------------------- |:-------------:|:---------------------------:| -------------------------------------- | --------- | ------------- | ----------------- | ---------------- | ------------------- |
@@ -621,7 +681,11 @@ Concerne tous les objets (Supports, foyers, départs, PI, ouvrages, câbles).
 Concerne les modèles de lampe, de lanterne et de support.
 
 #Les fonctionnalités 
-
+* ### Relations : 
+	Aucune
+* ### Particularités :
+	Aucune
+	
 ## Recherche globale : `ECL - Recherche avancée d'une voie`
 
 Cette recherche permet à l'utilisateur de rechercher une voie en mode proposition de valeur (sans saisie manuelle). Cette recherche est issue de l'application Voie-Adresse. Se référer à ce dossier pour le détail de cette recherche. **La seule différence ici est que la vleur de la ville a été mise à 'Compiègne' par défaut**, afin de faciliter le travail du service d'éclairage public qui intervient principalement sur Compiègne.
@@ -629,42 +693,36 @@ Cette recherche permet à l'utilisateur de rechercher une voie en mode propositi
 ## Recherche globale : `ECL - Recherche avancée d'une adresse`
 Cette recherche permet à l'utilisateur de rechercher une adresse en mode proposition de valeur (sans saisie manuelle). Cette recherche est issue de l'application Voie-Adresse. Se référer à ce dossier pour le détail de cette recherche. **La seule différence ici est que la vleur de la ville a été mise à 'Compiègne' par défaut**, afin de faciliter le travail du service d'éclairage public qui intervient principalement sur Compiègne.
 
-**Les recherches ci-dessous existent, mais n'ont encore jamais été utilisées par le service technique, la documentation sera donc réalisée après les retours possibles du service. En l'absence d'utilisation, ces recherches pourront être supprimées, ou simplifiées pour celles éligibles au clic.**
+## *En Construction*
 
-## Recherche : 'Recherche d'ouvrages électriques'
-Eligible au clic
-
-## Recherche : 'Recherche de départ'
-
-## Recherche : 'Recherche de support'
-Eligible au clic
-
-## Recherche : 'Recherche de foyer'
-
-## Recherche : 'Recherche de point-d'intérêt'
-Eligible au clic
-
-## Recherche : 'Recherche de câble'
-Eligible au clic
-
-## Tableau de bord 
-
-**Fin des recherches non testées par le service d'éclairage.**
+> **Les recherches ci-dessous existent, mais n'ont encore jamais été utilisées par le service technique, la documentation sera donc réalisée après les retours possibles du service. En l'absence d'utilisation, ces recherches pourront être supprimées, ou simplifiées pour celles éligibles au clic.**
+>## Recherche : 'Recherche d'ouvrages électriques'
+>Eligible au clic
+>## Recherche : 'Recherche de départ'
+>## Recherche : 'Recherche de support'
+> Eligible au clic
+> ## Recherche : 'Recherche de foyer'
+> ## Recherche : 'Recherche de point-d'intérêt' Eligible au clic
+> ## Recherche : 'Recherche de câble' Eligible au clic
+> ## Tableau de bord 
+> 
+> ## *Fin de la zone en construction*
 
 ## Recherche : 'Recherche de modèle de support'
-Cette recherche permet à l'utilisateur de faire une recherche de tous les modèles de support existants, sauf le modèle id=2, utilisé uniquement dans l'application pour les interventions.
+Cette recherche permet à l'utilisateur de faire une recherche de tous les modèles de support existants, sauf le modèle id=2, utilisé uniquement pour la gestion des interventions.
 
-    - Configuration :
+* ### Configuration :
 
 Source : an_ecl_modele_support
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
-| nom_mod_su   | x            | x              | x              | **                        | x                     |
+| nom_mod_su   | x            | x              | x              |                         | x                     |
 
+Tri : nom_mod_su (Alphabétique) 
 (la détection des doublons n'est pas activée ici)
 
-Filtres :
+* ### Filtres :
 
 | Nom                     | Attribut                    | Obligatoire    | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -675,17 +733,17 @@ Fiches d'information active : Fiche d'information Support (modèle)
 ## Recherche : 'Recherche de modèle de lampe'
 Cette recherche permet à l'utilisateur de faire une recherche de tous les modèles de lampe existants, sauf le modèle id=2, utilisé uniquement dans l'application pour les interventions.
 
-    - Configuration :
+* ### Configuration :
 
 Source : an_ecl_modele_lampe
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
-| nom_mod_lm   | x            | x              | x              | **                        | x                     |
-
+| nom_mod_lm   | x            | x              | x              |                         | x                     |
+Tri : nom_mod_lm (Alphabétique)
 (la détection des doublons n'est pas activée ici)
 
-Filtres :
+* ### Filtres :
 
 | Nom                     | Attribut                    | obligatoire     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -696,17 +754,17 @@ Fiches d'information active : Fiche d'information Lampe (modèle)
 ## Recherche : 'Recherche de modèle de lanterne'
 Cette recherche permet à l'utilisateur de faire une recherche de tous les modèles de lanterne existants, sauf le modèle id=2, utilisé uniquement dans l'application pour les interventions.
 
-    - Configuration :
+* ### Configuration :
 
 Source : an_ecl_modele_lampe
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | nom_mod_ln   | x            | x              | x              |                           | x                     |
-
+Tri : nom_mod_ln (Alphabétique) 
 (la détection des doublons n'est pas activée ici)
 
-Filtres :
+* ### Filtres :
 
 | Nom                     | Attribut                    | Obligatoire     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
 | ----------------------- | --------------------------- |:-----------------:|:--------------:|:-----------------------------------------------:| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -715,25 +773,25 @@ Filtres :
 Fiches d'information active : Fiche d'information Lanterne (modèle)
 
 ## Recherche : 'Rapport de signalement'
-Cette recherche permet à l'utilisateur rechercher de tous les signalements faits entre deux dates.
+Cette recherche permet à l'utilisateur de rechercher tous les signalements faits entre deux dates.
 
-    - Configuration :
+* ### Configuration :
 
 Source : an_ecl_intervention
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | Affiche-recherche-signalement  | x            | x              | x              |                        | x                     |
-
+Tri : id_inter (ascendant) 
 (la détection des doublons n'est pas activée ici)
 La géométrie est récupérer via la relation avec la table geo_ecl_noeud.
 
-Filtres :
+* ### Filtres :
 
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Etats                              | etat_sign                                |                   | Alphanumérique | La valeur de “etat_sign” =est égale à                                                          | 10 , 50 ou 40 | Sélectionne les interventions/signalements qui ne sont pas réglés (soumis, classé sans suite, pour information), de façon à les faire apparaître dans le rapport de signalement .  |
-| Dates signalement                  | dat_signa (Date du signalement)          |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur etune valeur choisie par l'utilisateur |               | Sert à la recherche : "Rapport de signalement", afin de faire apparaître tous les signalements réalisées entre deux dates.                                                         |
+| Dates signalement                  | dat_signa (Date du signalement)          |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur et une valeur choisie par l'utilisateur |               | Sert à la recherche : "Rapport de signalement", afin de faire apparaître tous les signalements réalisées entre deux dates.                                                         |
 | Signalement oui / intervention non | type_si_in (Signalement ou intervention) |                   | Alphanumérique | La valeur de “type_si_in” =est égale à                                                         | 10            |                                                                                    |
 
 Fiches d'information active : sans objet
@@ -741,40 +799,40 @@ Fiches d'information active : sans objet
 ## Recherche : 'Rapport d'intervention'
 Cette recherche permet à l'utilisateur rechercher de toutes les interventions faits entre deux dates.
 
-    - Configuration :
+* ### Configuration :
 
 Source : an_ecl_intervention
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | Affiche-recherche-signalement  | x            | x              | x              |                        | x                     |
-
+Tri : id_inter (ascendant) 
 (la détection des doublons n'est pas activée ici)
 La géométrie est récupérer via la relation avec la table geo_ecl_noeud.
 
-Filtres :
+* ### Filtres :
 
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Dates intervention                 | dat_real (Date de réalisation des signalements)          |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur etune valeur choisie par l'utilisateur |               |                                                          |
+| Dates intervention                 | dat_real (Date de réalisation des signalements)          |                   | Alphanumérique | est comprise entre une valeur choisie par l'utilisateur et une valeur choisie par l'utilisateur |               |                                                          |
 
 Fiches d'information active : sans objet
 
 ## Recherche : 'Câble non-relié'
 Cette recherche permet à l'utilisateur de rechercher de tous les câbles non-reliés, que ce soit au noeud final, initial ou les deux.
 
-    - Configuration :
+* ### Configuration :
 
 Source : geo_ecl_cable
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_cab  | x            | x              | x              |                        | x                     |
-
+Tri : pas de tri.
 (la détection des doublons n'est pas activée ici)
 La géométrie est celle du câble.
 
-Filtres :
+* ### Filtres :
 
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -787,18 +845,18 @@ Fiches d'information active : sans objet
 ## Recherche : 'Noeud non-relié à un câble'
 Cette recherche permet à l'utilisateur rechercher de tous les noeuds qui ne sont pas reliés à des câbles.
 
-    - Configuration :
+* ### Configuration :
 
 Source : geo_ecl_noeud
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_noeud  | x            | x              | x              |                        | x                     |
-
+Tri : pas de tri.
 (la détection des doublons n'est pas activée ici)
 La géométrie est celle du noeud.
 
-Filtres :
+* ### Filtres :
 
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
@@ -809,18 +867,18 @@ Fiches d'information active : sans objet
 ## Recherche : 'Noeud non-relié à une armoire'
 Cette recherche permet à l'utilisateur de rechercher de tous les noeuds qui ne sont pas reliés à une armoire de façon attributaire.
 
-    - Configuration :
+* ### Configuration :
 
 Source : geo_ecl_noeud
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_noeud  | x            | x              | x              |                        | x                     |
-
+Tri : pas de tri.
 (la détection des doublons n'est pas activée ici)
 La géométrie est celle du noeud.
 
-Filtres :
+* ### Filtres :
 
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
@@ -831,20 +889,20 @@ Filtres :
 Fiches d'information active : sans objet
 
 ## Recherche : 'Recherche des foyers dont la lampe n'est pas renseignée'
-Cette recherche permet à l'utilisateur de rechercher tous les foyers qui n'ont pas de lampe renseignée.
+Cette recherche permet à l'utilisateur de rechercher tous les foyers qui n'ont pas de modèle de lampe renseignée.
 
-    - Configuration :
+  * ### Configuration :
 
 Source : an_ecl_foyer
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | id_foyer  | x            | x              | x              |                        | x                     |
-
+Tri : pas de tri.
 (la détection des doublons n'est pas activée ici)
 La géométrie est celle du support auquel est lié le foyer, via la relation avec la table "geo_ecl_noeud".
 
-Filtres :
+* ### Filtres :
 
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
@@ -856,18 +914,18 @@ Fiches d'information active : 'Foyer (ECL)'
 ## Recherche : ' Recherche de supports sans foyers'
 Cette recherche permet à l'utilisateur de rechercher tous les supports qui n'ont pas de foyer.
 
-    - Configuration :
+* ### Configuration :
 
 Source : geo_v_ecl_point_lumineux
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | Affiche_recherche | x            | x              | x              |                        | x                     |
-
+Tri : pas de tri.
 (la détection des doublons n'est pas activée ici)
 La géométrie est celle du noeud.
 
-Filtres :
+* ### Filtres :
 
 | Nom                                | Attribut                                 | Au chargement     | Type           | Condition                                                                                      | Valeur        | Description                                                                                                                                                                        |
 | ---------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------------------------------------:| ------------- | ------------------------ |
@@ -879,18 +937,18 @@ Fiches d'information active : 'Point lumineux (support)'
 ## Recherche : ' Recherche d'erreur'
 Cette recherche permet à l'utilisateur de rechercher tous les supports qui n'ont pas de foyer.
 
-    - Configuration :
+* ### Configuration :
 
 Source : geo_v_ecl_point_lumineux
 
 | Attribut     | Afficher     | Rechercher     | Suggestion     | Attribut de géométrie     | Tri des résultats     |
 | ------------ |:------------:|:--------------:|:--------------:|:-------------------------:|:---------------------:|
 | champ_calcule | x            | x              | x              |                        | x                     |
-
+Tri : pas de tri.
 (la détection des doublons n'est pas activée ici)
 Pas de géométrie.
 
-Filtres : Sans objet
+* ### Filtres : Sans objet
 
 Fiches d'information active : sans objet
 
@@ -899,12 +957,13 @@ Fiches d'information active : sans objet
 
 Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un ouvrage électrique. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
 
-    - Configuration :
+* ### Configuration :
 
-Source : geo_v_ecl_ouvrage_electrique
+	Source : geo_v_ecl_ouvrage_electrique
 
-    - Filtres : aucun
-    - Accrochage : 
+* ### Filtres : 
+	Aucun
+* ### Accrochage : 
 | Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
 | ---------------------------- |:---------:|:-------------------:| ------------------ |
 | geo_v_ecl_point_lumineux     | Nœud      |                     | 15                 |
@@ -912,18 +971,20 @@ Source : geo_v_ecl_ouvrage_electrique
 | geo_ecl_cable                | Nœud      |                     | 15                 |
 | geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
 
-    - Fiches d'information active : Fiche d'information 'Ouvrage electrique'
-    - Topologie : aucune
+* ### Fiches d'information active :
+	Fiche d'information 'Ouvrage electrique'
+* ### Topologie : 
+	Aucune
 
 ## Modification géométrique d'un point lumineux
 Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un point lumineux. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
 
-    - Configuration :
+* ### Configuration :
 
 Source : geo_v_ecl_point_lumineux
 
-    - Filtres : aucun
-    - Accrochage : 
+* ### Filtres : aucun
+* ###  Accrochage : 
 | Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
 | ---------------------------- |:---------:|:-------------------:| ------------------ |
 | geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
@@ -931,18 +992,19 @@ Source : geo_v_ecl_point_lumineux
 | geo_ecl_cable                | Nœud      |                     | 15                 |
 | geo_v_ecl_point_lumineux     | Nœud      |                     | 15                 |
 
-    - Fiches d'information active : Fiche d'information 'Point lumineux (support)'
-    - Topologie : aucune
+* ### Fiches d'information active : 
+	Fiche d'information 'Point lumineux (support)'
+* ### Topologie : aucune
 
 ## Modification géométrique d'un point d'intérêt (ECL)
 Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un point lumineux. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
 
-    - Configuration :
+* ### Configuration :
 
-Source : geo_v_ecl_point_d'interet
+	Source : geo_v_ecl_point_d'interet
 
-    - Filtres : aucun
-    - Accrochage : 
+* ### Filtres : aucun
+* ### Accrochage : 
 | Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
 | ---------------------------- |:---------:|:-------------------:| ------------------ |
 | geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
@@ -950,76 +1012,81 @@ Source : geo_v_ecl_point_d'interet
 | geo_ecl_cable                | Nœud      |                     | 15                 |
 | geo_v_ecl_point_d'interet    | Nœud      |                     | 15                 |
 
-    - Fiches d'information active : Fiche d'information 'Point d'intérêt (PI)'
-    - Topologie : aucune
+* ### Fiches d'information active :
+	 Fiche d'information 'Point d'intérêt (PI)'
+* ### Topologie : aucune
 
 ## Modification géométrique d'un point d'intérêt (ECL)
 Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un câble. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
 
-    - Configuration :
+* ### Configuration :
 
 Source : geo_ecl_cable
 
-    - Filtres : aucun
-    - Accrochage : 
+* ### Filtres : aucun
+* ### Accrochage : 
 | Géotable                     | Types     | Suivi de lignes     | Tolérance (px)     |
 | ---------------------------- |:---------:|:-------------------:| ------------------ |
 | geo_v_ecl_ouvrage_electrique | Nœud      |                     | 15                 |
 | geo_v_ecl_point_lumineux     | Nœud      |                     | 15                 |
 | geo_v_ecl_pi                 | Nœud      |                     | 15                 |
 
-    - Fiches d'information active : Fiche d'information 'Câble (ECL)'
-    - Topologie : aucune
+* ### Fiches d'information active : Fiche d'information 'Câble (ECL)'
+* ### Topologie : aucune
     
     
 ## Saisie attributaire d'un modèle de lampe 
 
-    - Fiches d'information active : Fiche d'information 'Lampe (modèle)'
+* ### Fiches d'information active : 
+	Fiche d'information 'Lampe (modèle)'
 
 ## Saisie attributaire d'un modèle de lanterne
 
-    - Fiches d'information active : Fiche d'information 'Lanterne (modèle)'
+* ### Fiches d'information active : 
+	Fiche d'information 'Lanterne (modèle)'
 
 ## Saisie attributaire d'un modèle de lampe 
 
-    - Fiches d'information active : Fiche d'information 'Support (modèle)'
+    - Fiches d'information active :
+	Fiche d'information 'Support (modèle)'
 
 
 ## Fiche information :  Lampe (modèle)
 
 Source : an_ecl_modele_lampe
 
-  - Statistique : aucune
+* ###    Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
 
-| Mode d'ouverture     |      | Taille (px)     | Agencement des sections     |
-| -------------------- | ---- | --------------- | --------------------------- |
-| dans le gabarit      |      | 600 * 650       | Vertical                    |
+	| Mode d'ouverture     |      | Taille (px)     | Agencement des sections     |
+	| -------------------- | ---- | --------------- | --------------------------- |
+	| dans le gabarit      |      | 600 * 650       | Vertical                    |
+	
+	| Nom de la section     | Sous-section     | Attributs     | Position label     | Agencement attribut     | Visibilité conditionnelle        | Fichie liée     | Ajout de données autorisé     | Description                                |
+	|:---------------------:|:----------------:|:-------------:|:------------------:|:-----------------------:|:--------------------------------:|:---------------:|:-----------------------------:|:------------------------------------------:|
+	| Caractéristiques      |                  |               | par défaut         | Vertical                |                                  |                 |                               | Caréctéristiques métier du modèle de lampe |
+	|                       | nom_mod_lm       |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | gar_lamp         |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | ty_lampe         |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | puis_lam         |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | cul_lamp         |               |                    |                         |                                  |                 |                               |                                            |
+	| Télégestion           |                  |               | par défaut         | Vertical                | ty_lampe == 50                   |                 |                               |                                            |
+	|                       | telgest          |               |                    |                         |                                  |                 |                               |                                            |
+	| Couleur d’éclairage   |                  |               | par défaut         | Vertical                | ty_lampe == 10 && cul_lamp == 30 |                 |                               |                                            |
+	|                       | cou_ecl          |               |                    |                         |                                  |                 |                               |                                            |
+	| Métadonnées           |                  |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | date_maj         |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | date_sai         |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | op_sai           |               |                    |                         |                                  |                 |                               |                                            |
+	| Photothèque           |                  |               | par défaut         | Vertical                | id_mod_lm != NULL                |                 |                               | Photos et documents associés               |
+	|                       | miniature        |               |                    |                         |                                  |                 |                               |                                            |
+	|                       | n_fichier        |               |                    |                         |                                  |                 |                               |                                            |
 
-| Nom de la section     | Sous-section        | Attributs     | Position label     | Agencement attribut     | Visibilité conditionnelle        | Fichie liée     | Ajout de données autorisé     | Description                                |
-|:---------------------:|:-------------------:|:-------------:|:------------------:|:-----------------------:|:--------------------------------:|:---------------:|:-----------------------------:|:------------------------------------------:|
-| Caractéristiques      |                     |               | par défaut         | Vertical                |                                  |                 |                               | Caréctéristiques métier du modèle de lampe |
-|                       |                     | nom_mod_lm    |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | gar_lamp      |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | ty_lampe      |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | puis_lam      |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | cul_lamp      |                    |                         |                                  |                 |                               |                                            |
-|                       | Télégestion         |               | par défaut         | Vertical                | ty_lampe == 50                   |                 |                               |                                            |
-|                       |                     | telgest       |                    |                         |                                  |                 |                               |                                            |
-|                       | Couleur d'éclairage |               | par défaut         | Vertical                | ty_lampe == 10 && cul_lamp == 30 |                 |                               |                                            |
-|                       |                     | cou_ecl       |                    |                         |                                  |                 |                               |                                            |
-| Métadonnées           |                     |               |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | date_maj      |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | date_sai      |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | op_sai        |                    |                         |                                  |                 |                               |                                            |
-| Photothèque           |                     |               | par défaut         | Vertical                | id_mod_lm != NULL                |                 |                               | Photos et documents associés               |
-|                       |                     | miniature     |                    |                         |                                  |                 |                               |                                            |
-|                       |                     | n_fichier     |                    |                         |                                  |                 |                               |                                            |
+* ### Saisie :
 
-    - Saisie :
-
-Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
+Sont présents ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
 | Attribut                                                         | Obligatoire     | Valeur par défaut     | Liste de domaine                  |
 |:----------------------------------------------------------------:|:---------------:|:---------------------:|:---------------------------------:|
@@ -1040,9 +1107,10 @@ Modèle d'impression : aucun
 
 Source : an_ecl_modele_lanterne
 
-  - Statistique : aucune
+* ### Statistique :
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1070,7 +1138,7 @@ Source : an_ecl_modele_lanterne
 |                       |                  | Affichage_message_erreur |                    |                         |                                                         |                 |                               |                                            |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 | Atributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                      | Utilisation                                               |
@@ -1089,9 +1157,9 @@ Modèle d'impression : aucun
 
 Source : an_ecl_modele_support
 
-  - Statistique : aucune
+* ### Statistique : aucune
   
-  - Représentation : 
+* ### Représentation : 
 
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1108,7 +1176,7 @@ Source : an_ecl_modele_support
 |                       |                  | cod_ral_s        |                    |                         |                                        |                 |                               |                                                           |
 |                       |                  | observ           |                    |                         |                                        |                 |                               |                                                           |
 |                       |                  | op_sai           |                    |                         |                                        |                 |                               |                                                           |
-|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_sup != NULL && (ik_supp == NULL |                 | ip_supp ==NULL)               |                                                           |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_mod_sup != NULL && (ik_supp == NULL `||` ip_supp ==NULL) |                 |                |                                                           |
 |                       |                  | Affichage_message_erreur |                    |                         |                                        |                 |                               |                                                           |
 | Photothèque           |                  |                  | par défaut         | Vertical                | id_mod_sup!= NULL                      |                 |                               | Photos et documents associés                              |
 |                       |                  | miniature        |                    |                         |                                        |                 |                               |                                                           |
@@ -1119,10 +1187,7 @@ Source : an_ecl_modele_support
 |                       |                  | date_maj         |                    |                         |                                        |                 |                               |                                                           |
 | (vide)                |                  | op_sai           | par défaut         | Vertical                | id_mod_lm < 0                          |                 |                               | Pour que l'opérateur de saisie se remplisse correctement. |
 
-
-
-
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1144,9 +1209,10 @@ Modèle d'impression : aucun
 
 Source : geo_ecl_cable
 
-  - Statistique : aucune
+* ### Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
 
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1188,7 +1254,7 @@ Source : geo_ecl_cable
 |                       |                  | dates         |                    |                         |                               |                    |                               |                                                     |
 |                       |                  | type_inter    |                    |                         |                               |                    |                               |                                                     |
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1213,9 +1279,9 @@ Modèle d'impression : aucun
 
 Source : geo_v_ecl_point_d'interet
 
-  - Statistique : aucune
+* ### Statistique : aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1259,7 +1325,7 @@ Source : geo_v_ecl_point_d'interet
 |                       |                  | commune          |                    |                         |                               |                 |
 |                       |                  | insee            |                    |                         |                               |                 |
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1285,9 +1351,9 @@ Modèle d'impression : aucun
 
 Source : an_ecl_foyer
 
-  - Statistique : aucune
+* ### Statistique : aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1305,7 +1371,7 @@ Source : an_ecl_foyer
 |                       |                  | ty_amorce        |                    |                         |                                       |                          |                               |
 |                       |                  | ty_ballast       |                    |                         |                                       |                          |                               |
 |                       |                  | ty_auto_tr       |                    |                         |                                       |                          |                               |
-|                       | (vide)           |                  | par défaut         | Vertical                | id_foyer != NULL && (haut_feu == NULL |                          | pct_fct ==NULL                |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_foyer != NULL && (haut_feu == NULL `||`pct_fct ==NULL ||  |                          |                 |
 |                       |                  | Affichage_message_erreur |                    |                         |                                       |                          |                               |
 | Lanterne              |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      | Lanterne (modèle :photo) |                               |
 |                       |                  | nom_mod_ln       |                    |                         |                                       |                          |                               |
@@ -1340,7 +1406,7 @@ Source : an_ecl_foyer
 |                       |                  | type_inter       |                    |                         |                                       |                          |                               |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1367,9 +1433,10 @@ Modèle d'impression : aucun
 
 Source : geo_v_ecl_ouvrage_electrique
 
-  - Statistique : aucune
+* ### Statistique :
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1393,8 +1460,7 @@ Source : geo_v_ecl_ouvrage_electrique
 |                       |                  | pdl_edf            |                    |                         |                               |                    |                               |
 |                       |                  | n_com_edf          |                    |                         |                               |                    |                               |
 |                       |                  | puis_mes           |                    |                         |                               |                    |                               |
-|                       | (vide)           |                    | Par défaut         | Vertical                | id_ouvelec != NULL &&         |                    |                               |
-| (ik_ouvelec == NULL   |                  | ip_ouvelec == NULL |                    | puis_mes ==NULL         |                               | val_terre==NULL)   |                               |
+|                       | (vide)           |                    | Par défaut         | Vertical                | id_ouvelec != NULL && (ik_ouvelec == NULL`||`ip_ouvelec == NULL  `||` puis_mes ==NULL `||` val_terre==NULL)       |                    |                               |
 |                       |                  | Affichage_message_erreur   |                    |                         |                               |                    |                               |
 | Départ(s)             |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            | Depart (ECL)       | x                             |
 |                       |                  | nom_depart         |                    |                         |                               |                    |                               |
@@ -1418,7 +1484,7 @@ Source : geo_v_ecl_ouvrage_electrique
 |                       |                  | src_date           |                    |                         |                               |                    |                               |
 |                       | (vide)           |                    | Par défaut         | Vertical                | id_ouvelec != NULL            |                    |                               |
 |                       |                  | Affichage_message_erreur   |                    |                         |                               |                    |                               |
-| Intervention          |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            | intervention câble | x                             |
+| Intervention          |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            | intervention ouvrage electrique | x                             |
 |                       |                  | dates              |                    |                         |                               |                    |                               |
 |                       |                  | type_inter         |                    |                         |                               |                    |                               |
 | Contrat               |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            |                    |                               |
@@ -1431,7 +1497,7 @@ Source : geo_v_ecl_ouvrage_electrique
 |                       |                  | insee              |                    |                         |                               |                    |                               |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1467,9 +1533,9 @@ Modèle d'impression : aucun
 
 Source : an_ecl_depart
 
-  - Statistique : aucune
+* ###  Statistique : aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1506,7 +1572,7 @@ Source : an_ecl_depart
 |                       |                   | type_inter       |                    |                         |                                      |                     |                               |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1529,9 +1595,9 @@ Modèle d'impression : aucun
 
 Source : geo_v_ecl_point_lumineux (support)
 
-  - Statistique : aucune
+* ### Statistique : aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1552,7 +1618,7 @@ Source : geo_v_ecl_point_lumineux (support)
 |                       |                  | id_mod_sup       |                    |                         |                                                             |                                       |                               |
 |                       | Option           |                  | par défaut         | Vertical                | ty_supp == 10                                               |                                       |                               |
 |                       |                  | opt_supp         |                    |                         |                                                             |                                       |                               |
-|                       | (vide)           |                  | par défaut         | Vertical                | id_supp != NULL && (haut_supp == NULL || haut_trap == NULL) |                                       |                               |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_supp != NULL && (haut_supp == NULL`||` haut_trap == NULL) ||  |                                       |                               |
 |                       |                  | Message d'erreur |                    |                         |                                                             |                                       |                               |
 | Foyer(s)              |                  |                  | par défaut         | Vertical                | id_ouvelec != NULL                                          | Foyer (ECL)                           | x                             |
 |                       |                  | id_mod_ln        |                    |                         |                                                             |                                       |                               |
@@ -1589,7 +1655,7 @@ Source : geo_v_ecl_point_lumineux (support)
 |                       |                  | insee            |                    |                         |                                                             |                                       |                               |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1623,9 +1689,10 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 
 Source : an_ecl_media
 
-  - Statistique : aucune
+* ### Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1639,7 +1706,7 @@ Source : an_ecl_media
 |                       |                  | dat_sai       |                    |                         |                               |                 |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1656,9 +1723,10 @@ Modèle d'impression : aucun
 
 Source : an_ecl_intervention
 
-  - Statistique : aucune
+* ### Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1683,18 +1751,18 @@ Source : an_ecl_intervention
 |                       |                                    | etat_sign        |                    |                         |                                                                                                                                                                                          |                     |                               |
 | Intervention          |                                    |                  | par défaut         | Vertical                | type_si_in == '20'                                                                                                                                                                       | intervention départ |                               |
 |                       |                                    | type_inter       |                    |                         |                                                                                                                                                                                          |                     |                               |
-|                       | Disjoncteur                        |                  | par défaut         | Vertical                | ((type_inter.indexOf('10') >0) && (type_si_in == '20') ) || (type_inter == '10' && (type_si_in == '20'))                                                                                 |                     |                               |
+|                       | Disjoncteur                        |                  | par défaut         | Vertical                | ((type_inter.indexOf('10') >0) && (type_si_in == '20') ) `||` (type_inter == '10' && (type_si_in == '20'))                                                                                 |                     |                               |
 |                       |                                    | att_met1         |                    |                         |                                                                                                                                                                                          |                     |                               |
-|                       | Fusible                            |                  | par défaut         | Vertical                | ((type_inter.indexOf('11') >0) && (type_si_in == '20')) || (type_inter == '11' && (type_si_in == '20'))                                                                                  |                     |                               |
+|                       | Fusible                            |                  | par défaut         | Vertical                | ((type_inter.indexOf('11') >0) && (type_si_in == '20')) `||` (type_inter == '11' && (type_si_in == '20'))                                                                                  |                     |                               |
 |                       |                                    | att_met2         |                    |                         |                                                                                                                                                                                          |                     |                               |
-|                       | Parasurtenseur                     |                  | par défaut         | Vertical                | ((type_inter.indexOf("19") >0) && (type_si_in == '20')) || (type_inter == 19 && (type_si_in == '20') )                                                                                   |                     |                               |
+|                       | Parasurtenseur                     |                  | par défaut         | Vertical                | ((type_inter.indexOf("19") >0) && (type_si_in == '20')) `||` (type_inter == 19 && (type_si_in == '20') )                                                                                   |                     |                               |
 |                       |                                    | att_met3         |                    |                         |                                                                                                                                                                                          |                     |                               |
-|                       | Options                            |                  | par défaut         | Vertical                | (((type_inter.indexOf("18") >0) || (type_inter.indexOf("90") >0)) && (type_si_in == '20')) || (type_inter == 18 && (type_si_in == '20') ) || (type_inter == 90 && (type_si_in == '20') ) |                     |                               |
+|                       | Options                            |                  | par défaut         | Vertical                | (((type_inter.indexOf("18") >0) `||` (type_inter.indexOf("90") >0)) && (type_si_in == '20')) `||` (type_inter == 18 && (type_si_in == '20') ) `||` (type_inter == 90 && (type_si_in == '20') ) |                     |                               |
 |                       |                                    | att_met7         |                    |                         |                                                                                                                                                                                          |                     |                               |
 |                       | Etat du support après intervention |                  | par défaut         | Vertical                | (type_si_in == '20')                                                                                                                                                                     |                     |                               |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1722,9 +1790,10 @@ Modèle d'impression : aucun
 
 Source : Intervention_ouvrage (an_ecl_intervention)
 
-  - Statistique : aucune
+* ### Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1749,22 +1818,22 @@ Source : Intervention_ouvrage (an_ecl_intervention)
 |                       |                                    | etat_sign        |                    |                         |                                                                                                          |                 |                               |
 | Intervention          |                                    |                  | par défaut         | Vertical                | type_si_in == '20'                                                                                       |                 |                               |
 |                       |                                    | type_inter       |                    |                         |                                                                                                          |                 |                               |
-|                       | Disjoncteur                        |                  | par défaut         | Vertical                | ((type_inter.indexOf('10') >0) && (type_si_in == '20') ) || (type_inter == '10' && (type_si_in == '20')) |                 |                               |
+|                       | Disjoncteur                        |                  | par défaut         | Vertical                | ((type_inter.indexOf('10') >0) && (type_si_in == '20') ) `||` (type_inter == '10' && (type_si_in == '20')) |                 |                               |
 |                       |                                    | att_met1         |                    |                         |                                                                                                          |                 |                               |
-|                       | Fusible                            |                  | par défaut         | Vertical                | ((type_inter.indexOf('11') >0) && (type_si_in == '20')) || (type_inter == '11' && (type_si_in == '20'))  |                 |                               |
+|                       | Fusible                            |                  | par défaut         | Vertical                | ((type_inter.indexOf('11') >0) && (type_si_in == '20')) `||` (type_inter == '11' && (type_si_in == '20'))  |                 |                               |
 |                       |                                    | att_met2         |                    |                         |                                                                                                          |                 |                               |
-|                       | Type de commande                   |                  | par défaut         | Vertical                | ((type_inter.indexOf("19") >0) && (type_si_in == '20')) || (type_inter == 19 && (type_si_in == '20') )   |                 |                               |
+|                       | Type de commande                   |                  | par défaut         | Vertical                | ((type_inter.indexOf("19") >0) && (type_si_in == '20')) `||` (type_inter == 19 && (type_si_in == '20') )   |                 |                               |
 |                       |                                    | att_met3         |                    |                         |                                                                                                          |                 |                               |
 |                       | Etat du support après intervention |                  | par défaut         | Vertical                | (type_si_in == '20')                                                                                     |                 |                               |
 |                       |                                    | att_met6         |                    |                         |                                                                                                          |                 |                               |
-|                       | Caractéristiques du départ         |                  | par défaut         | Vertical                | ((type_inter.indexOf("60") >0) && type_si_in == '20') || (type_inter == 60 && (type_si_in == '20') )     |                 |                               |
+|                       | Caractéristiques du départ         |                  | par défaut         | Vertical                | ((type_inter.indexOf("60") >0) && type_si_in == '20') `||` (type_inter == 60 && (type_si_in == '20') )     |                 |                               |
 |                       |                                    | att_met4         |                    |                         |                                                                                                          |                 |                               |
 |                       |                                    | att_met5         |                    |                         |                                                                                                          |                 |                               |
 |                       |                                    | att_met7         |                    |                         |                                                                                                          |                 |                               |
 |                       |                                    | att_met8         |                    |                         |                                                                                                          |                 |                               |
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1796,9 +1865,9 @@ Modèle d'impression : aucun
 
 Source : Intervention_depart (an_ecl_intervention)
 
-  - Statistique : aucune
+* ### Statistique : aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1825,15 +1894,15 @@ Source : Intervention_depart (an_ecl_intervention)
 |                       |                                     | etat_sign        |                    |                         |                                                                                                        |                 |
 | Intervention          |                                     |                  | par défaut         | Vertical                | type_si_in == '20'                                                                                     |                 |
 |                       |                                     | type_inter       |                    |                         |                                                                                                        |                 |
-|                       | Disjoncteur                         |                  | par défaut         | Vertical                | ((type_inter.indexOf("10") >0) && (type_si_in == '20')) || (type_inter == 10 && (type_si_in == '20') ) |                 |
+|                       | Disjoncteur                         |                  | par défaut         | Vertical                | ((type_inter.indexOf("10") >0) && (type_si_in == '20')) `||` (type_inter == 10 && (type_si_in == '20') ) |                 |
 |                       |                                     | att_met1         |                    |                         |                                                                                                        |                 |
-|                       | Fusible                             |                  | par défaut         | Vertical                | ((type_inter.indexOf("11") >0) && (type_si_in == '20')) || (type_inter == 11 && (type_si_in == '20') ) |                 |
+|                       | Fusible                             |                  | par défaut         | Vertical                | ((type_inter.indexOf("11") >0) && (type_si_in == '20')) `||` (type_inter == 11 && (type_si_in == '20') ) |                 |
 |                       |                                     | att_met2         |                    |                         |                                                                                                        |                 |
 |                       | Etat du départ après l'intervention |                  | par défaut         | Vertical                | (type_si_in == '20')                                                                                   |                 |
 
 
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1858,13 +1927,15 @@ IMPORTANT : L'édition des données jointes est désactivée.
 Modèle d'impression : aucun
 
 
+
 ## Fiche information :      Intervention_Foyer
 
 Source : Intervention_foyer (an_ecl_intervention)
 
-  - Statistique : aucune
+* ### Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1891,20 +1962,19 @@ Source : Intervention_foyer (an_ecl_intervention)
 |                       |                                     | etat_sign        |                    |                         |                                                                                                      |                 |
 | Intervention          |                                     |                  | par défaut         | Vertical                | type_si_in == '20'                                                                                   |                 |
 |                       |                                     | type_inter       |                    |                         |                                                                                                      |                 |
-|                       | Modèle de lanterne                  |                  | par défaut         | Vertical                | ((type_inter.indexOf("12") >0) && type_si_in == '20') || (type_inter == 12 && (type_si_in == '20') ) |                 |
+|                       | Modèle de lanterne                  |                  | par défaut         | Vertical                | ((type_inter.indexOf("12") >0) && type_si_in == '20') `||` (type_inter == 12 && (type_si_in == '20') ) |                 |
 |                       |                                     | att_met7         |                    |                         |                                                                                                      |                 |
-|                       | Modèle de lampe                     |                  | par défaut         | Vertical                | ((type_inter.indexOf("13") >0)&& type_si_in == '20') || (type_inter == 13 && (type_si_in == '20') )  |                 |
-|                       |                                     | att_met8         |                    |                         |                                                                                                      |                 |
-|                       | Ballast / driver                    |                  | par défaut         | Vertical                | ((type_inter.indexOf("15") >0) && type_si_in == '20') || (type_inter == 15 && (type_si_in == '20') ) |                 |
+|                       | Modèle de lampe                     |                  | par défaut         | Vertical                | ((type_inter.indexOf("13") >0)&& type_si_in == '20') `||` (type_inter == 13 && (type_si_in == '20') )  |                 |
+|                       |                                     | att_met8             |                    |                         |                                                                                                      |                 |
+|                       | Ballast / driver                    |                  | par défaut         | Vertical                | ((type_inter.indexOf("15") >0) && type_si_in == '20') `||` (type_inter == 15 && (type_si_in == '20') ) |                 |
 |                       |                                     | att_met1         |                    |                         |                                                                                                      |                 |
-|                       | Amorceur                            |                  | par défaut         | Vertical                | ((type_inter.indexOf("16") >0) && type_si_in == '20') || (type_inter == 16 && (type_si_in == '20') ) |                 |
+|                       | Amorceur                            |                  | par défaut         | Vertical                | ((type_inter.indexOf("16") >0) && type_si_in == '20') `||` (type_inter == 16 && (type_si_in == '20') ) |                 |
 |                       |                                     | att_met2         |                    |                         |                                                                                                      |                 |
-|                       | Auto transformateur                 |                  |                    |                         | ((type_inter.indexOf("17") >0) && type_si_in == '20') || (type_inter == 17 && (type_si_in == '20') ) |                 |
+|                       | Auto transformateur                 |                  |                    |                         | ((type_inter.indexOf("17") >0) && type_si_in == '20') `||` (type_inter == 17 && (type_si_in == '20') ) |                 |
 |                       |                                     | att_met3         |                    |                         |                                                                                                      |                 |
 |                       | Etat du départ après l'intervention |                  | par défaut         | Vertical                | (type_si_in == '20')                                                                                 |                 |
 
-
-    - Saisie :
+- Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1935,9 +2005,10 @@ Modèle d'impression : aucun
 
 Source : Intervention_cable (an_ecl_intervention)
 
-  - Statistique : aucune
+* ### Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -1961,8 +2032,7 @@ Source : Intervention_cable (an_ecl_intervention)
 |                       |                  | src_def          |                    |                         |                               |                 |                               |
 |                       |                  | etat_sign        |                    |                         |      
 
-
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -1984,14 +2054,14 @@ IMPORTANT : L'édition des données jointes est désactivée.
 Modèle d'impression : aucun
 
 
-
 ## Fiche information :      Intervention_PI
 
 Source : Intervention_PI (an_ecl_intervention)
 
-  - Statistique : aucune
+* ###  Statistique : 
+	Aucune
   
-  - Représentation : 
+* ### Représentation : 
   
 | Mode d'ouverture     | Taille (px)     | Agencement des sections     |
 | -------------------- | --------------- | --------------------------- |
@@ -2018,7 +2088,7 @@ Source : Intervention_PI (an_ecl_intervention)
 |                       |                                 | type_inter       |                    |                         |                               |                 |                               |
 |                       | Etat du PI après l'intervention |                  | par défaut         | Vertical                | (type_si_in == '20')          |                 |                               |
 
-    - Saisie :
+* ### Saisie :
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
@@ -2040,7 +2110,9 @@ Modèle d'impression : aucun
 
 ## Fiches information : Lanterne / Lampe / Support       (modèle : photo)
 
-Ces 3 fiches information sont uniquement composée d'une miniature de la photo des modèles, s'il y en a une, rien n'est éditable. Elles sont utilisée dans les fiches informations du foyer / du support afin d'empêcher un lien direct entre un objet précis et une fiche de modèle éditable. 
-Le but est d'imposer une prise de consience avant une modification d'un modèle qui agira sur tous les objets ayant le même modèle.
+Ces 3 fiches information sont uniquement composées d'une miniature de la photo des modèles s'il y en a une, rien n'est éditable. Elles sont utilisées dans les fiches informations du foyer / du support afin d'empêcher un lien direct entre un objet précis et une fiche de modèle éditable. 
+Le but est d'imposer une prise de conscience avant une modification d'un modèle qui agira sur tous les objets ayant le même modèle.
 
               
+
+
