@@ -1815,23 +1815,23 @@ Source : Intervention_foyer (an_ecl_intervention)
 
 Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
 
-| Attribut                                                                                               | Obligatoire     | Valeur par défaut     | Liste de domaine                                       | Représentation     |
-| ------------------------------------------------------------------------------------------------------ | --------------- | --------------------- | ------------------------------------------------------ | ------------------ |
-| Signalement ou intervention ( type_si_in )   STRING                                                    | x               | 10                    | "lt_ecl_signalement_intervention (code)"               | Par défaut         |
-| Type de défaillance ( typ_def )   STRING                                                               | x               | 0                     | "lt_ecl_type_defaillance (code)"                       | Par défaut         |
-| Source de la défaillance ( src_def )   STRING                                                          | x               | 0                     | "lt_ecl_source_defaillance (code)"                     | Par défaut         |
-| Etat du signalement ( etat_sign )   STRING                                                             | x               | 10                    | "lt_ecl_etat_signalement"                              | Par défaut         |
-| Moyen d'intervention ( moy_interv )   STRING                                                           | x               | 0                     | "lt_ecl_moyen_intervention (code)"                     | Par défaut         |
-| Type d'intervention ( type_inter )   STRING                                                            | x               | 0                     | "lt_intervention_point_lumineux (code)"                | Par défaut         |
-| Commentaires divers ( observ )   STRING                                                                |                 |                       |                                                        | Par défaut         |
-| Opérateur de la saisie de la donnée ( op_sai )   STRING                                                |                 | %USER_LOGIN%          |                                                        | Par défaut         |
-| Attribut métier dédié au type de parasurtenseur  ( att_met3 )   STRING                                 |                 | 0                     | "lt_ecl_auto_transformateur (code)"                    | Par défaut         |
-| Attribut métier Dédié au type d'amorce ( att_met2 )   STRING                                           |                 | 0                     | "lt_ecl_amorceur (code)"                               | Par défaut         |
-| Attribut métier dédié au type de disjoncteur / type de ballast ( att_met1 )   STRING                   |                 | 0                     | "lt_ecl_type_ballast (code)"                           | Par défaut         |
-| Attribut métier Dédié au nom du départ / aux options du support ( att_met7 )   STRING                  |                 | 2                     | "an_ecl_modele_lanterne"                               | Par défaut         |
-| Attribut métier Dédié à la tension / pourcentage de puissance de fonctionnement ( att_met8 )   INTEGER |                 | 2                     | "an_ecl_modele_lampe (intervention)"                   | Par défaut         |
-| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING               |                 | 0                     | "lt_ecl_etat"                                          | Par défaut         |
-| Attribut métier Dédié au modèle de lampe ( att_met5 )   STRING                                         |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
+| Attribut                                                       | Obligatoire     | Valeur par défaut     | Liste de domaine                                      | Représentation     |
+|:--------------------------------------------------------------:|:---------------:|:---------------------:|:-----------------------------------------------------:|:------------------:|
+| Signalement ou intervention ( type_si_in ) STRING              | x               | 10                    | "lt_ecl_signalement_intervention (code)"              | Par défaut         |
+| Type de défaillance ( typ_def ) STRING                         | x               | 0                     | "lt_ecl_type_defaillance (code)"                      | Par défaut         |
+| Source de la défaillance ( src_def ) STRING                    | x               | 0                     | "lt_ecl_source_defaillance (code)"                    | Par défaut         |
+| Etat du signalement ( etat_sign ) STRING                       | x               | 10                    | "lt_ecl_etat_signalement"                             | Par défaut         |
+| Moyen d'intervention ( moy_interv ) STRING                     | x               | 0                     | "lt_ecl_moyen_intervention (code)"                    | Par défaut         |
+| Type d'intervention ( type_inter ) STRING                      | x               | 0                     | "lt_intervention_point_lumineux (code)"               | Par défaut         |
+| Commentaires divers ( observ ) STRING                          |                 |                       |                                                       | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai ) STRING          |                 | %USER_LOGIN%          |                                                       | Par défaut         |
+| Auto transformateur ( att_met3 )   STRING                      |                 | 0                     | "lt_ecl_auto_transformateur (code)"                   | Par défaut         |
+| Type d'amorce ( att_met2 )   STRING                            |                 | 0                     | "lt_ecl_amorceur (code)"                              | Par défaut         |
+| Type de ballast ( att_met1 )   STRING                          |                 | 0                     | "lt_ecl_type_ballast (code)"                          | Par défaut         |
+| Modèle de lanterne ( att_met7 )   STRIN                        |                 | 2                     | "an_ecl_modele_lanterne"                              | Par défaut         |
+| Modèle de lampe ( att_met8 )   INTEGER                         |                 | 2                     | "an_ecl_modele_lampe (intervention)"                  | Par défaut         |
+| Etat de l'objet après l'intervention ( att_met6 )   STRING     |                 | 0                     | "lt_ecl_etat"                                         | Par défaut         |
+| Signalement réglé lors de l'intervention ( att_met5 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)" | Par défaut         |
 
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1883,7 +1883,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
 | Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%          | "lt_ecl_auto_transformateur (code)"       | Par défaut |
-| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                 | 2                     | "lt_ecl_etat"                             | Par défaut |
+| Etat de l'objet après l'intervention ( att_met6 )   STRING|                 | 2                     | "lt_ecl_etat"                             | Par défaut |
 
 
 IMPORTANT : L'édition des données jointes est désactivée.
@@ -1939,7 +1939,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Type d'intervention ( type_inter )   STRING                                              | x               | 0                     |                                           | Par défaut |
 | Commentaires divers ( observ )   STRING                                                  |                 |                       |                                           | Par défaut |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING                                  |                 | %USER_LOGIN%  |         |  Par défaut |
-| Attribut métier Dédié à l'état de l'objet ciblé par l'intervention ( att_met6 )   STRING |                  | 2                     | "lt_ecl_etat"                             | Par défaut |
+| Etat de l'objet après l'intervention ( att_met6 )   STRING |                  | 2                     | "lt_ecl_etat"                             | Par défaut |
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
