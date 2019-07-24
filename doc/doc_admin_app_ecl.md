@@ -1,4 +1,4 @@
-![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
+                                                                         ![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
 
 # Documentation technique de l'application d'éclairage public (ECL)
 
@@ -92,9 +92,9 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 ## Table : `an_ecl_erreur`
 | Atributs      | Champ calculé     | Formatage     | Renommage                       | Particularité/Usage     | Utilisation                     | Exemple     |
 |:-------------:|:-----------------:|:-------------:| ------------------------------- | ----------------------- | ------------------------------- | ----------- |
-| Affichage_message_erreur  | x                 | x             | Message d'erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : ouvrages electrique,intervention cable, depart (ECL),  Foyer (ECL),  Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Support (modèle),  Intervention_PI  |    ![GeoCompiegnois](img/Affichage_message_erreur.JPG)         |
+| Affichage_message_erreur  | x                 | x             | Affichage_message_erreur                |     (1)                    | Recherche : Recherche d'erreur  / Fiches informations : ouvrages electrique,intervention cable, depart (ECL),  Foyer (ECL),  Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Support (modèle),  Intervention_PI  |    ![GeoCompiegnois](img/Affichage_message_erreur.JPG)         |
 
-(1) Requête SQL permettant d'afficher temporairement un message d'erreur dans la fiche d'information. La durée est de 10 minutes pour que l'utilisateur ait le temps de se souvenir de la présence des messages d'erreur, mais dès qu'un update est fait sur l'objet, les messages d'erreurs sont effacés via les triggers.
+(1) Requête SQL permettant d'afficher temporairement un Affichage_message_erreur dans la fiche d'information. La durée est de 10 minutes pour que l'utilisateur ait le temps de se souvenir de la présence des messages d'erreur, mais dès qu'un update est fait sur l'objet, les messages d'erreurs sont effacés via les triggers.
  `CASE WHEN
   extract(epoch from  now()::timestamp) - extract(epoch from
 {horodatage}::timestamp) <= 600 then 
@@ -1058,7 +1058,7 @@ Source : an_ecl_modele_lanterne
 |                       |                  | ik_lant          |                    |                         |                                                         |                 |                               |                                            |
 |                       |                  | ip_lant          |                    |                         |                                                         |                 |                               |                                            |
 |                       | (vide)           |                  | par défaut         | Vertical                | id_mod_ln != NULL && (ik_lant == NULL ||ip_lant ==NULL) |                 |                               |                                            |
-|                       |                  | Message d'erreur |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | Affichage_message_erreur |                    |                         |                                                         |                 |                               |                                            |
 | Photothèque           |                  |                  | par défaut         | Vertical                | id_mod_lm != NULL                                       |                 |                               | Photos et documents associés               |
 |                       |                  | miniature        |                    |                         |                                                         |                 |                               |                                            |
 |                       |                  | n_fichier        |                    |                         |                                                         |                 |                               |                                            |
@@ -1067,7 +1067,7 @@ Source : an_ecl_modele_lanterne
 |                       |                  | date_sai         |                    |                         |                                                         |                 |                               |                                            |
 |                       |                  | date_maj         |                    |                         |                                                         |                 |                               |                                            |
 |                       | (vide)           |                  | par défaut         | Vertical                | id_mod_ln != NULL                                       |                 |                               |                                            |
-|                       |                  | Message d'erreur |                    |                         |                                                         |                 |                               |                                            |
+|                       |                  | Affichage_message_erreur |                    |                         |                                                         |                 |                               |                                            |
 
 
     - Saisie :
@@ -1109,7 +1109,7 @@ Source : an_ecl_modele_support
 |                       |                  | observ           |                    |                         |                                        |                 |                               |                                                           |
 |                       |                  | op_sai           |                    |                         |                                        |                 |                               |                                                           |
 |                       | (vide)           |                  | par défaut         | Vertical                | id_mod_sup != NULL && (ik_supp == NULL |                 | ip_supp ==NULL)               |                                                           |
-|                       |                  | Message d'erreur |                    |                         |                                        |                 |                               |                                                           |
+|                       |                  | Affichage_message_erreur |                    |                         |                                        |                 |                               |                                                           |
 | Photothèque           |                  |                  | par défaut         | Vertical                | id_mod_sup!= NULL                      |                 |                               | Photos et documents associés                              |
 |                       |                  | miniature        |                    |                         |                                        |                 |                               |                                                           |
 |                       |                  | n_fichier        |                    |                         |                                        |                 |                               |                                                           |
@@ -1246,7 +1246,7 @@ Source : geo_v_ecl_point_d'interet
 |                       |                  | src_geom         |                    |                         |                               |                 |
 |                       |                  | src_date         |                    |                         |                               |                 |
 |                       | (vide)           |                  | par défaut         | Vertical                | id_pi != NULL                 |                 |
-|                       |                  | Message d'erreur |                    |                         |                               |                 |
+|                       |                  | Affichage_message_erreur |                    |                         |                               |                 |
 | Intervention          |                  |                  | par défaut         | Vertical                | id_pi != NULL                 | intervention PI |
 |                       |                  | dates            |                    |                         |                               |                 |
 |                       |                  | type_inter       |                    |                         |                               |                 |
@@ -1306,7 +1306,7 @@ Source : an_ecl_foyer
 |                       |                  | ty_ballast       |                    |                         |                                       |                          |                               |
 |                       |                  | ty_auto_tr       |                    |                         |                                       |                          |                               |
 |                       | (vide)           |                  | par défaut         | Vertical                | id_foyer != NULL && (haut_feu == NULL |                          | pct_fct ==NULL                |
-|                       |                  | Message d'erreur |                    |                         |                                       |                          |                               |
+|                       |                  | Affichage_message_erreur |                    |                         |                                       |                          |                               |
 | Lanterne              |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      | Lanterne (modèle :photo) |                               |
 |                       |                  | nom_mod_ln       |                    |                         |                                       |                          |                               |
 |                       |                  | gar_lant         |                    |                         |                                       |                          |                               |
@@ -1334,7 +1334,7 @@ Source : an_ecl_foyer
 |                       |                  | date_maj         |                    |                         |                                       |                          |                               |
 |                       |                  | op_sai           |                    |                         |                                       |                          |                               |
 |                       | (vide)           |                  |                    |                         |                                       |                          |                               |
-|                       |                  | Message d'erreur |                    |                         |                                       |                          |                               |
+|                       |                  | Affichage_message_erreur |                    |                         |                                       |                          |                               |
 | Intervention          |                  |                  | par défaut         | Vertical                | id_foyer != NULL                      | intervention foyer       | x                             |
 |                       |                  | Dates            |                    |                         |                                       |                          |                               |
 |                       |                  | type_inter       |                    |                         |                                       |                          |                               |
@@ -1395,7 +1395,7 @@ Source : geo_v_ecl_ouvrage_electrique
 |                       |                  | puis_mes           |                    |                         |                               |                    |                               |
 |                       | (vide)           |                    | Par défaut         | Vertical                | id_ouvelec != NULL &&         |                    |                               |
 | (ik_ouvelec == NULL   |                  | ip_ouvelec == NULL |                    | puis_mes ==NULL         |                               | val_terre==NULL)   |                               |
-|                       |                  | Message d'erreur   |                    |                         |                               |                    |                               |
+|                       |                  | Affichage_message_erreur   |                    |                         |                               |                    |                               |
 | Départ(s)             |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            | Depart (ECL)       | x                             |
 |                       |                  | nom_depart         |                    |                         |                               |                    |                               |
 |                       |                  | puis_sous          |                    |                         |                               |                    |                               |
@@ -1417,7 +1417,7 @@ Source : geo_v_ecl_ouvrage_electrique
 |                       |                  | src_geom           |                    |                         |                               |                    |                               |
 |                       |                  | src_date           |                    |                         |                               |                    |                               |
 |                       | (vide)           |                    | Par défaut         | Vertical                | id_ouvelec != NULL            |                    |                               |
-|                       |                  | Message d'erreur   |                    |                         |                               |                    |                               |
+|                       |                  | Affichage_message_erreur   |                    |                         |                               |                    |                               |
 | Intervention          |                  |                    | Par défaut         | Vertical                | id_ouvelec != NULL            | intervention câble | x                             |
 |                       |                  | dates              |                    |                         |                               |                    |                               |
 |                       |                  | type_inter         |                    |                         |                               |                    |                               |
@@ -1491,7 +1491,7 @@ Source : an_ecl_depart
 |                       | Options           |                  | par défaut         | Vertical                |                                      |                     |                               |
 |                       |                   | opt_supp         |                    |                         |                                      |                     |                               |
 |                       | (vide)            |                  | par défaut         | Vertical                | id_depart != NULL && tension == NULL |                     |                               |
-|                       |                   | Message d'erreur |                    |                         |                                      |                     |                               |
+|                       |                   | Affichage_message_erreur |                    |                         |                                      |                     |                               |
 | Photothèque           |                   |                  | par défaut         | Vertical                |                                      |                     |                               |
 |                       |                   | miniature        |                    |                         |                                      |                     |                               |
 |                       |                   | n_fichier        |                    |                         |                                      |                     |                               |
@@ -1524,6 +1524,99 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 IMPORTANT : L'édition des données jointes est désactivée.
 
 Modèle d'impression : aucun
+
+## Fiche information :     Support (point-lumineux)
+
+Source : geo_v_ecl_point_lumineux (support)
+
+  - Statistique : aucune
+  
+  - Représentation : 
+  
+| Mode d'ouverture     | Taille (px)     | Agencement des sections     |
+| -------------------- | --------------- | --------------------------- |
+| dans le gabarit      | 500*450         | Onglet                      |
+
+| Nom de la section     | Sous-section     | Attributs        | Position label     | Agencement attribut     | Visibilité conditionnelle                                   | Fichie liée                           | Ajout de données autorisé     |
+|:---------------------:|:----------------:|:----------------:|:------------------:|:-----------------------:|:-----------------------------------------------------------:|:-------------------------------------:|:-----------------------------:|
+| Caractéristiques      |                  |                  | par défaut         | Vertical                |                                                             |                                       |                               |
+|                       |                  | ty_supp          |                    |                         |                                                             |                                       |                               |
+|                       |                  | etat_supp        |                    |                         |                                                             |                                       |                               |
+|                       |                  | ty_disjonc       |                    |                         |                                                             |                                       |                               |
+|                       |                  | ty_fusible       |                    |                         |                                                             |                                       |                               |
+|                       |                  | haut_supp        |                    |                         |                                                             |                                       |                               |
+|                       |                  | haut_trap        |                    |                         |                                                             |                                       |                               |
+|                       |                  | ty_para          |                    |                         |                                                             |                                       |                               |
+|                       |                  | observ           |                    |                         |                                                             |                                       |                               |
+|                       | Modèle de mât    |                  | par défaut         | Vertical                | ty_supp == 10                                               |                                       |                               |
+|                       |                  | id_mod_sup       |                    |                         |                                                             |                                       |                               |
+|                       | Option           |                  | par défaut         | Vertical                | ty_supp == 10                                               |                                       |                               |
+|                       |                  | opt_supp         |                    |                         |                                                             |                                       |                               |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_supp != NULL && (haut_supp == NULL || haut_trap == NULL) |                                       |                               |
+|                       |                  | Message d'erreur |                    |                         |                                                             |                                       |                               |
+| Foyer(s)              |                  |                  | par défaut         | Vertical                | id_ouvelec != NULL                                          | Foyer (ECL)                           | x                             |
+|                       |                  | id_mod_ln        |                    |                         |                                                             |                                       |                               |
+|                       |                  | id_mod_lm        |                    |                         |                                                             |                                       |                               |
+| Courant               |                  |                  | par défaut         | Vertical                |                                                             |                                       |                               |
+|                       |                  | depart           |                    |                         |                                                             |                                       |                               |
+|                       |                  | amont_cour       |                    |                         |                                                             |                                       |                               |
+| Photothèque           |                  |                  | par défaut         | Vertical                | id_supp != NULL                                             |                                       |                               |
+|                       |                  | miniature        |                    |                         |                                                             |                                       |                               |
+|                       |                  | n_fichier        |                    |                         |                                                             |                                       |                               |
+| Métadonnées           |                  |                  | par défaut         | Vertical                | id_supp != NULL                                             |                                       |                               |
+|                       |                  | situation        |                    |                         |                                                             |                                       |                               |
+|                       |                  | qua_geo_xy       |                    |                         |                                                             |                                       |                               |
+|                       |                  | qua_geo_z        |                    |                         |                                                             |                                       |                               |
+|                       |                  | date_donne       |                    |                         |                                                             |                                       |                               |
+|                       |                  | date_sai         |                    |                         |                                                             |                                       |                               |
+|                       |                  | date_maj         |                    |                         |                                                             |                                       |                               |
+|                       |                  | op_sai           |                    |                         |                                                             |                                       |                               |
+|                       |                  | op_sai_geo       |                    |                         |                                                             |                                       |                               |
+|                       |                  | src_geom         |                    |                         |                                                             |                                       |                               |
+|                       |                  | src_date         |                    |                         |                                                             |                                       |                               |
+|                       | (vide)           |                  | par défaut         | Vertical                | id_supp != NULL                                             |                                       |                               |
+|                       |                  | Message d'erreur |                    |                         |                                                             |                                       |                               |
+| Intervention          |                  |                  | par défaut         | Vertical                | id_supp != NULL                                             | intervention support (point-lumineux) | x                             |
+|                       |                  | dates            |                    |                         |                                                             |                                       |                               |
+|                       |                  | type_inter       |                    |                         |                                                             |                                       |                               |
+| Contrat               |                  |                  | par défaut         | Vertical                | id_supp != NULL                                             |                                       |                               |
+|                       |                  | exploit_nd       |                    |                         |                                                             |                                       |                               |
+|                       |                  | presta_nd        |                    |                         |                                                             |                                       |                               |
+|                       |                  | ent_pose         |                    |                         |                                                             |                                       |                               |
+|                       |                  | dat_pos          |                    |                         |                                                             |                                       |                               |
+|                       |                  | qua_dat          |                    |                         |                                                             |                                       |                               |
+|                       |                  | commune          |                    |                         |                                                             |                                       |                               |
+|                       |                  | insee            |                    |                         |                                                             |                                       |                               |
+
+
+    - Saisie :
+
+Sont présent ici uniquement les attributs éditables ou disposant d'un mode de représentation spécifique.
+
+| Attribut                                                      | Obligatoire     | Valeur par défaut     | Liste de domaine                      | Représentation     |
+|:-------------------------------------------------------------:|:---------------:|:---------------------:|:-------------------------------------:|:------------------:|
+| Identifiant du modèle du support ( id_mod_sup )   INTEGER     | x               | 1                     | "an_ecl_modele_support"               | Par défaut         |
+| Type de support ( ty_supp )   STRING                          | x               | 0                     | "lt_ecl_type_support"                 | Par défaut         |
+| Opitions du support ( opt_supp )   STRING                     |                 |                       | "lt_ecl_options_support (code)"       | Par défaut         |
+| Type de parasurtenseur ( ty_parasu )   STRING                 | x               | 0                     | "lt_ecl_type_parasurtenseur"          | Par défaut         |
+| Etat general du support ( etat_supp )   STRING                | x               | 0                     | "lt_ecl_etat"                         | Par défaut         |
+| Hauteur de la trappe ( haut_trap )   STRING                   | x               | 0                     | "lt_ecl_hauteur_trappe (code)"        | Par défaut         |
+| Type de fusible installé ( ty_fusible )   STRING              | x               | 0                     | "lt_ecl_type_fusible"                 | Par défaut         |
+| Hauteur du support ( haut_supp )   INTEGER                    |                 |                       |                                       | Par défaut         |
+| Qualité de la date de pose ( qua_dat )   STRING               | x               | 0                     | "lt_ecl_qualite_date (code)"          | Par défaut         |
+| Date de pose ( dat_pos )   TIMESTAMP                          |                 |                       |                                       | Par défaut         |
+| Entreprise de pose ( ent_pose )   STRING                      |                 |                       |                                       | Par défaut         |
+| Numéro de départ auquel est lié le noeud ( depart )   INTEGER |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"  | Par défaut         |
+| Opérateur de la saisie de la donnée ( op_sai )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
+| Commentaires divers ( observ )   STRING                       |                 |                       |                                       | Par défaut         |
+| Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 0                     | "lt_ecl_type_disjoncteur"             | Par défaut         |
+| Date de la donnée ( date_donne )   TIMESTAMP                  |                 |                       |                                       | Par défaut         |
+| Exploitant de l'objet ( exploit_nd )   STRING                 |                 |                       |                                       | Par défaut         |
+| Prestataire intervenant sur l'objet ( presta_nd )   STRING    |                 |                       |                                       | Par défaut         |
+
+
+
+
 
 
 ## Fiche information :     Media - Fiche objet ECL
@@ -1579,7 +1672,7 @@ Source : an_ecl_intervention
 |                       |                                    | moy_interv       |                    |                         |                                                                                                                                                                                          |                     |                               |
 |                       |                                    | observ           |                    |                         |                                                                                                                                                                                          |                     |                               |
 | (vide)                |                                    |                  | par défaut         | Vertical                |                                                                                                                                                                                          |                     |                               |
-|                       |                                    | Message d'erreur |                    |                         |                                                                                                                                                                                          |                     |                               |
+|                       |                                    | Affichage_message_erreur |                    |                         |                                                                                                                                                                                          |                     |                               |
 | Métadonnées           |                                    |                  | par défaut         | Vertical                |                                                                                                                                                                                          |                     |                               |
 |                       |                                    | date_sai         |                    |                         |                                                                                                                                                                                          |                     |                               |
 |                       |                                    | date_maj         |                    |                         |                                                                                                                                                                                          |                     |                               |
@@ -1645,7 +1738,7 @@ Source : Intervention_ouvrage (an_ecl_intervention)
 |                       |                                    | moy_interv       |                    |                         |                                                                                                          |                 |                               |
 |                       |                                    | observ           |                    |                         |                                                                                                          |                 |                               |
 | (vide)                |                                    |                  | par défaut         | Vertical                |                                                                                                          |                 |                               |
-|                       |                                    | Message d'erreur |                    |                         |                                                                                                          |                 |                               |
+|                       |                                    | Affichage_message_erreur |                    |                         |                                                                                                          |                 |                               |
 | Métadonnées           |                                    |                  | par défaut         | Vertical                |                                                                                                          |                 |                               |
 |                       |                                    | date_sai         |                    |                         |                                                                                                          |                 |                               |
 |                       |                                    | date_maj         |                    |                         |                                                                                                          |                 |                               |
@@ -1721,7 +1814,7 @@ Source : Intervention_depart (an_ecl_intervention)
 |                       | Signalement                         |                  | par défaut         | Vertical                | type_si_in == '20'                                                                                     |                 |
 |                       |                                     | att_met7         |                    |                         |                                                                                                        |                 |
 | (vide)                |                                     |                  | par défaut         | Vertical                |                                                                                                        |                 |
-|                       |                                     | Message d'erreur |                    |                         |                                                                                                        |                 |
+|                       |                                     | Affichage_message_erreur |                    |                         |                                                                                                        |                 |
 | Métadonnées           |                                     |                  | par défaut         | Vertical                |                                                                                                        |                 |
 |                       |                                     | date_sai         |                    |                         |                                                                                                        |                 |
 |                       |                                     | date_maj         |                    |                         |                                                                                                        |                 |
@@ -1787,7 +1880,7 @@ Source : Intervention_foyer (an_ecl_intervention)
 |                       | Signalement                         |                  | par défaut         | Vertical                | type_si_in == '20'                                                                                   |                 |
 |                       |                                     | att_met5         |                    |                         |                                                                                                      |                 |
 | (vide)                |                                     |                  | par défaut         | Vertical                |                                                                                                      |                 |
-|                       |                                     | Message d'erreur |                    |                         |                                                                                                      |                 |
+|                       |                                     | Affichage_message_erreur |                    |                         |                                                                                                      |                 |
 | Métadonnées           |                                     |                  | par défaut         | Vertical                |                                                                                                      |                 |
 |                       |                                     | date_sai         |                    |                         |                                                                                                      |                 |
 |                       |                                     | date_maj         |                    |                         |                                                                                                      |                 |
@@ -1858,7 +1951,7 @@ Source : Intervention_cable (an_ecl_intervention)
 |                       |                  | moy_interv       |                    |                         |                               |                 |                               |
 |                       |                  | observ           |                    |                         |                               |                 |                               |
 | (vide)                |                  |                  | par défaut         | Vertical                |                               |                 |                               |
-|                       |                  | Message d'erreur |                    |                         |                               |                 |                               |
+|                       |                  | Affichage_message_erreur |                    |                         |                               |                 |                               |
 | Métadonnées           |                  |                  | par défaut         | Vertical                |                               |                 |                               |
 |                       |                  | date_sai         |                    |                         |                               |                 |                               |
 |                       |                  | date_maj         |                    |                         |                               |                 |                               |
@@ -1912,7 +2005,7 @@ Source : Intervention_PI (an_ecl_intervention)
 |                       |                                 | moy_interv       |                    |                         |                               |                 |                               |
 |                       |                                 | observ           |                    |                         |                               |                 |                               |
 | (vide)                |                                 |                  | par défaut         | Vertical                |                               |                 |                               |
-|                       |                                 | Message d'erreur |                    |                         |                               |                 |                               |
+|                       |                                 | Affichage_message_erreur |                    |                         |                               |                 |                               |
 | Métadonnées           |                                 |                  | par défaut         | Vertical                |                               |                 |                               |
 |                       |                                 | date_sai         |                    |                         |                               |                 |                               |
 |                       |                                 | date_maj         |                    |                         |                               |                 |                               |
