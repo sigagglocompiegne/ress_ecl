@@ -96,7 +96,7 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 
 * Trigger(s) :
 	* t_t1_depart_insert_update (Before Insert or Update) : 
-- gestion des controles de saisie à l'insertion ou la mise à jour (par génération de message d'erreur)
+    - gestion des controles de saisie à l'insertion ou la mise à jour (par génération de message d'erreur)
 
 		- mise à jour de date_maj à la maj
 
