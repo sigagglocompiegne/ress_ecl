@@ -1,3 +1,4 @@
+
 ![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
 
 # Documentation technique de la base de données d'éclairage public (ECL)
@@ -8,11 +9,11 @@
 
 Dans le cadre de son axe prioritaire de développement autour de la connaissance patrimoniale et la gestion des réseaux, l’un des projets de l'ARC concerne plus particulièrement l’éclairage public. Celui-ci constitue essentiellement, à faire évoluer la base de données existante, enrichir les données sur la ville de Compiègne et développer une application web pour le service métier concerné. Cette BdD est donc vouée avant tout à la gestion du réseau, bien que la dimension précision cartographique soit prise en compte (DT/DICT).
 
-Cette base de donnée s'inspire des modèles RAEPA et GR@CE, mais aussi de ceux du pays de Brest (https://geo.pays-de-brest.fr/espacedocumentaire/Documents/Public/CCTP_recolement.pdf), du syndicat d'énergie du finistère, du géojura, d'Alpes Sud, geomap...etc.
+Cette base de donnée s'inspire des modèles RAEPA et GR@CE, mais aussi de ceux du pays de Brest (https://geo.pays-de-brest.fr/espacedocumentaire/Documents/Public/CCTP_recolement.pdf), du syndicat d'énergie du Finistère, du géojura, d'Alpes Sud, geomap...etc.
 
 Elle a été conçue au fur et à mesure des réunions avec le service d'éclairage public de la ville de Compiègne. Elle est donc adaptée à ses besoins spécifiques, et n'a pas vocation à être un standard valable dans chaque collectivité.  
 
-Le standard de données des réseaux, en cours de rédaction au moment de la réalisation de cette base, n'a pas été inégré. Cependant, la problématique DT/DICT est prise en compte, avec des métadonnées de classe de précision tirées du RAEPA.
+Le standard de données des réseaux, en cours de rédaction au moment de la réalisation de cette base, n'a pas été intégré. Cependant, la problématique DT/DICT est prise en compte, avec des métadonnées de classe de précision tirées du RAEPA.
 
 
 ### Résumé fonctionnel
@@ -32,15 +33,15 @@ Dans le détail :
 #### Les droits
 
 #####	Le service d'éclairage public peut:
-* Voir, rechercher et éditer toutes les données.
+* Voir, rechercher et éditer toutes les données via l'application.
 
 #####	Un autre service en faisant la demande peut :
-* Voir les différents objets du réseau, sans les caractéristiqus techniques.
+* Voir les différents objets du réseau, sans les caractéristiques techniques.
 
 ###	Alimentation de la base de données
 * Les données sont rentrées et modifiées via l'application web-métier d'éclairage public. 
 * Les données des prestataires  agissant pour le compte de l'Agglomération de la Région de Compiègne ou de la Ville de Compiègne ont été ajoutées via un workflow FME.
-* Le cadre d'actualisation des données par les prestataires est ) définir avec ces prestataires.
+* Le cadre d'actualisation des données par les prestataires est à définir avec ces prestataires.
 
 ###	Les contrôles de saisie
 
@@ -48,12 +49,12 @@ De nombreux point de contrôles de la saisie des utilisateurs sont vérifiés. S
 
 #### Topologie
 - Seuls un point d'intérêt et un point lumineux peuvent avoir la même géométrie. 
-- Un câble ne peut pas être relié en point initial et en point final au même noeud.
+- Un câble ne peut pas être relié en point initial et en point final au même nœud.
 
 #### Attributs
 - Un signalement ne peut pas être classé en 'réglé' sans la création d'une intervention. 
 - Certains attributs sont forcés à une certaine valeur en fonction des autres attributs renseignés par l'utilisateur. (ex : si le support est une façade, l'attribut ''type de mât'' est forcé à ''non concerné''.)
-- Certaines valeurs numériques ont une limite à ne pas dépasser, si 
+- Certaines valeurs numériques ont une limite à ne pas dépasser, si la saisie est supérieure ou inférieurs aux limites, un message d'erreur est créé et la saisie est sur-corrigée. 
 
 Toutes ces règles de vérification sont implémentées informatiquement pour éviter les erreurs de saisie (incohérences).
 
@@ -72,7 +73,10 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 
 ### Classes d'objets géographique et patrimoniale
 
-#### an_ecl_depart
+#### an_ecl_depart 
+ Description : Objet intégré à un ouvrage électrique et permettant le branchement d''un câble
+
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_depart|Numéro du depart interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
@@ -90,7 +94,34 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |puis_sous|Puissance souscrite calculée via un trigger|integer| |
 
+* Trigger(s) :
+	* t_t1_depart_insert_update (Before Insert or Update) : 
+-- gestion des controles de saisie à l'insertion ou la mise à jour (par génération de message d'erreur)
+
+		-- mise à jour de date_maj à la maj
+
+		-- à l'insert, génération de la date de la donnée (source) à la date du jour (modifiable ensuite par l'utilisateur)
+
+	* t_t3_depart_delete (Before Delete) : 
+
+		-- suppression virtuelle du départ (attribut situation à supprimer)
+
+		-- Suppression = départ à null au niveau des nœuds reliés à ce départ
+
+		-- rafraichissement de la vue récursive
+
+Vues : 
+-  xapps_geo_v_ecl_depart  
+-  xapps_an_v_ecl_tension_cable
+- xapps_an_v_ecl_patrimoine
+- xapps_an_vmr_ecl_materialisee_noeud_armoire
+
+
+
 #### an_ecl_foyer
+
+D! Objet reposant sur un support, intégrant une source lumineuse
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_foyer|Numéro du foyer interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
@@ -114,7 +145,31 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 
+* Trigger(s) :
+	* t_t1_foyer (before insert or update) :
+		-- suppression des messages d'erreur
+
+		-- gestion des contraintes de saisie avec génération de message d'erreur
+
+		-- forçage de certains attributs à l'insertion
+
+	* t_t3_foyer_after (after insert or update) :
+	-- on update le support du foyer (nbr foyer) et le départ auquel est lié le foyer (puissance souscrite).
+	
+	*  t_t4_foyer_delete (before delete) : 
+		-- suppression virtuelle du foyer (attribut situation à supprimer)
+
+		-- Suppression = puissance souscrite du départ auquel il est lié remise à jour.
+
+		-- rafraichissement de la vue récursive
+	
+Vues :
+- xapps_an_v_ecl_patrimoine
+	
 #### an_ecl_intervention
+
+Interventions et signalements du service métier 
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_inter|Numéro de l'intervention interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
@@ -142,8 +197,27 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |op_sai|Opérateur de la saisie initiale de la donnée|character varying(80)| |
 |id_noeud|Identifiant du noeud sur lequel a lieu l'intervention (Pour foyer et départ, noeud = Support ou armoire)|integer| |
 
+* Trigger(s) :
+	* t_t1_intervention (before update or insert) :
+
+		--- suppression des messages d'erreur
+
+		--- on force certains attributs
+
+		--- gestion des contraintes de saisie
+
+		--- on update la date maj si update.
+
+		--- selon le(s) type(s) d'intervention(s) on update les valeurs de l'objet concerné.
+
+Vues :
+-  xapps_an_v_ecl_stat_intervention
+-  xapps_geo_v_ecl_intervention_liste_affichage
 
 #### an_ecl_modele_lanterne
+
+Modèles de lanternes existants ou ayant existés à Compiègne
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_mod_ln|Numéro du modèle de lanterne interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_modele_lanterne_id_mod_ln_seq'::regclass)|
@@ -158,7 +232,20 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_maj|Date de dernière mise à jour de la donnée|timestamp without time zone| |
 |op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
 
+* Trigger(s) :
+	* t_t1_modele_lanterne (before insert or update) : 
+		--- geo retourne '' au lieu de null, on force donc la valeur null pour éviter la contrainte unique
+
+		--- suppression des messages d'erreur
+
+		--- gestion des contraintes de saisie avec génération de message d'erreur
+
+		--- on update la date maj si update.
+
+
 #### an_ecl_modele_lampe
+Modèles de lampe existants ou ayant existés à Compiègne
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_mod_lm|Numéro du modèle de la lampe, interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_modele_lampe_id_mod_lm_seq'::regclass)|
@@ -174,7 +261,19 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_maj|Date de dernière mise à jour de la donnée|timestamp without time zone| |
 |op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
 
+* Trigger(s) :
+	* t_t1_modele_lampe (before insert or update) : 
+		--- geo retourne '' au lieu de null, on force donc la valeur null pour éviter la contrainte unique
+
+		--- suppression des messages d'erreur
+
+		--- gestion des contraintes de saisie avec génération de message d'erreur
+
+		--- on update la date maj si update.
+
 #### an_ecl_modele_support
+Modèles des différents mâts
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_mod_sup|Numéro du modèle de support, interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_modele_support_id_mod_sup_seq'::regclass)|
@@ -188,7 +287,19 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_maj|Date de dernière mise à jour de la donnée|timestamp without time zone| |
 |op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
 
+* Trigger(s) :
+	* t_t1_modele_support (before insert or update) :
+		--- geo retourne '' au lieu de null, on force donc la valeur null pour éviter la contrainte unique
+
+		--- suppression des messages d'erreur
+
+		--- gestion des contraintes de saisie avec génération de message d'erreur
+
+		--- on update la date maj si update.
+
 #### an_ecl_ouvrage_electrique
+Objet avec une arrivée d''électricité et un ou plusieurs départs
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_ouvelec|Identifiant du nœud lié à l'ouvrage|integer| |
@@ -208,14 +319,31 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |ty_disjonc|Type du disjoncteur|character varying(2)|'00'::character varying|
 |ty_fusible|Type du fusible|character varying(2)|'00'::character varying|
 
+Vues :
+- xapps_geo_v_ecl_support_par_armoire
+- m_reseau_sec.geo_v_ecl_ouvrage_electrique
+- xapps_an_v_ecl_patrimoine
+- xapps_an_vmr_ecl_materialisee_noeud_armoire
+- xapps_geo_v_ecl_depart
+
 #### an_ecl_pi
+
+Objet réel ou abstrait indiquant un point d''importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''Eclairage Public
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_pi|Identifiant du nœud lié au point d'interet|integer| |
 |ty_pi|Type de point d'intérêt|character varying(2)|'00'::character varying|
 |etat_pi|Etat du point d'intérêt |character varying(2)|'00'::character varying|
 
+Vues :
+- m_reseau_sec.geo_v_ecl_pi
+- xapps_an_v_ecl_patrimoine
+
 #### an_ecl_support
+
+Supports des foyers (sol, façade, mât...)
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_supp|Identifiant du nœud lié au support|integer| |
@@ -230,7 +358,14 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |haut_supp|Hauteur du support|integer| |
 |nbr_foyer|Nombre de foyer, calculé automatiquement via trigger|integer| |
 
+Vues :
+- geo_v_ecl_point_lumineux
+- xapps_geo_v_ecl_support_par_armoire
+
 #### geo_ecl_cable
+
+Objet linéaire allant d''un nœud à un autre
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_cab|Numéro du câble interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
@@ -261,7 +396,31 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 
+* Trigger(s) :
+	* t_t1_cable_before_insert_update (before insert or update):
+		--- on force la valeur de certains attributs à l'insertion
+
+		--- on actualise la date de maj à l'update
+
+		--- suppression des messages d'erreur
+
+		--- gestion des contraintes de saisie avec génération de message d'erreur
+
+		--- on force une valeur aux attributs nœud initial et nœud final du câble. --> lien avec table nœud.
+
+		--- on force une valeur pour les attributs commune, insee, gestionnaire, prestataire, en fonction d'autres tables.
+
+	* t_t3_cable_delete (before delete) :
+		-- A la suppression du câble, attribut à supprimer (pas de suppression géométrique de l'objet)
+
+Vues :
+- xapps_an_v_ecl_tension_cable
+- xapps_an_v_ecl_patrimoine
+
 #### geo_ecl_noeud
+
+Nœud ponctuel du réseau.
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_noeud|Numéro du noeud interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
@@ -286,11 +445,23 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 
-
+Vues : 
+- xapps_geo_v_ecl_support_par_armoire
+- xapps_geo_v_ecl_intervention_liste_affichage
+- xapps_geo_v_ecl_depart
+- xapps_an_v_ecl_patrimoine
+- xapps_an_vmr_ecl_materialisee_noeud_armoire
+- xapps_an_v_ecl_tension_cable
+- m_reseau_sec.geo_v_ecl_ouvrage_electrique
+- m_reseau_sec.geo_v_ecl_pi
+- m_reseau_sec.geo_v_ecl_point_lumineux
 
 ### Classes d'objets de gestion
 
 #### an_ecl_media
+
+Table de gestion des photos et documents dans GEO
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |gid|Identifiant d'une ligne, interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_media_gid_seq'::regclass)|
@@ -302,6 +473,9 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |date_sai|Date de saise|timestamp without time zone| |
 
 #### an_ecl_media_modele
+
+Table de gestion des photos et documents des modèles dans GEO
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |gid|Identifiant du modèle + lettre (dans GEO cle_media)|integer|nextval('m_reseau_sec.an_ecl_media_modeles_gid_seq'::regclass)|
@@ -311,6 +485,8 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |n_fichier|Nom du fichier GEO|text| |
 
 #### an_ecl_erreur
+Erreurs de saisies et messages d''erreur associés
+
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:---|:---|:---|:---|  
 |id_erreur|Numéro de l'erreur interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_erreur_id_erreur_seq'::regclass)|
@@ -330,6 +506,9 @@ Toutes les listes de valeur ont la même structure :
 
 
 #### lt_ecl_classe_electrique
+
+Code permettant de décrire la classe électrique de la lanterne
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -337,7 +516,12 @@ Toutes les listes de valeur ont la même structure :
 |20|Classe II|
 |30|Classe III|
 
+Particularité : x
+
 #### lt_ecl_couleur_eclairage
+
+Code permettant de décrire la couleur d''éclairage de la lampe
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non-renseigné|
@@ -346,7 +530,12 @@ Toutes les listes de valeur ont la même structure :
 |ZZ|Non-concerné|
 |99|Autre|
 
+Particularité : N'est utile que pour certains types de lampe associés à certains types de culots. Saisie contrôlée dans l'application via les apparitions conditionnelles des fiches information.
+
 #### lt_ecl_culot_lampe
+
+Code permettant de décrire le culot de la lampe
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -355,7 +544,12 @@ Toutes les listes de valeur ont la même structure :
 |30|G12|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_emplacement
+
+Code permettant de décrire l''emplacement de la platine du foyer
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -363,7 +557,12 @@ Toutes les listes de valeur ont la même structure :
 |20|Lanterne|
 |ZZ|Non concerné|
 
+Particularité : x
+
 #### lt_ecl_etat
+
+Code permettant de décrire l''état de l''objet
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -373,7 +572,12 @@ Toutes les listes de valeur ont la même structure :
 |40|Vétuste|
 |ZZ|Non concerné|
 
+Particularité : Selon appréciation du service métier, ou bien selon données des contrôles mécaniques/ électriques. 
+
 #### lt_ecl_etat_signalement_affichage
+
+Code permettant de décrire l''etat du signalement pour affichage dans GEO
+
 |Code | Valeur |
 |:---|:---|  
 |10|Soumis|
@@ -381,6 +585,8 @@ Toutes les listes de valeur ont la même structure :
 |40|Classé sans suite|
 |50|Pour information|
 |60|Réglé par une intervention sur foyer / départ|
+
+Particularité : Présents deux fois dans GEO, dont une fois avec un filtre pour enlever le code 60, afin que les utilisateurs ne puissent pas saisir l'option ''Réglé par une intervention sur foyer / départ". Pour que cette option s'affiche bien ensuite dans la fiche, le deuxième domaine de valeur GEO, basé sur ce même domaine mais sans filtre cette fois, est utilisé.
 
 #### lt_ecl_hauteur_trappe
 |Code | Valeur |
@@ -390,7 +596,12 @@ Toutes les listes de valeur ont la même structure :
 |20|En hauteur|
 |ZZ|Non concerné|
 
+Particularité : x
+
 #### lt_ecl_materiaux_supports
+
+Code permettant de décrire le matériaux du support
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -402,7 +613,12 @@ Toutes les listes de valeur ont la même structure :
 |60|Fibre de verre|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_mode_pose_ouvrage_electrique
+
+Code permettant de décrire le mode de pose de l''ouvrage électrique
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -414,14 +630,24 @@ Toutes les listes de valeur ont la même structure :
 |60|Enterré|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_moyen_intervention
+
+Code permettant de décrire si l''intervention se fait avec ou sans nacelle
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
 |10|Avec nacelle|
 |20|Sans nacelle|
 
+Particularité : x
+
 #### lt_ecl_options_support
+
+Code permettant de décrire les options du support
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -443,14 +669,25 @@ Toutes les listes de valeur ont la même structure :
 |99|Autre|
 |ZZ|Non concerné|
 
+Particularités : 
+Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessité à gérer une cardinalité 1-n depuis la classe `an_ecl_support`.
+
 #### lt_ecl_presence
+
+Code permettant de décrire la présence, ou non, d''un élément
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non-renseigné|
 |10|Oui|
 |20|Non|
 
+Particularité :  Devrait être remplacé à terme par un domaine oui/non déjà existant.
+
 #### lt_ecl_puissance_lampe
+
+Code permettant de décrire la puissance de la lampe
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -467,7 +704,12 @@ Toutes les listes de valeur ont la même structure :
 |99|Autre|
 |ZZ|Non concerné|
 
+Particularité : Doit disparaître pour laisser la place à une saisie libre, car les puissances sont trop différentes et varient souvent.
+
 #### lt_ecl_qualite_date
+
+Code permettant de décrire la qualité de la date indiquée
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -477,7 +719,12 @@ Toutes les listes de valeur ont la même structure :
 |40|Mémoire|
 |50|Déduite|
 
+Particularité : Tiré des métadonnées du standard GraceTHD.
+
 #### lt_ecl_qualite_geolocalisation
+
+Code permettant de décrire la qualité de la géolocalisation
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -485,7 +732,12 @@ Toutes les listes de valeur ont la même structure :
 |20|Classe B|
 |30|Classe C|
 
+Particularité :  Tiré des métadonnées du standard RAEPA
+
 #### lt_ecl_section_cable
+
+Code permettant de décrire la section du câble
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -498,20 +750,34 @@ Toutes les listes de valeur ont la même structure :
 |30|2,5|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_signalement_intervention
+
+Code permettant de décrire si c''est un signalement ou une intervention
+
 |Code | Valeur |
 |:---|:---|  
 |10|Signalement|
 |20|Intervention|
 
+Particularité : x
+
 #### lt_ecl_situation
+Code permettant de décrire la situation réelle de l''objet
+
 |Code | Valeur |
 |:---|:---|  
 |10|Actif|
 |11|Inactif|
 |12|Supprimé|
 
+Particularité : Inactif signifie que l'objet existe toujours physiquement mais qu'il ne joue plus aucun rôle pour le réseau d'éclairage public.
+
 #### lt_ecl_situation_cable
+
+Code permettant de décrire la situation du câble
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -524,7 +790,12 @@ Toutes les listes de valeur ont la même structure :
 |30|Mural|
 |99|Autre|
 
+Particularité : 
+
 #### lt_ecl_source_defaillance
+
+Code permettant de décrire la source de la déaillance repérée
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -534,7 +805,12 @@ Toutes les listes de valeur ont la même structure :
 |50|Inconnue|
 |99|Autre|
 
+Particularité :x
+
 #### lt_ecl_type_amorceur
+
+Code permettant de décrire le type d''amorceur
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -544,7 +820,12 @@ Toutes les listes de valeur ont la même structure :
 |99|Autre|
 |ZZ|Non concerné|
 
+Particularité : x
+
 #### lt_ecl_type_auto_transformateur
+
+Code permettant de décrire le type d''auto-transformateur
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -566,7 +847,12 @@ Toutes les listes de valeur ont la même structure :
 |99|Autre|
 |ZZ|Non concerné|
 
+Particularité : x
+
 #### lt_ecl_type_ballast
+
+Code permettant de décrire le type de ballast
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -576,7 +862,12 @@ Toutes les listes de valeur ont la même structure :
 |99|Autre|
 |ZZ|Non concerné|
 
+Particularité : Type de Ballast doit évoluer sur le moyen/long terme vers type de driver, puisque les lampes vont toutes passées en LED. 
+
 #### lt_ecl_type_commande
+
+Code permettant de décrire le type de commande de l''ouvrage électrique
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -589,7 +880,12 @@ Toutes les listes de valeur ont la même structure :
 |99|Autre|
 |ZZ|Non concerné|
 
+Particularité : Compiègne vise à être est uniquement en BH-T à moyen terme, mais l'ARC dispose de nombreux types de commande différents.
+
 #### lt_ecl_type_defaillance
+
+Code permettant de décrire le type de défaillane
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -601,7 +897,12 @@ Toutes les listes de valeur ont la même structure :
 |60|Phase ouverte|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_type_disjoncteur
+
+Code permettant de décrire le type de disjoncteur
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -612,7 +913,12 @@ Toutes les listes de valeur ont la même structure :
 |40|Disjoncteur principal|
 |99|Autre|
 
+Particularité : Les armoirs principales ont toutes un disjoncteur différent, d'où la présence d'un ''disjoncteur principal''. Les nouvelles armoires devraient toutes avoir le même, sa référence sera donc ajoutée.
+
 #### lt_ecl_type_fusible
+
+Code permettant de décrire le type de fusible
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -638,7 +944,12 @@ Toutes les listes de valeur ont la même structure :
 |53|22x58 100A|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_type_intervention
+
+Code permettant de décrire le type d''intervention
+
 |Code | Valeur |
 |:---|:---|  
 |00|-->|
@@ -663,7 +974,12 @@ Toutes les listes de valeur ont la même structure :
 |18|Ajout d'une option|
 |90|Suppression d'une option|
 
+Particularité : Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessiter à gérer une cardinalité 1-n depuis la classe `an_ecl_intervention`.
+
 #### lt_ecl_type_intervention_cables
+
+Code permettant de décrire le type d''intervention des câbles
+
 |Code | Valeur |
 |:---|:---|  
 |50|Réparation|
@@ -672,7 +988,12 @@ Toutes les listes de valeur ont la même structure :
 |82|Réactivation de l'objet|
 |99|Autre|
 
+Particularité : voir lt_ecl_type_intervention
+
 #### lt_ecl_type_intervention_depart
+
+Code permettant de décrire le type d''intervention des départs
+
 |Code | Valeur |
 |:---|:---|  
 |10|Changement de disjoncteur|
@@ -681,7 +1002,12 @@ Toutes les listes de valeur ont la même structure :
 |80|Suppression de l'objet|
 |99|Autre|
 
+Particularité : voir lt_ecl_type_intervention
+
 #### lt_ecl_type_intervention_foyer
+
+Code permettant de décrire le type d''intervention des foyers
+
 |Code | Valeur |
 |:---|:---|  
 |12|Changement de lanterne|
@@ -695,7 +1021,12 @@ Toutes les listes de valeur ont la même structure :
 |80|Suppression de l'objet|
 |99|Autre|
 
+Particularité : voir lt_ecl_type_intervention
+
 #### lt_ecl_type_intervention_ouvrage
+
+Code permettant de décrire le type d''intervention des ouvrages
+
 |Code | Valeur |
 |:---|:---|  
 |10|Changement de disjoncteur|
@@ -711,7 +1042,12 @@ Toutes les listes de valeur ont la même structure :
 |21|Changement de récepteur|
 |99|Autre|
 
+Particularité : voir lt_ecl_type_intervention
+
 #### lt_ecl_type_intervention_pi
+
+Code permettant de décrire le type d''intervention des point-d''intérets
+
 |Code | Valeur |
 |:---|:---|  
 |30|Contrôle électrique|
@@ -723,7 +1059,12 @@ Toutes les listes de valeur ont la même structure :
 |82|Réactivation de l'objet|
 |99|Autre|
 
+Particularité : voir lt_ecl_type_intervention
+
 #### lt_ecl_type_intervention_point_lumineux
+
+Code permettant de décrire le type d''intervention des point lumineux
+
 |Code | Valeur |
 |:---|:---|  
 |10|Changement de disjoncteur|
@@ -740,7 +1081,12 @@ Toutes les listes de valeur ont la même structure :
 |83|Dépose / repose identique (accident)|
 |99|Autre|
 
+Particularité : voir lt_ecl_type_intervention
+
 #### lt_ecl_type_lampe
+
+Code permettant de décrire le type de la lampe
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -752,7 +1098,12 @@ Toutes les listes de valeur ont la même structure :
 |60|Fluo Compact – FC|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_type_lanterne
+
+Code permettant de décrire le type de lanterne
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -761,7 +1112,12 @@ Toutes les listes de valeur ont la même structure :
 |30|Projecteur|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_type_ouvrage_electrique
+
+Code permettant de décrire le type d''ouvrage électrique
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -770,7 +1126,12 @@ Toutes les listes de valeur ont la même structure :
 |20|Transformateur|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_type_parasurtenseur
+
+'Code permettant de décrire le type de parasurtenseur';
+
 |Code | Valeur |
 |:---|:---|  
 |00|Non renseigné|
@@ -778,7 +1139,12 @@ Toutes les listes de valeur ont la même structure :
 |20|Vario Var15EP25MR|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_type_pi
+
+Code permettant de décrire le type de point d''interet
+
 |Code | Valeur |
 |:---|:---| 
 |00|Non renseigné|
@@ -792,7 +1158,12 @@ Toutes les listes de valeur ont la même structure :
 |80|Arrêt de bus|
 |99|Autre|
 
+Particularité : x
+
 #### lt_ecl_type_support
+
+Code permettant de décrire le type de support
+
 |Code | Valeur |
 |:---|:---| 
 |00|Non renseigné|
@@ -801,6 +1172,70 @@ Toutes les listes de valeur ont la même structure :
 |30|Poteau réseau électrique BT|
 |40|Sol|
 |99|Autre|
+
+Particularité : x
+
+# Les vues
+
+### m_reseau_sec.geo_v_ecl_ouvrage_electrique
+Description : Vue des ouvrages électriques permettant la saisie dans l''application Geo
+
+* Trigger(s) :
+	* t_t1_lk_ouvrage_electrique (INSTEAD OF INSERT OR UPDATE OR DELETE) :
+		--- Suppression des messages d'erreur
+		--- On force certains attributs
+		--- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
+		--- Contrôle de la topologie 
+		--- Ventilation des données aux tables Noeuds et ouvrages électriques
+		--- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
+		--- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+
+###  m_reseau_sec.geo_v_ecl_point_lumineux
+Description : Vue des supports permettant la saisie dans l''application Geo
+
+* Trigger(s) :
+	* t_t1_lk_point_lumineux (INSTEAD OF INSERT OR UPDATE OR DELETE) :
+		--- Suppression des messages d'erreur
+		--- On force certains attributs
+		--- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
+		--- Contrôle de la topologie 
+		--- Ventilation des données aux tables Noeuds et Supports
+		--- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé
+		--- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+
+###  m_reseau_sec.geo_v_ecl_pi 
+Description : Objet réel ou abstrait indiquant un point ayant une importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''EP.
+
+* Trigger(s) :
+	* t_t1_point_interet (INSTEAD OF INSERT OR UPDATE OR DELETE) :
+		--- Suppression des messages d'erreur
+		--- On force certains attributs
+		--- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
+		--- Contrôle de la topologie 
+		--- Ventilation des données aux tables Noeuds et PI
+		--- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
+		--- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+
+### xapps_an_v_ecl_patrimoine
+Description : Bilan du patrimoine numérique d''éclairage public
+
+### xapps_an_v_ecl_stat_intervention 
+Description : Compte des interventions selon le type
+
+### xapps_an_v_ecl_tension_cable
+Description : Lien entre le câble et sa tension selon noeud final du câble
+
+### xapps_geo_v_ecl_depart
+Description : Vue géospatialisée des départs selon géométrie de l''ouvrage rattaché - géométrie de buffer
+
+### xapps_geo_v_ecl_intervention_liste_affichage
+Description : Interventions/Signalements avec attributs calculés dynamiquement, sert à la liste de domaine interventions et à l''affichage des signalements sur GEO
+
+### xapps_geo_v_ecl_support_par_armoire
+Description : Supports categorisés par armoires pour affichage GEO
+
+### xapps_an_vmr_ecl_materialisee_noeud_armoire 
+Description : Vue matérialisée utilisant une requête récursive pour déterminer les ouvrages électriques en amont des noeuds.
 
 # Projet QGIS pour la gestion
 Un projet QGIS a été réalisé pour la gestion interne des données. Il est stocké ici : R:\Projets\Metiers\1902RESS-ARC-EvolBdd_Apps_ECL\2-PreEtude\Utilitaires_et_ressources dans l'attente d'être placé ici Y:\Ressources\4-Partage\3-Procedures\QGIS
