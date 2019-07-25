@@ -63,7 +63,7 @@ Toutes ces règles de vérification sont implémentées informatiquement pour é
 La base de données ECL s'appuie sur des référentiels préexistants constituant autant de dépendances nécessaires pour l'implémentation de la BdD.
 
 | schéma        | table                    | description                                                                              | usage                                                                                              |
-| ----- | -------- | ------------------------------ | ---------------------------------- |
+| - | - | -- | -- |
 | m_amenagement | geo_amt_zpne_gestion     | Table géographique délimitant les zones de gestion entre la ville de Compiègne et l''ARC | Détermine la complétion automatique du prestataire et du gestionnaire pour les nœuds et les câbles |
 | r_osm         | geo_vm_osm_commune_arcba | Vue matérialisée des limites communales des communes de l''ARCBA                         | Détermine la complétion automatique de la commune et du code Insee pour les nœuds et les câbles    |
 
@@ -96,27 +96,27 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 
 * Trigger(s) :
 	* t_t1_depart_insert_update (Before Insert or Update) : 
--- gestion des controles de saisie à l'insertion ou la mise à jour (par génération de message d'erreur)
+- gestion des controles de saisie à l'insertion ou la mise à jour (par génération de message d'erreur)
 
-		-- mise à jour de date_maj à la maj
+		- mise à jour de date_maj à la maj
 
-		-- à l'insert, génération de la date de la donnée (source) à la date du jour (modifiable ensuite par l'utilisateur)
+		- à l'insert, génération de la date de la donnée (source) à la date du jour (modifiable ensuite par l'utilisateur)
 
 	* t_t3_depart_delete (Before Delete) : 
 
-		-- suppression virtuelle du départ (attribut situation à supprimer)
+		- suppression virtuelle du départ (attribut situation à supprimer)
 
-		-- Suppression = départ à null au niveau des nœuds reliés à ce départ
+		- Suppression = départ à null au niveau des nœuds reliés à ce départ
 
-		-- rafraichissement de la vue récursive
+		- rafraichissement de la vue récursive
 
-Vue(s) : 
--  xapps_geo_v_ecl_depart  
--  xapps_an_v_ecl_tension_cable
-- xapps_an_v_ecl_patrimoine
-- xapps_an_vmr_ecl_materialisee_noeud_armoire
+* Vue(s) : 
+    -  xapps_geo_v_ecl_depart  
+    -  xapps_an_v_ecl_tension_cable
+    - xapps_an_v_ecl_patrimoine
+    - xapps_an_vmr_ecl_materialisee_noeud_armoire
 
-
+-------------------------------------------------------------------------
 
 #### an_ecl_foyer
 
@@ -147,25 +147,25 @@ D! Objet reposant sur un support, intégrant une source lumineuse
 
 * Trigger(s) :
 	* t_t1_foyer (before insert or update) :
-		-- suppression des messages d'erreur
+		- suppression des messages d'erreur
 
-		-- gestion des contraintes de saisie avec génération de message d'erreur
+		- gestion des contraintes de saisie avec génération de message d'erreur
 
-		-- forçage de certains attributs à l'insertion
+		- forçage de certains attributs à l'insertion
 
 	* t_t3_foyer_after (after insert or update) :
-	-- on update le support du foyer (nbr foyer) et le départ auquel est lié le foyer (puissance souscrite).
+	- on update le support du foyer (nbr foyer) et le départ auquel est lié le foyer (puissance souscrite).
 	
 	*  t_t4_foyer_delete (before delete) : 
-		-- suppression virtuelle du foyer (attribut situation à supprimer)
+		- suppression virtuelle du foyer (attribut situation à supprimer)
 
-		-- Suppression = puissance souscrite du départ auquel il est lié remise à jour.
+		- Suppression = puissance souscrite du départ auquel il est lié remise à jour.
 
-		-- rafraichissement de la vue récursive
+		- rafraichissement de la vue récursive
 	
-Vue(s) :
-- xapps_an_v_ecl_patrimoine
-	
+* Vue(s) :
+    - xapps_an_v_ecl_patrimoine
+-------------------------------------------------------------------------	
 #### an_ecl_intervention
 
 Interventions et signalements du service métier 
@@ -210,10 +210,10 @@ Interventions et signalements du service métier
 
 		- selon le(s) type(s) d'intervention(s) on update les valeurs de l'objet concerné.
 
-Vue(s) :
--  xapps_an_v_ecl_stat_intervention
--  xapps_geo_v_ecl_intervention_liste_affichage
-
+* Vue(s) :
+    -  xapps_an_v_ecl_stat_intervention
+    -  xapps_geo_v_ecl_intervention_liste_affichage
+-------------------------------------------------------------------------
 #### an_ecl_modele_lanterne
 
 Modèles de lanternes existants ou ayant existés à Compiègne
@@ -242,7 +242,7 @@ Modèles de lanternes existants ou ayant existés à Compiègne
 
 		- on update la date maj si update.
 
-
+-------------------------------------------------------------------------
 #### an_ecl_modele_lampe
 Modèles de lampe existants ou ayant existés à Compiègne
 
@@ -270,7 +270,7 @@ Modèles de lampe existants ou ayant existés à Compiègne
 		- gestion des contraintes de saisie avec génération de message d'erreur
 
 		- on update la date maj si update.
-
+-------------------------------------------------------------------------
 #### an_ecl_modele_support
 Modèles des différents mâts
 
@@ -296,7 +296,7 @@ Modèles des différents mâts
 		- gestion des contraintes de saisie avec génération de message d'erreur
 
 		- on update la date maj si update.
-
+-------------------------------------------------------------------------
 #### an_ecl_ouvrage_electrique
 Objet avec une arrivée d''électricité et un ou plusieurs départs
 
@@ -319,13 +319,13 @@ Objet avec une arrivée d''électricité et un ou plusieurs départs
 |ty_disjonc|Type du disjoncteur|character varying(2)|'00'::character varying|
 |ty_fusible|Type du fusible|character varying(2)|'00'::character varying|
 
-Vue(s) :
-- xapps_geo_v_ecl_support_par_armoire
-- m_reseau_sec.geo_v_ecl_ouvrage_electrique
-- xapps_an_v_ecl_patrimoine
-- xapps_an_vmr_ecl_materialisee_noeud_armoire
-- xapps_geo_v_ecl_depart
-
+* Vue(s) :
+    - xapps_geo_v_ecl_support_par_armoire
+    - m_reseau_sec.geo_v_ecl_ouvrage_electrique
+    - xapps_an_v_ecl_patrimoine
+    - xapps_an_vmr_ecl_materialisee_noeud_armoire
+    - xapps_geo_v_ecl_depart
+-------------------------------------------------------------------------
 #### an_ecl_pi
 
 Objet réel ou abstrait indiquant un point d''importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''Eclairage Public
@@ -336,10 +336,10 @@ Objet réel ou abstrait indiquant un point d''importance pour la connaissance pa
 |ty_pi|Type de point d'intérêt|character varying(2)|'00'::character varying|
 |etat_pi|Etat du point d'intérêt |character varying(2)|'00'::character varying|
 
-Vue(s) :
-- m_reseau_sec.geo_v_ecl_pi
-- xapps_an_v_ecl_patrimoine
-
+* Vue(s) :
+    - m_reseau_sec.geo_v_ecl_pi
+    - xapps_an_v_ecl_patrimoine
+-------------------------------------------------------------------------
 #### an_ecl_support
 
 Supports des foyers (sol, façade, mât...)
@@ -358,10 +358,10 @@ Supports des foyers (sol, façade, mât...)
 |haut_supp|Hauteur du support|integer| |
 |nbr_foyer|Nombre de foyer, calculé automatiquement via trigger|integer| |
 
-Vue(s) :
-- geo_v_ecl_point_lumineux
-- xapps_geo_v_ecl_support_par_armoire
-
+* Vue(s) :
+    - geo_v_ecl_point_lumineux
+    - xapps_geo_v_ecl_support_par_armoire
+-------------------------------------------------------------------------
 #### geo_ecl_cable
 
 Objet linéaire allant d''un nœud à un autre
@@ -406,17 +406,17 @@ Objet linéaire allant d''un nœud à un autre
 
 		- gestion des contraintes de saisie avec génération de message d'erreur
 
-		- on force une valeur aux attributs nœud initial et nœud final du câble. --> lien avec table nœud.
+		- on force une valeur aux attributs nœud initial et nœud final du câble. -> lien avec table nœud.
 
 		- on force une valeur pour les attributs commune, insee, gestionnaire, prestataire, en fonction d'autres tables.
 
 	* t_t3_cable_delete (before delete) :
-		-- A la suppression du câble, attribut à supprimer (pas de suppression géométrique de l'objet)
+		- A la suppression du câble, attribut à supprimer (pas de suppression géométrique de l'objet)
 
-Vue(s) :
-- xapps_an_v_ecl_tension_cable
-- xapps_an_v_ecl_patrimoine
-
+* Vue(s) :
+    - xapps_an_v_ecl_tension_cable
+    - xapps_an_v_ecl_patrimoine
+-------------------------------------------------------------------------
 #### geo_ecl_noeud
 
 Nœud ponctuel du réseau.
@@ -445,17 +445,17 @@ Nœud ponctuel du réseau.
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 
-Vue(s) : 
-- xapps_geo_v_ecl_support_par_armoire
-- xapps_geo_v_ecl_intervention_liste_affichage
-- xapps_geo_v_ecl_depart
-- xapps_an_v_ecl_patrimoine
-- xapps_an_vmr_ecl_materialisee_noeud_armoire
-- xapps_an_v_ecl_tension_cable
-- m_reseau_sec.geo_v_ecl_ouvrage_electrique
-- m_reseau_sec.geo_v_ecl_pi
-- m_reseau_sec.geo_v_ecl_point_lumineux
-
+* Vue(s) : 
+    - xapps_geo_v_ecl_support_par_armoire
+    - xapps_geo_v_ecl_intervention_liste_affichage
+    - xapps_geo_v_ecl_depart
+    - xapps_an_v_ecl_patrimoine
+    - xapps_an_vmr_ecl_materialisee_noeud_armoire
+    - xapps_an_v_ecl_tension_cable
+    - m_reseau_sec.geo_v_ecl_ouvrage_electrique
+    - m_reseau_sec.geo_v_ecl_pi
+    - m_reseau_sec.geo_v_ecl_point_lumineux
+-------------------------------------------------------------------------
 ### Classes d'objets de gestion
 
 #### an_ecl_media
@@ -471,7 +471,7 @@ Table de gestion des photos et documents dans GEO
 |n_fichier|Nom du fichier GEO|text| |
 |op_sai|Opérateur de saisie|text| |
 |date_sai|Date de saise|timestamp without time zone| |
-
+-------------------------------------------------------------------------
 #### an_ecl_media_modele
 
 Table de gestion des photos et documents des modèles dans GEO
@@ -483,7 +483,7 @@ Table de gestion des photos et documents des modèles dans GEO
 |media|Champ Média de GEO|text| |
 |miniature|Champ miniature de GEO|bytea| |
 |n_fichier|Nom du fichier GEO|text| |
-
+-------------------------------------------------------------------------
 #### an_ecl_erreur
 Erreurs de saisies et messages d''erreur associés
 
@@ -500,11 +500,12 @@ Erreurs de saisies et messages d''erreur associés
 Toutes les listes de valeur ont la même structure :
 
 | Nom attribut     | Définition         | Type                  |
-| ------ | ------ | ------- |
+| - | - | - |
 | code             | Code de la liste   | character varying(2)  |
 | valeur           | Valeur de la liste | character varying(80) |
 
 
+-------------------------------------------------------------------------
 #### lt_ecl_classe_electrique
 
 Code permettant de décrire la classe électrique de la lanterne
@@ -517,7 +518,7 @@ Code permettant de décrire la classe électrique de la lanterne
 |30|Classe III|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_couleur_eclairage
 
 Code permettant de décrire la couleur d''éclairage de la lampe
@@ -531,7 +532,7 @@ Code permettant de décrire la couleur d''éclairage de la lampe
 |99|Autre|
 
 Particularité : N'est utile que pour certains types de lampe associés à certains types de culots. Saisie contrôlée dans l'application via les apparitions conditionnelles des fiches information.
-
+-------------------------------------------------------------------------  
 #### lt_ecl_culot_lampe
 
 Code permettant de décrire le culot de la lampe
@@ -545,7 +546,7 @@ Code permettant de décrire le culot de la lampe
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_emplacement
 
 Code permettant de décrire l''emplacement de la platine du foyer
@@ -558,7 +559,7 @@ Code permettant de décrire l''emplacement de la platine du foyer
 |ZZ|Non concerné|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_etat
 
 Code permettant de décrire l''état de l''objet
@@ -573,7 +574,7 @@ Code permettant de décrire l''état de l''objet
 |ZZ|Non concerné|
 
 Particularité : Selon appréciation du service métier, ou bien selon données des contrôles mécaniques/ électriques. 
-
+-------------------------------------------------------------------------
 #### lt_ecl_etat_signalement_affichage
 
 Code permettant de décrire l''etat du signalement pour affichage dans GEO
@@ -587,7 +588,7 @@ Code permettant de décrire l''etat du signalement pour affichage dans GEO
 |60|Réglé par une intervention sur foyer / départ|
 
 Particularité : Présents deux fois dans GEO, dont une fois avec un filtre pour enlever le code 60, afin que les utilisateurs ne puissent pas saisir l'option ''Réglé par une intervention sur foyer / départ". Pour que cette option s'affiche bien ensuite dans la fiche, le deuxième domaine de valeur GEO, basé sur ce même domaine mais sans filtre cette fois, est utilisé.
-
+-------------------------------------------------------------------------
 #### lt_ecl_hauteur_trappe
 |Code | Valeur |
 |:-|:-|  
@@ -597,7 +598,7 @@ Particularité : Présents deux fois dans GEO, dont une fois avec un filtre pour
 |ZZ|Non concerné|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_materiaux_supports
 
 Code permettant de décrire le matériaux du support
@@ -614,7 +615,7 @@ Code permettant de décrire le matériaux du support
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_mode_pose_ouvrage_electrique
 
 Code permettant de décrire le mode de pose de l''ouvrage électrique
@@ -631,7 +632,7 @@ Code permettant de décrire le mode de pose de l''ouvrage électrique
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_moyen_intervention
 
 Code permettant de décrire si l''intervention se fait avec ou sans nacelle
@@ -643,7 +644,7 @@ Code permettant de décrire si l''intervention se fait avec ou sans nacelle
 |20|Sans nacelle|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_options_support
 
 Code permettant de décrire les options du support
@@ -671,7 +672,7 @@ Code permettant de décrire les options du support
 
 Particularités : 
 Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessité à gérer une cardinalité 1-n depuis la classe `an_ecl_support`.
-
+-------------------------------------------------------------------------
 #### lt_ecl_presence
 
 Code permettant de décrire la présence, ou non, d''un élément
@@ -683,7 +684,7 @@ Code permettant de décrire la présence, ou non, d''un élément
 |20|Non|
 
 Particularité :  Devrait être remplacé à terme par un domaine oui/non déjà existant.
-
+-------------------------------------------------------------------------
 #### lt_ecl_puissance_lampe
 
 Code permettant de décrire la puissance de la lampe
@@ -705,7 +706,7 @@ Code permettant de décrire la puissance de la lampe
 |ZZ|Non concerné|
 
 Particularité : Doit disparaître pour laisser la place à une saisie libre, car les puissances sont trop différentes et varient souvent.
-
+-------------------------------------------------------------------------
 #### lt_ecl_qualite_date
 
 Code permettant de décrire la qualité de la date indiquée
@@ -720,7 +721,7 @@ Code permettant de décrire la qualité de la date indiquée
 |50|Déduite|
 
 Particularité : Tiré des métadonnées du standard GraceTHD.
-
+-------------------------------------------------------------------------
 #### lt_ecl_qualite_geolocalisation
 
 Code permettant de décrire la qualité de la géolocalisation
@@ -733,7 +734,7 @@ Code permettant de décrire la qualité de la géolocalisation
 |30|Classe C|
 
 Particularité :  Tiré des métadonnées du standard RAEPA
-
+-------------------------------------------------------------------------
 #### lt_ecl_section_cable
 
 Code permettant de décrire la section du câble
@@ -751,7 +752,7 @@ Code permettant de décrire la section du câble
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_signalement_intervention
 
 Code permettant de décrire si c''est un signalement ou une intervention
@@ -762,7 +763,7 @@ Code permettant de décrire si c''est un signalement ou une intervention
 |20|Intervention|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_situation
 Code permettant de décrire la situation réelle de l''objet
 
@@ -773,7 +774,7 @@ Code permettant de décrire la situation réelle de l''objet
 |12|Supprimé|
 
 Particularité : Inactif signifie que l'objet existe toujours physiquement mais qu'il ne joue plus aucun rôle pour le réseau d'éclairage public.
-
+-------------------------------------------------------------------------
 #### lt_ecl_situation_cable
 
 Code permettant de décrire la situation du câble
@@ -791,7 +792,7 @@ Code permettant de décrire la situation du câble
 |99|Autre|
 
 Particularité : 
-
+-------------------------------------------------------------------------
 #### lt_ecl_source_defaillance
 
 Code permettant de décrire la source de la déaillance repérée
@@ -806,7 +807,7 @@ Code permettant de décrire la source de la déaillance repérée
 |99|Autre|
 
 Particularité :x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_amorceur
 
 Code permettant de décrire le type d''amorceur
@@ -821,7 +822,7 @@ Code permettant de décrire le type d''amorceur
 |ZZ|Non concerné|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_auto_transformateur
 
 Code permettant de décrire le type d''auto-transformateur
@@ -848,7 +849,7 @@ Code permettant de décrire le type d''auto-transformateur
 |ZZ|Non concerné|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_ballast
 
 Code permettant de décrire le type de ballast
@@ -863,7 +864,7 @@ Code permettant de décrire le type de ballast
 |ZZ|Non concerné|
 
 Particularité : Type de Ballast doit évoluer sur le moyen/long terme vers type de driver, puisque les lampes vont toutes passées en LED. 
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_commande
 
 Code permettant de décrire le type de commande de l''ouvrage électrique
@@ -881,7 +882,7 @@ Code permettant de décrire le type de commande de l''ouvrage électrique
 |ZZ|Non concerné|
 
 Particularité : Compiègne vise à être est uniquement en BH-T à moyen terme, mais l'ARC dispose de nombreux types de commande différents.
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_defaillance
 
 Code permettant de décrire le type de défaillane
@@ -898,7 +899,7 @@ Code permettant de décrire le type de défaillane
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_disjoncteur
 
 Code permettant de décrire le type de disjoncteur
@@ -914,7 +915,7 @@ Code permettant de décrire le type de disjoncteur
 |99|Autre|
 
 Particularité : Les armoirs principales ont toutes un disjoncteur différent, d'où la présence d'un ''disjoncteur principal''. Les nouvelles armoires devraient toutes avoir le même, sa référence sera donc ajoutée.
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_fusible
 
 Code permettant de décrire le type de fusible
@@ -945,14 +946,14 @@ Code permettant de décrire le type de fusible
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_intervention
 
 Code permettant de décrire le type d''intervention
 
 |Code | Valeur |
 |:-|:-|  
-|00|-->|
+|00|->|
 |10|Changement de disjoncteur|
 |11|Changement de fusible|
 |20|Changement de type de commande|
@@ -975,7 +976,7 @@ Code permettant de décrire le type d''intervention
 |90|Suppression d'une option|
 
 Particularité : Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessiter à gérer une cardinalité 1-n depuis la classe `an_ecl_intervention`.
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_intervention_cables
 
 Code permettant de décrire le type d''intervention des câbles
@@ -989,7 +990,7 @@ Code permettant de décrire le type d''intervention des câbles
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_intervention_depart
 
 Code permettant de décrire le type d''intervention des départs
@@ -1003,7 +1004,7 @@ Code permettant de décrire le type d''intervention des départs
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_intervention_foyer
 
 Code permettant de décrire le type d''intervention des foyers
@@ -1022,7 +1023,7 @@ Code permettant de décrire le type d''intervention des foyers
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_intervention_ouvrage
 
 Code permettant de décrire le type d''intervention des ouvrages
@@ -1043,7 +1044,7 @@ Code permettant de décrire le type d''intervention des ouvrages
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_intervention_pi
 
 Code permettant de décrire le type d''intervention des point-d''intérets
@@ -1060,7 +1061,7 @@ Code permettant de décrire le type d''intervention des point-d''intérets
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_intervention_point_lumineux
 
 Code permettant de décrire le type d''intervention des point lumineux
@@ -1082,7 +1083,7 @@ Code permettant de décrire le type d''intervention des point lumineux
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_lampe
 
 Code permettant de décrire le type de la lampe
@@ -1099,7 +1100,7 @@ Code permettant de décrire le type de la lampe
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_lanterne
 
 Code permettant de décrire le type de lanterne
@@ -1113,7 +1114,7 @@ Code permettant de décrire le type de lanterne
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_ouvrage_electrique
 
 Code permettant de décrire le type d''ouvrage électrique
@@ -1127,7 +1128,7 @@ Code permettant de décrire le type d''ouvrage électrique
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_parasurtenseur
 
 'Code permettant de décrire le type de parasurtenseur';
@@ -1140,7 +1141,7 @@ Particularité : x
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_pi
 
 Code permettant de décrire le type de point d''interet
@@ -1159,7 +1160,7 @@ Code permettant de décrire le type de point d''interet
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 #### lt_ecl_type_support
 
 Code permettant de décrire le type de support
@@ -1174,7 +1175,7 @@ Code permettant de décrire le type de support
 |99|Autre|
 
 Particularité : x
-
+-------------------------------------------------------------------------
 # Les Vue(s)
 
 ### m_reseau_sec.geo_v_ecl_ouvrage_electrique
@@ -1188,7 +1189,7 @@ Description : Vue des ouvrages électriques permettant la saisie dans l''applica
 		- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
 		- Contrôle de la topologie 
 		- Ventilation des données aux tables Noeuds et ouvrages électriques
-		- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
+		- En cas de DELETE, attribut situation passe à 'supprimer' -> Le point n'est donc pas réellement supprimé.
 		- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 
 ###  m_reseau_sec.geo_v_ecl_point_lumineux
@@ -1202,7 +1203,7 @@ Description : Vue des supports permettant la saisie dans l''application Geo
 		- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
 		- Contrôle de la topologie 
 		- Ventilation des données aux tables Noeuds et Supports
-		- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé
+		- En cas de DELETE, attribut situation passe à 'supprimer' -> Le point n'est donc pas réellement supprimé
 		- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 
 ###  m_reseau_sec.geo_v_ecl_pi 
@@ -1216,7 +1217,7 @@ Description : Objet réel ou abstrait indiquant un point ayant une importance po
 		- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
 		- Contrôle de la topologie 
 		- Ventilation des données aux tables Noeuds et PI
-		- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
+		- En cas de DELETE, attribut situation passe à 'supprimer' -> Le point n'est donc pas réellement supprimé.
 		- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 
 ### xapps_an_v_ecl_patrimoine
