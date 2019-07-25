@@ -518,6 +518,7 @@ Code permettant de décrire la classe électrique de la lanterne
 |30|Classe III|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_couleur_eclairage
 
@@ -532,6 +533,7 @@ Code permettant de décrire la couleur d''éclairage de la lampe
 |99|Autre|
 
 Particularité : N'est utile que pour certains types de lampe associés à certains types de culots. Saisie contrôlée dans l'application via les apparitions conditionnelles des fiches information.
+
 -------------------------------------------------------------------------  
 #### lt_ecl_culot_lampe
 
@@ -546,6 +548,7 @@ Code permettant de décrire le culot de la lampe
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_emplacement
 
@@ -559,6 +562,7 @@ Code permettant de décrire l''emplacement de la platine du foyer
 |ZZ|Non concerné|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_etat
 
@@ -573,7 +577,8 @@ Code permettant de décrire l''état de l''objet
 |40|Vétuste|
 |ZZ|Non concerné|
 
-Particularité : Selon appréciation du service métier, ou bien selon données des contrôles mécaniques/ électriques. 
+Particularité : Selon appréciation du service métier, ou bien selon données des contrôles mécaniques/ électriques.
+ 
 -------------------------------------------------------------------------
 #### lt_ecl_etat_signalement_affichage
 
@@ -588,6 +593,7 @@ Code permettant de décrire l''etat du signalement pour affichage dans GEO
 |60|Réglé par une intervention sur foyer / départ|
 
 Particularité : Présents deux fois dans GEO, dont une fois avec un filtre pour enlever le code 60, afin que les utilisateurs ne puissent pas saisir l'option ''Réglé par une intervention sur foyer / départ". Pour que cette option s'affiche bien ensuite dans la fiche, le deuxième domaine de valeur GEO, basé sur ce même domaine mais sans filtre cette fois, est utilisé.
+
 -------------------------------------------------------------------------
 #### lt_ecl_hauteur_trappe
 |Code | Valeur |
@@ -598,6 +604,7 @@ Particularité : Présents deux fois dans GEO, dont une fois avec un filtre pour
 |ZZ|Non concerné|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_materiaux_supports
 
@@ -615,6 +622,7 @@ Code permettant de décrire le matériaux du support
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_mode_pose_ouvrage_electrique
 
@@ -632,6 +640,7 @@ Code permettant de décrire le mode de pose de l''ouvrage électrique
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_moyen_intervention
 
@@ -644,6 +653,7 @@ Code permettant de décrire si l''intervention se fait avec ou sans nacelle
 |20|Sans nacelle|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_options_support
 
@@ -672,6 +682,7 @@ Code permettant de décrire les options du support
 
 Particularités : 
 Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessité à gérer une cardinalité 1-n depuis la classe `an_ecl_support`.
+
 -------------------------------------------------------------------------
 #### lt_ecl_presence
 
@@ -684,6 +695,7 @@ Code permettant de décrire la présence, ou non, d''un élément
 |20|Non|
 
 Particularité :  Devrait être remplacé à terme par un domaine oui/non déjà existant.
+
 -------------------------------------------------------------------------
 #### lt_ecl_puissance_lampe
 
@@ -706,6 +718,7 @@ Code permettant de décrire la puissance de la lampe
 |ZZ|Non concerné|
 
 Particularité : Doit disparaître pour laisser la place à une saisie libre, car les puissances sont trop différentes et varient souvent.
+
 -------------------------------------------------------------------------
 #### lt_ecl_qualite_date
 
@@ -721,6 +734,7 @@ Code permettant de décrire la qualité de la date indiquée
 |50|Déduite|
 
 Particularité : Tiré des métadonnées du standard GraceTHD.
+
 -------------------------------------------------------------------------
 #### lt_ecl_qualite_geolocalisation
 
@@ -734,6 +748,7 @@ Code permettant de décrire la qualité de la géolocalisation
 |30|Classe C|
 
 Particularité :  Tiré des métadonnées du standard RAEPA
+
 -------------------------------------------------------------------------
 #### lt_ecl_section_cable
 
@@ -752,6 +767,7 @@ Code permettant de décrire la section du câble
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_signalement_intervention
 
@@ -763,6 +779,7 @@ Code permettant de décrire si c''est un signalement ou une intervention
 |20|Intervention|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_situation
 Code permettant de décrire la situation réelle de l''objet
@@ -774,6 +791,7 @@ Code permettant de décrire la situation réelle de l''objet
 |12|Supprimé|
 
 Particularité : Inactif signifie que l'objet existe toujours physiquement mais qu'il ne joue plus aucun rôle pour le réseau d'éclairage public.
+
 -------------------------------------------------------------------------
 #### lt_ecl_situation_cable
 
@@ -792,6 +810,7 @@ Code permettant de décrire la situation du câble
 |99|Autre|
 
 Particularité : 
+
 -------------------------------------------------------------------------
 #### lt_ecl_source_defaillance
 
@@ -807,6 +826,7 @@ Code permettant de décrire la source de la déaillance repérée
 |99|Autre|
 
 Particularité :x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_amorceur
 
@@ -822,6 +842,7 @@ Code permettant de décrire le type d''amorceur
 |ZZ|Non concerné|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_auto_transformateur
 
@@ -849,6 +870,7 @@ Code permettant de décrire le type d''auto-transformateur
 |ZZ|Non concerné|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_ballast
 
@@ -864,6 +886,7 @@ Code permettant de décrire le type de ballast
 |ZZ|Non concerné|
 
 Particularité : Type de Ballast doit évoluer sur le moyen/long terme vers type de driver, puisque les lampes vont toutes passées en LED. 
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_commande
 
@@ -882,6 +905,7 @@ Code permettant de décrire le type de commande de l''ouvrage électrique
 |ZZ|Non concerné|
 
 Particularité : Compiègne vise à être est uniquement en BH-T à moyen terme, mais l'ARC dispose de nombreux types de commande différents.
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_defaillance
 
@@ -899,6 +923,7 @@ Code permettant de décrire le type de défaillane
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_disjoncteur
 
@@ -915,6 +940,7 @@ Code permettant de décrire le type de disjoncteur
 |99|Autre|
 
 Particularité : Les armoirs principales ont toutes un disjoncteur différent, d'où la présence d'un ''disjoncteur principal''. Les nouvelles armoires devraient toutes avoir le même, sa référence sera donc ajoutée.
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_fusible
 
@@ -946,6 +972,7 @@ Code permettant de décrire le type de fusible
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_intervention
 
@@ -976,6 +1003,7 @@ Code permettant de décrire le type d''intervention
 |90|Suppression d'une option|
 
 Particularité : Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessiter à gérer une cardinalité 1-n depuis la classe `an_ecl_intervention`.
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_intervention_cables
 
@@ -990,6 +1018,7 @@ Code permettant de décrire le type d''intervention des câbles
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_intervention_depart
 
@@ -1004,6 +1033,7 @@ Code permettant de décrire le type d''intervention des départs
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_intervention_foyer
 
@@ -1023,6 +1053,7 @@ Code permettant de décrire le type d''intervention des foyers
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_intervention_ouvrage
 
@@ -1044,6 +1075,7 @@ Code permettant de décrire le type d''intervention des ouvrages
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_intervention_pi
 
@@ -1061,6 +1093,7 @@ Code permettant de décrire le type d''intervention des point-d''intérets
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_intervention_point_lumineux
 
@@ -1083,6 +1116,7 @@ Code permettant de décrire le type d''intervention des point lumineux
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_lampe
 
@@ -1100,6 +1134,7 @@ Code permettant de décrire le type de la lampe
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_lanterne
 
@@ -1114,6 +1149,7 @@ Code permettant de décrire le type de lanterne
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_ouvrage_electrique
 
@@ -1128,6 +1164,7 @@ Code permettant de décrire le type d''ouvrage électrique
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_parasurtenseur
 
@@ -1141,6 +1178,7 @@ Particularité : x
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_pi
 
@@ -1160,6 +1198,7 @@ Code permettant de décrire le type de point d''interet
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 #### lt_ecl_type_support
 
@@ -1175,6 +1214,7 @@ Code permettant de décrire le type de support
 |99|Autre|
 
 Particularité : x
+
 -------------------------------------------------------------------------
 # Les Vue(s)
 
