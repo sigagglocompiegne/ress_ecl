@@ -54,6 +54,31 @@
 
 	Sans objet
 
+# Utilisation des pictos
+
+| Picto                 | Utilisation                                                                                                          |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| ![triangle vert](img/triangle_vert.png)         | Cartographie appx_geo_v_ecl_intervention_liste_affichage                                                             |
+| ![triangle gris](img/triangle_gris.png)          | Cartographie appx_geo_v_ecl_intervention_liste_affichage                                                             |
+| ![triangle bleu](img/triangle_bleu.png)            | Cartographie appx_geo_v_ecl_intervention_liste_affichage                                                             |
+| ![mât 1 foyer](img/mat_1_foyer.png)     | Cartographie Points lumineux                                                                                         |
+| ![mât 2 foyer](img/mat_2_foyers.png)   | Cartographie Points lumineux                                                                                         |
+| ![mât 3 foyer](img/mat_3_foyers.png)  | Cartographie Points lumineux                                                                                         |
+| ![Façade](img/facade.png)               | Cartographie Points lumineux                                                                                         |
+| ![lanterne](img/ecp_picto_lanterne.png)             | Fiche information "Support (point lumineux)" et "Foyer (ECL)"                                                        |
+| ![départ](img/ecp_picto_depart.png)              | Fiche information Ouvrage électrique                                                                                 |
+| ![lampe](img/Lampe_ecl.png)                | Fiche informationFoyer (ECL)                                                                                         |
+| ![intervention](img/intervention_ecl.png)        | Fiches informations Câble, Foyer (ECL), Support (point lumineux), Ouvrage électrique, Point d'intérêt, Départ (ECL)  |
+|  ![Contrat](img/contrat_ecl.png)               | Fiche information Support (point lumineux), Ouvrage électrique et point d'intérêt (ECL)                              | 
+| ![Courant](img/Prise.png)                 | Fiche information Support (point lumineux), Ouvrage électrique et point d'intérêt (ECL)                              |
+| ![Métadonnées](img/metadonnees.png)          | Fiches informations Câble, Foyer (ECL), Support (point lumineux), Ouvrage électrique, Point d'intérêt, Départ (ECL)  |
+| ![Armoire](img/armoire_ecl.png)                | Cartographie Ouvrage électrique                                                                                      |
+| ![sous-Armoire](img/armoire_ecl.png)            | Cartographie Ouvrage électrique                                                                                      |
+| ![transformateur](img/transformateur_ecl.png)        | Cartographie Ouvrage électrique                                                                                      |
+| ![non-renseigné](img/ouvrage_non_renseigne_ecl.png)        | Cartographie Ouvrage électrique                                                                                      |
+
+
+
 # Les données
 
 Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les besoins de l'application. Les autres données servant d'habillage (pour la cartographie ou les recherches) sont listées dans les autres parties ci-après. Le tableau ci-dessous présente uniquement les changements (type de champ, formatage du résultat, ...) ou les ajouts (champs calculés, filtre, ...) non présents dans la donnée source. 
