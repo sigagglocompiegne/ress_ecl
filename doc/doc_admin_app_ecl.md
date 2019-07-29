@@ -87,6 +87,7 @@ Sont décrites ici les Géotables et/ou Tables intégrées dans GEO pour les bes
 | an_ecl_erreur                | id_depart - id_objet                                      |0...n      |
 | an_ecl_intervention          | id_depart - id_objet                                      |0...n      |
 
+Une relation avec média pourra être ajoutée si le service en ressent le besoin. (demande initiale non renouvelée après test de l'application.
 
   * ### Particularités :
   *  Les départs sont *obligatoirement* rattachés à une armoire.
@@ -189,6 +190,7 @@ Les erreurs possibles :
 | an_ecl_intervention (Intervention Foyer) | id_depart - id_objet                                      |0...n      |
 | an_ecl_erreur                            | id_foyer - id_objet                                       |0...n      |
 
+Une relation avec média pourra être ajoutée si le service en ressent le besoin. (demande initiale non renouvelée après test de l'application.
 
   * ### Particularités : 
   * Les foyers sont *obligatoirement* rattachés à un support. 
@@ -284,7 +286,7 @@ Les erreurs possibles :
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_media_modele     | cle_media - id                                            |0...n      |
-| an_ecl_erreur           | id_mod_sup - id_objet                                     | o…n      |
+| an_ecl_erreur           | id_mod_sup - id_objet                                     | 0…n      |
 
   * ### Particularités : 
   * La table est en fait un domaine de valeur avec plusieurs caractéristiques. Elle est éditable par les agents du service métier directement via l'application.
@@ -321,7 +323,7 @@ Les erreurs possibles :
 | Géotables ou Tables                      | Champs de jointure (champs table - champs table liée)     | Type     |
 | ---------------------------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_intervention (Intervention câble) | id_cab - id_objet                                         |0...n      |
-| xapps_an_v_ecl_tension_cable             | id_cab                                                    | 00…1      |
+| xapps_an_v_ecl_tension_cable             | id_cab                                                    | 0…1      |
 
   * ### Particularités : 
   * Un câble ne peut pas être relié en ses deux extrémités au même nœud.
@@ -475,6 +477,8 @@ Les erreurs possibles :
 | Géotables ou Tables     | Champs de jointure (champs table - champs table liée)     | Type     |
 | ----------------------- | --------------------------------------------------------- | -------- |
 | an_ecl_erreur           | id_noeud                                                  |0...n      |
+
+Une relation avec média pourra être ajoutée si le service en ressent le besoin. (demande initiale non renouvelée après test de l'application.
 
   * ### Particularités :
   * Ces tables interventions doivent être séparées dans Géo afin que l'affichage puisse se faire selon un domaine de valeur précis, différent selon l'objet de l'intervention. (cf tableau ci-dessus)
