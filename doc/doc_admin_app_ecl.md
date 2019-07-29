@@ -112,6 +112,48 @@ END
 
 (2) Intervention Foyer, Intervention_depart, Point lumineux (support), Intervention Point-lumineux, Intervention ouvrage, Support (modèle), Intervention_PI, Intervention câble, Lanterne (modèle)
 
+Les erreurs possibles :
+
+| Erreurs attributaires     |            |              |                                                                                                                                                                       |
+|:-------------------------:|:----------:|:------------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| Classe                    | Attribut   | contrainte   | Message à faire remonter                                                                                                                                              |
+| an_ecl_depart             | tension    | <= 3200      | La tension doit être inférieure ou égale à 3200 V                                                                                                                     |
+| an_ecl_depart             | date_donne | <= now       | La date de création de la donnée doit être inférieure à la date actuelle                                                                                              |
+| an_ecl_foyer              | ty_ballast |              | Pour les LED, l''emplacement de la platine est automatiquement indiqué dans la lanterne, l''amorceur est en "non-concerné" et le ballast est indiqué comme "driver".  |
+| an_ecl_foyer              | loc_plat   |              | Pour les LED, l''emplacement de la platine est automatiquement indiqué dans la lanterne, l''amorceur est en "non-concerné" et le ballast est indiqué comme "driver".  |
+| an_ecl_foyer              | ty_amorce  |              | Pour les LED, l''emplacement de la platine est automatiquement indiqué dans la lanterne, l''amorceur est en "non-concerné" et le ballast est indiqué comme "driver".  |
+| an_ecl_foyer              | pct_fct    | <=100        | Le % de puissance de fonctionnement ne peut pas dépasser les 100 %                                                                                                    |
+| an_ecl_foyer              | pct_fct    |              | Seules les LED peuvent avoir un pourcentage de puissance de fonctionnement.                                                                                           |
+| an_ecl_foyer              | date_donne | <= now       | La date de création de la donnée doit être inférieure à la date actuelle                                                                                              |
+| an_ecl_modele_lanterne    | ik_lant    | <=10         | L''IK ne peut pas être supérieur à 10                                                                                                                                 |
+| an_ecl_modele_lanterne    | ip_lant    | <=69         | L''IP ne peut pas être supérieur à 69                                                                                                                                 |
+| an_ecl_modele_support     | ik_supp    | <=10         | L''IK ne peut pas être supérieur à 10                                                                                                                                 |
+| an_ecl_modele_support     | ip_supp    | <=69         | L''IP ne peut pas être supérieur à 69                                                                                                                                 |
+| geo_v_ouvrage_electrique  | puis_mes   | <10000       | La puissance mesurée doit être inférieure à 10 000                                                                                                                    |
+| geo_v_ouvrage_electrique  | val_terre  | <1000        | La valeur de la terre doit être inférieure à 1000                                                                                                                     |
+| geo_v_ouvrage_electrique  | dat_pos    | <=now        | La date de pose doit être inférieure à la date actuelle                                                                                                               |
+| geo_v_ouvrage_electrique  | date_donne | <= now       | La date de création de la donnée doit être inférieure à la date actuelle                                                                                              |
+| geo_v_point_lumineux      | haut_supp  | <30          | Le support doit faire moins de 30 mètres                                                                                                                              |
+| geo_v_point_lumineux      | dat_pos    | <=now        | La date de pose doit être inférieure à la date actuelle                                                                                                               |
+| geo_v_point_lumineux      | date_donne | <= now       | La date de création de la donnée doit être inférieure à la date actuelle                                                                                              |
+| an_ecl_intervention       | etat_sign  |              | Le signalement ne peut-être réglé que s''il y a eu une intervention                                                                                                   |
+| an_ecl_intervention       | dat_progra | > dat_signa  | La date de programmation ne peut pas être inférieure à la date de signalement                                                                                         |
+| an_ecl_intervention       | dat_real   | > dat_signa  | La date de réalisation de l''intervention ne peut pas être inférieure à la date de signalement                                                                        |
+| geo_v_point_interet       | dat_pos    | <=now        | La date de pose doit être inférieure à la date actuelle                                                                                                               |
+| geo_v_point_interet       | date_donne | <= now       | La date de création de la donnée doit être inférieure à la date actuelle                                                                                              |
+| geo_ecl_cable             | date_donne | <= now       | La date de création de la donnée doit être inférieure à la date actuelle                                                                                              |
+| **Erreurs de topologie**  | ****       | ****         | ****                                                                                                                                                                  |
+| geo_ecl_cable             | id_nd_ini  | != id_nd_fin | Un câble ne peut pas être relié deux fois au même nœud.                                                                                                               |
+| geo_ecl_cable             | geom       |              | L''objet se situe dans plusieurs zones de gestion. Merci de renseigner le prestataire et l''exploitant dans les métadonnées de ce câble                               |
+| geo_ecl_cable             | geom       |              | L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.                                                                                        |
+| geo_v_point_lumineux      | geom       |              | L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.                                                                                        |
+| geo_v_point_lumineux      | geom       |              | Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.                                                                  |
+| geo_v_point_interet       | geom       |              | L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.                                                                                        |
+| geo_v_point_interet       | geom       |              | Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.                                                                  |
+| geo_v_ouvrage_electrique  | geom       |              | L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.                                                                                        |
+| geo_v_ouvrage_electrique  | geom       |              | Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.                                                                  |
+
+
 ## Table : `an_ecl_foyer`
 | Attributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | 
 |:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------------:|
