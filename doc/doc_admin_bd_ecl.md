@@ -24,6 +24,10 @@ Pour rappel des grands principes :
 * Il a été choisi volontairement de ne pas mettre en place une classe artère, de par la complexification que cela entraîne et l'absence de besoins de cette information pour le service d'éclairage public.
 * La suppression est gérée par un attribut, les données ne sont donc jamais supprimées "en dur" dans la BdD, afin d'atténuer l'impact des erreurs de suppression. 
 
+Afin de forcer la suppression d'un objet, il suffit de désactiver les triggers activés sur la table.
+Pour les noeuds (Point-lumineux, ouvrages électriques, Point-d'intérêt) il est aussi possible de supprimer l'objet dans la table noeud, la suppression est en cascade sur les autres tables.
+
+
 ## Schéma fonctionnel
 
 ![schema_fonctionnel](img/schema_fonctionnel_v2.png)
