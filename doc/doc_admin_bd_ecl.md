@@ -62,6 +62,8 @@ De nombreux point de contrôles de la saisie des utilisateurs sont vérifiés. S
 
 Toutes ces règles de vérification sont implémentées informatiquement pour éviter les erreurs de saisie (incohérences).
 
+En cas de passage de l'état de supprimé à actif (attribut situation), et puisqu'il s'agit d'un UPDATE, les règles topologiques s'appliquent normalement.
+
  ## Dépendances
 
 La base de données ECL s'appuie sur des référentiels préexistants constituant autant de dépendances nécessaires pour l'implémentation de la BdD.
