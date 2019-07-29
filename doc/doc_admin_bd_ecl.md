@@ -152,21 +152,23 @@ D! Objet reposant sur un support, intégrant une source lumineuse
 
 * Trigger(s) :
 	* t_t1_foyer (before insert or update) :
-		- suppression des messages d'erreur
+	- suppression des messages d'erreur
 
-		- gestion des contraintes de saisie avec génération de message d'erreur
+	- gestion des contraintes de saisie avec génération de message d'erreur
 
-		- forçage de certains attributs à l'insertion
+	- forçage de certains attributs à l'insertion
 
 	* t_t3_foyer_after (after insert or update) :
 	- on update le support du foyer (nbr foyer) et le départ auquel est lié le foyer (puissance souscrite).
 	
+	La puissance souscrite ne prend pas en compte la puissance des sous-armoire reliées. C'est une amélioration importante à rélaliser.
+	
 	*  t_t4_foyer_delete (before delete) : 
-		- suppression virtuelle du foyer (attribut situation à supprimer)
+	- suppression virtuelle du foyer (attribut situation à supprimer)
 
-		- Suppression = puissance souscrite du départ auquel il est lié remise à jour.
+	- Suppression = puissance souscrite du départ auquel il est lié remise à jour.
 
-		- rafraichissement de la vue récursive
+	- rafraichissement de la vue récursive
 	
 * Vue(s) :
     - xapps_an_v_ecl_patrimoine
