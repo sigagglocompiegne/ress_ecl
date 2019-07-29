@@ -636,7 +636,7 @@ Aucune
 * ### Relations : 
 	Aucune
 * ### Particularités :
-	Aucune
+	Sélectionne les départs à 400 m ou moins de l'objet courant (dont la fiche information est ouverte). Evite une liste des 300 ou 500 départs différents. 
 
 ## Domaine de valeur : 'an_ecl_modele_support'
 | Nom                     | Attribut                    | Au chargement     | Type           | Condition                                       | Valeur     | Description                                                                                                                                                                                 |
