@@ -1232,6 +1232,47 @@ Particularité : x
 ### m_reseau_sec.geo_v_ecl_ouvrage_electrique
 Description : Vue des ouvrages électriques permettant la saisie dans l''application Geo
 
+| Table de provenance           | Nom de l'attribut |
+| ----------------------------- | ----------------- |
+|     an_ecl_ouvrage_electrique | id_ouvelec        |
+|     an_ecl_ouvrage_electrique | nom_ouv           |
+|     an_ecl_ouvrage_electrique | ty_ouvelec        |
+|     geo_ecl_noeud             | depart            |
+|     an_ecl_ouvrage_electrique | etat_ouvel        |
+|     an_ecl_ouvrage_electrique | mod_pos_ou        |
+|     an_ecl_ouvrage_electrique | ty_comm           |
+|     an_ecl_ouvrage_electrique | pdl_edf           |
+|     an_ecl_ouvrage_electrique | n_com_edf         |
+|     an_ecl_ouvrage_electrique | val_terre         |
+|     an_ecl_ouvrage_electrique | ik_ouvelec        |
+|     an_ecl_ouvrage_electrique | ip_ouvelec        |
+|     an_ecl_ouvrage_electrique | puis_mes          |
+|     an_ecl_ouvrage_electrique | puis_sous         |
+|     an_ecl_ouvrage_electrique | pres_var          |
+|     geo_ecl_noeud             | ent_pose          |
+|     geo_ecl_noeud             | dat_pos           |
+|     geo_ecl_noeud             | qua_dat           |
+|     an_ecl_ouvrage_electrique | ty_disjonc        |
+|     an_ecl_ouvrage_electrique | ty_fusible        |
+|     geo_ecl_noeud             | observ            |
+|     geo_ecl_noeud             | geom              |
+|     geo_ecl_noeud             | op_sai            |
+|     geo_ecl_noeud             | date_donne        |
+|     geo_ecl_noeud             | op_sai_geo        |
+|     geo_ecl_noeud             | qua_geo_xy        |
+|     geo_ecl_noeud             | qua_geo_z         |
+|     geo_ecl_noeud             | src_geom          |
+|     geo_ecl_noeud             | src_date          |
+|     geo_ecl_noeud             | situation         |
+|     geo_ecl_noeud             | date_sai          |
+|     geo_ecl_noeud             | date_maj          |
+|     geo_ecl_noeud             | exploit_nd        |
+|     geo_ecl_noeud             | presta_nd         |
+|     geo_ecl_noeud             | commune           |
+|     geo_ecl_noeud             | insee             |
+
+
+
 * Trigger(s) :
 	* t_t1_lk_ouvrage_electrique (INSTEAD OF INSERT OR UPDATE OR DELETE) :
 	  
@@ -1246,6 +1287,41 @@ Description : Vue des ouvrages électriques permettant la saisie dans l''applica
 ###  m_reseau_sec.geo_v_ecl_point_lumineux
 Description : Vue des supports permettant la saisie dans l''application Geo
 
+| Table de provenance | Nom de l'attribut |
+| ------------------- | ----------------- |
+|     an_ecl_support  | id_supp           |
+|     geo_ecl_noeud   | depart            |
+|     an_ecl_support  | id_mod_sup        |
+|     an_ecl_support  | ty_supp           |
+|     an_ecl_support  | opt_supp          |
+|     an_ecl_support  | ty_parasu         |
+|     an_ecl_support  | etat_supp         |
+|     an_ecl_support  | haut_trap         |
+|     an_ecl_support  | ty_fusible        |
+|     geo_ecl_noeud   | ent_pose          |
+|     geo_ecl_noeud   | dat_pos           |
+|     geo_ecl_noeud   | qua_dat           |
+|     an_ecl_support  | haut_supp         |
+|     geo_ecl_noeud   | observ            |
+|     geo_ecl_noeud   | geom              |
+|     geo_ecl_noeud   | op_sai            |
+|     an_ecl_support  | ty_disjonc        |
+|     geo_ecl_noeud   | date_donne        |
+|     geo_ecl_noeud   | op_sai_geo        |
+|     geo_ecl_noeud   | qua_geo_xy        |
+|     geo_ecl_noeud   | qua_geo_z         |
+|     geo_ecl_noeud   | src_geom          |
+|     geo_ecl_noeud   | src_date          |
+|     geo_ecl_noeud   | situation         |
+|     geo_ecl_noeud   | date_sai          |
+|     geo_ecl_noeud   | date_maj          |
+|     an_ecl_support  | nbr_foyer         |
+|     geo_ecl_noeud   | exploit_nd        |
+|     geo_ecl_noeud   | presta_nd         |
+|     geo_ecl_noeud   | commune           |
+|     geo_ecl_noeud   | insee             |
+
+
 * Trigger(s) :
 	* t_t1_lk_point_lumineux (INSTEAD OF INSERT OR UPDATE OR DELETE) :
 	  
@@ -1259,6 +1335,33 @@ Description : Vue des supports permettant la saisie dans l''application Geo
 
 ###  m_reseau_sec.geo_v_ecl_pi 
 Description : Objet réel ou abstrait indiquant un point ayant une importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''EP.
+
+| Table de provenance | Nom de l'attribut |
+| ------------------- | ----------------- |
+|     an_ecl_pi       | id_pi             |
+|     geo_ecl_noeud   | depart            |
+|     an_ecl_pi       | ty_pi             |
+|     geo_ecl_noeud   | ent_pose          |
+|     geo_ecl_noeud   | dat_pos           |
+|     geo_ecl_noeud   | qua_dat           |
+|     an_ecl_pi       | etat_pi           |
+|     geo_ecl_noeud   | observ            |
+|     geo_ecl_noeud   | geom              |
+|     geo_ecl_noeud   | op_sai            |
+|     geo_ecl_noeud   | date_donne        |
+|     geo_ecl_noeud   | op_sai_geo        |
+|     geo_ecl_noeud   | qua_geo_xy        |
+|     geo_ecl_noeud   | qua_geo_z         |
+|     geo_ecl_noeud   | src_geom          |
+|     geo_ecl_noeud   | src_date          |
+|     geo_ecl_noeud   | situation         |
+|     geo_ecl_noeud   | date_sai          |
+|     geo_ecl_noeud   | date_maj          |
+|     geo_ecl_noeud   | exploit_nd        |
+|     geo_ecl_noeud   | presta_nd         |
+|     geo_ecl_noeud   | commune           |
+|     geo_ecl_noeud   | insee             |
+
 
 * Trigger(s) :
 	* t_t1_point_interet (INSTEAD OF INSERT OR UPDATE OR DELETE) :
