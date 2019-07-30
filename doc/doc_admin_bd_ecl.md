@@ -75,6 +75,12 @@ La base de données ECL s'appuie sur des référentiels préexistants constituan
 
 Ces deux tables sont les seules, avec les domaines de valeur, à ne pas être gérées directement dans leur contenu par le service d'éclairage public. 
 
+## Séquences 
+
+Il y a 8 séquences. Tous les objets qui sont soumis à une intervention doivent avoir la même séquence, car l'identifiant de l'objet est stocké dans la table intervention.
+
+Une autre solution aurait consistée à faire une séquence par table, avec des lettres en préfixe différenciant les tables.
+
 ## Classes d'objets
 
 L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_reseau_sec, celles dérivées et applicatives dans le schéma x_apps.
