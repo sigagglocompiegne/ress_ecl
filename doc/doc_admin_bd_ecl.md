@@ -73,6 +73,8 @@ La base de données ECL s'appuie sur des référentiels préexistants constituan
 | m_amenagement | geo_amt_zpne_gestion     | Table géographique délimitant les zones de gestion entre la ville de Compiègne et l''ARC | Détermine la complétion automatique du prestataire et du gestionnaire pour les nœuds et les câbles |
 | r_osm         | geo_vm_osm_commune_arcba | Vue matérialisée des limites communales des communes de l''ARCBA                         | Détermine la complétion automatique de la commune et du code Insee pour les nœuds et les câbles    |
 
+Ces deux tables sont les seules, avec les domaines de valeur, à ne pas être gérées directement dans leur contenu par le service d'éclairage public. 
+
 ## Classes d'objets
 
 L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_reseau_sec, celles dérivées et applicatives dans le schéma x_apps.
