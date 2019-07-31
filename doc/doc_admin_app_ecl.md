@@ -2027,7 +2027,7 @@ Source : Intervention_depart (an_ecl_intervention)
 |                       |                                     | date_sai         |                    |                         |                                                                                                        |                 |
 |                       |                                     | date_maj         |                    |                         |                                                                                                        |                 |
 |                       |                                     | op_sai           |                    |                         |                                                                                                        |                 |
-| Signalement           |                                     |                  | par défaut         | Vertical                | type_si_in == '10'                                                                                     |                 |
+| Signalement           |                                     |                  | par défaut         | Vertical                | type_si_in == '10' && id_inter ==NULL                                                                                    |                 |
 |                       |                                     |  typ_def         |                    |                         |                                                                                                        |                 |
 |                       |                                     | src_def          |                    |                         |                                                                                                        |                 |
 |                       |                                     | etat_sign        |                    |                         |                                                                                                        |                 |
@@ -2058,14 +2058,14 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Type de disjoncteur ( att_met1 )   STRING                                             |                 | 00                     | "lt_ecl_type_disjoncteur"                              | Par défaut         |
 | Type de fusible ( att_met2 )   STRING                                                 |                 | 00                     | "lt_ecl_type_fusible"                                  | Par défaut         |
 | Etat de l'ouvrage après l'intervention ( att_met6 )   STRING                          |                 | 00                     | "lt_ecl_etat"                                          | Par défaut         |
-| Nom du départ  ( att_met7 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
+| Signalement réglé lors de l'intervention ( att_met7 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)"  | Par défaut         |
 
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
 Modèle d'impression : aucun
 
-
+L'attribut "Signalement réglé lors de l'intervention" (att_met7), n'apparaît que lorsqu'il s'agit d'une création d'intervention sans passé par un signalement (géré par la conditionnalité : id_inter==NULL).
 
 ## Fiche information :      Intervention_Foyer
 
@@ -2135,6 +2135,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Etat de l'objet après l'intervention ( att_met6 )   STRING     |                 | 00                     | "lt_ecl_etat"                                         | Par défaut         |
 | Signalement réglé lors de l'intervention ( att_met5 )   STRING |                 |                       | "xapps_geo_v_ecl_intervention_liste_affichage (code)" | Par défaut         |
 
+L'attribut "Signalement réglé lors de l'intervention" (att_met5), n'apparaît que lorsqu'il s'agit d'une création d'intervention sans passé par un signalement (géré par la conditionnalité : id_inter==NULL).
 
 IMPORTANT : L'édition des données jointes est désactivée.
 
