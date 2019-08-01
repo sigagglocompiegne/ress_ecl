@@ -76,4 +76,4 @@ Des protections électriques peuvent être présentes au niveau des ouvrages, po
 
 Voici un schéma résumant la transition d'organisation de service d'éclairage public avec l'utilisation de l'application.
 
-![GeoCompiegnois](img/MOT_SEP2.png) 
+![GeoCompiegnois](img/MOT_SEP.png) 
