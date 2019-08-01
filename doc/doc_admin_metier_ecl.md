@@ -77,3 +77,9 @@ Des protections électriques peuvent être présentes au niveau des ouvrages, po
 Voici un schéma résumant la transition d'organisation de service d'éclairage public avec l'utilisation de l'application.
 
 ![GeoCompiegnois](img/MOT_SEP.png) 
+
+L'intégration des données du prestataire, dans la phase 1, ne concerne que les signalements sur les zones de gestion ARC. De plus les données intégrées ne sont pas celles des interventions mais uniquement l'état final du patrimoine après intervention.
+
+La phase deux est celle de montée en compétences et acquisition de savoir-faires des agents du service d'éclairage public.
+
+Entre la phase 2 et la phase 3, la différence réside dans l'intégration des données des signalements et interventions depuis une tablette sur le terrain. Pour cela, une bonne maîtrise de l'application est indispensable. Ainsi le processus métier initial n'est que légérement modifié, mais l'apport en tableau de bord et en connaissance patrimoniale est important. 
