@@ -1,3 +1,4 @@
+![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
 
 # Documentation synthétique du métier et du réseau d'éclairage public.
 
@@ -73,7 +74,6 @@ Des protections électriques peuvent être présentes au niveau des ouvrages, po
   
 ## Fonctionnement du service d'éclairage public de la ville de Compiègne
 
-MOT signalement
+Voici un schéma résumant la transition d'organisation de service d'éclairage public avec l'utilisation de l'application.
 
-MOT intervention
-
+![GeoCompiegnois](img/MOT_SEP.png) 
