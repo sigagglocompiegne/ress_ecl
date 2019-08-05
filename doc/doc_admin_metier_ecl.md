@@ -68,7 +68,7 @@ Des protections électriques peuvent être présentes au niveau des ouvrages, po
 
 ### Fonctionnement de la tension
 
-  La tension peut-être de 3200 volts maximum, cette tension correspond à un réseau particulier de la ville de compiègne, partant du Poste PAN (considéré comme une armoire principale ici). Les lampes d'éclairage fonctionnant en 230 ou 400 V, des transformateurs sont alors nécessaires pour changer la tension délivrée.
+  La tension peut-être de 3200 volts maximum, cette tension correspond à un réseau particulier de la ville de compiègne, partant du Poste PAN (considéré comme une armoire principale ici). Les lampes d'éclairage fonctionnant en 230 ou 400 V, des transformateurs sont parfois nécessaires pour changer la tension délivrée.
   Parfois, les lanternes possèdent des autotransformateurs modifiant la tension dans la lampe elle-même. 
 
   Chaque câble est composé de plusieurs fils. Sur un câble de tension 230-400V, entre le fil neutre et un fil de phase une tension de 230 V est délivrée. Entre deux fils de phase, une tension de 400 V est délivrée. Ainsi, un même câble peut délivrer des tensions différentes selon la façon dont il est branché à un élément du réseau.
