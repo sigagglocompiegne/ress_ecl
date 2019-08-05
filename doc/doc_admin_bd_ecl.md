@@ -30,7 +30,7 @@ Pour les noeuds (Point-lumineux, ouvrages électriques, Point-d'intérêt) il es
 
 ## Schéma fonctionnel
 
-![schema_fonctionnel](img/schema_fonctionnel_v2.png)
+![schema_fonctionnel](img/Schéma_fonctionnel_ecl.png)
 
 Dans le détail :
 
