@@ -55,11 +55,14 @@ Le vocabulaire de l'éclairage public diverge d'une structure à l'autre, des ch
 
 ### Cheminement :
   1 - Le courant électrique part du réseau d'un fournisseur d'énergie (ENEDIS par exemple). 
+  
   2 - Il arrive jusqu'à une armoire principale.
+  
   3 - Il repart de l'armoire via les câbles branchés aux départs, uniquement si l'armoire est "allumée".
       La gestion de l'allumage se fait via un système de commande (Radio BH, forfait SOGEME, horloge astronomique...) et est indépendant par départ.
       Le réseau est généralement allumé la nuit, cependant certaines armoires (déservant les caméras, feux tricolores, feux piétons...) restent allumées en continu. 
-  4 - Les câbles amènent le courant jusqu'aux différents éléments du réseau.
+ 
+ 4 - Les câbles amènent le courant jusqu'aux différents éléments du réseau.
  
 Des protections électriques peuvent être présentes au niveau des ouvrages, point lumineux / d'intérêts... etc : Fusibles et/ou disjoncteurs.
 
