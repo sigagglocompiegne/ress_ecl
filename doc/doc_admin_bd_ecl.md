@@ -1414,6 +1414,6 @@ Un projet QGIS a été réalisé pour la gestion interne des données. Il est st
   
 # Schéma fonctionnel
   ## Modèle conceptuel simplifié
-  ![GeoCompiegnois](img/schema_spy_compact.png)
+  ![GeoCompiegnois](img/schema_spy_large.png)
 
 
