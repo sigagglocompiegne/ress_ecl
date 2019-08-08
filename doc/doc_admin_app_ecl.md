@@ -1058,6 +1058,22 @@ Pas de géométrie.
 Fiches d'information active : sans objet
 
 
+## Cartographie : Visuel de gestion --> Support classés par armoire
+
+Pour les "Visuels de gestion", les géotables sont glissées dans les fonctionnalités de l'application. Cela permet de les afficher sans passer par la légende.
+
+Source : xapps_geo_v_ecl_support_par_armoire
+
+Particularité : Lorsqu'une armoire est ajoutée, il faut la rentrer dans la cartographie ECL.
+
+## Cartographie : Visuel de gestion --> Zones de gestion
+
+Source : geo_amt_zpne_gestion
+
+## Cartographie : Visuel de gestion --> Etat des supports
+
+Source : Etat des supports (geo_v_ecl_point_lumineux)
+
 ## Modification géométrique d'ouvrage électrique 
 
 Cette recherche permet à l'utilisateur de saisir ou modifier l'emplacement d'un ouvrage électrique. Cette fonctionnalité n'est accessible qu'aux agents du service d'éclairage public, et au SIG.
