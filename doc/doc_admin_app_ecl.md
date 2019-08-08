@@ -16,7 +16,6 @@
 |:---|:---|:---|
 |17/07/2019|Thibaud BILLOTEAU|version initiale|
 
-
 # Généralité
 
 |Représentation| Nom de l'application |Résumé|
@@ -2254,5 +2253,6 @@ Ces 3 fiches information sont uniquement composées d'une miniature de la photo 
 Le but est d'imposer une prise de conscience avant une modification d'un modèle qui agira sur tous les objets ayant le même modèle.
 
               
+# Limites :
 
-
+L'application, tout comme la base de données, ne gère pas les activités temporaires, notamment en lien avec les festivités.
