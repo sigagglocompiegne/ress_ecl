@@ -72,7 +72,7 @@
 | ![Courant](img/Prise.png)                 | Fiche information Support (point lumineux), Ouvrage électrique et point d'intérêt (ECL)                              |
 | ![Métadonnées](img/metadonnees.png)          | Fiches informations Câble, Foyer (ECL), Support (point lumineux), Ouvrage électrique, Point d'intérêt, Départ (ECL)  |
 | ![Armoire](img/armoire_ecl.png)                | Cartographie Ouvrage électrique                                                                                      |
-| ![sous-Armoire](img/armoire_ecl.png)            | Cartographie Ouvrage électrique                                                                                      |
+| ![sous-Armoire](img/sous_armoire_ecl.png)            | Cartographie Ouvrage électrique                                                                                      |
 | ![transformateur](img/transformateur_ecl.png)        | Cartographie Ouvrage électrique                                                                                      |
 | ![non-renseigné](img/ouvrage_non_renseigne_ecl.png)        | Cartographie Ouvrage électrique                                                                                      |
 
