@@ -1401,6 +1401,10 @@ Description : Supports categorisés par armoires pour affichage GEO
 ### xapps_an_vmr_ecl_materialisee_noeud_armoire 
 Description : Vue matérialisée utilisant une requête récursive pour déterminer les ouvrages électriques en amont des noeuds.
 
+Schéma de la requête :
+
+![recursivite](img/recursivité.jpg)
+
 # Projet QGIS pour la gestion
 Un projet QGIS a été réalisé pour la gestion interne des données. Il est stocké ici : R:\Projets\Metiers\1902RESS-ARC-EvolBdd_Apps_ECL\2-PreEtude\Utilitaires_et_ressources dans l'attente d'être placé ici Y:\Ressources\4-Partage\3-Procedures\QGIS
 
