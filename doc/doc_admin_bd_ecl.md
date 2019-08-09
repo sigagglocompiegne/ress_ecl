@@ -39,8 +39,10 @@ Dans le détail :
 #####	Le service d'éclairage public peut:
 * Voir, rechercher et éditer toutes les données via l'application.
 
-#####	Un autre service en faisant la demande peut :
-* Voir les différents objets du réseau, sans les caractéristiques techniques.
+#####	Les autres services : 
+
+* Le patrimoine de l'éclairage public est consultable sur l'application générique réseaux pour les ayants droit.
+
 
 ###	Alimentation de la base de données
 * Les données sont rentrées et modifiées via l'application web-métier d'éclairage public. 
