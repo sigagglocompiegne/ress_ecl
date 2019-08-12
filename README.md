@@ -6,7 +6,7 @@ Ensemble des éléments constituant la mise en oeuvre de la base de données sur
 
 - Script d'initialisation de la base de données
   * [Suivi des modifications](sql/.sql)
-  * [Création  de la structure initiale](sql/ecl_10_squelette.sql)
+  * [Création  de la structure initiale](SQL/ECL_10_squelette.sql)
   * [Création des vues de gestion](sql/ecl_20_vues_gestion.sql)
   * [Création des vues applicatives](sql/ecl_21_vues_xapps.sql)
   * [Création des vues applicatives gd public](sql/ecl_22_vues_xapps_public.sql)
