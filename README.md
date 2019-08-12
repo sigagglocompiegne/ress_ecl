@@ -11,5 +11,5 @@ Ensemble des éléments constituant la mise en oeuvre de la base de données sur
   * [Création des vues applicatives](SQL/ECL_21_vues_xapps.sql)
   * [Création des privilèges](SQL/ECL_99_grant.sql)
 - [Documentation d'administration de la base](doc/doc_admin_bd_ecl.md)
-- [Documentation d'administration de l'application HABITAT](doc/doc_admin_app_ecl.md)
+- [Documentation d'administration de l'application éclairage public](doc/doc_admin_app_ecl.md)
 - [Documentation utilisateur de l'application](doc/doc_user_app_ecl.md)
