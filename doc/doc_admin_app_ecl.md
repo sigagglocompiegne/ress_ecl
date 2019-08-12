@@ -228,7 +228,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | cul_lamp      |                   | x             | Culot de la lampe                            | Formatage par une liste de domaine ( lt_ecl_culot_lampe )       | Fiche d'information : modèle lampe (ECL) |
 | date_maj      |                   | x             | Date de dernière mise à jour                 | Les heures ne sont pas affichées                                | Fiche d'information : modèle lampe (ECL) |
 | date_sai      |                   | x             | Date de saisie de l'information dans la base | Les heures ne sont pas affichées                                | Fiche d'information : modèle lampe (ECL) |
-| puis_lam      |                   | x             | Puissance de la lampe                        | Formatage par une liste de domaine ( lt_ecl_puissance_lampe )   | Fiche d'information : modèle lampe (ECL) |
+| puis_lam      |                   | x             | Puissance de la lampe                        |   | Fiche d'information : modèle lampe (ECL) |
 | telgest       |                   | x             | Présence d'une télégestion                   | Formatage par une liste de domaine ( lt_ecl_presence )          | Fiche d'information : modèle lampe (ECL) |
 | ty_lampe      |                   | x             | Type de lampe                                | Formatage par une liste de domaine ( lt_ecl_type_lampe )        | Fiche d'information : modèle lampe (ECL) |
 
@@ -1213,7 +1213,7 @@ Sont présents ici uniquement les attributs éditables ou disposant d'un mode de
 |:----------------------------------------------------------------:|:---------------:|:---------------------:|:---------------------------------:|
 | Nom du modèle de lampe ( nom_mod_lm )   STRING                   |                 |                       |                                   |
 | Type de lampe ( ty_lampe )   STRING                              | x               | 00                     | "lt_ecl_type_lampe"               |
-| Puissance de la lampe ( puis_lam )   STRING                      | x               | 00                     | "lt_ecl_puissance_lampe (code)"   |
+| Puissance de la lampe ( puis_lam )   STRING                      |                |                      |    |
 | Culot de la lampe ( cul_lamp )   STRING                          | x               | 00                     | "lt_ecl_culot_lampe"              |
 | Présence d'une télégestion ( telgest )   STRING                  | x               | 00                     | "lt_ecl_presence (code)"          |
 | Couleur d'éclairage de la lampe ( cou_ecl )   STRING             | x               | 00                     | "lt_ecl_couleur_eclairage (code)" |
