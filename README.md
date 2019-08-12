@@ -5,7 +5,7 @@
 Ensemble des éléments constituant la mise en oeuvre de la base de données sur l'éclairage public ainsi que l'exploitation des données dans l'application dédiée :
 
 - Script d'initialisation de la base de données
-  * [Suivi des modifications](sql/.sql)
+  * [Suivi des modifications](sql/ECL_00_trace.sql)
   * [Création  de la structure initiale](SQL/ECL_10_squelette.sql)
   * [Création des vues de gestion](sql/ecl_20_vues_gestion.sql)
   * [Création des vues applicatives](sql/ecl_21_vues_xapps.sql)
