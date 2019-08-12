@@ -171,9 +171,10 @@ D! Objet reposant sur un support, intégrant une source lumineuse
 	- forçage de certains attributs à l'insertion
 
 	* t_t3_foyer_after (after insert or update) :
-	- on update le support du foyer (nbr foyer) et le départ auquel est lié le foyer (puissance souscrite).
+	- on update le support du foyer (nbr foyer) 
+	==> le départ auquel est lié le foyer (puissance souscrite) a été désactivité pour le moment
 	
-	La puissance souscrite ne prend pas en compte la puissance des sous-armoire reliées. C'est une amélioration importante à rélaliser.
+	La puissance souscrite ne prend pas en compte la puissance des sous-armoire reliées. C'est une amélioration importante à rélaliser (à gérer avec la partie désactivé ci-dessus).
 	
 	*  t_t4_foyer_delete (before delete) : 
 	- suppression virtuelle du foyer (attribut situation à supprimer)
@@ -715,28 +716,6 @@ Code permettant de décrire la présence, ou non, d''un élément
 
 Particularité :  Devrait être remplacé à terme par un domaine oui/non déjà existant.
 
--------------------------------------------------------------------------
-#### lt_ecl_puissance_lampe
-
-Code permettant de décrire la puissance de la lampe
-
-|Code | Valeur |
-|:-|:-|  
-|00|Non renseigné|
-|05|30|
-|10|35|
-|15|40|
-|20|60|
-|30|70|
-|40|100|
-|50|150|
-|60|250|
-|70|400|
-|80|1000|
-|99|Autre|
-|ZZ|Non concerné|
-
-Particularité : Doit disparaître pour laisser la place à une saisie libre, car les puissances sont trop différentes et varient souvent.
 
 -------------------------------------------------------------------------
 #### lt_ecl_qualite_date
