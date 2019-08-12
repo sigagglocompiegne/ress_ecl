@@ -192,7 +192,7 @@ Interventions et signalements du service métier
 
 |Nom attribut | Définition | Type  | Valeurs par défaut |
 |:-|:-|:-|:-|  
-|id_inter|Numéro de l'intervention interne à l'ARC|integer|nextval('m_reseau_sec.ecl_objet_seq'::regclass)|
+|id_inter|Numéro de l'intervention interne à l'ARC|integer|nextval('m_reseau_sec.an_ecl_intervention_seq'::regclass)|
 |id_objet|Identifiant de l'objet concerné par l'intervention|integer| |
 |type_si_in|Signalement ou intervention|character varying(2)|'10'::character varying|
 |dat_signa|Date du signalement|timestamp without time zone|now()|
