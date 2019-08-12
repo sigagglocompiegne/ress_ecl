@@ -394,6 +394,14 @@ GRANT ALL ON TABLE m_reseau_sec.geo_ecl_noeud TO create_sig;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE m_reseau_sec.geo_ecl_noeud TO edit_sig;
 GRANT SELECT ON TABLE m_reseau_sec.geo_ecl_noeud TO read_sig;
 
+
+ALTER TABLE m_reseau_sec.an_ecl_log
+  OWNER TO sig_create;
+GRANT ALL ON TABLE m_reseau_sec.an_ecl_log TO postgres;
+GRANT ALL ON TABLE m_reseau_sec.an_ecl_log TO create_sig;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE m_reseau_sec.an_ecl_log TO edit_sig;
+GRANT SELECT ON TABLE m_reseau_sec.an_ecl_log TO read_sig;
+
 -- #################################################################### VUE DE GESTION  ####################################################################
 
 
