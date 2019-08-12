@@ -1986,7 +1986,7 @@ BEGIN
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_cab, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(NEW.id_cab, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
 			RETURN OLD ;
 
 		END IF;
