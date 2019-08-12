@@ -3334,19 +3334,28 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_media.n_fichier IS 'Nom du fichier GEO';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_media.op_sai IS 'Opérateur de saisie';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_media.date_sai IS 'Date de saisie dans la base de donnée';
 
- --################################################################## MEDIA OBJET########################################################
+ --################################################################## MEDIA MODELE ########################################################
  
-CREATE TABLE m_reseau_sec.an_ecl_media------------------------------------------------ Table de gestion des photos et documents dans GEO
+-- Table: m_reseau_sec.an_ecl_media_modele
+
+-- DROP TABLE m_reseau_sec.an_ecl_media_modele;
+
+CREATE TABLE m_reseau_sec.an_ecl_media_modele
 (
-	  gid serial 	NOT NULL, ---------------------------------------------------- Valeur par défaut ta séquence spécifique à cette table (nextval('[schéma].an_ecl_media_gid_seq'::regclass);)
-	  id 		integer, ----------------------------------------------------- Identifiant de cession
-	  media 	text, -------------------------------------------------------- Champ Média de GEO
-	  miniature 	bytea, ------------------------------------------------------- Champ miniature de GEO
-	  n_fichier 	text, -------------------------------------------------------- Nom du fichier
-	  t_fichier 	text --------------------------------------------------------- Type de média dans GEO
-	  op_sai 	text,--------------------------------------------------------- opérateur de la saisie initiale dans la base
-	  date_sai 	timestamp without time zone ---------------------------------- Date de la saisie dans la base	  
+  gid integer NOT NULL DEFAULT nextval('m_reseau_sec.an_ecl_media_modeles_gid_seq'::regclass), -- Identifiant du modèle + lettre (dans GEO cle_media)
+  id character varying(5), -- Identifiant de l’objet lié
+  media text, -- Champ Média de GEO
+  miniature bytea, -- Champ miniature de GEO
+  n_fichier text, -- Nom du fichier GEO
+  t_fichier text,
+  op_sai text,
+  date_sai timestamp without time zone
 )
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE m_reseau_sec.an_ecl_media_modele
+  OWNER TO sig_create;
 
 COMMENT ON TABLE m_reseau_sec.an_ecl_media_modele
   IS 'Table de gestion des photos et documents des modèles dans GEO';
@@ -3355,8 +3364,6 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.id IS 'Identifiant de l’obj
 COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.media IS 'Champ Média de GEO';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.miniature IS 'Champ miniature de GEO';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.n_fichier IS 'Nom du fichier GEO';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.op_sai IS 'Opérateur de saisie';
-COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.date_sai IS 'Date de saisie dans la base de donnée';
 
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
