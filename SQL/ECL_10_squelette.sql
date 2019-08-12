@@ -3376,8 +3376,8 @@ CREATE TABLE m_reseau_sec.an_ecl_log
   idlog integer NOT NULL, -- Identifiant unique de d'opération
   tablename character varying(80) NOT NULL, -- Nom de la table concernée par l'opération sur l'entité
   type_ope text NOT NULL, -- Type l'opération sur l'entité
-  dataold character varying(254), -- Valeur ancienne avant l'opération sur l'entité
-  datanew character varying(254), -- Valeur nouvelle après l'opération sur l'entité
+  dataold character varying(1000), -- Valeur ancienne avant l'opération sur l'entité
+  datanew character varying(1000), -- Valeur nouvelle après l'opération sur l'entité
   date_maj timestamp without time zone, -- Horodatage de l'opération sur la base d'éclairage public
   CONSTRAINT an_ecl_log_pkey PRIMARY KEY (idlog)
 )
@@ -3395,6 +3395,9 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_log.type_ope IS 'Type l''opération sur l'
 COMMENT ON COLUMN m_reseau_sec.an_ecl_log.dataold IS 'Valeur ancienne avant l''opération sur l''entité';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_log.datanew IS 'Valeur nouvelle après l''opération sur l''entité';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_log.date_maj IS 'Horodatage de l''opération sur la base d''éclairage public';
+
+
+
 
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
