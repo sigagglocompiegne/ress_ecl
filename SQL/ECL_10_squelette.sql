@@ -897,6 +897,7 @@ COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_commande.valeur IS 'Valeur de la list
 
 --############################################################ Puissance de lampe ##################################################
 
+-- liste de valeurs plus utilisé, saisie de l'utilisateur préférée
 CREATE TABLE m_reseau_sec.lt_ecl_puissance_lampe
 (
   code character varying(2) NOT NULL,
@@ -2396,6 +2397,10 @@ $BODY$
   ---
 
 -- ON UPDATE le support du foyer (nbr foyer) et le départ auquel est lié le foyer (puissance souscrite).
+-- Function: m_reseau_sec.ft_m_foyer_after()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_foyer_after();
+
 CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_foyer_after()
   RETURNS trigger AS
 $BODY$
@@ -2418,7 +2423,10 @@ BEGIN
 	END IF;--------------------------------------------------------------------------------------------- FIN de condition
 
 	---
-
+	--- partie désactivé car puissance lampe à saisir (pas liste de valeur) et null possible
+	--- et en plus sous-armoire non prise en compte ici
+        --- on calcule ici la puissance de l'ensemble des lampes des foyers reliés au départ 
+/*
 IF ( TG_OP = 'INSERT') THEN ------------------------- Si c'est un INSERT
 	UPDATE m_reseau_sec.an_ecl_depart---- On UPDATE le départ
 			SET 
@@ -2470,20 +2478,23 @@ ELSIF ( TG_OP = 'UPDATE') THEN --------------------- SI c'est un UPDATE
 									  ))
 
 			WHERE id_depart =    (SELECT depart 
-					      FROM m_reseau_sec.geo_ecl_noeud 
-					      WHERE id_noeud =  NEW.id_supp
+								   FROM m_reseau_sec.geo_ecl_noeud 
+								   WHERE id_noeud =  NEW.id_supp
 								  );
 
 	--END IF;
 	
 END IF;--------------------------------------------- FIN de condition
-
+*/
 
 RETURN NEW;
 END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
+ALTER FUNCTION m_reseau_sec.ft_m_foyer_after()
+  OWNER TO postgres;
+
 
   CREATE TRIGGER t_t3_foyer_after --- t2 réservé à log
   AFTER INSERT OR UPDATE
