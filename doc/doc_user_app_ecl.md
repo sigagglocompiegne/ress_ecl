@@ -1,16 +1,9 @@
+![GeoCompiegnois](img/Logo_web-GeoCompiegnois.png)
 
-# Documentation technique d'aide utilisateur pour l'application d'éclairage public (ECL)
+# Documentation utilisateur de l'application Eclairage public
 
-* Statut
-  - [ ] à rédiger
-  - [x] en cours de rédaction
-  - [ ] relecture
-  - [ ] finaliser
-  - [ ] révision
-  
-* Historique des versions
+- [Guide utilisateur](http://geo.compiegnois.fr/documents/cms/fiche_aide/ecl_guide_utilisateur.pdf)
 
-|Date | Auteur | Description
-|:---|:---|:---|
-|30/07/2019|Thibaud BILLOTEAU|version initiale|
-
+- [Les étapes pas à pas d'un signalement](http://geo.compiegnois.fr/documents/cms/fiche_aide/ecl_schema_signalement.pdf)
+- [Les étapes pas à pas d'une intervention](http://geo.compiegnois.fr/documents/cms/fiche_aide/ecl_schéma_intervention.pdf)
+- [Les étapes pas à pas d'une suppression d'un objet du patrimoine ](http://geo.compiegnois.fr/documents/cms/fiche_aide/ecl_schema_suppression.pdf)
