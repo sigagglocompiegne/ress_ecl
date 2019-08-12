@@ -5,8 +5,8 @@
 
 * Statut
   - [ ] à rédiger
-  - [x] en cours de rédaction
-  - [ ] relecture
+  - [ ] en cours de rédaction
+  - [x] relecture
   - [ ] finaliser
   - [ ] révision
   
@@ -353,7 +353,8 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
   * Un câble ne peut pas être relié en ses deux extrémités au même nœud.
   * L'attribut tension est transmise au câble en fonction du départ auquel est lié le nœud référencer en tant que nœud final du câble.
 
-## Table : `an_ecl_intervention`
+## Table : `an_ecl_intervention` (Pour recherche "rapport se signalement", "rapport d'intervention" et pour afichage dans la cartographie) --> Présente 1 fois dans GEO.
+
 | Attributs                       | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                              | Utilisation                                   | Exemple     |
 |:------------------------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
 | Affiche-recherche-intervention | x                 |               | Affiche-recherche-intervention                                                                                                          | Formate l'affichage d'une recherche. | Recherche : Rapport d'intervention            |             |
@@ -380,8 +381,8 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
   * Cette table a été insérée 7 fois dans GEO. La version présentée ici est celle servant aux recherches et à la cartographie.
   * Les 6 autres tables sont présentées d'un seul tenant ci-dessous.
    
- ## Intervention Foyer, Intervention Câble, Intervention Départ, Intervention Points lumineux, Intervention PI, Intervention ouvrage  
-   * ### Table : `an_ecl_intervention`
+ #### 	Intervention Foyer, Intervention Câble, Intervention Départ, Intervention Points lumineux, Intervention PI, Intervention ouvrage  
+   * ### Table : `an_ecl_intervention` (Pour interventions sur les 6 objets du patrimoine) --> est insérée 6 fois dans GEO
  | Attributs     | Champ calculé     | Formatage     | Renommage                                | Particularité/Usage                                                                      | Utilisation                                                                                                                         |
 |:------------:|:-----------------:|:-------------:|:----------------------------------------:|:----------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------:|
 | Dates        | x                 |               | Dates                                    | Formate l'affichage des différentes dates dans les fiches informations des interventions | Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI)                                                  |
@@ -1390,6 +1391,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Section du câble ( sect_cab )   STRING                       | x               | 00                     | "lt_ecl_section_cable (valeur)" | Par défaut         |
 | Commentaires divers ( observ )   STRING                      |                 |                       |                                 | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING      |                 | %USER_LOGIN%          |                                 | Par défaut         |
+| Opérateur de la saisie de la donnée géographique ( op_sai_geo )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
 | Date de création de la donnée ( date_donne )   TIMESTAMP     |                 |                       |                                 | Par défaut         |
 | Qualité de la date de pose ( qua_dat )   STRING              |                 | 00                     |                                 | Par défaut         |
 
@@ -1457,6 +1459,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Etat du point d'intérêt ( etat_pi )   STRING                          | x               | 00                     | "lt_ecl_etat"                        | Par défaut         |
 | Numéro de départ auquel est lié le noeud ( depart )   INTEGER         |                 |                       | "xapps_geo_v_ecl_depart (id_depart)" | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING               |                 | %USER_LOGIN%          |                                      | Par défaut         |
+| Opérateur de la saisie de la donnée géographique ( op_sai_geo )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
 | Commentaires divers ( observ )   STRING                               |                 |                       |                                      | Par défaut         |
 | Date de la donnée ( date_donne )   TIMESTAMP                          |                 |                       |                                      | Par défaut         |
 | Exploit Nd ( exploit_nd )   STRING                                    |                 |                       |                                      | Par défaut         |
@@ -1639,6 +1642,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Type de fusible ( ty_fusible )   STRING                       | x               | 00                     | "lt_ecl_type_fusible"                 | Par défaut         |
 | Numéro de départ auquel est lié le noeud ( depart )   INTEGER |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"  | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
+| Opérateur de la saisie de la donnée géographique ( op_sai_geo )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
 | Commentaires divers ( observ )   STRING                       |                 |                       |                                       | Par défaut         |
 | Date de la donnée ( date_donne )   TIMESTAMP                  |                 |                       |                                       | Par défaut         |
 | Prestataire intervenant sur l'objet ( presta_nd )   STRING    |                 |                       |                                       | Par défaut         |
@@ -1796,6 +1800,7 @@ Sont présent ici uniquement les attributs éditables ou disposant d'un mode de 
 | Entreprise de pose ( ent_pose )   STRING                      |                 |                       |                                       | Par défaut         |
 | Numéro de départ auquel est lié le noeud ( depart )   INTEGER |                 |                       | "xapps_geo_v_ecl_depart (id_depart)"  | Par défaut         |
 | Opérateur de la saisie de la donnée ( op_sai )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
+| Opérateur de la saisie de la donnée géographique ( op_sai_geo )   STRING       |                 | %USER_LOGIN%          |                                       | Par défaut         |
 | Commentaires divers ( observ )   STRING                       |                 |                       |                                       | Par défaut         |
 | Type de disjoncteur ( ty_disjonc )   STRING                   | x               | 00                     | "lt_ecl_type_disjoncteur"             | Par défaut         |
 | Date de la donnée ( date_donne )   TIMESTAMP                  |                 |                       |                                       | Par défaut         |
