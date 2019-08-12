@@ -3365,6 +3365,37 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.media IS 'Champ Média de GEO
 COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.miniature IS 'Champ miniature de GEO';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_media_modele.n_fichier IS 'Nom du fichier GEO';
 
+--################################################################## LOG ########################################################
+ 
+ -- Table: m_reseau_sec.an_ecl_log
+
+-- DROP TABLE m_reseau_sec.an_ecl_log;
+
+CREATE TABLE m_reseau_sec.an_ecl_log
+(
+  idlog integer NOT NULL, -- Identifiant unique de d'opération
+  tablename character varying(80) NOT NULL, -- Nom de la table concernée par l'opération sur l'entité
+  type_ope text NOT NULL, -- Type l'opération sur l'entité
+  dataold character varying(254), -- Valeur ancienne avant l'opération sur l'entité
+  datanew character varying(254), -- Valeur nouvelle après l'opération sur l'entité
+  date_maj timestamp without time zone, -- Horodatage de l'opération sur la base d'éclairage public
+  CONSTRAINT an_ecl_log_pkey PRIMARY KEY (idlog)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE m_reseau_sec.an_ecl_log
+  OWNER TO postgres;
+
+COMMENT ON TABLE m_reseau_sec.an_ecl_log
+  IS 'Table des opérations sur la base de données d''éclairage public';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_log.idlog IS 'Identifiant unique de d''opération';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_log.tablename IS 'Nom de la table concernée par l''opération sur l''entité';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_log.type_ope IS 'Type l''opération sur l''entité';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_log.dataold IS 'Valeur ancienne avant l''opération sur l''entité';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_log.datanew IS 'Valeur nouvelle après l''opération sur l''entité';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_log.date_maj IS 'Horodatage de l''opération sur la base d''éclairage public';
+
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
 -- ###                                                        CONTRAINTES                                                      ###
