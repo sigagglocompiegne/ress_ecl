@@ -105,6 +105,7 @@ DROP SEQUENCE m_reseau_sec.objet_seq ;
 DROP SEQUENCE m_reseau_sec.ecl_log_seq ;
 DROP SEQUENCE m_reseau_sec.an_ecl_media_gid_seq ;
 DROP SEQUENCE m_reseau_sec.an_ecl_erreur_id_erreur_seq ;
+DROP SEQUENCE m_reseau_sec.an_ecl_intervention_seq ;
 
 --TRIGGERS
 
@@ -245,6 +246,27 @@ CREATE SEQUENCE m_reseau_sec.an_ecl_modele_support_id_mod_sup_seq
 
 COMMENT ON SEQUENCE m_reseau_sec.an_ecl_modele_support_id_mod_sup_seq
   IS 'Séquence unique pour les médias liées au modèle de support';
+
+--############################################################ INTERVENTION ##################################################  
+
+
+-- Sequence: m_reseau_sec.an_ecl_intervention_seq
+
+-- DROP SEQUENCE m_reseau_sec.an_ecl_intervention_seq;
+
+CREATE SEQUENCE m_reseau_sec.an_ecl_intervention_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 7050
+  CACHE 1;
+ALTER TABLE m_reseau_sec.an_ecl_intervention_seq
+  OWNER TO sig_create;
+GRANT ALL ON SEQUENCE m_reseau_sec.an_ecl_intervention_seq TO sig_create;
+GRANT ALL ON SEQUENCE m_reseau_sec.an_ecl_intervention_seq TO public;
+GRANT ALL ON SEQUENCE m_reseau_sec.an_ecl_intervention_seq TO create_sig;
+COMMENT ON SEQUENCE m_reseau_sec.an_ecl_intervention_seq
+  IS 'Séquence unique pour toutes les interventions';
 
 
 -- ###############################################################################################################################
@@ -2612,7 +2634,7 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_erreur.heure IS 'Date de la saisie de l''e
 
 CREATE TABLE m_reseau_sec.an_ecl_intervention --------------------------------------- Interventions et signalements du service métier
 (
-	id_inter 	integer NOT NULL DEFAULT nextval('m_reseau_sec.ecl_objet_seq'),-- Numéro de l''intervention interne à l''ARC
+	id_inter 	integer NOT NULL DEFAULT nextval('m_reseau_sec.an_ecl_intervention_seq'),-- Numéro de l''intervention interne à l''ARC
 	id_objet 	integer NOT NULL,-------------------------------------------- Identifiant de l''objet concerné par l''intervention
 	type_si_in 	character varying(2) DEFAULT '10'::character varying,-------- Signalement ou intervention
 	dat_signa 	timestamp without time zone DEFAULT now(),------------------- Date du signalement
