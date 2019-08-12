@@ -341,6 +341,18 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 
 ELSIF (TG_OP= 'UPDATE') THEN --------------------------------------------------- Si c'est un UPDATE
 
+	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
+	  
+
+	   INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_ouvelec, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
+
+		new.geom = old.geom;
+	ELSE
+	NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
+	END IF;
+						     
 
 	IF (NEW.date_donne > now()::timestamp) THEN ----------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
 
@@ -929,6 +941,15 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
+	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_supp, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
+
+		new.geom = old.geom;
+	ELSE
+	NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
+	END IF;
+						     
 	---
 
 	IF (NEW.date_donne > now()::timestamp) THEN ----------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
@@ -1241,7 +1262,9 @@ DECLARE id_unique integer;
 BEGIN
 
 	---
-
+DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+					     
+	----
 IF (TG_OP = 'INSERT') THEN 
 
 	id_unique = nextval('m_reseau_sec.ecl_objet_seq');
@@ -1363,6 +1386,15 @@ IF (TG_OP = 'INSERT') THEN
 
 ELSIF (TG_OP = 'UPDATE') THEN 
 
+	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_pi, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
+
+		new.geom = old.geom;
+	ELSE
+	NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
+	END IF;
+						     
 	IF (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') < 1 )
 	      OR (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') =1) AND 
 		(( (SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12' ) IN (SELECT id_supp FROM m_reseau_sec.an_ecl_support))
