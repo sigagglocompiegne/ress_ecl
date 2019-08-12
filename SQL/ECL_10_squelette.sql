@@ -1043,6 +1043,8 @@ COMMENT ON COLUMN m_reseau_sec.lt_ecl_hauteur_trappe.valeur IS 'Valeur de la lis
 
 --############################################################ TYPE INTERVENTION ##################################################
 
+-- cette première liste ne sert pas dans l'application, permet juste de lister tous les codes dans les listes de valeurs nommées par matériel ci-après)
+
 CREATE TABLE m_reseau_sec.lt_ecl_type_intervention
 (
   code character varying(2) NOT NULL,
@@ -1058,6 +1060,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('00','-->'),
 			('10','Changement de disjoncteur'),
 			('11','Changement de fusible'),
+			('22','Réenclenchement du disjoncteur'),
 			('20','Changement de type de commande'),
 			('21','Changement de récepteur'),
 			('30','Contrôle électrique'),
@@ -1066,6 +1069,8 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('60','Ajout d''un départ'),
 			('80','Suppression de l''objet'),
 			('81','Désactivation de l''objet'),
+			('82','Réactivation de l'objet'),
+			('83','Dépose / repose identique (accident)'),
 			('99','Autre'),
 			('12','Changement de lanterne'),
 			('13','Changement de lampe'),
@@ -1075,6 +1080,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('70','Repositionnement lanterne/crosse'),
 			('31','Contrôle mécanique'),
 			('18','Ajout d''une option'),
+			('19','Changement de parasurtenseur'),
 			('90','Suppression d''une option');
 
 			COMMENT ON TABLE m_reseau_sec.lt_ecl_type_intervention
@@ -1098,6 +1104,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			    VALUES
 			('10','Changement de disjoncteur'),
 			('11','Changement de fusible'),
+			('22','Réenclenchement disjoncteur'),
 			('20','Changement de type de commande'),
 			('30','Contrôle électrique'),
 			('40','Nettoyage'),
@@ -1131,6 +1138,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			    VALUES
 			('10','Changement de disjoncteur'),
 			('11','Changement de fusible'),
+			('22','Réenclenchement disjoncteur'),
 			('50','Réparation'),
 			('80','Suppression de l''objet'),
 			('99','Autre');
@@ -1216,6 +1224,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			    VALUES
 			('10','Changement de disjoncteur'),
 			('11','Changement de fusible'),
+			('22','Réenclenchement disjoncteur'),
 			('18','Ajout d''une option'),
 			('90','Suppression d''une option'),
 			('19','Changement de parasurtenseur'),
