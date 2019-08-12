@@ -418,6 +418,7 @@ Objet linéaire allant d''un nœud à un autre
 
 * Trigger(s) :
 	* t_t1_cable_before_insert_update (before insert or update):
+	
 		- on force la valeur de certains attributs à l'insertion
 
 		- on actualise la date de maj à l'update
@@ -429,6 +430,7 @@ Objet linéaire allant d''un nœud à un autre
 		- on force une valeur aux attributs nœud initial et nœud final du câble. -> lien avec table nœud.
 
 		- on force une valeur pour les attributs commune, insee, gestionnaire, prestataire, en fonction d'autres tables.
+		- Contrôle de topologie + pas de modif géo si classe A
 
 	* t_t3_cable_delete (before delete) :
 		- A la suppression du câble, attribut à supprimer (pas de suppression géométrique de l'objet)
@@ -1266,10 +1268,11 @@ Description : Vue des ouvrages électriques permettant la saisie dans l''applica
 		- Suppression des messages d'erreur
 		- On force certains attributs
 		- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
-		- Contrôle de la topologie 
+		- Contrôle de la topologie (pas de modifs géométrique si classe A)
 		- Ventilation des données aux tables Noeuds et ouvrages électriques
 		- En cas de DELETE, attribut situation passe à 'supprimer' -> Le point n'est donc pas réellement supprimé.
 		- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+		- Insertion des logs
 
 ###  m_reseau_sec.geo_v_ecl_point_lumineux
 Description : Vue des supports permettant la saisie dans l''application Geo
@@ -1314,11 +1317,12 @@ Description : Vue des supports permettant la saisie dans l''application Geo
 	  
 		- Suppression des messages d'erreur
 		- On force certains attributs
-		- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
-		- Contrôle de la topologie 
+		- Gestion des contraintes de saisie avec génération de messages d'erreurs
+		- Contrôle de la topologie (pas de modifs géométrique si classe A)
 		- Ventilation des données aux tables Noeuds et Supports
 		- En cas de DELETE, attribut situation passe à 'supprimer' -> Le point n'est donc pas réellement supprimé
 		- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+		- Insertion des logs
 
 ###  m_reseau_sec.geo_v_ecl_pi 
 Description : Objet réel ou abstrait indiquant un point ayant une importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''EP.
@@ -1356,10 +1360,11 @@ Description : Objet réel ou abstrait indiquant un point ayant une importance po
 		- Suppression des messages d'erreur
 		- On force certains attributs
 		- Gestion des contraintes de saisie avec génération de  	messages d'erreurs
-		- Contrôle de la topologie 
+		- Contrôle de la topologie (pas de modifs géométrique si classe A)
 		- Ventilation des données aux tables Noeuds et PI
 		- En cas de DELETE, attribut situation passe à 'supprimer' -> Le point n'est donc pas réellement supprimé.
 		- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+		- Insertion des logs
 
 ### xapps_an_v_ecl_patrimoine
 Description : Bilan du patrimoine numérique d''éclairage public
