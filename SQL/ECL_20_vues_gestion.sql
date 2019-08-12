@@ -113,10 +113,18 @@ ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER situation SET DEFAULT '10
 --- Ventilation des données aux tables Noeuds et ouvrages électriques
 --- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+--- L'insertion des logs se fait également dans cette fonction
 CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
   RETURNS trigger AS
 $BODY$
 DECLARE id_unique integer;
+
+--- variable pour un log
+DECLARE v_idlog integer;
+DECLARE v_dataold character varying(1000);
+DECLARE v_datanew character varying(1000);
+DECLARE v_name_table character varying(254);
+
 BEGIN 
 
 ---
@@ -195,15 +203,14 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 
 		--
 	
-	IF ((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') < 1 )  THEN 
-	-- S'il n'y a pas d'autre noeud dont la géométrie est égale
+	IF ((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') < 1 )  THEN -- S'il n'y a pas d'autre noeud dont la géométrie est égale
 
 	
-		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) THEN  ----- Si c'est contenu dans une des zones de gestion
+		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) THEN
 
-			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
@@ -325,7 +332,7 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 		SET id_nd_fin= new.id_ouvelec
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) AND situation <> '12' ;
 
-		RETURN NEW;
+
 		
 	ELSE ---- Si la topologie de la saisie n'est pas valide
 	
@@ -337,14 +344,28 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 
 	END IF;
 
-	
+	--- log
+        v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass); 
+	v_datanew := ROW(NEW.*); ------------------------------------ On concatène tous les attributs dans un seul
+
+	---
+	INSERT INTO m_reseau_sec.an_ecl_log (idlog, tablename, type_ope, dataold, datanew, date_maj)
+	SELECT
+	v_idlog,
+	TG_TABLE_NAME,
+	'INSERT',
+	NULL,
+	v_datanew,
+	now();
+
+RETURN NEW;
 
 ELSIF (TG_OP= 'UPDATE') THEN --------------------------------------------------- Si c'est un UPDATE
 
-	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
-	  
 
-	   INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
+        
+        IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
+	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
 		VALUES
 		(NEW.id_ouvelec, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
 
@@ -352,7 +373,8 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 	ELSE
 	NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
 	END IF;
-						     
+
+	---
 
 	IF (NEW.date_donne > now()::timestamp) THEN ----------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
 
@@ -460,11 +482,11 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 
 		--
 		
-		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) THEN
+		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) THEN
 
-			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
@@ -479,9 +501,7 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 
 
 	IF (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') < 1 )
-	-- S'il n'y a pa d'autre noeud dont la géométrie est égale
-	      OR ( (NEW.geom = OLD.geom) AND ((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') = 1 ) AND (OLD.situation <>'12')))  THEN 
-	      -- S'il y a UN noeud dont la géométrie est égale et que c'est l'objet lui même, ALORS
+	      OR ( (NEW.geom = OLD.geom) AND ((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') = 1 ) AND (OLD.situation <>'12')))  THEN -- S'il n'y a pa d'autre noeud dont la géométrie est égale
 
 
 		UPDATE m_reseau_sec.geo_ecl_noeud 
@@ -605,7 +625,7 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 
 		END IF;
 
-		RETURN NEW;
+
 
 	ELSE --- Si la topologie n'est pas valide
 	
@@ -617,6 +637,24 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 
 	END IF;
 
+	--- log
+	v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass);
+	v_dataold := ROW(OLD.*);------------------------------------ On concatène tous les anciens attributs dans un seul
+	v_datanew := ROW(NEW.*);------------------------------------ On concatène tous les nouveaux attributs dans un seul	
+	v_name_table := TG_TABLE_NAME;
+
+	---
+  
+	INSERT INTO m_reseau_sec.an_ecl_log (idlog, tablename,  type_ope, dataold, datanew, date_maj)
+	SELECT
+	v_idlog,
+	v_name_table,
+	'UPDATE',
+	v_dataold,
+	v_datanew,
+	now();
+
+RETURN NEW;
 	
 ELSIF (TG_OP = 'DELETE') THEN --------------------------------------------------- Si c'est un UPDATE
 
@@ -637,6 +675,21 @@ ELSIF (TG_OP = 'DELETE') THEN --------------------------------------------------
 	
 	--- On supprime les départs, ce qui change leur situation à '12'
 	DELETE FROM m_reseau_sec.an_ecl_depart WHERE id_ouvelec = OLD.id_ouvelec;
+
+	--- log
+	v_dataold := ROW(OLD.*);------------------------------------ On concatène tous les anciens attributs dans un seul
+	v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass);
+
+	INSERT INTO m_reseau_sec.an_ecl_log (idlog, tablename,  type_ope, dataold, datanew, date_maj)
+	SELECT
+	v_idlog,
+	TG_TABLE_NAME,
+	'DELETE',
+	v_dataold,
+	NULL,
+	now();
+
+
 	
 	RETURN NEW;
 END IF;
@@ -644,6 +697,9 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
+ALTER FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
+  OWNER TO postgres;
+
 
 DROP TRIGGER t_t1_lk_ouvrage_electrique ON m_reseau_sec.geo_v_ecl_ouvrage_electrique;
 CREATE TRIGGER t_t1_lk_ouvrage_electrique
