@@ -817,7 +817,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_supp, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(NEW.id_supp, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
 			RETURN OLD ;
 
 		END IF;
@@ -993,7 +993,7 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_supp, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(NEW.id_supp, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
 			RETURN OLD ;
 
 		END IF;
