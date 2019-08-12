@@ -941,6 +941,8 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
+	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
+						     
 	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
 		VALUES
 		(NEW.id_supp, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
@@ -1386,6 +1388,8 @@ IF (TG_OP = 'INSERT') THEN
 
 ELSIF (TG_OP = 'UPDATE') THEN 
 
+						     
+	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
 	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
 		VALUES
 		(NEW.id_pi, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
