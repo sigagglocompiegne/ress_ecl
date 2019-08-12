@@ -1868,12 +1868,23 @@ BEGIN
 
 	IF (TG_OP ='UPDATE') THEN
 
-			NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
+	DELETE FROM m_reseau_sec.an_ecl_erreur WHERE id_objet IN (SELECT id_cab FROM m_reseau_sec.geo_ecl_cable); ------ On efface les messages d'erreurs existants
+
+	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
+	  
+
+	   INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
+		VALUES
+		(NEW.id_cab, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
+
+		new.geom = old.geom;
+	ELSE
+	NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
+	END IF;
+
+	
 	END IF; 
 
----
-
-	DELETE FROM m_reseau_sec.an_ecl_erreur WHERE id_objet IN (SELECT id_cab FROM m_reseau_sec.geo_ecl_cable); ------ On efface les messages d'erreurs existants
 
 	--- CORRECTION DES ERREURS DE SAISIE, affichage message d'erreur
 
