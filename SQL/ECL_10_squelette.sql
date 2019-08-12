@@ -2600,6 +2600,85 @@ $BODY$
   EXECUTE PROCEDURE m_reseau_sec.ft_m_foyer_delete(); 
 
 ---
+-- Function: m_reseau_sec.ft_m_log_ecl()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_log_ecl();
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_log_ecl()
+  RETURNS trigger AS
+$BODY$
+DECLARE v_idlog integer;
+DECLARE v_dataold character varying(1000);
+DECLARE v_datanew character varying(1000);
+DECLARE v_name_table character varying(254);
+BEGIN
+
+-- INSERT
+IF (TG_OP = 'INSERT') THEN
+
+  v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass); 
+  v_datanew := ROW(NEW.*); ------------------------------------ On concatène tous les attributs dans un seul
+
+  ---
+  INSERT INTO m_reseau_sec.an_ecl_log (idlog, tablename, type_ope, dataold, datanew, date_maj)
+  SELECT
+  v_idlog,
+  TG_TABLE_NAME,
+  'INSERT',
+  NULL,
+  v_datanew,
+  now();
+
+  ---
+  
+  RETURN NEW;
+  
+
+-- UPDATE
+ELSIF (TG_OP = 'UPDATE') THEN 
+  ---
+  
+  v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass);
+  v_dataold := ROW(OLD.*);------------------------------------ On concatène tous les anciens attributs dans un seul
+  v_datanew := ROW(NEW.*);------------------------------------ On concatène tous les nouveaux attributs dans un seul	
+  v_name_table := TG_TABLE_NAME;
+
+  ---
+  
+  INSERT INTO m_reseau_sec.an_ecl_log (idlog, tablename,  type_ope, dataold, datanew, date_maj)
+  SELECT
+  v_idlog,
+  v_name_table,
+  CASE WHEN new.situation ='12' THEN 'DELETE' ELSE 'UPDATE'END,
+  v_dataold,
+  v_datanew,
+  now();
+  RETURN NEW;
+  
+
+END IF;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION m_reseau_sec.ft_m_log_ecl()
+  OWNER TO postgres;
+
+
+-- Trigger: t_t5_log_foyer on m_reseau_sec.an_ecl_foyer
+
+-- DROP TRIGGER t_t5_log_foyer ON m_reseau_sec.an_ecl_foyer;
+
+CREATE TRIGGER t_t5_log_foyer
+  AFTER INSERT OR UPDATE OR DELETE
+  ON m_reseau_sec.an_ecl_foyer
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_log_ecl();
+
+
+
+---
   
 COMMENT ON TABLE m_reseau_sec.an_ecl_foyer IS 'Objet reposant sur un support, intégrant une source lumineuse';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.id_foyer IS 'Numéro du foyer interne à l''ARC';
