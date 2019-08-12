@@ -4,7 +4,7 @@
 /*PostGIS*/
 
 /* Propriétaire : GeoCompiegnois - http://geo.compiegnois.fr/ */
-/* Auteur : Thibaut Guill */
+/* Auteur : Thibaud Billoteau */
 
 /*  
   dépendances : voir script d'initialisation des dépendances init_bd_pei_dependencies.sql
@@ -15,4 +15,4 @@
 
 /*
 #################################################################### SUIVI CODE SQL ####################################################################
-2019-08-12 : TG / initialisation du code
+2019-08-12 : TB / initialisation du code
