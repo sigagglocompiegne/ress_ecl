@@ -116,7 +116,7 @@ SELECT  dep.id_depart,
 		 WHERE dep.id_ouvelec=ouv.id_ouvelec),
 	        '-' ,dep.nom_depart)  
 	AS nom_depart,--------------------------------------------------------------- Nom de l'attribut concaténé
-	ST_Buffer(nd.geom,400)::geometry(Polygon,2154) AS geom ---------------------- Réalisation du buffer de 400 mètres (à revoir) selon géométrie de l'ouvrage(noeud) auquel est lié le départ
+	ST_Buffer(nd.geom,750)::geometry(Polygon,2154) AS geom ---------------------- Réalisation du buffer de 400 mètres (à revoir) selon géométrie de l'ouvrage(noeud) auquel est lié le départ
 FROM m_reseau_sec.an_ecl_depart dep
 JOIN m_reseau_sec.geo_ecl_noeud nd ON nd.id_noeud = dep.id_ouvelec
 WHERE dep.situation <> '12' AND dep.situation <> '11';------------------------------- On sélection les départs actifs uniquement
