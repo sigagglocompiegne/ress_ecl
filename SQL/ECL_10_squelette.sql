@@ -640,6 +640,10 @@ INSERT INTO m_reseau_sec.lt_ecl_type_disjoncteur(code, valeur)
 	('30','63A 500Ma'),
 	('31','63A 1000Ma'),
 	('40','Disjoncteur principal'),
+	('50','10/30A'),
+	('51','30/60A'),
+	('60','10A 30Ma'),
+	('61','16A 30Ma'),
 	('99','Autre');
 
 COMMENT ON TABLE m_reseau_sec.lt_ecl_type_disjoncteur
