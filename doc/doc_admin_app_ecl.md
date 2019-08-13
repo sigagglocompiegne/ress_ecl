@@ -604,7 +604,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | xapps_an_vmr_ecl_materialisee_noeud_armoire       | id_supp - id_noeud                                     | 1        |
 | an_ecl_erreur                                     | id_supp - id_objet                                     |0...n      |
 | an_ecl_intervention (intervention point lumineux) | id_supp - id_objet                                     |0...n      |
-| xapps_geo_v_ecl_depart                            | depart - id_depart                                        | 00…1      |
+| xapps_geo_v_ecl_depart                            | depart - id_depart                                        | 0…1      |
 | an_ecl_foyer                                      | id_supp                                                   |0...n      |
 | an_ecl_modele_support                             | id_mod_sup                                                | 1        |
 
@@ -705,7 +705,7 @@ Aucune
 ## Domaine de valeur : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
 | ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| par géométrie | geom         |           x        | Spatial  | est différente de | 000, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
+| par géométrie | geom         |           x        | Spatial  | est différente de | 00, 60 et 30 | Sélection des départs dont la géométrie (buffer autour du point réalisé en base) contient le point courant. |
 
 * ### Relations : 
 	Aucune
