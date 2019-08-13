@@ -2567,6 +2567,7 @@ situation = '12' -------------------- Situation = '12' équivaut à ''supprimé'
 WHERE OLD.id_foyer=id_foyer;--------- On utilise OLD puisque c'est un trigger DELETE
 RETURN NEW;
 
+/*
 UPDATE m_reseau_sec.an_ecl_depart---- On UPDATE le départ avec les foyers actifs restant.
 			SET 
 				puis_sous = 	(SELECT SUM ((lt_ecl_puissance_lampe.valeur::integer * (( SELECT count(*) AS count -------------Les puissances des lampes * le nbr de foyers...
@@ -2590,7 +2591,7 @@ UPDATE m_reseau_sec.an_ecl_depart---- On UPDATE le départ avec les foyers actif
 								   FROM m_reseau_sec.geo_ecl_noeud 
 								   WHERE id_noeud =  NEW.id_supp
 								  );
-
+*/
 
 END;
 $BODY$
