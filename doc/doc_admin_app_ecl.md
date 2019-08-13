@@ -1067,15 +1067,16 @@ Pas de géométrie.
 Fiches d'information active : sans objet
 
 
-## Cartographie : Visuel de gestion --> Support classés par armoire
+
+## Cartographie (via menu de gauche des fonctionnalités) : 
 
 Pour les "Visuels de gestion", les géotables sont glissées dans les fonctionnalités de l'application. Cela permet de les afficher sans passer par la légende.
 
+### Visuel de gestion --> Support classés par armoire
+
 Source : xapps_geo_v_ecl_support_par_armoire
 
-Particularité : Lorsqu'une armoire est ajoutée, il faut la rentrer dans la cartographie ECL.
-
-## Cartographie :
+Particularité : Lorsqu'une armoire est ajoutée, il faut la rentrer dans la cartographie ECL (ajouter une catégorie dans la symbologie).
 
 ### Visuel de gestion --> Zones de gestion
 
