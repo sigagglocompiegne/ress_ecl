@@ -16,6 +16,7 @@ Elle a été conçue au fur et à mesure des réunions avec le service d'éclair
 Le standard de données des réseaux, en cours de rédaction au moment de la réalisation de cette base, n'a pas été intégré. Cependant, la problématique DT/DICT est prise en compte, avec des métadonnées de classe de précision tirées du RAEPA.
 
 
+
 ### Résumé fonctionnel
 
 Pour rappel des grands principes :
@@ -47,7 +48,7 @@ Dans le détail :
 ###	Alimentation de la base de données
 * Les données sont rentrées et modifiées via l'application web-métier d'éclairage public. 
 * Les données des prestataires  agissant pour le compte de l'Agglomération de la Région de Compiègne ou de la Ville de Compiègne ont été ajoutées via un workflow FME.
-* Le cadre d'actualisation des données par les prestataires est à définir avec ces prestataires.
+* Le cadre d'actualisation des données par les prestataires est à définir avec eux. Pour le moment, aucun processus n'a été prévu, et aucun contact n'a été engagé avec les entreprises concernées.
 
 ###	Les contrôles de saisie
 
