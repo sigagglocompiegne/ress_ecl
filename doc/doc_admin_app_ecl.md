@@ -170,6 +170,7 @@ Les erreurs possibles :
 | **Erreurs de topologie**  | ****       | ****         | ****                                                                                                                                                                  |
 | geo_ecl_cable             | id_nd_ini  | != id_nd_fin | Un câble ne peut pas être relié deux fois au même nœud.                                                                                                               |
 | geo_ecl_cable             | geom       |              | L''objet se situe dans plusieurs zones de gestion. Merci de renseigner le prestataire et l''exploitant dans les métadonnées de ce câble                               |
+| geo_ecl_cable             | geom       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A.                           |
 | geo_ecl_cable             | geom       |              | L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.                                                                                        |
 | geo_v_point_lumineux      | geom       |              | L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.                                                                                        |
 | geo_v_point_lumineux      | geom       |              | Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.                                                                  |
@@ -179,7 +180,8 @@ Les erreurs possibles :
 | geo_v_ouvrage_electrique  | geom       |              | Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.                                                                  |
 | geo_v_point_interet       | geom, qua_geo_xy       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A.                                                                  |
 | geo_v_ouvrage_electrique  | geom,qua_geo_xy       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A.                                                                                          |
-| geo_v_point_lumineux      | geom, qua_geo_xy       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A.                                                                    |
+| geo_v_point_lumineux      | geom, qua_geo_xy       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A. |
+
 ## Table : `an_ecl_foyer`
 | Attributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | 
 |:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------------:|
