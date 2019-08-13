@@ -334,6 +334,8 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | date_donne          |                   | x             | Date de création de la donnée                                     | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
 | date_maj            |                   | x             | Date de la mise à jour                                            | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
 | date_sai            |                   | x             | Date de saisie dans la base                                       | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
+| info_bulle | x                 |               | info_bulle                                               |  | Cartographie Réseaux  |
+| label  | x                 |               | label                                               |  | Cartographie Réseaux  |
 
 (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
@@ -533,6 +535,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | date_sai       |                   | x             | Date de saisie dans la base                  | L'heure n'est pas affichée                                                       | Fiche information : Câble (ECL)            |
 | dat_pos        |                   | x             | Date de pose                                 | L'heure n'est pas affichée                                                       | Fiche information : Câble (ECL)            |
 | date_donne     |                   | x             | Date de création de la donnée                | L'heure n'est pas affichée                                                       | Fiche information : Câble (ECL)            |
+| info_bulle | x                 |               | info_bulle                                               |  | Cartographie Réseaux  |
 
  (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
@@ -583,6 +586,8 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | date_sai                         |                   | x             | Date de saisie dans la base                  | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
 | dat_pos                          |                   | x             | Date de pose                                 | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
 | date_donne                       |                   | x             | Date de création de la donnée                | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
+| info_bulle | x                 |               | info_bulle                                               |  | Cartographie Réseaux  |
+| label  | x                 |               | label                                               |  | Cartographie Réseaux  |
 
  (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
@@ -627,7 +632,7 @@ Aucune
 | qua_geo_z         |                   | x             | Classe de la géolocalisation en Z                | Formatage par une liste de domaine ( lt_ecl_qualite_geolocalisation )            | Fiche information : Point intérêt (PI)   |
 | situation         |                   | x             | Situation générale : actif, inactif,supprimé     | Formatage par une liste de domaine ( lt_ecl_situation )                          | Fiche information : Point intérêt (PI)   |
 | ty_pi             |                   | x             | Type de point d'intérêt                          | Formatage par une liste de domaine ( lt_ecl_type_pi )                            | Fiche information : Point intérêt (PI)   |
-
+| info_bulle | x                 |               | info_bulle                                               |  | Cartographie Réseaux  |
 
   * ### Filtres :
 
