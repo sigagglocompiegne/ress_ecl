@@ -1070,11 +1070,13 @@ Source : xapps_geo_v_ecl_support_par_armoire
 
 Particularité : Lorsqu'une armoire est ajoutée, il faut la rentrer dans la cartographie ECL.
 
-## Cartographie : Visuel de gestion --> Zones de gestion
+## Cartographie :
+
+### Visuel de gestion --> Zones de gestion
 
 Source : geo_amt_zpne_gestion
 
-## Cartographie : Visuel de gestion --> Etat des supports
+### Visuel de gestion --> Etat des supports
 
 Source : Etat des supports (geo_v_ecl_point_lumineux)
 
