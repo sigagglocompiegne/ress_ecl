@@ -358,7 +358,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
   * Un câble ne peut pas être relié en ses deux extrémités au même nœud.
   * L'attribut tension est transmise au câble en fonction du départ auquel est lié le nœud référencer en tant que nœud final du câble.
 
-## Table : `an_ecl_intervention` (Pour recherche "rapport se signalement", "rapport d'intervention" et pour afichage dans la cartographie) --> Présente 1 fois dans GEO.
+## Table : `an_ecl_intervention` (Pour recherche "rapport se signalement", "rapport d'intervention" et pour affichage dans la cartographie) --> Présente 1 fois dans GEO.
 
 | Attributs                       | Champ calculé     | Formatage     | Renommage                                                                                                                               | Particularité/Usage                                                              | Utilisation                                   | Exemple     |
 |:------------------------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
@@ -411,7 +411,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | typ_def      |                   | x             | Type de défaillance                      | Formatage par une liste de domaine ( lt_ecl_type_defaillance )                           | Fiches informations des Fiches d'intervention                                                                                       |
 | type_inter   |                   | x             | Type d'intervention                      | Formatage par une liste de domaine ( lt_intervention_point_lumineux )                    | Fiches informations des Fiches d'intervention +  Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI) |
 | type_si_in   |                   | x             | Signalement ou intervention              | Formatage par une liste de domaine ( lt_ecl_signalement_intervention )                   | Fiches informations des Fiches d'intervention                                                                                       |
-
+| Affiche_ordre   |            x       |              | affiche_ordre             |      Défini l'ordre de création des signalements/interventions              | Fiches informations des Fiches d'intervention                                                                                       |
 
 * ### 'att_met1' 
 | Fiche information           | Utilisé     | Particularité/Usage                                          | Label                |
