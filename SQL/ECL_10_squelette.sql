@@ -2473,6 +2473,8 @@ BEGIN
 	--- partie désactivé car puissance lampe à saisir (pas liste de valeur) et null possible
 	--- et en plus sous-armoire non prise en compte ici
         --- on calcule ici la puissance de l'ensemble des lampes des foyers reliés au départ 
+
+-- partie supprimé car puissance mis en charactère mais à gérer plus tard (cf ticket redmine)
 /*
 IF ( TG_OP = 'INSERT') THEN ------------------------- Si c'est un INSERT
 	UPDATE m_reseau_sec.an_ecl_depart---- On UPDATE le départ
@@ -2567,6 +2569,7 @@ situation = '12' -------------------- Situation = '12' équivaut à ''supprimé'
 WHERE OLD.id_foyer=id_foyer;--------- On utilise OLD puisque c'est un trigger DELETE
 RETURN NEW;
 
+-- partie supprimé car puissance mis en charactère mais à gérer plus tard (cf ticket redmine)
 /*
 UPDATE m_reseau_sec.an_ecl_depart---- On UPDATE le départ avec les foyers actifs restant.
 			SET 
