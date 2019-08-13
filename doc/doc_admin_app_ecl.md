@@ -15,6 +15,7 @@
 |Date | Auteur | Description
 |:---|:---|:---|
 |17/07/2019|Thibaud BILLOTEAU|version initiale|
+|13/08/2019|Thibaud BILLOTEAU|version finale|
 
 # Généralité
 
