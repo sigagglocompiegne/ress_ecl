@@ -3370,6 +3370,14 @@ ALTER FUNCTION m_reseau_sec.ft_m_intervention()
   ON m_reseau_sec.an_ecl_intervention
   FOR EACH ROW
   EXECUTE PROCEDURE m_reseau_sec.ft_m_intervention(); 
+  
+  --- log
+  CREATE TRIGGER t_t2_log_intervention
+  AFTER INSERT OR UPDATE OR DELETE
+  ON m_reseau_sec.an_ecl_intervention
+  FOR EACH ROW
+EXECUTE PROCEDURE m_reseau_sec.ft_m_log_ecl();
+
 --
 COMMENT ON TABLE m_reseau_sec.an_ecl_intervention IS 'Interventions et signalements du service métier ';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.id_inter IS 'Numéro de l''intervention interne à l''ARC';
