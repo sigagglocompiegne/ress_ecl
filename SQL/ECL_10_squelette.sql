@@ -2047,6 +2047,14 @@ $BODY$
   FOR EACH ROW
   EXECUTE PROCEDURE m_reseau_sec.ft_m_cable_delete();
 
+---log
+
+CREATE TRIGGER t_t4_log_cable
+  AFTER INSERT OR UPDATE OR DELETE
+  ON m_reseau_sec.geo_ecl_cable
+  FOR EACH ROW
+EXECUTE PROCEDURE m_reseau_sec.ft_m_log_ecl();
+
 ---
   
 COMMENT ON TABLE m_reseau_sec.geo_ecl_cable IS 'Objet linéaire allant d''un nœud à un autre.';
@@ -2291,7 +2299,13 @@ $BODY$
   FOR EACH ROW
   EXECUTE PROCEDURE m_reseau_sec.ft_m_depart_delete(); 
 
----
+--- log
+
+CREATE TRIGGER t_t3_log_depart
+  AFTER INSERT OR UPDATE OR DELETE
+  ON m_reseau_sec.an_ecl_depart
+  FOR EACH ROW
+EXECUTE PROCEDURE m_reseau_sec.ft_m_log_ecl();
 
 COMMENT ON TABLE m_reseau_sec.an_ecl_depart IS 'Objet intégré à un ouvrage électrique et permettant le branchement d''un câble.';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.id_depart IS 'Numéro du depart interne à l''ARC';
@@ -2538,7 +2552,7 @@ ALTER FUNCTION m_reseau_sec.ft_m_foyer_after()
   OWNER TO postgres;
 
 
-  CREATE TRIGGER t_t3_foyer_after --- t2 réservé à log
+  CREATE TRIGGER t_t3_foyer_after --- t3 réservé à log
   AFTER INSERT OR UPDATE
   ON m_reseau_sec.an_ecl_foyer
   FOR EACH ROW
