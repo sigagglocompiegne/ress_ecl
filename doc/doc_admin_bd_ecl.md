@@ -99,7 +99,7 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
 |id_ouvelec|Lien vers table armoire|integer| |
 |nom_depart|Nom du secteur déservi par le départ|character varying(254)| |
 |etat_dep|Etat du départ|character varying(2)|'00'::character varying|
-|tension|Tension électrique en sortie|integer| |
+|tension|Tension électrique en sortie|character varying(10)| |
 |ty_disjonc|Type du disjoncteur|character varying(2)|'00'::character varying|
 |ty_fusible|Type du fusible|character varying(2)|'00'::character varying|
 |observ|Commentaires divers|character varying(254)| |
