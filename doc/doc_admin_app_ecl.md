@@ -2296,5 +2296,80 @@ L'application, tout comme la base de données, ne gère pas les activités tempo
 | geo_amt_zpne_gestion                         | x                           |                          |                      |                       | Zones de gestion                            |                        | gest                                   |                         | ARC = (Polygone, solid texture, #003978, opacité 18) / Ville = (Polygone, solid texture, #CAAE10, opacité 18 |                                                |
 |                                              | x                           | x                        | x                    | x                     | Limite administrative                       |                        |                                        |                         |                                                      |                                                |
 
+# L'application
 
+* Généralités :
+
+| Gabarit     | Thème                            | Modules spé                                                                                                     | Impression                            |
+| ----------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Pro         | Thème GeoCompiegnois 1.0.7 (ECL) |  Introduction, StreetView, Page de connexion perso (config Eclirage public), javascript, Multimédia (Média-ECL) | A4 - Portrait et A4 - Paysage+légende |
+
+* Particularité de certains modules :
+  * Module introduction : ce menu s'ouvre automatiquement à l'ouverture de l'application grâce un code dans le module javascript. Ce module contient une introduction sur l'application, et des liens vers le guide utilisateur.
+  * Module javacript : 
+  `var injector = angular.element('body').injector();
+var acfApplicationService = injector.get('acfApplicationService');
+acfApplicationService.whenLoaded(setTimeout(function(){
+$(".sidepanel-item.launcher-application").click();
+}, 100));`
+
+* Recherche globale : 
+Vide
+
+* Carte : `ECL`
+
+Comportement au clic : (dés)active uniquement l'item cliqué
+Liste des recherches :  Recherche d'ouvrage électrique ,  Recherche de support ,  Recherche de point d'intérêt (ECL) ,  Recherche de câble.
+
+
+* Fonds de plan :
+
+|Nom|Au démarrage|opacité|
+|:---|:---|:---|
+|Cadastre|x|100%|
+|Plan de ville||100%|
+|Photographie aérienne 2013|x|70%|
+
+* Fonctionnalités
+
+| Groupe                                        | Sous-groupe | Nom                                                     |
+| --------------------------------------------- | ----------- | ------------------------------------------------------- |
+| Recherche métier                              |             |                                                         |
+|                                               |             | Recherche d'ouvrage électrique                          |
+|                                               |             | Recherche de départ                                     |
+|                                               |             | Recherche de support                                    |
+|                                               |             | Recherche de foyer                                      |
+|                                               |             | Recherche de point d'intérêt                            |
+|                                               |             | **Recherche de câble**                                  |
+| Saisie                                        |             |                                                         |
+|                                               |             | Saisie d'ouvrage électrique                             |
+|                                               |             | Saisie de points d'intérêts                             |
+|                                               |             | Saisie de supports pour foyers                          |
+|                                               |             | Saisie de câble                                         |
+| Gestion des modèles                           |             | ****                                                    |
+|                                               |             | Nouveau modèle de support                               |
+|                                               |             | Nouveau modèle de lanterne                              |
+|                                               |             | Nouveau modèle de lampe                                 |
+|                                               |             | Recherche d'un modèle de support                        |
+|                                               |             | Recherche d'un modèle de lanterne                       |
+|                                               |             | Recherche d'un modèle de lampe                          |
+| Signalements et interventions                 |             |                                                         |
+|                                               |             | Rapport de signalement                                  |
+|                                               |             | Rapport d'intervention                                  |
+| Recherche avancée d'une voie ou d'une adresse |             |                                                         |
+|                                               |             | ECL-Recherche avancée d'une voie                        |
+|                                               |             | ECL-Recherche avancée d'une adresse                     |
+| Gestion des anomalies                         |             |                                                         |
+|                                               | Topologie   |                                                         |
+|                                               |             | Câble non relié                                         |
+|                                               |             | Nœud non relié à un câble                               |
+|                                               | Réseau      |                                                         |
+|                                               |             | Nœuds non reliés à une armoire                          |
+|                                               |             | Recherche des foyers dont la lampe n'est pas renseignée |
+|                                               |             | Recherche de supports de foyers                         |
+|                                               |             | Messages d'erreurs                                      |
+| Visuels de gestion                            |             |                                                         |
+|                                               |             | Supports classés par armoire                            |
+|                                               |             | Etat des supports                                       |
+|                                               |             | Zones de gestion                                        |
 
