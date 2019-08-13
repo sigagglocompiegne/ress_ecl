@@ -177,8 +177,9 @@ Les erreurs possibles :
 | geo_v_point_interet       | geom       |              | Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.                                                                  |
 | geo_v_ouvrage_electrique  | geom       |              | L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.                                                                                        |
 | geo_v_ouvrage_electrique  | geom       |              | Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.                                                                  |
-
-
+| geo_v_point_interet       | geom, qua_geo_xy       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A.                                                                  |
+| geo_v_ouvrage_electrique  | geom,qua_geo_xy       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A.                                                                                          |
+| geo_v_point_lumineux      | geom, qua_geo_xy       |              | Vous ne pouvez pas modifier la géométrie d'un objet en classe A.                                                                    |
 ## Table : `an_ecl_foyer`
 | Attributs     | Champ calculé     | Formatage     | Renommage                                 | Particularité/Usage                                                     | Utilisation                     | 
 |:------------:|:-----------------:|:-------------:|:-----------------------------------------:|:-----------------------------------------------------------------------:|:-------------------------------:|
