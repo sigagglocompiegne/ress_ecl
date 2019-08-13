@@ -172,14 +172,14 @@ D! Objet reposant sur un support, intégrant une source lumineuse
 
 	* t_t3_foyer_after (after insert or update) :
 	- on update le support du foyer (nbr foyer) 
-	==> le départ auquel est lié le foyer (puissance souscrite) a été désactivité pour le moment
+	==> l'update du départ auquel est lié le foyer (attribut puissance souscrite) a été désactivité pour le moment
 	
-	La puissance souscrite ne prend pas en compte la puissance des sous-armoire reliées. C'est une amélioration importante à rélaliser (à gérer avec la partie désactivé ci-dessus).
+	La puissance souscrite ne prend pas en compte la puissance des sous-armoire reliées. C'est une amélioration importante à rélaliser (à gérer avec la partie désactivée ci-dessus).
 	
 	*  t_t4_foyer_delete (before delete) : 
 	- suppression virtuelle du foyer (attribut situation à supprimer)
 
-	- Suppression = puissance souscrite du départ auquel il est lié remise à jour.
+	- Suppression = puissance souscrite du départ auquel il est lié remise à jour. ==> Désactivé pour le moment, voir ci-dessus
 
 	- rafraichissement de la vue récursive
 	
