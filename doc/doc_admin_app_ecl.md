@@ -6,8 +6,8 @@
 * Statut
   - [ ] à rédiger
   - [ ] en cours de rédaction
-  - [x] relecture
-  - [ ] finaliser
+  - [ ] relecture
+  - [x] finaliser
   - [ ] révision
   
 * Historique des versions
