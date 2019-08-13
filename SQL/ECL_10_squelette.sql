@@ -2183,7 +2183,7 @@ CREATE TABLE m_reseau_sec.an_ecl_depart ----------------------------------------
 	id_ouvelec  integer NOT NULL,  --------------------------------------------- Lien vers table armoire
 	nom_depart  character varying (254),  -------------------------------------- Nom du secteur déservi par le départ -- pas de unique car pour les transformateurs les noms sont les mêmes
 	etat_dep    character varying (2) NOT NULL DEFAULT '00',  ------------------ Etat du départ
-	tension     integer ,  ----------------------------------------------------- Tension électrique en sortie - en varchar pour la gestion d'intervention
+	tension     character varying (10) ,  ---------------------------------------Tension électrique en sortie - en varchar pour la gestion d'intervention
 	ty_disjonc  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type du disjoncteur
 	ty_fusible  character varying (2) NOT NULL DEFAULT '00',  ------------------ Type du fusible
 	observ      character varying(254) ,  -------------------------------------- Commentaires divers
@@ -2212,15 +2212,6 @@ BEGIN
 -- 1 ere partie : On Efface les messages d'erreurs existants, puis on test les attributs pour générer les nouveaux messages d'erreur si besoin
 
 	DELETE FROM m_reseau_sec.an_ecl_erreur WHERE id_objet NOT IN (SELECT id_foyer FROM m_reseau_sec.an_ecl_foyer); ------ On efface les messages d'erreurs existants de la table, sauf foyer car ce trigger est lancé lors de l'update de foyer
-
-	---
-
-	IF (NEW.tension > 3200::integer) THEN -------------------------------------------------- Test si la tension du départ est bien inférieur à 3200 V, valeur max du réseau de Compiègne. 
-		NEW.tension=NULL;--------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
-		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure) -------------- Puis on ajoute dans la table erreur
-		VALUES
-		(NEW.id_depart, 'La tension doit être inférieure ou égale à 3200 V', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
-	END IF;
 
 	---
 
