@@ -156,24 +156,71 @@ COMMENT ON COLUMN x_apps.xapps_an_v_ecl_tension_cable.tension IS 'Tension du câ
 --############################################################## TABLEAU DE BORD PATRIMOINE ####################################################
 
 --- On fait une vue du nombre d'éléments du patrimoine
---DROP VIEW  x_apps.xapps_an_v_ecl_patrimoine;
+-- View: x_apps.xapps_an_v_ecl_patrimoine
+
+DROP VIEW x_apps.xapps_an_v_ecl_patrimoine;
+
 CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_patrimoine AS 
-SELECT 
-	(SELECT count(*) FROM m_reseau_sec.an_ecl_ouvrage_electrique JOIN m_reseau_sec.geo_ecl_noeud nd ON id_noeud=id_ouvelec WHERE nd.situation <> '12') AS ouvrage,
-	(SELECT count(*) FROM m_reseau_sec.an_ecl_foyer WHERE situation <> '12') AS nbr_foyer,
-	(SELECT count(*) FROM m_reseau_sec.an_ecl_support sup JOIN m_reseau_sec.geo_ecl_noeud nd ON id_noeud=id_supp WHERE nd.situation <> '12') AS support,
-	(SELECT count(*) FROM m_reseau_sec.an_ecl_depart dep WHERE dep.situation <> '12' ) AS depart,
-	(SELECT count(*) FROM m_reseau_sec.an_ecl_pi JOIN m_reseau_sec.geo_ecl_noeud nd ON id_noeud=id_pi WHERE nd.situation <> '12') AS pi;              
+ SELECT 
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_ouvrage_electrique
+             JOIN m_reseau_sec.geo_ecl_noeud nd ON nd.id_noeud = an_ecl_ouvrage_electrique.id_ouvelec
+          WHERE nd.situation::text <> '12'::text) AS ouvrage,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_ouvrage_electrique
+             JOIN m_reseau_sec.geo_ecl_noeud nd ON nd.id_noeud = an_ecl_ouvrage_electrique.id_ouvelec
+          WHERE nd.situation::text <> '12'::text AND (nd.op_sai::text = 'mporte'::text OR nd.op_sai::text = 'slagache'::text OR nd.op_sai::text = 'ewiegant'::text)) AS ouvrage_ecl,
 
-ALTER VIEW x_apps.xapps_an_v_ecl_patrimoine
-OWNER TO sig_temp;
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_foyer
+          WHERE an_ecl_foyer.situation::text <> '12'::text) AS nbr_foyer,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_foyer
+          WHERE an_ecl_foyer.situation::text <> '12'::text AND (op_sai::text = 'mporte'::text OR op_sai::text = 'slagache'::text OR op_sai::text = 'ewiegant'::text)) AS nbr_foyer_ecl,
 
-COMMENT ON VIEW x_apps.xapps_an_v_ecl_patrimoine IS 'Bilan du patrimoine numérique d''éclairage public';
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_support sup
+             JOIN m_reseau_sec.geo_ecl_noeud nd ON nd.id_noeud = sup.id_supp
+          WHERE nd.situation::text <> '12'::text) AS support,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_support sup
+             JOIN m_reseau_sec.geo_ecl_noeud nd ON nd.id_noeud = sup.id_supp
+          WHERE nd.situation::text <> '12'::text AND (nd.op_sai::text = 'mporte'::text OR nd.op_sai::text = 'slagache'::text OR nd.op_sai::text = 'ewiegant'::text)) AS support_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_depart dep
+          WHERE dep.situation::text <> '12'::text) AS depart,
+              ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_depart dep
+          WHERE dep.situation::text <> '12'::text AND (op_sai::text = 'mporte'::text OR op_sai::text = 'slagache'::text OR op_sai::text = 'ewiegant'::text)) AS depart_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_pi
+             JOIN m_reseau_sec.geo_ecl_noeud nd ON nd.id_noeud = an_ecl_pi.id_pi
+          WHERE nd.situation::text <> '12'::text) AS pi,
+        ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_pi
+             JOIN m_reseau_sec.geo_ecl_noeud nd ON nd.id_noeud = an_ecl_pi.id_pi
+          WHERE nd.situation::text <> '12'::text AND (nd.op_sai::text = 'mporte'::text OR nd.op_sai::text = 'slagache'::text OR nd.op_sai::text = 'ewiegant'::text))  AS pi_ecl;
+
+ALTER TABLE x_apps.xapps_an_v_ecl_patrimoine
+  OWNER TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_patrimoine TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_patrimoine TO create_sig;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_an_v_ecl_patrimoine TO edit_sig;
+GRANT SELECT ON TABLE x_apps.xapps_an_v_ecl_patrimoine TO read_sig;
+COMMENT ON VIEW x_apps.xapps_an_v_ecl_patrimoine
+  IS 'Bilan du patrimoine numérique d''éclairage public';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.ouvrage IS 'Nombre d''ouvrages Actifs ou Inactifs';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.support IS 'Nombre de supports Actifs ou Inactifs';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.ouvrage_ecl IS 'Nombre d''ouvrages Actifs ou Inactifs par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.nbr_foyer IS 'Nombre de foyers Actifs ou Inactifs';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.nbr_foyer_ecl IS 'Nombre de foyers Actifs ou Inactifs par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.support IS 'Nombre de supports Actifs ou Inactifs';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.support_ecl IS 'Nombre de supports Actifs ou Inactifs par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.depart IS 'Nombre de departs Actifs ou Inactifs';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.depart_ecl IS 'Nombre de departs Actifs ou Inactifs par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.pi IS 'Nombre de point d''intérêts Actifs ou Inactifs';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.pi_ecl IS 'Nombre de point d''intérêts Actifs ou Inactifs par le service';
+
+
 
 
 --#################################################### INTERVENTION VUE POUR LISTE RAFRAICHISSEMENT ET AFFICHAGE ####################################################
