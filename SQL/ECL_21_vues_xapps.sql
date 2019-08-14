@@ -250,57 +250,221 @@ COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_support_par_armoire.geom IS 'Géométri
 --############################################################## TABLEAU DE BORD INTERVENTION ####################################################
 
 --- On fait une vue des intervenations
---DROP VIEW  x_apps.xapps_an_v_ecl_stat_intervention;
+-- View: x_apps.xapps_an_v_ecl_stat_intervention
+
+DROP VIEW x_apps.xapps_an_v_ecl_stat_intervention;
+
 CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_intervention AS 
-SELECT          (SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_si_in = '20') AS nbr_inter,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%10%') AS chgmt_disj, 
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%11%') AS chgmt_fus, 
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%12%') AS chgmt_lant, 
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%13%') AS chgmt_lam,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%15%') AS chgmt_balla, 
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%16%') AS chgmt_amo, 
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%17%') AS chgmt_tran, 
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%18%') AS ajout_opti,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%19%') AS chgmt_para, 
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%20%') AS chgmt_comm,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%30%') AS ctrl_ele,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%31%') AS ctrl_mec,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%40%') AS nettoyage,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%50%') AS rep_objet,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%60%') AS ajout_dep,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%21%') AS chgmt_rece,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%70%') AS repo_lant,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%80%') AS supp_obj,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%81%') AS aban_obj,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%82%') AS reac_obj,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%90%') AS supp_optio,
-		(SELECT count(*) FROM m_reseau_sec.an_ecl_intervention WHERE type_inter LIKE '%99%') AS autre;
+ SELECT 
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_si_in::text = '20'::text) AS nbr_inter,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_si_in::text = '20'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS nbr_inter_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%10%'::text) AS chgmt_disj,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%10%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_disj_ecl,
 
-ALTER VIEW x_apps.xapps_an_v_ecl_stat_intervention
-OWNER TO sig_temp;
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%11%'::text) AS chgmt_fus,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%11%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_fus_ecl,
+     ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%12%'::text) AS chgmt_lant,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%12%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_lant_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%13%'::text) AS chgmt_lam,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%13%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_lam_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%15%'::text) AS chgmt_balla,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%15%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_balla_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%16%'::text) AS chgmt_amo,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%16%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_amo_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%17%'::text) AS chgmt_tran,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%17%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_tran_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%18%'::text) AS ajout_opti,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%18%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ajout_opti_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%19%'::text) AS chgmt_para,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%19%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_para_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%20%'::text) AS chgmt_comm,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%20%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_comm_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%21%'::text) AS chgmt_rece,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%21%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_rece_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%22%'::text) AS reenc_disj,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%22%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS reenc_disj_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%30%'::text) AS ctrl_ele,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%30%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ctrl_ele_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%31%'::text) AS ctrl_mec,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%31%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ctrl_mec_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%40%'::text) AS nettoyage,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%40%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS nettoyage_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%50%'::text) AS rep_objet,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%50%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS rep_objet_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%60%'::text) AS ajout_dep,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%60%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ajout_dep_ecl,
 
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%70%'::text) AS repo_lant,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%70%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS repo_lant_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%80%'::text) AS supp_obj,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%80%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS supp_obj_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%81%'::text) AS aban_obj,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%81%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS aban_obj_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%82%'::text) AS reac_obj,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%82%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS reac_obj_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%83%'::text) AS dep_acc,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%83%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS dep_acc_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%90%'::text) AS supp_optio,
+   ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%90%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS supp_optio_ecl,
+    ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%99%'::text) AS autre,
+             ( SELECT count(*) AS count
+           FROM m_reseau_sec.an_ecl_intervention
+          WHERE an_ecl_intervention.type_inter::text ~~ '%99%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS autre_ecl;
 
-COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_intervention IS 'Compte des interventions selon le type';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_obj IS 'Suppression de l''objet';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.aban_obj IS 'Abandon de l''objet';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reac_obj IS 'Réactivation de l''objet';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_optio IS 'Suppresion d''une option';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_rece IS 'Changement de recepteur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nbr_inter IS 'Identifiant du câble';
+ALTER TABLE x_apps.xapps_an_v_ecl_stat_intervention
+  OWNER TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_intervention TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_intervention TO create_sig;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_an_v_ecl_stat_intervention TO edit_sig;
+GRANT SELECT ON TABLE x_apps.xapps_an_v_ecl_stat_intervention TO read_sig;
+COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_intervention
+  IS 'Compte des interventions selon le type';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nbr_inter IS 'Nombre d''intervention total';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nbr_inter_ecl IS 'Nombre d''intervention du service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_disj IS 'Changement de disjoncteur';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_disj_ecl IS 'Changement de disjoncteur par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lant IS 'Changement de lanterne';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lant_ecl IS 'Changement de lanterne par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lam IS 'Changement de lampe';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_amo IS 'Changement d''amorceur';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lam_ecl IS 'Changement de lampe par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_balla IS 'Changement de ballaste / driver';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_balla_ecl IS 'Changement de ballaste / driver par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_amo IS 'Changement d''amorceur';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_amo_ecl IS 'Changement d''amorceur par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_tran IS 'Changement d''auto-transformateur';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_tran_ecl IS 'Changement d''auto-transformateur par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_opti IS 'Ajout d''option';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_opti_ecl IS 'Ajout d''option par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_para IS 'Changement de parasurtenseur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_comm IS 'Changement de type de commande';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_mec IS 'Contrôle mécanique';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_para_ecl IS 'Changement de parasurtenseur par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_comm IS 'Changement de type de commande ';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_comm_ecl IS 'Changement de type de commande par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_ele IS 'Contrôle électrique';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_ele_ecl IS 'Contrôle électrique par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_mec IS 'Contrôle mécanique';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_mec_ecl IS 'Contrôle mécanique par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nettoyage IS 'Nettoyage';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nettoyage_ecl IS 'Nettoyage par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.rep_objet IS 'Réparation d''objet';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.rep_objet_ecl IS 'Réparation d''objet par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_dep IS 'Ajout d''un départ';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.autre IS 'Autre type d''intervention';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_dep_ecl IS 'Ajout d''un départ par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_rece IS 'Changement de recepteur';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_rece_ecl IS 'Changement de recepteur par le service';
 COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.repo_lant IS 'Repositionnement d''une lanterne/crosse';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.repo_lant_ecl IS 'Repositionnement d''une lanterne/crosse par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_obj IS 'Suppression de l''objet';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_obj_ecl IS 'Suppression de l''objet par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.aban_obj IS 'Abandon de l''objet';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.aban_obj_ecl IS 'Abandon de l''objet par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reac_obj IS 'Réactivation de l''objet';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reac_obj_ecl IS 'Réactivation de l''objet par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_optio IS 'Suppresion d''une option';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_optio_ecl IS 'Suppresion d''une option par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.autre IS 'Autre type d''intervention';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.autre_ecl IS 'Autre type d''intervention par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_fus IS 'Changement de fusible';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_fus_ecl IS 'Changement de fusible par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reenc_disj IS 'Réenclenchement du disjoncteur';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reenc_disj_ecl IS 'Réenclenchement du disjoncteur par le service';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.dep_acc IS 'Dépose / repose identique (accident)';
+COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.dep_acc_ecl IS 'Dépose / repose identique (accident) par le service';
 
