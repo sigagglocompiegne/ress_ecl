@@ -13,7 +13,7 @@ Cette base de donnée s'inspire des modèles RAEPA et GR@CE, mais aussi de ceux 
 
 Elle a été conçue au fur et à mesure des réunions avec le service d'éclairage public de la ville de Compiègne. Elle est donc adaptée à ses besoins spécifiques, et n'a pas vocation à être un standard valable dans chaque collectivité.  
 
-Le standard de données des réseaux, en cours de rédaction au moment de la réalisation de cette base, n'a pas été intégré. Cependant, la problématique DT/DICT est prise en compte, avec des métadonnées de classe de précision tirées du RAEPA.
+Le projet standard de données des réseaux DT-DICT (StaR-DT), en cours de rédaction au moment de la réalisation de cette base, n'a pas été intégré. Cependant, la problématique DT/DICT est prise en compte, avec des métadonnées de classe de précision tirées du RAEPA.
 
 
 
