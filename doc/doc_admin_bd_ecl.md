@@ -50,9 +50,9 @@ Dans le détail :
 * Les données des prestataires  agissant pour le compte de l'Agglomération de la Région de Compiègne ou de la Ville de Compiègne ont été ajoutées via un workflow FME.
 * Le cadre d'actualisation des données par les prestataires est à définir avec eux. Pour le moment, aucun processus n'a été prévu, et aucun contact n'a été engagé avec les entreprises concernées.
 * Pour les mises à jour de suppression manuelles réalisées par le SIG (suppression "en dur" dans la base), 3 options :
-	-L'objet est une intervention ou un modèle (lampe, lanterne ou support). ==> On supprime directement dans la classe.
- 	-L'objet est un ouvrage électrique, un point d'intérêt ou un support (point lumineux) ==> On supprime l'objet directement dans la classe noeud, et la suppression du reste est automatique.
-	-L'objet est un câble, un départ ou un foyer ==> On désactive le trigger "delete" avant de supprimer dans la classe. 
+** L'objet est une intervention ou un modèle (lampe, lanterne ou support). ==> On supprime directement dans la classe.
+** L'objet est un ouvrage électrique, un point d'intérêt ou un support (point lumineux) ==> On supprime l'objet directement dans la classe noeud, et la suppression du reste est automatique.
+** L'objet est un câble, un départ ou un foyer ==> On désactive le trigger "delete" avant de supprimer dans la classe. 
 
 ###	Les contrôles de saisie
 
