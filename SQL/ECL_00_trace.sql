@@ -16,3 +16,4 @@
 /*
 #################################################################### SUIVI CODE SQL ####################################################################
 2019-08-12 : TB / initialisation du code
+2019-11-27 : GB / Ajout de 3 valeurs d'attributs dans la table lt_ecl_type_commande
