@@ -909,6 +909,9 @@ VALUES
 	('40','Télégestion'),
 	('50','Radio BH-T'),
 	('60','SOGEME GSM'),
+	('71','Radiolite xp 410'),
+	('72','Radiolite xp 420'),
+	('73','Radiolite xp 430'),
 	('99','Autre'),
 	('ZZ','Non concerné');
 
