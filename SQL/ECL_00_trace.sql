@@ -17,3 +17,5 @@
 #################################################################### SUIVI CODE SQL ####################################################################
 2019-08-12 : TB / initialisation du code
 2019-11-27 : GB / Ajout de 3 valeurs d'attributs dans la table lt_ecl_type_commande
+2019-12-20 : GB / Modifications SQL suite adaptation sur l'exploitation des rapports de signalements/Interventions et leurs recherches
+2019-12-20 : GB / Modifications suite intégration de la gestion des contrats et l'accès à des prestataires extérieurs
