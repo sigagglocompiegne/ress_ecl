@@ -3107,9 +3107,6 @@ ELSE 'Nombre d''interventions trop important, faire une demande au service SIG'
 END
 );
 
-	NEW.id_contrat := (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = new.id_noeud);
-
-
 	
 END IF;
 
@@ -3963,7 +3960,41 @@ ALTER FUNCTION m_reseau_sec.ft_m_intervention()
   ON m_reseau_sec.an_ecl_intervention
   FOR EACH ROW
   EXECUTE PROCEDURE m_reseau_sec.ft_m_intervention(); 
+
+
+--  contrat après l'insertion
+
+-- Function: m_reseau_sec.ft_m_intervention_contrat()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_intervention_contrat();
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_intervention_contrat()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+
+        UPDATE m_reseau_sec.an_ecl_intervention  SET id_contrat = id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = an_ecl_intervention.id_noeud AND an_ecl_intervention.id_contrat IS NULL;
+
+RETURN NEW;
+
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION m_reseau_sec.ft_m_intervention_contrat()
+  OWNER TO sig_create;
   
+  -- Trigger: t_t2_log_intervention_contrat on m_reseau_sec.an_ecl_intervention
+
+-- DROP TRIGGER t_t2_log_intervention_contrat ON m_reseau_sec.an_ecl_intervention;
+
+CREATE TRIGGER t_t2_log_intervention_contrat
+  AFTER INSERT
+  ON m_reseau_sec.an_ecl_intervention
+  FOR EACH ROW
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_intervention_contrat();
+
+
 --- log
 
 CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_log_inter_ecl()
@@ -4043,7 +4074,7 @@ $BODY$
   LANGUAGE plpgsql VOLATILE
 COST 100;
 
-CREATE TRIGGER t_t2_log_intervention
+CREATE TRIGGER t_t3_log_intervention
   AFTER INSERT OR UPDATE OR DELETE
   ON m_reseau_sec.an_ecl_intervention
   FOR EACH ROW
