@@ -47,62 +47,115 @@ DROP VIEW IF EXISTS m_reseau_sec.geo_v_pi;
 
 
 --##############################################################OUVELEC#############################################################
---DROP VIEW m_reseau_sec.geo_v_ouvrage_electrique ;
+-- View: m_reseau_sec.geo_v_ecl_ouvrage_electrique
+
+-- DROP VIEW m_reseau_sec.geo_v_ecl_ouvrage_electrique;
+
 CREATE OR REPLACE VIEW m_reseau_sec.geo_v_ecl_ouvrage_electrique AS 
- SELECT 
-	ouvelec.id_ouvelec,
-	ouvelec.nom_ouv,
-	ouvelec.ty_ouvelec,
-	noeud.depart,
-	ouvelec.etat_ouvel,
-	ouvelec.mod_pos_ou,
-	ouvelec.ty_comm,
-	ouvelec.pdl_edf,
-	ouvelec.n_com_edf,
-	ouvelec.val_terre,
-	ouvelec.ik_ouvelec,
-	ouvelec.ip_ouvelec,
-	ouvelec.puis_mes,
-	ouvelec.puis_sous,
-	ouvelec.pres_var,
-	noeud.ent_pose,
-	noeud.dat_pos,
-	noeud.qua_dat,
-	ouvelec.ty_disjonc,
-	ouvelec.ty_fusible,
-	noeud.observ,
-        noeud.geom,
-        noeud.op_sai,
-        noeud.date_donne,
-        noeud.op_sai_geo,
-        noeud.qua_geo_XY,
-        noeud.qua_geo_Z,
-        noeud.src_geom,
-        noeud.src_date,
-        noeud.situation,
-        noeud.date_sai,
-        noeud.date_maj,
-        noeud.exploit_nd,
-        noeud.presta_nd,
-        noeud.commune,
-        noeud.insee        
- FROM m_reseau_sec.an_ecl_ouvrage_electrique ouvelec
+ SELECT ouvelec.id_ouvelec,
+    ouvelec.nom_ouv,
+    ouvelec.ty_ouvelec,
+    noeud.depart,
+    ouvelec.etat_ouvel,
+    ouvelec.mod_pos_ou,
+    ouvelec.ty_comm,
+    ouvelec.pdl_edf,
+    ouvelec.n_com_edf,
+    ouvelec.val_terre,
+    ouvelec.ik_ouvelec,
+    ouvelec.ip_ouvelec,
+    ouvelec.puis_mes,
+    ouvelec.puis_sous,
+    ouvelec.pres_var,
+    noeud.ent_pose,
+    noeud.dat_pos,
+    noeud.qua_dat,
+    ouvelec.ty_disjonc,
+    ouvelec.ty_fusible,
+    noeud.observ,
+    noeud.geom,
+    noeud.op_sai,
+    noeud.date_donne,
+    noeud.op_sai_geo,
+    noeud.qua_geo_xy,
+    noeud.qua_geo_z,
+    noeud.src_geom,
+    noeud.src_date,
+    noeud.situation,
+    noeud.date_sai,
+    noeud.date_maj,
+    noeud.exploit_nd,
+    noeud.presta_nd,
+    noeud.id_contrat,
+    noeud.commune,
+    noeud.insee
+   FROM m_reseau_sec.an_ecl_ouvrage_electrique ouvelec
      JOIN m_reseau_sec.geo_ecl_noeud noeud ON ouvelec.id_ouvelec = noeud.id_noeud;
-     
---- '00' = "non renseigné" dans les domaines de valeurs
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER etat_ouvel SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER ty_ouvelec SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER mod_pos_ou SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER ty_comm SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER pres_var SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER ty_disjonc SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER ty_fusible SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER qua_dat SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER qua_geo_XY SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER qua_geo_Z SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER src_geom SET DEFAULT '00';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER src_date SET DEFAULT '0000';
-ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER situation SET DEFAULT '10';
+
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique
+  OWNER TO postgres;
+GRANT ALL ON TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique TO postgres;
+GRANT ALL ON TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique TO create_sig;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique TO edit_sig;
+GRANT SELECT ON TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique TO read_sig;
+COMMENT ON VIEW m_reseau_sec.geo_v_ecl_ouvrage_electrique
+  IS 'Vue des ouvrages électriques permettant la saisie dans l''application Geo';
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN ty_ouvelec SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN etat_ouvel SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN mod_pos_ou SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN ty_comm SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN pres_var SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN qua_dat SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN ty_disjonc SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN ty_fusible SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN qua_geo_xy SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN qua_geo_z SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN src_geom SET DEFAULT '00'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN src_date SET DEFAULT '0000'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN situation SET DEFAULT '10'::character varying;
+ALTER TABLE m_reseau_sec.geo_v_ecl_ouvrage_electrique ALTER COLUMN id_contrat SET DEFAULT '00'::character varying;
+
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.id_ouvelec IS 'Identifiant de l''ouvrage électrique';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.nom_ouv IS 'Nom métier de l''ouvrage';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.ty_ouvelec IS 'Type de l''ouvrage électrique';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.depart IS 'Numéro de départ auquel est lié le noeud';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.etat_ouvel IS 'Etat de l''ouvrage électrique';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.mod_pos_ou IS 'Mode de pose de l''ouvrage électrique';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.ty_comm IS 'Type de commande d''allumage/extinction';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.pdl_edf IS 'Numéro de référence EDF';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.n_com_edf IS 'Numéro du compteur EDF';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.val_terre IS 'Valeur globale de la terre';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.ik_ouvelec IS 'Indice de protection face aux influences extérieures';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.ip_ouvelec IS 'Indice de protection eux chocs mécaniques';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.puis_mes IS 'Puissance mesurée';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.puis_sous IS 'Puissance souscrite';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.pres_var IS 'Présence d''un variateur';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.ent_pose IS 'Entreprise ayant posé l''ouvrage';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.dat_pos IS 'Date de pose de l''ouvrage';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.qua_dat IS 'Qualité de la date de pose de l''ouvrage';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.ty_disjonc IS 'Type du disjoncteur';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.ty_fusible IS 'Type du fusible';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.observ IS 'Commentaires divers';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.geom IS 'Géométrie de l''objet';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.op_sai IS 'Opérateur de la saisie de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.date_donne IS 'Date de la création de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.op_sai_geo IS 'Opérateur de la saisie des données de géolocalisation';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.qua_geo_xy IS 'Classe de la géolocalisation en XY';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.qua_geo_z IS 'Classe de la géolocalisation en Z';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.src_geom IS 'Source utilisée pour la géolocalisation';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.src_date IS 'Date de la source utilisée pour la géolocalisation';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.situation IS 'Situation générale : actif, inactif,supprimé';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.date_sai IS 'Date de la saisie de la donnée dans la base';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.date_maj IS 'Date de dernière mise à jour de la donnée';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.exploit_nd IS 'Exploitant de l''objet';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.presta_nd IS 'Prestataire intervenant sur l''objet';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.id_contrat IS 'Code du contrat de maintenant et/ou d''entretien en cours';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.commune IS 'Commune sur laquelle est situé l''objet';
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.insee IS 'Code insee de la commune sur laquelle se situe l''objet';
+
+
+
+
 
 ---
 
@@ -114,6 +167,11 @@ ALTER VIEW m_reseau_sec.geo_v_ouvrage_electrique ALTER situation SET DEFAULT '10
 --- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 --- L'insertion des logs se fait également dans cette fonction
+
+-- Function: m_reseau_sec.ft_m_ouvrage_electrique()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_ouvrage_electrique();
+
 CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
   RETURNS trigger AS
 $BODY$
@@ -210,13 +268,13 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_ouvelec, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(NEW.id_ouvelec, 'L''objet est en dehors des zones de gestion. Contacter le SIG pour modifier les zones de gestion.', now() );
 			RETURN OLD ;
 
 		END IF;
@@ -251,7 +309,7 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 
 		---On insère les données normalement dans noeud, avec une date de mise à jour des données = NULL.
 		INSERT INTO m_reseau_sec.geo_ecl_noeud (id_noeud,commune, insee, exploit_nd, presta_nd,ent_pose,dat_pos,qua_dat, geom,op_sai,
-							depart, observ, date_sai, date_maj,date_donne,op_sai_geo,qua_geo_Z,qua_geo_XY, src_geom, src_date,situation )
+							depart, observ, date_sai, date_maj,date_donne,op_sai_geo,qua_geo_Z,qua_geo_XY, src_geom, src_date,situation,id_contrat )
 			SELECT
 			id_unique,
 			NEW.commune,
@@ -273,7 +331,8 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 			NEW.qua_geo_XY,
 			NEW.src_geom,
 			NEW.src_date,
-			NEW.situation; -------------------------------------------------- On insère les données normalement dans noeud
+			NEW.situation,
+			NEW.id_contrat; -------------------------------------------------- On insère les données normalement dans noeud
 
 		--
 
@@ -486,13 +545,13 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_ouvelec, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(NEW.id_ouvelec, 'L''objet est en dehors des zones de gestion. Contacter le SIG pour modifier les zones de gestion.', now() );
 			RETURN OLD ;
 
 		END IF;
@@ -513,6 +572,7 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
 		presta_nd = NEW.presta_nd,
+		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
 		geom=NEW.geom, 
@@ -698,56 +758,20 @@ $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 ALTER FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
-  OWNER TO postgres;
+  OWNER TO sig_create;
 
 
-DROP TRIGGER t_t1_lk_ouvrage_electrique ON m_reseau_sec.geo_v_ecl_ouvrage_electrique;
+					     
+-- Trigger: t_t1_lk_ouvrage_electrique on m_reseau_sec.geo_v_ecl_ouvrage_electrique
+
+-- DROP TRIGGER t_t1_lk_ouvrage_electrique ON m_reseau_sec.geo_v_ecl_ouvrage_electrique;
+
 CREATE TRIGGER t_t1_lk_ouvrage_electrique
-  INSTEAD OF INSERT OR UPDATE OR DELETE --------------------------------------------- Un seul trigger pour la vue
+  INSTEAD OF INSERT OR UPDATE OR DELETE
   ON m_reseau_sec.geo_v_ecl_ouvrage_electrique
   FOR EACH ROW
-  EXECUTE PROCEDURE m_reseau_sec.ft_m_ouvrage_electrique(); 
-
----
-
-COMMENT ON VIEW m_reseau_sec.geo_v_ouvrage_electrique IS 'Vue des ouvrages électriques permettant la saisie dans l''application Geo';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.id_ouvelec IS 'Identifiant de l''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.depart IS 'Numéro de départ auquel est lié le noeud';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.nom_ouv IS 'Nom métier de l''ouvrage';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.ty_ouvelec IS 'Type de l''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.etat_ouvel IS 'Etat de l''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.mod_pos_ou IS 'Mode de pose de l''ouvrage électrique';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.ty_comm IS 'Type de commande d''allumage/extinction';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.pdl_edf IS 'Numéro de référence EDF';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.n_com_edf IS 'Numéro du compteur EDF';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.val_terre IS 'Valeur globale de la terre';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.ik_ouvelec IS 'Indice de protection face aux influences extérieures';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.ip_ouvelec IS 'Indice de protection eux chocs mécaniques';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.puis_mes IS 'Puissance mesurée';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.puis_sous IS 'Puissance souscrite';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.pres_var IS 'Présence d''un variateur';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.ty_disjonc IS 'Type du disjoncteur';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.ty_fusible IS 'Type du fusible';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.observ IS 'Commentaires divers';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.ent_pose IS 'Entreprise ayant posé l''ouvrage';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.dat_pos IS 'Date de pose de l''ouvrage';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.qua_dat IS 'Qualité de la date de pose de l''ouvrage';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.op_sai IS 'Opérateur de la saisie de la donnée';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.date_donne IS 'Date de la création de la donnée';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.op_sai_geo IS 'Opérateur de la saisie des données de géolocalisation';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.qua_geo_XY IS 'Classe de la géolocalisation en XY';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.qua_geo_Z IS 'Classe de la géolocalisation en Z';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.src_geom IS 'Source utilisée pour la géolocalisation';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.src_date IS 'Date de la source utilisée pour la géolocalisation';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.situation IS 'Situation générale : actif, inactif,supprimé';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.date_sai IS 'Date de la saisie de la donnée dans la base';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.date_maj IS 'Date de dernière mise à jour de la donnée';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.exploit_nd IS 'Exploitant de l''objet';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.presta_nd IS 'Prestataire intervenant sur l''objet';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.commune IS 'Commune sur laquelle est situé l''objet';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.insee IS 'Code insee de la commune sur laquelle se situe l''objet';
-COMMENT ON COLUMN m_reseau_sec.geo_v_ouvrage_electrique.geom IS 'Géométrie de l''objet';
-
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_ouvrage_electrique();
+					     
 --##############################################################POINT LUMINEUX######################################################
 --DROP VIEW m_reseau_sec.geo_v_point_lumineux ;
 CREATE OR REPLACE VIEW m_reseau_sec.geo_v_ecl_point_lumineux AS 
@@ -810,6 +834,9 @@ ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER situation SET DEFAULT '10';
 --- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
 --- L'insertion des logs se fait également dans cette fonction					 
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
+-- Function: m_reseau_sec.ft_m_point_lumineux()
+
+
 -- Function: m_reseau_sec.ft_m_point_lumineux()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_point_lumineux();
@@ -889,7 +916,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
@@ -918,7 +945,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 
 		---On insère les données normalement dans noeud, avec une date de mise à jour des données = NULL.
 		INSERT INTO m_reseau_sec.geo_ecl_noeud (id_noeud,commune, insee, exploit_nd, presta_nd,ent_pose,dat_pos,qua_dat, geom,op_sai,
-							depart, observ, date_sai, date_maj,date_donne,op_sai_geo,qua_geo_Z,qua_geo_XY, src_geom, src_date,situation )
+							depart, observ, date_sai, date_maj,date_donne,op_sai_geo,qua_geo_Z,qua_geo_XY, src_geom, src_date,situation,id_contrat)
 			SELECT
 			id_unique,
 			NEW.commune,
@@ -940,7 +967,8 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 			NEW.qua_geo_XY,
 			NEW.src_geom,
 			NEW.src_date,
-			NEW.situation; -------------------------------------------------- On insère les données normalement dans noeud
+			NEW.situation,
+			NEW.id_contrat; -------------------------------------------------- On insère les données normalement dans noeud
 
 		--
 
@@ -1091,7 +1119,7 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
@@ -1115,6 +1143,7 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
 		presta_nd = NEW.presta_nd,
+		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
 		geom=NEW.geom, 
@@ -1276,21 +1305,21 @@ $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 ALTER FUNCTION m_reseau_sec.ft_m_point_lumineux()
-  OWNER TO postgres;
+  OWNER TO sig_create
 
 
 
-  
-  
-DROP TRIGGER t_t1_lk_point_lumineux ON m_reseau_sec.geo_v_ecl_point_lumineux;
- CREATE TRIGGER t_t1_lk_point_lumineux
-  INSTEAD OF INSERT OR UPDATE OR DELETE --------------------------------------------- Un seul trigger pour la vue
+-- Trigger: t_t1_lk_point_lumineux on m_reseau_sec.geo_v_ecl_point_lumineux
+
+-- DROP TRIGGER t_t1_lk_point_lumineux ON m_reseau_sec.geo_v_ecl_point_lumineux;
+
+CREATE TRIGGER t_t1_lk_point_lumineux
+  INSTEAD OF INSERT OR UPDATE OR DELETE
   ON m_reseau_sec.geo_v_ecl_point_lumineux
   FOR EACH ROW
-  EXECUTE PROCEDURE m_reseau_sec.ft_m_point_lumineux();  
-
-
-
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_point_lumineux();
+  
+  
 
 COMMENT ON VIEW m_reseau_sec.geo_v_point_lumineux IS 'Vue des supports permettant la saisie dans l''application Geo';
 COMMENT ON COLUMN m_reseau_sec.geo_v_point_lumineux.id_supp IS 'Identifiant du point lumineux';
@@ -1375,7 +1404,8 @@ ALTER VIEW m_reseau_sec.geo_v_pi ALTER situation SET DEFAULT '10';
 --- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 --- L'insertion des logs se fait également dans cette fonction	
--- Function: m_reseau_sec.ft_m_point_interet()
+
+					     -- Function: m_reseau_sec.ft_m_point_interet()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
 
@@ -1426,7 +1456,7 @@ IF (TG_OP = 'INSERT') THEN
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
@@ -1447,7 +1477,7 @@ IF (TG_OP = 'INSERT') THEN
 
 	
 		INSERT INTO m_reseau_sec.geo_ecl_noeud (id_noeud,commune, insee, exploit_nd, presta_nd,ent_pose,dat_pos,qua_dat, geom,op_sai,
-							depart, observ, date_sai, date_maj,date_donne,op_sai_geo,qua_geo_Z,qua_geo_XY, src_geom, src_date,situation )
+							depart, observ, date_sai, date_maj,date_donne,op_sai_geo,qua_geo_Z,qua_geo_XY, src_geom, src_date,situation,id_contrat)
 			SELECT
 			id_unique,
 			NEW.commune,
@@ -1469,7 +1499,8 @@ IF (TG_OP = 'INSERT') THEN
 			NEW.qua_geo_XY,
 			NEW.src_geom,
 			NEW.src_date,
-			NEW.situation; -------------------------------------------------- On insère les données normalement dans noeud
+			NEW.situation,
+			NEW.id_contrat; -------------------------------------------------- On insère les données normalement dans noeud
 
 		--
 
@@ -1577,7 +1608,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_nd = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
@@ -1604,6 +1635,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
 		presta_nd = NEW.presta_nd,
+		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
 		geom=NEW.geom, 
@@ -1719,14 +1751,19 @@ $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 ALTER FUNCTION m_reseau_sec.ft_m_point_interet()
-  OWNER TO postgres;
+  OWNER TO sig_create;
 
+
+
+-- Trigger: t_t1_point_interet on m_reseau_sec.geo_v_ecl_pi
+
+-- DROP TRIGGER t_t1_point_interet ON m_reseau_sec.geo_v_ecl_pi;
 
 CREATE TRIGGER t_t1_point_interet
   INSTEAD OF INSERT OR UPDATE OR DELETE
   ON m_reseau_sec.geo_v_ecl_pi
   FOR EACH ROW
-  EXECUTE PROCEDURE m_reseau_sec.ft_m_point_interet();  
+  EXECUTE PROCEDURE m_reseau_sec.ft_m_point_interet();
 
 ---
 
