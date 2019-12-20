@@ -225,38 +225,62 @@ COMMENT ON COLUMN x_apps.xapps_an_v_ecl_patrimoine.pi_ecl IS 'Nombre de point d'
 
 --#################################################### INTERVENTION VUE POUR LISTE RAFRAICHISSEMENT ET AFFICHAGE ####################################################
 
---- 
---DROP VIEW  x_apps.geo_v_intervention_liste_affichage ;
+-- View: x_apps.xapps_geo_v_ecl_intervention_liste_affichage
+
+-- DROP VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage;
+
 CREATE OR REPLACE VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage AS 
-SELECT 
-	inter.id_inter AS code,
-	CONCAT ('Signalement N°', id_inter, ' - Défaillance : ', (SELECT valeur FROM m_reseau_sec.lt_ecl_type_defaillance WHERE typ_def=code)) AS valeur,
-	inter.type_si_in,
-	inter.etat_sign,
-	noeud.geom,
-	CONCAT ( 'Signalement N°' , id_inter, chr(10), ' Sur ', CASE 
-		WHEN inter.id_objet IN (SELECT id_ouvelec FROM m_reseau_sec.an_ecl_ouvrage_electrique) THEN 'ouvrage électrique' 
-		WHEN inter.id_objet IN (SELECT id_supp FROM m_reseau_sec.an_ecl_support) THEN 'support' 
-		WHEN inter.id_objet IN (SELECT id_pi FROM m_reseau_sec.an_ecl_pi) THEN 'point d''intérêt' 
-		WHEN inter.id_objet IN (SELECT id_cab FROM m_reseau_sec.geo_ecl_cable) THEN 'câble' 
-		WHEN inter.id_objet IN (SELECT id_foyer FROM m_reseau_sec.an_ecl_foyer) THEN 'foyer' 
-		WHEN inter.id_objet IN (SELECT id_depart FROM m_reseau_sec.an_ecl_depart) THEN 'depart' 
-		ELSE NULL END ,
-		 ' N°', id_objet, chr(10), 'Défaillance: ', (SELECT valeur FROM m_reseau_sec.lt_ecl_type_defaillance WHERE typ_def=code), chr(10), 'Nacelle : ',(SELECT valeur FROM m_reseau_sec.lt_ecl_moyen_intervention WHERE moy_interv=code)  ,chr(10), inter.observ )
-	AS affichage,
-	inter.dat_signa,
-	inter.dat_real,
-	inter.moy_interv,
-	inter.observ,
-	inter.typ_def
-FROM m_reseau_sec.an_ecl_intervention inter JOIN m_reseau_sec.geo_ecl_noeud noeud ON inter.id_noeud = noeud.id_noeud;        
+ SELECT inter.id_inter AS code,
+    concat('Signalement N°', inter.id_inter, ' - Défaillance : ', ( SELECT lt_ecl_type_defaillance.valeur
+           FROM m_reseau_sec.lt_ecl_type_defaillance
+          WHERE inter.typ_def::text = lt_ecl_type_defaillance.code::text)) AS valeur,
+    inter.type_si_in,
+    inter.etat_sign,
+    noeud.geom,
+    concat('Signalement N°', inter.id_inter, '<br>', ' Sur ',
+        CASE
+            WHEN (inter.id_objet IN ( SELECT an_ecl_ouvrage_electrique.id_ouvelec
+               FROM m_reseau_sec.an_ecl_ouvrage_electrique)) THEN 'ouvrage électrique'::text
+            WHEN (inter.id_objet IN ( SELECT an_ecl_support.id_supp
+               FROM m_reseau_sec.an_ecl_support)) THEN 'support'::text
+            WHEN (inter.id_objet IN ( SELECT an_ecl_pi.id_pi
+               FROM m_reseau_sec.an_ecl_pi)) THEN 'point d''intérêt'::text
+            WHEN (inter.id_objet IN ( SELECT geo_ecl_cable.id_cab
+               FROM m_reseau_sec.geo_ecl_cable)) THEN 'câble'::text
+            WHEN (inter.id_objet IN ( SELECT an_ecl_foyer.id_foyer
+               FROM m_reseau_sec.an_ecl_foyer)) THEN 'foyer'::text
+            WHEN (inter.id_objet IN ( SELECT an_ecl_depart.id_depart
+               FROM m_reseau_sec.an_ecl_depart)) THEN 'depart'::text
+            ELSE NULL::text
+        END, ' N°', inter.id_objet, '<br>', 'Défaillance : ', ( SELECT lt_ecl_type_defaillance.valeur
+           FROM m_reseau_sec.lt_ecl_type_defaillance
+          WHERE inter.typ_def::text = lt_ecl_type_defaillance.code::text), '<br>', ' Intervention : ', ( SELECT lt_ecl_moyen_intervention.valeur
+           FROM m_reseau_sec.lt_ecl_moyen_intervention
+          WHERE inter.moy_interv::text = lt_ecl_moyen_intervention.code::text), '<br>', ' Commentaire(s) : ', inter.observ) AS affichage,
+    inter.dat_signa,
+    inter.dat_real,
+    inter.moy_interv,
+    inter.observ,
+    inter.typ_def,
+    noeud.id_contrat,
+    noeud.id_noeud,
+    noeud.commune,
+    inter.lib_inter
+   FROM m_reseau_sec.an_ecl_intervention inter
+     JOIN m_reseau_sec.geo_ecl_noeud noeud ON inter.id_noeud = noeud.id_noeud;
 
-ALTER VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage
-OWNER TO sig_temp;
-
-COMMENT ON VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage IS 'Interventions/Signalements avec attributs calculés dynamiquement, sert à la liste de domaine interventions et à l''affichage des signalements sur GEO';
+ALTER TABLE x_apps.xapps_geo_v_ecl_intervention_liste_affichage
+  OWNER TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_geo_v_ecl_intervention_liste_affichage TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_geo_v_ecl_intervention_liste_affichage TO create_sig;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_geo_v_ecl_intervention_liste_affichage TO edit_sig;
+GRANT SELECT ON TABLE x_apps.xapps_geo_v_ecl_intervention_liste_affichage TO read_sig;
+COMMENT ON VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage
+  IS 'Interventions/Signalements avec attributs calculés dynamiquement, sert à la liste de domaine interventions et à l''affichage des signalements sur GEO';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.code IS 'Identifiant du signalement/de l''intervention';
+COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.valeur IS 'Concaténation de plusieurs attributs, avec valeurs des defaillance (au lieu du code stocké dans la table intervention)';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.type_si_in IS 'Signalement ou intervention';
+COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.etat_sign IS 'Etat du signalement (soumis, réglé...)';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.geom IS 'Géométrie du noeud su lequel est l''intervention/le signalement';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.affichage IS 'Texte de l''infobulle dans GEO';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.dat_signa IS 'Date du signalement';
@@ -264,8 +288,7 @@ COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.dat_real I
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.moy_interv IS 'Moyen d''intervention (avec ou sans nacelle)';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.observ IS 'Commentaires divers';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.typ_def IS 'Type de défaillance';
-COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.etat_sign IS 'Etat du signalement (soumis, réglé...)';
-COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.valeur IS 'Concaténation de plusieurs attributs, avec valeurs des defaillance (au lieu du code stocké dans la table intervention)';
+
 
 
 --####################################################### SUPPORT CATEGORISE PAR ARMOIRES ####################################################
