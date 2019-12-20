@@ -804,7 +804,8 @@ CREATE OR REPLACE VIEW m_reseau_sec.geo_v_ecl_point_lumineux AS
         noeud.date_maj,
         supp.nbr_foyer,
         noeud.exploit_nd,
-        noeud.presta_nd,
+        noeud.presta_nd
+        noeud.id_contrat,
         noeud.commune,
         noeud.insee       
  FROM m_reseau_sec.an_ecl_support supp
@@ -823,7 +824,7 @@ ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER qua_geo_Z SET DEFAULT '00';
 ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER src_geom SET DEFAULT '00';
 ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER src_date SET DEFAULT '0000';
 ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER situation SET DEFAULT '10';
-
+ALTER TABLE m_reseau_sec.geo_v_ecl_point_lumineux ALTER COLUMN id_contrat SET DEFAULT '00'::character varying;
 
 
 --- SUPPRESSION DES MESSAGES D'ERREUR
@@ -1353,7 +1354,8 @@ COMMENT ON COLUMN m_reseau_sec.geo_v_point_lumineux.haut_trap IS 'Hauteur de la 
 COMMENT ON COLUMN m_reseau_sec.geo_v_point_lumineux.geom IS 'Géométrie de l''objet';
 COMMENT ON COLUMN m_reseau_sec.geo_v_point_lumineux.ty_disjonc IS 'Type de disjoncteur';
 COMMENT ON COLUMN m_reseau_sec.geo_v_point_lumineux.nbr_foyer IS 'Nombre de foyers, calculé via trigger';
-
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_point_lumineux.id_contrat IS 'Code du contrat de maintenant et/ou d''entretien en cours';
+					     
 --############################################################## POINT - D'INTERET ################################################
 --DROP VIEW m_reseau_sec.geo_v_pi ;
 CREATE OR REPLACE VIEW m_reseau_sec.geo_v_ecl_pi AS 
@@ -1379,7 +1381,8 @@ CREATE OR REPLACE VIEW m_reseau_sec.geo_v_ecl_pi AS
         noeud.date_maj,
         noeud.exploit_nd,
         noeud.presta_nd,
-        noeud.commune,
+	noeud.id_contrat,
+	noeud.commune,
         noeud.insee       
  FROM m_reseau_sec.an_ecl_pi pi
      JOIN m_reseau_sec.geo_ecl_noeud noeud ON pi.id_pi = noeud.id_noeud;
@@ -1393,7 +1396,7 @@ ALTER VIEW m_reseau_sec.geo_v_pi ALTER qua_geo_Z SET DEFAULT '00';
 ALTER VIEW m_reseau_sec.geo_v_pi ALTER src_geom SET DEFAULT '00';
 ALTER VIEW m_reseau_sec.geo_v_pi ALTER src_date SET DEFAULT '0000';
 ALTER VIEW m_reseau_sec.geo_v_pi ALTER situation SET DEFAULT '10';
-
+ALTER TABLE m_reseau_sec.geo_v_ecl_pi ALTER COLUMN id_contrat SET DEFAULT '00'::character varying;
 ---
 
 --- SUPPRESSION DES MESSAGES D'ERREUR
@@ -1791,4 +1794,4 @@ COMMENT ON COLUMN m_reseau_sec.geo_v_pi.presta_nd IS 'Prestataire intervenant su
 COMMENT ON COLUMN m_reseau_sec.geo_v_pi.commune IS 'Commune sur laquelle est situé l''objet';
 COMMENT ON COLUMN m_reseau_sec.geo_v_pi.insee IS 'Code insee de la commune sur laquelle se situe l''objet';
 COMMENT ON COLUMN m_reseau_sec.geo_v_pi.geom IS 'Géométrie de l''objet';
-
+COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_pi.id_contrat IS 'Code du contrat de maintenant et/ou d''entretien en cours';
