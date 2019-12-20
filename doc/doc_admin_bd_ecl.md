@@ -43,6 +43,7 @@ Dans le détail :
 #####	Les autres services : 
 
 * Le patrimoine de l'éclairage public est consultable sur l'application générique réseaux pour les ayants droit.
+* Des prestataires exétieurs disposant d'un contrat de maintenance peuvent saisir des signalements et/ou interventions directement dans l'application (en revanche un filtre est appliquée selon leurs droits déterminés par le service)
 
 
 ###	Alimentation de la base de données
@@ -77,7 +78,7 @@ La base de données ECL s'appuie sur des référentiels préexistants constituan
 
 | schéma        | table                    | description                                                                              | usage                                                                                              |
 | - | - | -- | -- |
-| m_amenagement | geo_amt_zpne_gestion     | Table géographique délimitant les zones de gestion entre la ville de Compiègne et l''ARC | Détermine la complétion automatique du prestataire et du gestionnaire pour les nœuds et les câbles |
+| m_amenagement | geo_amt_zone_gestion     | Table géographique délimitant les zones de gestion entre la ville de Compiègne et l''ARC | Détermine la complétion automatique du prestataire et du gestionnaire pour les nœuds et les câbles |
 | r_osm         | geo_vm_osm_commune_arcba | Vue matérialisée des limites communales des communes de l''ARCBA                         | Détermine la complétion automatique de la commune et du code Insee pour les nœuds et les câbles    |
 
 Ces deux tables sont les seules, avec les domaines de valeur, à ne pas être gérées directement dans leur contenu par le service d'éclairage public. 
@@ -221,6 +222,8 @@ Interventions et signalements du service métier
 |date_maj|Date de dernière mise à jour de la donnée|timestamp without time zone| |
 |op_sai|Opérateur de la saisie initiale de la donnée|character varying(80)| |
 |id_noeud|Identifiant du noeud sur lequel a lieu l'intervention (Pour foyer et départ, noeud = Support ou armoire)|integer| |
+|lib_inter|Libellé en clair des interventions pour affichage des résultats dans GEO|character varying(2500)| |
+|id_contrat|Identifiant du contrat de maintenance|character varying(2)| |
 
 * Trigger(s) :
 	* t_t1_intervention (before update or insert) :
@@ -420,6 +423,7 @@ Objet linéaire allant d''un nœud à un autre
 |op_sai_geo|Opérateur de la géolocalisation|character varying(254)| |
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
+|id_contrat|Identifiant du contrat de maintenance|character varying(2)| |
 
 * Trigger(s) :
 	* t_t1_cable_before_insert_update (before insert or update):
@@ -471,6 +475,7 @@ Nœud ponctuel du réseau.
 |op_sai_geo|Opérateur de la géolocalisation|character varying(254)| |
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
+|id_contrat|Identifiant du contrat de maintenance|character varying(2)| |
 
 * Vue(s) : 
     - xapps_geo_v_ecl_support_par_armoire
@@ -1265,6 +1270,7 @@ Description : Vue des ouvrages électriques permettant la saisie dans l''applica
 |     geo_ecl_noeud             | date_maj          |
 |     geo_ecl_noeud             | exploit_nd        |
 |     geo_ecl_noeud             | presta_nd         |
+|     geo_ecl_noeud             | id_contrat        |
 |     geo_ecl_noeud             | commune           |
 |     geo_ecl_noeud             | insee             |
 
@@ -1316,6 +1322,7 @@ Description : Vue des supports permettant la saisie dans l''application Geo
 |     an_ecl_support  | nbr_foyer         |
 |     geo_ecl_noeud   | exploit_nd        |
 |     geo_ecl_noeud   | presta_nd         |
+|     geo_ecl_noeud   | id_contrat        |
 |     geo_ecl_noeud   | commune           |
 |     geo_ecl_noeud   | insee             |
 
@@ -1358,6 +1365,7 @@ Description : Objet réel ou abstrait indiquant un point ayant une importance po
 |     geo_ecl_noeud   | date_maj          |
 |     geo_ecl_noeud   | exploit_nd        |
 |     geo_ecl_noeud   | presta_nd         |
+|     geo_ecl_noeud   | id_contrat        |
 |     geo_ecl_noeud   | commune           |
 |     geo_ecl_noeud   | insee             |
 
