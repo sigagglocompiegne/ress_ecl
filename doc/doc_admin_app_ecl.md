@@ -14,8 +14,9 @@
 
 |Date | Auteur | Description
 |:---|:---|:---|
-|17/07/2019|Thibaud BILLOTEAU|version initiale|
-|13/08/2019|Thibaud BILLOTEAU|version finale|
+|17/07/2019|Thibaud BILLOTEAU|version 0|
+|13/08/2019|Thibaud BILLOTEAU|version 1|
+|20/12/2019|Grégory Bodet|version 1.1|
 
 # Généralité
 
@@ -336,6 +337,8 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | date_maj            |                   | x             | Date de la mise à jour                                            | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
 | date_sai            |                   | x             | Date de saisie dans la base                                       | L'heure n'est pas affichée                                               | Fiche information : Câble (ECL) |
 | info_bulle | x                 |               | info_bulle                                               |  | Cartographie Réseaux  |
+| info_bulle_metier  | x                 |               | label                                               |  | Cartographie Réseaux  |
+
 | label  | x                 |               | label                                               |  | Cartographie Réseaux  |
 
 (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
@@ -347,6 +350,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | Situation != supprimer | situation                         | x                 | Alphanumérique | est différente de une(des) valeur(s) par défaut | 12         | Empêche l'apparation des départ supprimés |
 | id_nd_fin est null     | id_nd_fin (nœud final du câble)   |                   | Alphanumérique | La valeur de “id_nd_fin” est                    | null       | Recherche : "câble non relié"             |
 | id_nd_ini est null     | id_nd_ini (nœud initial du câble) |                   | Alphanumérique | La valeur de “id_nd_ini” est                    | null       | Recherche : "câble non relié"             |
+| SECU | id_contrat                                |     x              | Alphanumérique | est égale une valeur de contexte    | id_presta                                | Sécurité d'accès aux données selon le prestataire                                      |
 
   * ### Relations :
 
@@ -365,6 +369,10 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 |:------------------------------:|:-----------------:|:-------------:| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------- | ----------- |
 | Affiche-recherche-intervention | x                 |               | Affiche-recherche-intervention                                                                                                          | Formate l'affichage d'une recherche. | Recherche : Rapport d'intervention            |             |
 | Affiche-recherche-signalement  | x                 |               | Affiche-recherche-signalement                                                                                                           | Formate l'affichage d'une recherche. | Recherche : Rapport de signalement            |             |
+| affiche_inter_sign  | x | | Avec signalement| Informe si l'intervention a fait l'objet d'un signalement ou non | Recherche : Rapport d'intervention  | |
+| affiche_nacelle   | x | | Nacelle| Informe si l'intervention a utilisé une nacelle ou non| Recherche : Rapport d'intervention  | |
+| affiche_signa_inter    | x | | Avec intervention| Informe si le signalement a fait l'objet d'une intervention ou non| Recherche : Rapport d'intervention  | |
+
 
   * ### Filtres :
 
@@ -413,6 +421,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | type_inter   |                   | x             | Type d'intervention                      | Formatage par une liste de domaine ( lt_intervention_point_lumineux )                    | Fiches informations des Fiches d'intervention +  Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI) |
 | type_si_in   |                   | x             | Signalement ou intervention              | Formatage par une liste de domaine ( lt_ecl_signalement_intervention )                   | Fiches informations des Fiches d'intervention                                                                                       |
 | Affiche_ordre   |            x       |              | affiche_ordre             |      Défini l'ordre de création des signalements/interventions              | Fiches informations des Fiches d'intervention                                                                                       |
+| affiche_titre_(suffixe selon intervention)    |            x       |              | affiche_titre_pi              | Titre HTML pour la fiche synthétisant les signalements/Interventions | Recherche d'un signalement ou d'une intervention                                                                                      |
 
 * ### 'att_met1' 
 | Fiche information           | Utilisé     | Particularité/Usage                                          | Label                |
@@ -549,6 +558,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | type d'ouvrage         | dat_signa (Date du signalement)          |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                            | une valeur listée de "ty_ouvelec" | Sert à la recherche : ''Recherche d'ouvrages électriques"                                            |
 | Nom de l'ouvrage       | type_si_in (Signalement ou intervention) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste                            | une valeur listée de "nom_ouv"    | Sert à la rechercher : '' Rapport d'intervention'' afin de ne sélectionner que les interventions     |
 | Situation != supprimer | situation                                |     x              | Alphanumérique | est différente de une(des) valeur(s) par défaut                                             | 12                                | Empêche l'apparation des ouvrages supprimés sur la cartographie                                      |
+| SECU | id_contrat                                |     x              | Alphanumérique | est égale une valeur de contexte    | id_presta                                | Sécurité d'accès aux données selon le prestataire                                      |
 
   * ### Relations :
 
@@ -589,6 +599,7 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | date_donne                       |                   | x             | Date de création de la donnée                | L'heure n'est pas affichée                                                           | Fiche information : Câble (ECL)              |
 | info_bulle | x                 |               | info_bulle                                               |  | Cartographie Réseaux  |
 | label  | x                 |               | label                                               |  | Cartographie Réseaux  |
+| SECU | id_contrat                                |     x              | Alphanumérique | est égale une valeur de contexte    | id_presta                                | Sécurité d'accès aux données selon le prestataire                                      |
 
  (1) Pour gérer le fait que GEO affiche en haut de la fiche info le 1er champ du résultat d'une recherche.
 
@@ -635,12 +646,14 @@ Aucune
 | ty_pi             |                   | x             | Type de point d'intérêt                          | Formatage par une liste de domaine ( lt_ecl_type_pi )                            | Fiche information : Point intérêt (PI)   |
 | info_bulle | x                 |               | info_bulle                                               |  | Cartographie Réseaux  |
 
+
   * ### Filtres :
 
 | Nom                    | Attribut                        | Au chargement     | Type           | Condition                                                        | Valeur                       | Description                                                            |
 | ---------------------- | ------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------:| ---------------------------- | ---------------------------------------------------------------------- |
 | type_ PI               | ty_pi (type de point d'interet) |                   | Prédéfinis     | est égale à une valeur choisie par l'utilisateur parmi une liste | une valeur listée de “ty_pi” | Sert à la recherche : ''Recherche de point d'interet"                  |
 | Situation != supprimer | situation                       |      x             | Alphanumérique | est différente de une(des) valeur(s) par défaut                  | 12                           | Empêche l'apparation des points-lumineux supprimés sur la cartographie |
+| SECU | id_contrat                                |     x              | Alphanumérique | est égale une valeur de contexte    | id_presta                                | Sécurité d'accès aux données selon le prestataire                                      |
 
   * ### Relations :
 
@@ -703,10 +716,78 @@ Aucune
 | Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements                          |
 | Pour rafaichissement domaine de valeur | geom                                     | x                 | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.            |
 
+  * ### Filtres :
+
+| Nom                    | Attribut                        | Au chargement     | Type           | Condition                                                        | Valeur                       | Description                                                            |
+| ---------------------- | ------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------:| ---------------------------- | ---------------------------------------------------------------------- |
+| Etat                   | etat_supp (état du support)             |                   | alphanumérique     | La valeur de “etat_sign” =est différente de | 00 ou 60 ou 30  | Filtre les résultats                         |
+| Type=signalement (10)                   | etat_sign             |                   | alphanumérique     | La valeur de “etat_sign” =est égale à | 10  | Garde que les signalements                       |
+| SECU | id_contrat                                |     x              | Alphanumérique | est égale une valeur de contexte    | id_presta                                | Sécurité d'accès aux données selon le prestataire                                      |
+
 * ### Relations : 
 	Aucune
+	
 * ### Particularités :
 	Aucune
+	
+## Domaine de valeur : 'xapps_geo_v_ecl_intervention_liste_affichage (pour recherche)'
+
+
+
+  * ### Filtres :
+
+| Nom                    | Attribut                        | Au chargement     | Type           | Condition                                                        | Valeur                       | Description                                                            |
+| ---------------------- | ------------------------------- |:-----------------:|:--------------:|:----------------------------------------------------------------:| ---------------------------- | ---------------------------------------------------------------------- |
+
+| SECU | id_contrat                                |     x              | Alphanumérique | est égale une valeur de contexte    | id_presta                                | Sécurité d'accès aux données selon le prestataire                                      |
+
+* ### Relations : 
+
+Foyer : 4 tables jointes dans une même relation ci-dessous
+
+| Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
+|:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
+| an_ecl_intervention                                | id_noeud - id_noeud                                       |0...n     |    | an_ecl_foyer         			      | id_objet - id_foyer                                       |0...n     |
+| an_ecl_intervention (intervention Foyer) 	     | id_foyer - id_objet                                       |0...n     |
+
+Ouvrage : 4 tables jointes dans une même relation ci-dessous
+
+| Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
+|:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
+| an_ecl_intervention                                | id_noeud - id_noeud                                       |0...n     |    | an_elc_ouvrage_electrique   			      | id_objet - id_ouvelec                                     |0...n     |
+| an_ecl_intervention (intervention Foyer) 	     | id_ouvelec - id_objet                                     |0...n     |
+
+Départ : 4 tables jointes dans une même relation ci-dessous
+
+| Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
+|:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
+| an_ecl_intervention                                | id_noeud - id_noeud                                       |0...n     |    | an_elc_depart   			              | id_objet - id_depart                                      |0...n     |
+| an_ecl_intervention (intervention depart) 	     | id_depart - id_objet                                      |0...n     |
+
+Point lumineux : 4 tables jointes dans une même relation ci-dessous
+
+| Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
+|:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
+| an_ecl_intervention                                | id_noeud - id_noeud                                       |0...n     |    | an_elc_support   			              | id_objet - id_supp                                        |0...n     |
+| an_ecl_intervention (intervention point lumineux)  | id_supp - id_objet                                        |0...n     |
+
+Point intérêt : 4 tables jointes dans une même relation ci-dessous
+
+| Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
+|:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
+| an_ecl_intervention                                | id_noeud - id_noeud                                       |0...n     |    | an_elc_pi   			                      | id_objet - id_pi                                          |0...n     |
+| an_ecl_intervention (intervention point d'intérêt) | id_pi - id_objet                                          |0...n     |
+
+Cable : 4 tables jointes dans une même relation ci-dessous
+
+| Géotables ou Tables                                | Champs de jointure (champs table - champs table liée)     | Type     |
+|:--------------------------------------------------:|:---------------------------------------------------------:|:--------:|
+| an_ecl_intervention                                | id_noeud - id_noeud                                       |0...n     |    | geo_ecl_cable   			              | id_objet - id_cab                                         |0...n     |
+| an_ecl_intervention (intervention cable)           | id_cab - id_objet                                         |0...n     |
+
+
+* ### Particularités :
+	Cette table est doublonnée uniquement pour gérer une recherche de tous les signalements et intervnetions qqs l'élément. Remonte pour chaque objet les signalements et interventions qui lui sont associés dans une fiche d'information spécifique.
 
 ## Domaine de valeur : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
