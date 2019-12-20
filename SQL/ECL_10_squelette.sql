@@ -1632,6 +1632,8 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.observ IS 'Commentaires di
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.date_sai IS 'Date de la saisie de la donnée dans la base';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.date_maj IS 'Date de dernière mise à jour de la donnée';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lanterne.op_sai IS 'Opérateur de la saisie de la donnée';
+
+
 --############################################################ MODELE DE LAMPE ##################################################
 
 CREATE TABLE m_reseau_sec.an_ecl_modele_lampe--------------------------------------- Modèles de lampe existants ou ayant existés à Compiègne
@@ -1754,6 +1756,8 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.op_sai IS 'Opérateur de la s
 -- ###                                                        CLASSES OBJETS                                                   ###
 -- ###                                                                                                                         ###
 -- ###############################################################################################################################
+
+
 --################################################################# NOEUD #######################################################
 
 CREATE TABLE m_reseau_sec.geo_ecl_noeud--------------------------------------------- Noeud ponctuel du réseau
@@ -1779,6 +1783,7 @@ CREATE TABLE m_reseau_sec.geo_ecl_noeud-----------------------------------------
 	op_sai_geo  character varying (254), ---------------------------------------- Opérateur de la géolocalisation
 	date_donne  timestamp without time zone, ------------------------------------ Horodatage de la production initiale de la donnée
 	situation   character varying (2) NOT NULL DEFAULT '10' ------------------- Situation générale : plus utilisé mais encore là ou utilisé ou supprimé
+	id_contrat character varying(2) DEFAULT '00'::character varying, -- Identifiant du contrat de maintenance et d'entretien de l'éclairage public (lien vers la table des contrats r_objet_lt_contrat)
 	);
 ---
 ALTER TABLE m_reseau_sec.geo_ecl_noeud
@@ -1806,6 +1811,8 @@ COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.qua_geo_Z IS 'Qualité de la géolo
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.op_sai_geo IS 'Opérateur de la géolocalisation';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.date_donne IS 'Horodatage de la production initiale de la donnée';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_noeud.id_contrat IS 'Identifiant du contrat de maintenance et d''entretien de l''éclairage public (lien vers la table des contrats r_objet_lt_contrat)';
+
 
 --################################################################# CABLE #######################################################
 
@@ -1838,6 +1845,7 @@ CREATE TABLE m_reseau_sec.geo_ecl_cable ----------------------------------------
 	op_sai_geo  character varying (254), ---------------------------------------- Opérateur de la géolocalisation
 	date_donne  timestamp without time zone, ------------------------------------ Horodatage de la donnée
 	situation   character varying (2) NOT NULL DEFAULT '10' ------------------- Situation générale : plus utilisé mais encore là ou utilisé ou supprimé
+	id_contrat character varying(2) DEFAULT '00'::character varying, -- Identifiant du contrat de maintenance et d'entretien de l'éclairage public (lien vers la table des contrats r_objet_lt_contrat)
 	);
 ---
 ALTER TABLE m_reseau_sec.geo_ecl_cable
@@ -2088,7 +2096,12 @@ COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.op_sai_geo IS 'Opérateur de la gé
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.date_donne IS 'Horodatage de la production initiale de la donnée';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.qua_dat IS 'Qualité de date de la pose';
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.id_contrat IS 'Identifiant du contrat de maintenance et d''entretien de l''éclairage public (lien vers la table des contrats r_objet_lt_contrat)';
+
+
 --################################################################# SUPPORT #####################################################
+
+
 CREATE TABLE m_reseau_sec.an_ecl_support ------------------------------------------- Table des supports de foyer
 	(
 	id_supp     integer NOT NULL,  --------------------------------------------- Identifiant du nœud lié au support
@@ -2119,6 +2132,7 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_disjonc IS 'Type du disjoncteur
 COMMENT ON COLUMN m_reseau_sec.an_ecl_support.ty_fusible IS 'Type du fusible';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_support.haut_supp IS 'Hauteur du support';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_support.nbr_foyer IS 'Nombre de foyer, calculé automatiquement via trigger';
+
 --############################################################# POINT D'INTERET ##################################################
 
 CREATE TABLE m_reseau_sec.an_ecl_pi ------------------------------------------------ Objet réel ou abstrait indiquant un point d'importance pour la connaissance patrimoniale du réseau, mais ne possédant pas de caractéristiques intrasèques intéressantes pour l''Eclairage Public.
@@ -2135,6 +2149,7 @@ COMMENT ON TABLE m_reseau_sec.an_ecl_pi IS 'Objet réel ou abstrait indiquant un
 COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.id_pi IS 'Identifiant du nœud lié au point d''interet';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.ty_pi IS 'Type de point d''intérêt';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_pi.etat_pi IS 'Etat du point d''intérêt ';
+
 --############################################################ OUVRAGE ELECTRIQUE ##################################################
 
 CREATE TABLE m_reseau_sec.an_ecl_ouvrage_electrique -------------------------------- Objet avec une arrivée d''électricité et un ou plusieurs départs
@@ -2178,6 +2193,7 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_comm IS 'Type de com
 COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.pres_var IS 'Présence d''un variateur';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_disjonc IS 'Type du disjoncteur';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_ouvrage_electrique.ty_fusible IS 'Type du fusible';
+
 --################################################################### DEPART #######################################################
 
 CREATE TABLE m_reseau_sec.an_ecl_depart -------------------------------------------- Objet intégré à une armoire et permettant le branchement d''un câble
@@ -2316,6 +2332,7 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.date_maj IS 'Date de dernière mise
 COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.puis_sous IS 'Puissance souscrite calculée via un trigger';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.date_donne IS 'Horodatage de la production initiale de la donnée';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_depart.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
+
 --################################################################## FOYER  ########################################################
 CREATE TABLE m_reseau_sec.an_ecl_foyer -------------------------------------- Objet reposant sur un support, intégrant une source lumineuse
 	(
@@ -2713,6 +2730,7 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.date_donne IS 'Horodatage de la prod
 COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
 COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.loc_plat IS 'Localisation de la platine, pieds de support ou dans la lanterne'; 
 COMMENT ON COLUMN m_reseau_sec.an_ecl_foyer.ty_lantern IS 'Type de lanterne : piéton ou routier'; 
+
 --################################################################## ERREURS  ########################################################
 
 CREATE TABLE m_reseau_sec.an_ecl_erreur -------------------------------------------- Table récupérant les messages d'erreurs
@@ -2760,6 +2778,8 @@ CREATE TABLE m_reseau_sec.an_ecl_intervention ----------------------------------
 	date_maj    	timestamp without time zone,--------------------------------- Date de dernière mise à jour de la donnée
 	op_sai 		character varying(80),--------------------------------------- Opérateur de la saisie initiale de la donnée
 	id_noeud        integer NOT NULL--------------------------------------------- Identifiant du noeud sur lequel a lieu l'intervention (Pour foyer et départ, noeud = Support ou armoire)
+        lib_inter character varying(2500), -- Libellé en clair des interventions pour affichage des résultats dans GEO
+        id_contrat character varying(2), -- Identifiant du contrat de maintenance
  );
 
 
@@ -2772,6 +2792,10 @@ ALTER TABLE  m_reseau_sec.an_ecl_intervention
 --- GESTION DES CONTRAINTES DE SAISIE 
 --- On update la date maj si UPDATE.
 --- Selon le(s) type(s) d'intervention(s) on update les valeurs de l'objet concerné.
+-- Function: m_reseau_sec.ft_m_intervention()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_intervention();
+
 CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_intervention()
   RETURNS trigger AS
 $BODY$
@@ -2800,6 +2824,292 @@ IF (TG_OP = 'INSERT') THEN
 
 	END IF;
 
+        -- décryptage des interventions pour affichage dans GEO dans les rapports de signalements ou d'intervention
+        NEW.lib_inter :=
+(
+CASE 
+WHEN new.type_inter = '' or new.type_inter is null  THEN 'n.r'
+WHEN length(new.type_inter) = 2 AND new.type_inter = '00' THEN 'n.r'
+WHEN length(new.type_inter) = 2 AND new.type_inter <> '00' THEN (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE li.code = new.type_inter)
+WHEN length(new.type_inter) = 5 THEN 
+	CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2))
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2))
+
+         END
+WHEN length(new.type_inter) = 8 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2))
+         END
+WHEN length(new.type_inter) = 11 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2))
+         END
+
+WHEN length(new.type_inter) = 14 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2))
+         END
+
+WHEN length(new.type_inter) = 17 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2))
+         END
+
+WHEN length(new.type_inter) = 20 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2))
+         END
+
+WHEN length(new.type_inter) = 23 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2))
+         END
+
+WHEN length(new.type_inter) = 26 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2))
+         END
+
+WHEN length(new.type_inter) = 29 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2))
+         END
+
+WHEN length(new.type_inter) = 32 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2))
+         END
+
+WHEN length(new.type_inter) = 35 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2))
+         END
+
+WHEN length(new.type_inter) = 38 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 37 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2))
+         END
+
+WHEN length(new.type_inter) = 41 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 37 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 40 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 37 for 2))
+         END
+ELSE 'Nombre d''interventions trop important, faire une demande au service SIG'
+END
+);
+
+	NEW.id_contrat := (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = new.id_noeud);
+
+
 	
 END IF;
 
@@ -2826,7 +3136,291 @@ IF (TG_OP = 'UPDATE') THEN
 	END IF;
 
 	NEW.date_maj = now(); ---------- On attribue la date actuelle à la date de dernière mise à jour
-	
+
+	-- mise à jour du contrat
+        NEW.id_contrat := id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = new.id_noeud ;
+	 -- décryptage des interventions pour affichage dans GEO dans les rapports de signalements ou d'intervention
+        NEW.lib_inter :=
+(
+CASE 
+WHEN new.type_inter = '' or new.type_inter is null  THEN 'n.r'
+WHEN length(new.type_inter) = 2 AND new.type_inter = '00' THEN 'n.r'
+WHEN length(new.type_inter) = 2 AND new.type_inter <> '00' THEN (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE li.code = new.type_inter)
+WHEN length(new.type_inter) = 5 THEN 
+	CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2))
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2))
+
+         END
+WHEN length(new.type_inter) = 8 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2))
+         END
+WHEN length(new.type_inter) = 11 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2))
+         END
+
+WHEN length(new.type_inter) = 14 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2))
+         END
+
+WHEN length(new.type_inter) = 17 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2))
+         END
+
+WHEN length(new.type_inter) = 20 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2))
+         END
+
+WHEN length(new.type_inter) = 23 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2))
+         END
+
+WHEN length(new.type_inter) = 26 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2))
+         END
+
+WHEN length(new.type_inter) = 29 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2))
+         END
+
+WHEN length(new.type_inter) = 32 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2))
+         END
+
+WHEN length(new.type_inter) = 35 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2))
+         END
+
+WHEN length(new.type_inter) = 38 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 37 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2))
+         END
+
+WHEN length(new.type_inter) = 41 THEN
+CASE 
+          WHEN substring(new.type_inter from 1 for 2) = '00' THEN 
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 37 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 40 for 2))
+
+	  WHEN substring(new.type_inter from 1 for 2) <> '00' THEN 
+                (SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 1 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 4 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 7 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 10 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 13 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 16 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 19 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 22 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 25 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 28 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 31 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 34 for 2)) || '<br>' ||
+		(SELECT li.valeur FROM m_reseau_sec.lt_ecl_type_intervention li WHERE code = substring(new.type_inter from 37 for 2))
+         END
+ELSE 'Nombre d''interventions trop important, faire une demande au service SIG'
+END
+);
 END IF;
 
 	---
@@ -3360,7 +3954,8 @@ $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 ALTER FUNCTION m_reseau_sec.ft_m_intervention()
-  OWNER TO postgres;
+  OWNER TO sig_create;
+
 
 
   CREATE TRIGGER t_t1_intervention
@@ -3480,6 +4075,9 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.op_sai IS 'Opérateur de la s
 COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.date_sai IS 'Date de la saisie de la donnée dans la base';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.date_maj IS 'Date de dernière mise à jour de la donnée';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.id_noeud IS 'Identifiant du noeud sur lequel a lieu l''intervention (Pour foyer et départ, noeud = Support ou armoire)';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.lib_inter IS 'Libellé en clair des interventions pour affichage des résultats dans GEO';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.id_contrat IS 'Identifiant du contrat de maintenance';
+
 
 
  --################################################################## MEDIA OBJET########################################################
