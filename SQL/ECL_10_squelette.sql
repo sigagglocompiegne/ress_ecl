@@ -1827,7 +1827,7 @@ CREATE TABLE m_reseau_sec.geo_ecl_cable ----------------------------------------
 	situ_cab    character varying (2) NOT NULL DEFAULT '00',-------------------- Situation physique du câble
 	dat_pos_ca  timestamp without time zone ,----------------------------------- Date de pose du câble
 	qua_dat     character varying(2) NOT NULL DEFAULT '00',--------------------- Qualité de date de la pose
-	sect_cab    character varying (2) ,----------------------------------------- Section du câble
+	sect_cab    character varying (2) NOT NULL DEFAULT '00',-------------------- Section du câble
 	ent_pose    character varying (254) ,--------------------------------------- Entreprise ayant posé le cable
 	insee1	    character varying(5), ------------------------------------------ Code insee de la commune
 	commune1    character varying (50) ,---------------------------------------- Commune sur laquelle est située le câble
