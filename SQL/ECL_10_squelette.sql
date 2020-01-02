@@ -1859,7 +1859,12 @@ ALTER TABLE m_reseau_sec.geo_ecl_cable
 --- GESTION DES CONTRAINTES DE SAISIE avec génération de message d'erreur
 --- On force une valeur aux attributs noeud initial et noeud final du câble. --> lien avec table noeud.
 --- On force une valeur pour les attributs commune, insee, gestionnaire, prestataire, en fonction d'autres tables.
-CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_cable_before() 
+
+-- Function: m_reseau_sec.ft_m_cable_before()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_cable_before();
+
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_cable_before()
   RETURNS trigger AS
 $BODY$
 BEGIN
@@ -1872,6 +1877,8 @@ BEGIN
 		NEW.src_geom = '20'; ---- Orthophotographie
 		NEW.src_date = '2013';--- 
 		NEW.situation = '10';---- Actif
+		NEW.presta_cab = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END;
+		NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom));
 	
 	END IF; 
 
@@ -1896,6 +1903,10 @@ BEGIN
 	
 	END IF; 
 
+
+
+
+	
 
 	--- CORRECTION DES ERREURS DE SAISIE, affichage message d'erreur
 
@@ -1990,15 +2001,15 @@ BEGIN
 
 ---
 
-		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)) = 1) THEN
+		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)) = 1) THEN
 	
 
-			NEW.exploi_cab= (SELECT gest FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.exploi_cab= (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-			NEW.presta_cab = (SELECT presta_ecl FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			NEW.presta_cab = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 
-		ELSIF ( (SELECT count(*) FROM m_amenagement.geo_amt_zpne_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)) > 1) THEN
+		ELSIF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)) > 1) THEN
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
@@ -2008,10 +2019,17 @@ BEGIN
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_cab, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(NEW.id_cab, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
 			RETURN OLD ;
 
 		END IF;
+
+	NEW.presta_cab = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END;
+	NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom));
+
+---
+
+
 
 
 ---
@@ -2023,13 +2041,9 @@ END;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
+ALTER FUNCTION m_reseau_sec.ft_m_cable_before()
+  OWNER TO sig_create;
 
-
-  CREATE TRIGGER t_t1_cable_before_insert_update
-  BEFORE INSERT OR UPDATE
-  ON m_reseau_sec.geo_ecl_cable
-  FOR EACH ROW
-  EXECUTE PROCEDURE m_reseau_sec.ft_m_cable_before(); 
 
 ---
 
