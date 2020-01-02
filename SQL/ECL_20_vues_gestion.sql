@@ -849,9 +849,10 @@ DECLARE id_unique integer;
 
 --- variable pour les logs
 DECLARE v_idlog integer;
-DECLARE v_dataold character varying(1000);
-DECLARE v_datanew character varying(1000);
+DECLARE v_dataold character varying(2000);
+DECLARE v_datanew character varying(2000);
 DECLARE v_name_table character varying(254);
+
 
 BEGIN
 
@@ -918,6 +919,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
+			
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
@@ -952,7 +954,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 			NEW.commune,
 			NEW.insee,
 			NEW.exploit_nd,
-			NEW.presta_nd,
+			CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
 			NEW.ent_pose,
 			NEW.dat_pos,
 			NEW.qua_dat,
@@ -1143,7 +1145,7 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		commune =NEW.commune,
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
-		presta_nd = NEW.presta_nd,
+		presta_nd = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
 		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
@@ -1306,7 +1308,8 @@ $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
 ALTER FUNCTION m_reseau_sec.ft_m_point_lumineux()
-  OWNER TO sig_create
+  OWNER TO sig_create;
+
 
 
 
