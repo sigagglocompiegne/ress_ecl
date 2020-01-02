@@ -315,7 +315,7 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 			NEW.commune,
 			NEW.insee,
 			NEW.exploit_nd,
-			NEW.presta_nd,
+			CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
 			NEW.ent_pose,
 			NEW.dat_pos,
 			NEW.qua_dat,
@@ -571,7 +571,7 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		op_sai=NEW.op_sai,
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
-		presta_nd = NEW.presta_nd,
+		presta_nd = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
 		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
@@ -759,6 +759,7 @@ $BODY$
   COST 100;
 ALTER FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
   OWNER TO sig_create;
+
 
 
 					     
@@ -1411,7 +1412,7 @@ ALTER TABLE m_reseau_sec.geo_v_ecl_pi ALTER COLUMN id_contrat SET DEFAULT '00'::
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 --- L'insertion des logs se fait également dans cette fonction	
 
-					     -- Function: m_reseau_sec.ft_m_point_interet()
+-- Function: m_reseau_sec.ft_m_point_interet()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
 
@@ -1489,7 +1490,7 @@ IF (TG_OP = 'INSERT') THEN
 			NEW.commune,
 			NEW.insee,
 			NEW.exploit_nd,
-			NEW.presta_nd,
+			CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
 			NEW.ent_pose,
 			NEW.dat_pos,
 			NEW.qua_dat,
@@ -1640,7 +1641,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		commune =NEW.commune,
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
-		presta_nd = NEW.presta_nd,
+		presta_nd = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
 		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
@@ -1758,6 +1759,7 @@ $BODY$
   COST 100;
 ALTER FUNCTION m_reseau_sec.ft_m_point_interet()
   OWNER TO sig_create;
+
 
 
 
