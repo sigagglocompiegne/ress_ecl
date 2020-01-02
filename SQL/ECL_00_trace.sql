@@ -19,4 +19,5 @@
 2019-11-27 : GB / Ajout de 3 valeurs d'attributs dans la table lt_ecl_type_commande
 2019-12-20 : GB / Modifications SQL suite adaptation sur l'exploitation des rapports de signalements/Interventions et leurs recherches
 2019-12-20 : GB / Modifications suite intégration de la gestion des contrats et l'accès à des prestataires extérieurs
-2020-01-01 : GB / Modification suite intégration de la gestion des contrats pour les cables (trigger sur cable)
+2020-01-01 : GB / Modification suite intégration de la gestion des contrats pour intégrer l'information du prestataire
+                  pour les cables et les noeuds lorsqu'il n'y a pas de contrats (trigger sur cable et vues de gestion des ouvrages, points d'intérêts et points lumineux)
