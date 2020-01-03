@@ -826,7 +826,7 @@ ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER src_geom SET DEFAULT '00';
 ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER src_date SET DEFAULT '0000';
 ALTER VIEW m_reseau_sec.geo_v_point_lumineux ALTER situation SET DEFAULT '10';
 ALTER TABLE m_reseau_sec.geo_v_ecl_point_lumineux ALTER COLUMN id_contrat SET DEFAULT '00'::character varying;
-
+ALTER TABLE m_reseau_sec.geo_v_ecl_point_lumineux ALTER COLUMN haut_trap SET DEFAULT '00'::character varying;
 
 --- SUPPRESSION DES MESSAGES D'ERREUR
 --- On force certains attributs
