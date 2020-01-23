@@ -4604,8 +4604,6 @@ ALTER TABLE  m_reseau_sec.an_ecl_intervention
       REFERENCES m_reseau_sec.lt_ecl_etat (code) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE SET DEFAULT; 
 
-ALTER TABLE  m_reseau_sec.an_ecl_intervention
-  ADD CONSTRAINT an_ecl_intervention_date_realisation_check CHECK (now() >= dat_real);
 
 ALTER TABLE  m_reseau_sec.an_ecl_intervention
   ADD CONSTRAINT an_ecl_intervention_dates_programation_signalement_check CHECK (dat_progra >= dat_signa);
