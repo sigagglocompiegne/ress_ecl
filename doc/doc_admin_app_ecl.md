@@ -408,11 +408,11 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | att_met6     |                   | x             | Etat de l'objet après l'intervention     | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
 | att_met7     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
 | att_met8     |                   | x             | Voir tableau ci-après                    | Formatage par une liste de domaine (Voir tableau ci-après)                               | Fiche information (Voir tableau ci-après)                                                                                           |
-| dat_progra   |                   | x             | Date de la programmation                 | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
-| dat_real     |                   | x             | Date de la réalisation de l'intervention | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| dat_progra   |                   | x             | programmée le                 | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| dat_real     |                   | x             | réalisée le | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
 | dat_signa    |                   | x             | Date du signalement                      | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
-| date_maj     |                   | x             | Date de la dernière mise à jour          | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
-| date_sai     |                   | x             | Date de la saisie initiale dans la base  | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| date_maj     |                   | x             | Fiche modifiée le          | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
+| date_sai     |                   | x             | Fiche saisie le  | Les heures ne sont pas affichées                                                         | Fiches informations des Fiches d'intervention                                                                                       |
 | etat_sign    |                   | x             | Etat du signalement                      | Formatage par une liste de domaine ( lt_ecl_etat_signalement_affichage )                 | Fiches informations des Fiches d'intervention                                                                                       |
 | moy_interv   |                   | x             | Moyen d'intervention                     | Formatage par une liste de domaine ( lt_ecl_moyen_intervention )                         | Fiches informations des Fiches d'intervention                                                                                       |
 | src_def      |                   | x             | Source de la défaillance                 | Formatage par une liste de domaine ( lt_ecl_source_defaillance )                         | Fiches informations des Fiches d'intervention                                                                                       |
@@ -421,7 +421,10 @@ Une relation avec média pourra être ajoutée si le service en ressent le besoi
 | type_inter   |                   | x             | Type d'intervention                      | Formatage par une liste de domaine ( lt_intervention_point_lumineux )                    | Fiches informations des Fiches d'intervention +  Fiches informations (Foyer, départ, Ouvrage électrique, câble, point lumineux, PI) |
 | type_si_in   |                   | x             | Signalement ou intervention              | Formatage par une liste de domaine ( lt_ecl_signalement_intervention )                   | Fiches informations des Fiches d'intervention                                                                                       |
 | Affiche_ordre   |            x       |              | affiche_ordre             |      Défini l'ordre de création des signalements/interventions              | Fiches informations des Fiches d'intervention                                                                                       |
-| affiche_titre_(suffixe selon intervention)    |            x       |              | affiche_titre_pi              | Titre HTML pour la fiche synthétisant les signalements/Interventions | Recherche d'un signalement ou d'une intervention                                                                                      |
+| dat_signa   |            x       |              | le             |      pour la fiche d'information signalé le              | Fiches informations des Fiches d'intervention                                                                                       |
+| op_sai   |            x       |              | déposé par             |                   | Fiches informations des Fiches d'intervention       
+| op_rea   |            x       |              | par             |     Pour la fiche d'information, intervention réalisée par              | Fiches informations des Fiches d'intervention   |
+| typ_obj   |            x       |              | Type de patrimoine             |     Pour affichage dans le résultat et fiche information des interventions en clair             | Fiches informations des Fiches d'intervention   |
 
 * ### 'att_met1' 
 | Fiche information           | Utilisé     | Particularité/Usage                                          | Label                |
@@ -672,7 +675,7 @@ Aucune
 * ### Filtres :
 | Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                                             |
 | -------------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-----------------:| ------------ | ------------------------------------------------------------------------------------------------------- |
-| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 000, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' sur la cartographie. |
+| Etats  | etat_sign ( état du signalement)         | x      | Alphanumérique | est différente de | 00, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' sur la cartographie. |
 | Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements sur la cartographie.                        |
 | Pour rafaichissement domaine de valeur | geom                                     |                   | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.                               |
 
@@ -680,6 +683,10 @@ Aucune
 	Aucune
 * ### Particularités :
 	Aucune
+	
+
+
+	
 ## Table : 'xapps_geo_v_ecl_depart'
 | Nom           | Attribut     | Au chargement     | Type     | Condition         | Valeur       | Description                                                                                                                                                          |
 | ------------- | ------------ |:-----------------:|:--------:|:-----------------:| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -712,7 +719,7 @@ Aucune
 ## Domaine de valeur : 'xapps_geo_v_ecl_intervention_liste_affichage'
 | Nom                                    | Attribut                                 | Au chargement     | Type           | Condition         | Valeur       | Description                                                                          |
 | -------------------------------------- | ---------------------------------------- |:-----------------:|:--------------:|:-----------------:| ------------ | ------------------------------------------------------------------------------------ |
-| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 000, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' . |
+| Etats                                  | etat_sign ( état du signalement)         | x                 | Alphanumérique | est différente de | 00, 60 et 30 | Permet de n'afficher que les entités qui ne sont pas en 'réglé' ou 'non-renseigné' . |
 | Type=signalement (10)                  | type_si_in (Signalement ou Intervention) | x                 | Alphanumérique | est égale à       | 10           | Permet d'afficher que les entités qui sont des signalements                          |
 | Pour rafaichissement domaine de valeur | geom                                     | x                 | Alphanumérique | est non-nulle     |              | Sert à actualiser le domaine de valeur en forçant un calcul de géométrie.            |
 
