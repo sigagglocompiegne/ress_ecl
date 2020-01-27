@@ -259,6 +259,8 @@ CREATE OR REPLACE VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage AS
           WHERE inter.moy_interv::text = lt_ecl_moyen_intervention.code::text), '<br>', ' Commentaire(s) : ', inter.observ) AS affichage,
     inter.dat_signa,
     inter.dat_real,
+    inter.op_rea,
+    inter.typ_obj,
     inter.moy_interv,
     inter.observ,
     inter.typ_def,
@@ -322,162 +324,59 @@ COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_support_par_armoire.geom IS 'Géométri
 --- On fait une vue des intervenations
 -- View: x_apps.xapps_an_v_ecl_stat_intervention
 
-DROP VIEW x_apps.xapps_an_v_ecl_stat_intervention;
+-- DROP VIEW x_apps.xapps_an_v_ecl_stat_intervention;
 
 CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_intervention AS 
- SELECT 
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_si_in::text = '20'::text) AS nbr_inter,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_si_in::text = '20'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS nbr_inter_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%10%'::text) AS chgmt_disj,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%10%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_disj_ecl,
-
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%11%'::text) AS chgmt_fus,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%11%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_fus_ecl,
-     ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%12%'::text) AS chgmt_lant,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%12%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_lant_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%13%'::text) AS chgmt_lam,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%13%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_lam_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%15%'::text) AS chgmt_balla,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%15%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_balla_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%16%'::text) AS chgmt_amo,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%16%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_amo_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%17%'::text) AS chgmt_tran,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%17%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_tran_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%18%'::text) AS ajout_opti,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%18%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ajout_opti_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%19%'::text) AS chgmt_para,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%19%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_para_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%20%'::text) AS chgmt_comm,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%20%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_comm_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%21%'::text) AS chgmt_rece,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%21%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS chgmt_rece_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%22%'::text) AS reenc_disj,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%22%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS reenc_disj_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%30%'::text) AS ctrl_ele,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%30%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ctrl_ele_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%31%'::text) AS ctrl_mec,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%31%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ctrl_mec_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%40%'::text) AS nettoyage,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%40%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS nettoyage_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%50%'::text) AS rep_objet,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%50%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS rep_objet_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%60%'::text) AS ajout_dep,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%60%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS ajout_dep_ecl,
-
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%70%'::text) AS repo_lant,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%70%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS repo_lant_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%80%'::text) AS supp_obj,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%80%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS supp_obj_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%81%'::text) AS aban_obj,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%81%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS aban_obj_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%82%'::text) AS reac_obj,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%82%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS reac_obj_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%83%'::text) AS dep_acc,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%83%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS dep_acc_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%90%'::text) AS supp_optio,
-   ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%90%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS supp_optio_ecl,
-    ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%99%'::text) AS autre,
-             ( SELECT count(*) AS count
-           FROM m_reseau_sec.an_ecl_intervention
-          WHERE an_ecl_intervention.type_inter::text ~~ '%99%'::text AND (op_sai='mporte' or op_sai='slagache' or op_sai='ewiegant')) AS autre_ecl;
+ WITH req_annee AS (
+         SELECT DISTINCT to_char("int".dat_real, 'YYYY'::text) AS annee,
+            tint.code AS type,
+            tint.valeur AS typ_int
+           FROM m_reseau_sec.an_ecl_intervention "int",
+            m_reseau_sec.lt_ecl_type_intervention tint
+          WHERE "int".dat_real IS NOT NULL AND tint.code::text <> '00'::text
+          GROUP BY "int".dat_real, tint.code, tint.valeur
+          ORDER BY to_char("int".dat_real, 'YYYY'::text), tint.code
+        ), r_ville AS (
+         SELECT DISTINCT to_char("int".dat_real, 'YYYY'::text) AS annee,
+            tint.code AS type,
+            count(*) AS nb_int_ville
+           FROM m_reseau_sec.an_ecl_intervention "int",
+            m_reseau_sec.lt_ecl_type_intervention tint
+          WHERE "int".type_si_in::text = '20'::text AND "int".type_inter::text ~~ (('%'::text || tint.code::text) || '%'::text) AND "int".id_contrat::text = 'ZZ'::text AND "int".dat_real >= '2019-09-01 00:00:00'::timestamp without time zone AND "int".dat_real IS NOT NULL
+          GROUP BY to_char("int".dat_real, 'YYYY'::text), tint.code
+        ), r_arc AS (
+         SELECT DISTINCT to_char("int".dat_real, 'YYYY'::text) AS annee,
+            tint.code AS type,
+            count(*) AS nb_int_arc
+           FROM m_reseau_sec.an_ecl_intervention "int",
+            m_reseau_sec.lt_ecl_type_intervention tint
+          WHERE "int".type_si_in::text = '20'::text AND "int".type_inter::text ~~ (('%'::text || tint.code::text) || '%'::text) AND "int".id_contrat::text = '03'::text AND "int".dat_real >= '2019-09-01 00:00:00'::timestamp without time zone AND "int".dat_real IS NOT NULL
+          GROUP BY to_char("int".dat_real, 'YYYY'::text), "int".id_contrat, tint.code
+        )
+ SELECT row_number() OVER () AS id,
+    a.typ_int AS type,
+    a.annee,
+        CASE
+            WHEN r1.nb_int_arc IS NULL THEN 0::bigint
+            ELSE r1.nb_int_arc
+        END AS nb_int_arc,
+        CASE
+            WHEN r2.nb_int_ville IS NULL THEN 0::bigint
+            ELSE r2.nb_int_ville
+        END AS nb_int_ville,
+        CASE
+            WHEN r1.nb_int_arc IS NULL THEN 0::bigint
+            ELSE r1.nb_int_arc
+        END +
+        CASE
+            WHEN r2.nb_int_ville IS NULL THEN 0::bigint
+            ELSE r2.nb_int_ville
+        END AS nb_int_tot
+   FROM req_annee a
+     LEFT JOIN r_arc r1 ON a.type::text = r1.type::text AND a.annee = r1.annee
+     LEFT JOIN r_ville r2 ON a.type::text = r2.type::text AND a.annee = r2.annee
+  WHERE a.annee::integer >= 2019
+  ORDER BY a.annee, a.type;
 
 ALTER TABLE x_apps.xapps_an_v_ecl_stat_intervention
   OWNER TO sig_create;
@@ -486,55 +385,324 @@ GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_intervention TO create_sig;
 GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_an_v_ecl_stat_intervention TO edit_sig;
 GRANT SELECT ON TABLE x_apps.xapps_an_v_ecl_stat_intervention TO read_sig;
 COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_intervention
-  IS 'Compte des interventions selon le type';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nbr_inter IS 'Nombre d''intervention total';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nbr_inter_ecl IS 'Nombre d''intervention du service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_disj IS 'Changement de disjoncteur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_disj_ecl IS 'Changement de disjoncteur par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lant IS 'Changement de lanterne';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lant_ecl IS 'Changement de lanterne par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lam IS 'Changement de lampe';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_lam_ecl IS 'Changement de lampe par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_balla IS 'Changement de ballaste / driver';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_balla_ecl IS 'Changement de ballaste / driver par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_amo IS 'Changement d''amorceur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_amo_ecl IS 'Changement d''amorceur par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_tran IS 'Changement d''auto-transformateur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_tran_ecl IS 'Changement d''auto-transformateur par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_opti IS 'Ajout d''option';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_opti_ecl IS 'Ajout d''option par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_para IS 'Changement de parasurtenseur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_para_ecl IS 'Changement de parasurtenseur par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_comm IS 'Changement de type de commande ';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_comm_ecl IS 'Changement de type de commande par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_ele IS 'Contrôle électrique';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_ele_ecl IS 'Contrôle électrique par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_mec IS 'Contrôle mécanique';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ctrl_mec_ecl IS 'Contrôle mécanique par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nettoyage IS 'Nettoyage';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.nettoyage_ecl IS 'Nettoyage par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.rep_objet IS 'Réparation d''objet';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.rep_objet_ecl IS 'Réparation d''objet par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_dep IS 'Ajout d''un départ';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.ajout_dep_ecl IS 'Ajout d''un départ par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_rece IS 'Changement de recepteur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_rece_ecl IS 'Changement de recepteur par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.repo_lant IS 'Repositionnement d''une lanterne/crosse';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.repo_lant_ecl IS 'Repositionnement d''une lanterne/crosse par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_obj IS 'Suppression de l''objet';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_obj_ecl IS 'Suppression de l''objet par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.aban_obj IS 'Abandon de l''objet';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.aban_obj_ecl IS 'Abandon de l''objet par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reac_obj IS 'Réactivation de l''objet';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reac_obj_ecl IS 'Réactivation de l''objet par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_optio IS 'Suppresion d''une option';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.supp_optio_ecl IS 'Suppresion d''une option par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.autre IS 'Autre type d''intervention';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.autre_ecl IS 'Autre type d''intervention par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_fus IS 'Changement de fusible';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.chgmt_fus_ecl IS 'Changement de fusible par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reenc_disj IS 'Réenclenchement du disjoncteur';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.reenc_disj_ecl IS 'Réenclenchement du disjoncteur par le service';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.dep_acc IS 'Dépose / repose identique (accident)';
-COMMENT ON COLUMN x_apps.xapps_an_v_ecl_stat_intervention.dep_acc_ecl IS 'Dépose / repose identique (accident) par le service';
+  IS 'Compte des interventions selon le type et la zone de gestion';
+
+-- View: x_apps.xapps_an_v_ecl_stat_intervention_total
+
+-- DROP VIEW x_apps.xapps_an_v_ecl_stat_intervention_total;
+
+CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_intervention_total AS 
+ WITH req_annee AS (
+         SELECT DISTINCT to_char("int".dat_real, 'YYYY'::text) AS annee
+           FROM m_reseau_sec.an_ecl_intervention "int"
+          WHERE "int".dat_real IS NOT NULL
+          GROUP BY "int".dat_signa, "int".dat_real
+          ORDER BY to_char("int".dat_real, 'YYYY'::text)
+        ), req_total AS (
+         SELECT DISTINCT to_char("int".dat_real, 'YYYY'::text) AS annee,
+            count(*) AS nbr_inter
+           FROM m_reseau_sec.an_ecl_intervention "int"
+          WHERE "int".type_si_in::text = '20'::text AND "int".dat_real >= '2019-09-01 00:00:00'::timestamp without time zone
+          GROUP BY to_char("int".dat_real, 'YYYY'::text)
+          ORDER BY to_char("int".dat_real, 'YYYY'::text)
+        ), req_total_secl AS (
+         SELECT DISTINCT to_char("int".dat_real, 'YYYY'::text) AS annee,
+            count(*) AS nbr_inter_secl
+           FROM m_reseau_sec.an_ecl_intervention "int"
+          WHERE "int".type_si_in::text = '20'::text AND "int".id_contrat::text = 'ZZ'::text AND "int".dat_real >= '2019-09-01 00:00:00'::timestamp without time zone AND "int".dat_real IS NOT NULL
+          GROUP BY to_char("int".dat_real, 'YYYY'::text)
+          ORDER BY to_char("int".dat_real, 'YYYY'::text)
+        ), req_total_hecl AS (
+         SELECT DISTINCT to_char("int".dat_real, 'YYYY'::text) AS annee,
+            count(*) AS nbr_inter_hecl
+           FROM m_reseau_sec.an_ecl_intervention "int"
+          WHERE "int".type_si_in::text = '20'::text AND "int".id_contrat::text = '03'::text AND "int".dat_real >= '2019-09-01 00:00:00'::timestamp without time zone AND "int".dat_real IS NOT NULL
+          GROUP BY to_char("int".dat_real, 'YYYY'::text)
+          ORDER BY to_char("int".dat_real, 'YYYY'::text)
+        )
+ SELECT a.annee,
+        CASE
+            WHEN t.nbr_inter IS NULL THEN 0::bigint
+            ELSE t.nbr_inter
+        END AS nbr_inter,
+        CASE
+            WHEN secl.nbr_inter_secl IS NULL THEN 0::bigint
+            ELSE secl.nbr_inter_secl
+        END AS nbr_inter_secl,
+        CASE
+            WHEN hecl.nbr_inter_hecl IS NULL THEN 0::bigint
+            ELSE hecl.nbr_inter_hecl
+        END AS nbr_inter_hecl
+   FROM req_annee a
+     LEFT JOIN req_total t ON a.annee = t.annee
+     LEFT JOIN req_total_secl secl ON a.annee = secl.annee
+     LEFT JOIN req_total_hecl hecl ON a.annee = hecl.annee
+  WHERE a.annee::integer >= 2019;
+
+ALTER TABLE x_apps.xapps_an_v_ecl_stat_intervention_total
+  OWNER TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_intervention_total TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_intervention_total TO create_sig;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_an_v_ecl_stat_intervention_total TO edit_sig;
+GRANT SELECT ON TABLE x_apps.xapps_an_v_ecl_stat_intervention_total TO read_sig;
+COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_intervention_total
+  IS 'Vue applicative formattant les indicateurs d''intervention';
+
+
+-- View: x_apps.xapps_an_v_ecl_stat_patrimoine
+
+-- DROP VIEW x_apps.xapps_an_v_ecl_stat_patrimoine;
+
+CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS 
+ WITH req_ouvrage_arc AS (
+         SELECT 'Ouvrage (total)'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text
+        ), req_ouvrage_ville AS (
+         SELECT 'Ouvrage (total)'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+        ), req_ouvrage_serv AS (
+         SELECT 'Ouvrage (total)'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+        ), req_armoire_arc AS (
+         SELECT 'dont armoire'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text
+        ), req_armoire_ville AS (
+         SELECT 'dont armoire'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+        ), req_armoire_serv AS (
+         SELECT 'dont armoire'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+        ), req_sous_armoire_arc AS (
+         SELECT 'dont sous-armoire'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text
+        ), req_sous_armoire_ville AS (
+         SELECT 'dont sous-armoire'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+        ), req_sous_armoire_serv AS (
+         SELECT 'dont sous-armoire'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+        ), req_transfo_arc AS (
+         SELECT 'dont transformateur'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text
+        ), req_transfo_ville AS (
+         SELECT 'dont transformateur'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+        ), req_transfo_serv AS (
+         SELECT 'dont transformateur'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+        ), req_depart_arc AS (
+         SELECT 'Départ'::text AS type,
+            count(d.*) AS nb
+           FROM m_reseau_sec.an_ecl_depart d,
+            m_reseau_sec.geo_v_ecl_ouvrage_electrique o
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text = '03'::text
+        ), req_depart_ville AS (
+         SELECT 'Départ'::text AS type,
+            count(d.*) AS nb
+           FROM m_reseau_sec.an_ecl_depart d,
+            m_reseau_sec.geo_v_ecl_ouvrage_electrique o
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text = 'ZZ'::text
+        ), req_depart_serv AS (
+         SELECT 'Départ'::text AS type,
+            count(d.*) AS nb
+           FROM m_reseau_sec.an_ecl_depart d,
+            m_reseau_sec.geo_v_ecl_ouvrage_electrique o
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND (d.op_sai::text = 'mporte'::text OR d.op_sai::text = 'slagache'::text OR d.op_sai::text = 'ewiegant'::text)
+        ), req_pt_lumi_arc AS (
+         SELECT 'Support'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_point_lumineux
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text = '03'::text
+        ), req_pt_lumi_ville AS (
+         SELECT 'Support'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_point_lumineux
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text = 'ZZ'::text
+        ), req_pt_lumi_serv AS (
+         SELECT 'Support'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_point_lumineux
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND (geo_v_ecl_point_lumineux.op_sai::text = 'mporte'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'slagache'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'ewiegant'::text)
+        ), req_foyer_arc AS (
+         SELECT 'Foyer'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.an_ecl_foyer f,
+            m_reseau_sec.geo_v_ecl_point_lumineux pl
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text = '03'::text
+        ), req_foyer_ville AS (
+         SELECT 'Foyer'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.an_ecl_foyer f,
+            m_reseau_sec.geo_v_ecl_point_lumineux pl
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text = 'ZZ'::text
+        ), req_foyer_serv AS (
+         SELECT 'Foyer'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.an_ecl_foyer f,
+            m_reseau_sec.geo_v_ecl_point_lumineux pl
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND (f.op_sai::text = 'mporte'::text OR f.op_sai::text = 'slagache'::text OR f.op_sai::text = 'ewiegant'::text)
+        ), req_pt_int_arc AS (
+         SELECT 'Point d''intérêt'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_pi
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text = '03'::text
+        ), req_pt_int_ville AS (
+         SELECT 'Point d''intérêt'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_pi
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text = 'ZZ'::text
+        ), req_pt_int_serv AS (
+         SELECT 'Point d''intérêt'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_pi
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND (geo_v_ecl_pi.op_sai::text = 'mporte'::text OR geo_v_ecl_pi.op_sai::text = 'slagache'::text OR geo_v_ecl_pi.op_sai::text = 'ewiegant'::text)
+        ), req_cable_arc AS (
+         SELECT 'Linéaire de câble**'::text AS type,
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+           FROM m_reseau_sec.geo_ecl_cable
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text = '03'::text
+        ), req_cable_ville AS (
+         SELECT 'Linéaire de câble**'::text AS type,
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+           FROM m_reseau_sec.geo_ecl_cable
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text = 'ZZ'::text
+        ), req_cable_serv AS (
+         SELECT 'Linéaire de câble**'::text AS type,
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+           FROM m_reseau_sec.geo_ecl_cable
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND (geo_ecl_cable.op_sai::text = 'mporte'::text OR geo_ecl_cable.op_sai::text = 'slagache'::text OR geo_ecl_cable.op_sai::text = 'ewiegant'::text)
+        )
+ SELECT 1 AS gid,
+    req_ouvrage_arc.type,
+    req_ouvrage_arc.nb AS nb_arc,
+    req_ouvrage_ville.nb AS nb_ville,
+    req_ouvrage_arc.nb + req_ouvrage_ville.nb AS total,
+    req_ouvrage_serv.nb AS nb_serv
+   FROM req_ouvrage_arc,
+    req_ouvrage_ville,
+    req_ouvrage_serv
+  WHERE req_ouvrage_arc.type = req_ouvrage_ville.type AND req_ouvrage_arc.type = req_ouvrage_serv.type
+UNION ALL
+ SELECT 2 AS gid,
+    req_armoire_arc.type,
+    req_armoire_arc.nb AS nb_arc,
+    req_armoire_ville.nb AS nb_ville,
+    req_armoire_arc.nb + req_armoire_ville.nb AS total,
+    req_armoire_serv.nb AS nb_serv
+   FROM req_armoire_arc,
+    req_armoire_ville,
+    req_armoire_serv
+  WHERE req_armoire_arc.type = req_armoire_ville.type AND req_armoire_arc.type = req_armoire_serv.type
+UNION ALL
+ SELECT 3 AS gid,
+    req_sous_armoire_arc.type,
+    req_sous_armoire_arc.nb AS nb_arc,
+    req_sous_armoire_ville.nb AS nb_ville,
+    req_sous_armoire_arc.nb + req_sous_armoire_ville.nb AS total,
+    req_sous_armoire_serv.nb AS nb_serv
+   FROM req_sous_armoire_arc,
+    req_sous_armoire_ville,
+    req_sous_armoire_serv
+  WHERE req_sous_armoire_arc.type = req_sous_armoire_ville.type AND req_sous_armoire_arc.type = req_sous_armoire_serv.type
+UNION ALL
+ SELECT 4 AS gid,
+    req_transfo_arc.type,
+    req_transfo_arc.nb AS nb_arc,
+    req_transfo_ville.nb AS nb_ville,
+    req_transfo_arc.nb + req_transfo_ville.nb AS total,
+    req_transfo_serv.nb AS nb_serv
+   FROM req_transfo_arc,
+    req_transfo_ville,
+    req_transfo_serv
+  WHERE req_transfo_arc.type = req_transfo_ville.type AND req_transfo_arc.type = req_transfo_serv.type
+UNION ALL
+ SELECT 5 AS gid,
+    req_depart_arc.type,
+    req_depart_arc.nb AS nb_arc,
+    req_depart_ville.nb AS nb_ville,
+    req_depart_arc.nb + req_depart_ville.nb AS total,
+    req_depart_serv.nb AS nb_serv
+   FROM req_depart_arc,
+    req_depart_ville,
+    req_depart_serv
+  WHERE req_depart_arc.type = req_depart_ville.type AND req_depart_arc.type = req_depart_serv.type
+UNION ALL
+ SELECT 6 AS gid,
+    req_pt_lumi_arc.type,
+    req_pt_lumi_arc.nb AS nb_arc,
+    req_pt_lumi_ville.nb AS nb_ville,
+    req_pt_lumi_arc.nb + req_pt_lumi_ville.nb AS total,
+    req_pt_lumi_serv.nb AS nb_serv
+   FROM req_pt_lumi_arc,
+    req_pt_lumi_ville,
+    req_pt_lumi_serv
+  WHERE req_pt_lumi_arc.type = req_pt_lumi_ville.type AND req_pt_lumi_arc.type = req_pt_lumi_serv.type
+UNION ALL
+ SELECT 7 AS gid,
+    req_foyer_arc.type,
+    req_foyer_arc.nb AS nb_arc,
+    req_foyer_ville.nb AS nb_ville,
+    req_foyer_arc.nb + req_foyer_ville.nb AS total,
+    req_foyer_serv.nb AS nb_serv
+   FROM req_foyer_arc,
+    req_foyer_ville,
+    req_foyer_serv
+  WHERE req_foyer_arc.type = req_foyer_ville.type AND req_foyer_arc.type = req_foyer_serv.type
+UNION ALL
+ SELECT 8 AS gid,
+    req_pt_int_arc.type,
+    req_pt_int_arc.nb AS nb_arc,
+    req_pt_int_ville.nb AS nb_ville,
+    req_pt_int_arc.nb + req_pt_int_ville.nb AS total,
+    req_pt_int_serv.nb AS nb_serv
+   FROM req_pt_int_arc,
+    req_pt_int_ville,
+    req_pt_int_serv
+  WHERE req_pt_int_arc.type = req_pt_int_ville.type AND req_pt_int_arc.type = req_pt_int_serv.type
+UNION ALL
+ SELECT 9 AS gid,
+    req_cable_arc.type,
+    req_cable_arc.long_cable AS nb_arc,
+    req_cable_ville.long_cable AS nb_ville,
+    req_cable_arc.long_cable + req_cable_ville.long_cable AS total,
+    req_cable_ville.long_cable AS nb_serv
+   FROM req_cable_arc,
+    req_cable_ville,
+    req_cable_serv
+  WHERE req_cable_arc.type = req_cable_ville.type AND req_cable_arc.type = req_cable_serv.type;
+
+ALTER TABLE x_apps.xapps_an_v_ecl_stat_patrimoine
+  OWNER TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO sig_create;
+GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO create_sig;
+GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO edit_sig;
+GRANT SELECT ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO read_sig;
+COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
+  IS 'Bilan du patrimoine numérique d''éclairage public';
+
+
 
