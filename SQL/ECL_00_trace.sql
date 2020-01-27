@@ -21,4 +21,5 @@
 2019-12-20 : GB / Modifications suite intégration de la gestion des contrats et l'accès à des prestataires extérieurs
 2020-01-01 : GB / Modification suite intégration de la gestion des contrats pour intégrer l'information du prestataire
                   pour les cables et les noeuds lorsqu'il n'y a pas de contrats (trigger sur cable et vues de gestion des ouvrages, points d'intérêts et points lumineux)
-2020-01-01 : GB / Mise à jour structure table geo_ecl_cable (sect_cab par défaut '00')
+2020-01-10 : GB / Mise à jour structure table geo_ecl_cable (sect_cab par défaut '00')
+2020-01-27 : GB / Mise à jour suite adaptation du suivi des interventions
