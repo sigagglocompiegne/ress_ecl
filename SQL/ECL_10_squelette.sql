@@ -2792,8 +2792,11 @@ CREATE TABLE m_reseau_sec.an_ecl_intervention ----------------------------------
 	date_maj    	timestamp without time zone,--------------------------------- Date de dernière mise à jour de la donnée
 	op_sai 		character varying(80),--------------------------------------- Opérateur de la saisie initiale de la donnée
 	id_noeud        integer NOT NULL--------------------------------------------- Identifiant du noeud sur lequel a lieu l'intervention (Pour foyer et départ, noeud = Support ou armoire)
-        lib_inter character varying(2500), -- Libellé en clair des interventions pour affichage des résultats dans GEO
-        id_contrat character varying(2), -- Identifiant du contrat de maintenance
+        lib_inter 	character varying(2500), ------------------------------------ Libellé en clair des interventions pour affichage des résultats dans GEO
+        id_contrat 	character varying(2), --------------------------------------- Identifiant du contrat de maintenance
+  	op_rea 		character varying(2) DEFAULT '00'::character varying, ------- Opérateur ayant réalisé l'intervention suite au signalement ou intervention direct (récupération des informations de la table lt_contrat)
+  	typ_obj 	character varying(50), -------------------------------------- Type d'objet concerné par l'intervention. Alimenté via le fonctionnel GEO par une valeur saisie par défaut selon l'objet (foyer, départ, ...)
+ 
  );
 
 
@@ -2806,6 +2809,7 @@ ALTER TABLE  m_reseau_sec.an_ecl_intervention
 --- GESTION DES CONTRAINTES DE SAISIE 
 --- On update la date maj si UPDATE.
 --- Selon le(s) type(s) d'intervention(s) on update les valeurs de l'objet concerné.
+
 -- Function: m_reseau_sec.ft_m_intervention()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_intervention();
@@ -2822,10 +2826,27 @@ BEGIN
 IF (TG_OP = 'INSERT') THEN
 
 	IF (NEW.type_si_in = '20') THEN --- Si lors de l'insertion c'est une intervention (sans passer par un signalement donc).
-		new.dat_real = now(); ----- La date de réalisation de l'intervention est égale à la date actuelle.
-		new.dat_signa = NULL;------ Et la date de signalement est nulle.
-    new.etat_sign = '30'; ----- Et l'état de signalement passe à réglé 
+                IF new.dat_real IS NULL THEN
+			new.dat_real = now(); ----- La date de réalisation de l'intervention est égale à la date actuelle.
+			new.dat_signa = NULL;------ Et la date de signalement est nulle.
+                        new.etat_sign = '30'; ----- Et l'état de signalement passe à réglé
+                ELSE
+			new.dat_signa = NULL;------ Et la date de signalement est nulle.
+                        new.etat_sign = '30'; ----- Et l'état de signalement passe à réglé
+                END IF;
+	 
 	END IF;
+
+
+	IF ( NEW.type_si_in = '20' AND NEW.op_rea = '00') THEN ----------------------------------------------- Si une intervention est saisie sans mettre l'opérateur passe pas
+
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_inter, 'Une intervention ne peut pas être réglée sans avoir précisé son opérateur. Merci de renseigner "Intervention par" en bas cette fiche.', now() );--- On ajoute un message d'erreur qui apparaît dans GEO
+		
+	END IF;
+
+
 
 	IF ( NEW.type_si_in = '10' AND NEW.etat_sign = '30') THEN ----------------------------------------------- Si un signalement (type_si_in code =10) est saisie en réglé (etat_sign code= 30) sans intervention pas possible donc ...
 
@@ -3121,12 +3142,24 @@ ELSE 'Nombre d''interventions trop important, faire une demande au service SIG'
 END
 );
 
+
+
 	
 END IF;
 
 	---
 
 IF (TG_OP = 'UPDATE') THEN
+
+	IF ( NEW.type_si_in = '20' AND NEW.op_rea = '00' ) THEN ----------------------------------------------- Si une intervention est saisie sans mettre l'opérateur passe pas
+
+		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
+		VALUES
+		(NEW.id_inter, 'Une intervention ne peut pas être réglée sans avoir précisé son opérateur. Merci de renseigner "Intervention par" en bas cette fiche.', now() );--- On ajoute un message d'erreur qui apparaît dans GEO
+		
+		NEW.op_rea = OLD.op_rea ; ----------------------------------------------------------------- Et on remet l'opérateur précedent
+		
+	END IF;
 
 	IF ( NEW.type_si_in = '10' AND NEW.etat_sign = '30') THEN ----------------------------------------------- Si un signalement (type_si_in code =10) est modifié en réglé (etat_sign code= 30) sans intervention pas possible donc ...
 
@@ -3138,8 +3171,10 @@ IF (TG_OP = 'UPDATE') THEN
 		
 	END IF;
 
-	IF (NEW.type_si_in = '20' AND OLD.type_si_in = '10') THEN --- Si on passe d'un signalement à une intervention
-		NEW.dat_real = now();-------------------------------- La date de réalisation de l'intervention est égale à la date actuelle. 
+	IF (NEW.type_si_in = '20' AND OLD.type_si_in = '10' AND NEW.dat_real IS NULL) THEN --- Si on passe d'un signalement à une intervention
+
+			NEW.dat_real = now();-------------------------------- La date de réalisation de l'intervention est égale à la date actuelle. 
+
 	END IF;
 
 	IF (OLD.type_si_in= '10' AND NEW.type_si_in='20') THEN --- Si on passe d'un signalement à une intervention.
@@ -3460,8 +3495,18 @@ END IF;
 
 	IF (NEW.type_si_in = '10') THEN
 		NEW.type_inter = '00';
-		NEW.dat_progra = NULL;
-    NEW.dat_real  = NULL;
+                IF NEW.dat_progra IS NULL THEN
+			NEW.dat_progra = NULL;
+                END IF;
+                IF NEW.dat_real IS NULL THEN
+			NEW.dat_real  = NULL;
+		END IF;
+			
+	END IF;
+
+	IF (NEW.type_si_in = '10') AND NEW.dat_real IS NOT NULL THEN
+	    
+		NEW.type_si_in = '20';
 	END IF;
 
 
@@ -3969,6 +4014,7 @@ ALTER FUNCTION m_reseau_sec.ft_m_intervention()
 
 
 
+
   CREATE TRIGGER t_t1_intervention
   BEFORE UPDATE OR INSERT
   ON m_reseau_sec.an_ecl_intervention
@@ -4196,8 +4242,8 @@ CREATE TABLE m_reseau_sec.an_ecl_log
   idlog integer NOT NULL, -- Identifiant unique de d'opération
   tablename character varying(80) NOT NULL, -- Nom de la table concernée par l'opération sur l'entité
   type_ope text NOT NULL, -- Type l'opération sur l'entité
-  dataold character varying(1000), -- Valeur ancienne avant l'opération sur l'entité
-  datanew character varying(1000), -- Valeur nouvelle après l'opération sur l'entité
+  dataold character varying(5000), -- Valeur ancienne avant l'opération sur l'entité
+  datanew character varying(5000), -- Valeur nouvelle après l'opération sur l'entité
   date_maj timestamp without time zone, -- Horodatage de l'opération sur la base d'éclairage public
   CONSTRAINT an_ecl_log_pkey PRIMARY KEY (idlog)
 )
