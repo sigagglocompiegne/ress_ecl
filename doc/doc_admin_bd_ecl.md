@@ -138,6 +138,7 @@ L'ensemble des classes d'objets unitaires sont stockées dans le schéma m_resea
     -  xapps_an_v_ecl_tension_cable
     - xapps_an_v_ecl_patrimoine
     - xapps_an_vmr_ecl_materialisee_noeud_armoire
+    - xapps_an_v_ecl_stat_patrimoine
 
 -------------------------------------------------------------------------
 
@@ -191,6 +192,7 @@ D! Objet reposant sur un support, intégrant une source lumineuse
 	
 * Vue(s) :
     - xapps_an_v_ecl_patrimoine
+    - xapps_an_v_ecl_stat_patrimoine
 -------------------------------------------------------------------------	
 #### an_ecl_intervention
 
@@ -224,6 +226,8 @@ Interventions et signalements du service métier
 |id_noeud|Identifiant du noeud sur lequel a lieu l'intervention (Pour foyer et départ, noeud = Support ou armoire)|integer| |
 |lib_inter|Libellé en clair des interventions pour affichage des résultats dans GEO|character varying(2500)| |
 |id_contrat|Identifiant du contrat de maintenance|character varying(2)| |
+|op_rea|Opérateur ayant réalisé l'intervention suite au signalement ou intervention direct (récupération des informations de la table lt_contrat)|character varying(2)| |
+|typ_obj|Type d'objet concerné par l'intervention. Alimenté via le fonctionnel GEO par une valeur saisie par défaut selon l'objet (foyer, départ, ...)|character varying(50)| |
 
 * Trigger(s) :
 	* t_t1_intervention (before update or insert) :
@@ -240,6 +244,7 @@ Interventions et signalements du service métier
 
 * Vue(s) :
     -  xapps_an_v_ecl_stat_intervention
+    -  xapps_an_v_ecl_stat_intervention_total
     -  xapps_geo_v_ecl_intervention_liste_affichage
 -------------------------------------------------------------------------
 #### an_ecl_modele_lanterne
@@ -353,6 +358,7 @@ Objet avec une arrivée d''électricité et un ou plusieurs départs
     - xapps_an_v_ecl_patrimoine
     - xapps_an_vmr_ecl_materialisee_noeud_armoire
     - xapps_geo_v_ecl_depart
+    - xapps_an_v_ecl_stat_patrimoine
 -------------------------------------------------------------------------
 #### an_ecl_pi
 
@@ -367,6 +373,7 @@ Objet réel ou abstrait indiquant un point d''importance pour la connaissance pa
 * Vue(s) :
     - m_reseau_sec.geo_v_ecl_pi
     - xapps_an_v_ecl_patrimoine
+    - xapps_an_v_ecl_stat_patrimoine
 -------------------------------------------------------------------------
 #### an_ecl_support
 
@@ -389,6 +396,7 @@ Supports des foyers (sol, façade, mât...)
 * Vue(s) :
     - geo_v_ecl_point_lumineux
     - xapps_geo_v_ecl_support_par_armoire
+    - xapps_an_v_ecl_stat_patrimoine
 -------------------------------------------------------------------------
 #### geo_ecl_cable
 
@@ -447,6 +455,7 @@ Objet linéaire allant d''un nœud à un autre
 * Vue(s) :
     - xapps_an_v_ecl_tension_cable
     - xapps_an_v_ecl_patrimoine
+    - xapps_an_v_ecl_stat_patrimoine
 -------------------------------------------------------------------------
 #### geo_ecl_noeud
 
@@ -487,6 +496,7 @@ Nœud ponctuel du réseau.
     - m_reseau_sec.geo_v_ecl_ouvrage_electrique
     - m_reseau_sec.geo_v_ecl_pi
     - m_reseau_sec.geo_v_ecl_point_lumineux
+
 -------------------------------------------------------------------------
 ### Classes d'objets de gestion
 
@@ -1387,6 +1397,12 @@ Description : Bilan du patrimoine numérique d''éclairage public
 
 ### xapps_an_v_ecl_stat_intervention 
 Description : Compte des interventions selon le type
+
+### xapps_an_v_ecl_stat_intervention_total 
+Description : Compte des interventions total
+
+### xapps_an_v_ecl_stat_patrimoine 
+Description : Compte du_ patrimoine
 
 ### xapps_an_v_ecl_tension_cable
 Description : Lien entre le câble et sa tension selon noeud final du câble
