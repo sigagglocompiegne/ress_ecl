@@ -24,3 +24,4 @@
 2020-01-10 : GB / Mise à jour structure table geo_ecl_cable (sect_cab par défaut '00')
 2020-01-27 : GB / Mise à jour suite adaptation du suivi des interventions
 2020-01-31 : GB / Mise à jour vue applicative (stat) suite prise en compte des réseaux rétrocédés
+2020-02-03 : GB / Intégration liste de valeurs des interventions liées aux feux tricolores
