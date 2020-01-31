@@ -1330,7 +1330,6 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 
 			INSERT INTO m_reseau_sec.lt_elecslt_type_intervention(code, valeur)
 			    VALUES
-			('00','-->'),
 			('23','Changement rouge principale'),
 			('24','Changement orange principale'),
 			('25','Changement vert principale'),
