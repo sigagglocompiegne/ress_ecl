@@ -98,6 +98,10 @@ DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_defaillance CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_cables CASCADE;
 
+DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_type_defaillance;
+DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_source_defaillance;
+DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_type_intervention;
+
 
 --SEQUENCES
 
@@ -1292,6 +1296,47 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 				IS 'Code permettant de décrire le type d''intervention des câbles';
 			COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_intervention_cables.code IS 'Code de la liste';
 			COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_intervention_cables.valeur IS 'Valeur de la liste';
+			
+			----------------------------------Type intervention Feu tricolore ---------------------------------------
+			
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux feux tricolores
+			CREATE TABLE m_reseau_sec.lt_elecslt_type_intervention
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_elecslt_type_intervention_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+
+			INSERT INTO m_reseau_sec.lt_elecslt_type_intervention(code, valeur)
+			    VALUES
+			('00','Non renseigné'),
+			('10','Changement rouge principale'),
+			('11','Changement orange principale'),
+			('12','Changement vert principale'),
+			('20','Changement rouge secondaire'),
+			('21','Changement orange secondaire'),
+			('23','Changement vert secondaire'),
+			('30','Changement rouge piéton'),
+			('31','Changement vert piéton'),
+			('40','Changement appel piéton'),
+			('41','Changement lampe rappel piéton'),
+			('50','Changement lampe croix de St-André'),
+			('60','Changement caisson complet feux principal'),
+			('61','Changement caisson complet feux secondaire'),
+			('62','Changement caisson complet boite piéton'),
+			('63','Changement caisson rappel piéton'),
+			('64','Changement caisson croix de St-André'),
+			('65','Changement feux complet'),
+			('70','Nettoyage'),
+			('99','Autre');
+
+			COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_intervention
+				IS 'Code permettant de décrire le type d''intervention des feux tricolores';
+			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention.code IS 'Code de la liste d''intervention des feux tricolores';
+			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention.valeur IS 'Valeur de la liste d''intervention des feux tricolores';
 
 
 
@@ -1349,6 +1394,31 @@ COMMENT ON TABLE m_reseau_sec.lt_ecl_source_defaillance
 	IS 'Code permettant de décrire la source de la déaillance repérée';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_source_defaillance.code IS 'Code de la liste';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_source_defaillance.valeur IS 'Valeur de la liste';
+
+
+--############################################################ SOURCE DE DEFAILLANCE (feu tricolore) ##################################################
+
+CREATE TABLE m_reseau_sec.lt_elecslt_source_defaillance
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_elecslt_source_defaillance_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_elecslt_source_defaillance(code, valeur)
+    VALUES
+('00','Non renseigné'),
+('10','Accident'),
+('20','Vandalisme'),
+('99','Autre') ;
+
+COMMENT ON TABLE m_reseau_sec.lt_elecslt_source_defaillance
+	IS 'Code permettant de décrire la source de la défaillance repérée pour les feux tricolores';
+COMMENT ON COLUMN m_reseau_sec.lt_elecslt_source_defaillance.code IS 'Code de la liste pour les défaillances repérées des feux tricolores';
+COMMENT ON COLUMN m_reseau_sec.lt_elecslt_source_defaillance.valeur IS 'Valeur de la liste pour les défaillances repérées des feux tricolores';
 
 --############################################################ MOYEN D'INTERVENTION ##################################################
 
@@ -1425,7 +1495,39 @@ COMMENT ON TABLE m_reseau_sec.lt_ecl_type_defaillance
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_defaillance.code IS 'Code de la liste';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_defaillance.valeur IS 'Valeur de la liste';
 
+--############################################################ TYPE DEFAILLANCE (feu tricolore) ##################################################
 
+CREATE TABLE m_reseau_sec.lt_elecslt_type_defaillance
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_elecslt_type_defaillance_pkey PRIMARY KEY (code)
+)
+
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_elecslt_type_defaillance(code, valeur)
+    VALUES
+('00','Non renseigné'),
+('10','Absence rouge principal'),
+('11','Absence orange principal'),
+('12','Absence vert principal'),
+('20','Absence rouge secondaire'),
+('21','Absence orange secondaire'),
+('22','Absence vert secondaire'),
+('30','Absence rouge piéton'),
+('31','Absence vert piéton'),
+('40','Défaut appel piéton'),
+('41','Défaut rappel piéton'),
+('50','Défaut croix de Saint-André'),
+('99','Autre');
+
+COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_defaillance
+	IS 'Code permettant de décrire le type de défaillane des feux tricolotes';
+COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_defaillance.code IS 'Code de la liste de défaillane des feux tricolotes';
+COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_defaillance.valeur IS 'Valeur de la liste de défaillane des feux tricolotes';
 
 --############################################################ MODELE DE SUPPORT ##################################################
 
