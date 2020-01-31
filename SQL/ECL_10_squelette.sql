@@ -1302,7 +1302,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			-- Pour GEO, on créé un type d'intervention destiné uniquement aux feux tricolores
 			CREATE TABLE m_reseau_sec.lt_elecslt_type_intervention
 			(
-			  code character varying(2) NOT NULL,
+			  code character varying(3) NOT NULL,
 			  valeur character varying(80) NOT NULL,
 			  CONSTRAINT lt_elecslt_type_intervention_pkey PRIMARY KEY (code)
 			)
@@ -1312,26 +1312,26 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 
 			INSERT INTO m_reseau_sec.lt_elecslt_type_intervention(code, valeur)
 			    VALUES
-			('00','Non renseigné'),
-			('10','Changement rouge principale'),
-			('11','Changement orange principale'),
-			('12','Changement vert principale'),
-			('20','Changement rouge secondaire'),
-			('21','Changement orange secondaire'),
-			('23','Changement vert secondaire'),
-			('30','Changement rouge piéton'),
-			('31','Changement vert piéton'),
-			('40','Changement appel piéton'),
-			('41','Changement lampe rappel piéton'),
-			('50','Changement lampe croix de St-André'),
-			('60','Changement caisson complet feux principal'),
-			('61','Changement caisson complet feux secondaire'),
-			('62','Changement caisson complet boite piéton'),
-			('63','Changement caisson rappel piéton'),
-			('64','Changement caisson croix de St-André'),
-			('65','Changement feux complet'),
-			('70','Nettoyage'),
-			('99','Autre');
+			('000','Non renseigné'),
+			('110','Changement rouge principale'),
+			('111','Changement orange principale'),
+			('112','Changement vert principale'),
+			('120','Changement rouge secondaire'),
+			('121','Changement orange secondaire'),
+			('123','Changement vert secondaire'),
+			('130','Changement rouge piéton'),
+			('131','Changement vert piéton'),
+			('140','Changement appel piéton'),
+			('141','Changement lampe rappel piéton'),
+			('150','Changement lampe croix de St-André'),
+			('160','Changement caisson complet feux principal'),
+			('161','Changement caisson complet feux secondaire'),
+			('162','Changement caisson complet boite piéton'),
+			('163','Changement caisson rappel piéton'),
+			('164','Changement caisson croix de St-André'),
+			('165','Changement feux complet'),
+			('170','Nettoyage'),
+			('999','Autre');
 
 			COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_intervention
 				IS 'Code permettant de décrire le type d''intervention des feux tricolores';
