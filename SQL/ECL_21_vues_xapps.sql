@@ -459,6 +459,33 @@ CREATE OR REPLACE VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage AS
     inter.lib_inter
    FROM m_reseau_sec.an_ecl_intervention inter
      JOIN m_reseau_sec.geo_ecl_noeud noeud ON inter.id_noeud = noeud.id_noeud
+  WHERE noeud.id_contrat::text = 'ZZ'::text OR noeud.id_contrat::text = '03'::text
+UNION ALL
+ SELECT inter.id_inter AS code,
+    concat('Signalement N°', inter.id_inter, ' - Défaillance : ', ( SELECT lt_elecslt_type_defaillance.valeur
+           FROM m_reseau_sec.lt_elecslt_type_defaillance
+          WHERE inter.typ_def::text = lt_elecslt_type_defaillance.code::text)) AS valeur,
+    inter.type_si_in,
+    inter.etat_sign,
+    noeud.geom,
+    concat(' N°', inter.id_objet, '<br>', 'Défaillance : ', ( SELECT lt_elecslt_type_defaillance.valeur
+           FROM m_reseau_sec.lt_elecslt_type_defaillance
+          WHERE inter.typ_def::text = lt_elecslt_type_defaillance.code::text), '<br>', ' Intervention : ', ( SELECT lt_ecl_moyen_intervention.valeur
+           FROM m_reseau_sec.lt_ecl_moyen_intervention
+          WHERE inter.moy_interv::text = lt_ecl_moyen_intervention.code::text), '<br>', ' Commentaire(s) : ', inter.observ) AS affichage,
+    inter.dat_signa,
+    inter.dat_real,
+    inter.op_rea,
+    inter.typ_obj,
+    inter.moy_interv,
+    inter.observ,
+    inter.typ_def,
+    noeud.id_contrat,
+    noeud.idu AS id_noeud,
+    noeud.commune,
+    inter.lib_inter
+   FROM m_reseau_sec.an_ecl_intervention inter
+     JOIN m_reseau_sec.geo_feu_b_support noeud ON inter.id_objet = noeud.idu
   WHERE noeud.id_contrat::text = 'ZZ'::text OR noeud.id_contrat::text = '03'::text;
 
 ALTER TABLE x_apps.xapps_geo_v_ecl_intervention_liste_affichage
@@ -480,7 +507,6 @@ COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.dat_real I
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.moy_interv IS 'Moyen d''intervention (avec ou sans nacelle)';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.observ IS 'Commentaires divers';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.typ_def IS 'Type de défaillance';
-
 
 
 
