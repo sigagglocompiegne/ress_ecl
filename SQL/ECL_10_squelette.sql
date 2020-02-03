@@ -1428,8 +1428,8 @@ WITH (
 INSERT INTO m_reseau_sec.lt_elecslt_source_defaillance(code, valeur)
     VALUES
 ('00','Non renseigné'),
-('10','Accident'),
-('20','Vandalisme'),
+('40','Accident'),
+('10','Vandalisme'),
 ('99','Autre') ;
 
 COMMENT ON TABLE m_reseau_sec.lt_elecslt_source_defaillance
