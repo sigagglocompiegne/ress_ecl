@@ -1505,6 +1505,17 @@ INSERT INTO m_reseau_sec.lt_ecl_type_defaillance(code, valeur)
 ('40','Trappe abîmée'), 
 ('50','Problème d''allumage'),
 ('60','Phase ouverte'),
+('61','Absence rouge principal'),
+('62','Absence orange principal'),
+('63','Absence vert principal'),
+('64','Absence rouge secondaire'),
+('65','Absence orange secondaire'),
+('66','Absence vert secondaire'),
+('67','Absence rouge piéton'),
+('68','Absence vert piéton'),
+('69','Défaut appel piéton'),
+('70','Défaut rappel piéton'),
+('71','Défaut croix de Saint-André'),
 ('99','Autre');
 
 COMMENT ON TABLE m_reseau_sec.lt_ecl_type_defaillance
@@ -1528,17 +1539,17 @@ WITH (
 INSERT INTO m_reseau_sec.lt_elecslt_type_defaillance(code, valeur)
     VALUES
 ('00','Non renseigné'),
-('10','Absence rouge principal'),
-('11','Absence orange principal'),
-('12','Absence vert principal'),
-('20','Absence rouge secondaire'),
-('21','Absence orange secondaire'),
-('22','Absence vert secondaire'),
-('30','Absence rouge piéton'),
-('31','Absence vert piéton'),
-('40','Défaut appel piéton'),
-('41','Défaut rappel piéton'),
-('50','Défaut croix de Saint-André'),
+('61','Absence rouge principal'),
+('62','Absence orange principal'),
+('63','Absence vert principal'),
+('64','Absence rouge secondaire'),
+('65','Absence orange secondaire'),
+('66','Absence vert secondaire'),
+('67','Absence rouge piéton'),
+('68','Absence vert piéton'),
+('69','Défaut appel piéton'),
+('70','Défaut rappel piéton'),
+('71','Défaut croix de Saint-André'),
 ('99','Autre');
 
 COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_defaillance
