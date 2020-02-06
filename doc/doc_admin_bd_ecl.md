@@ -933,7 +933,7 @@ Particularité : Compiègne vise à être est uniquement en BH-T à moyen terme,
 -------------------------------------------------------------------------
 #### lt_ecl_type_defaillance
 
-Code permettant de décrire le type de défaillane
+Code permettant de décrire le type de défaillane des feux tricolores
 
 |Code | Valeur |
 |:-|:-|  
