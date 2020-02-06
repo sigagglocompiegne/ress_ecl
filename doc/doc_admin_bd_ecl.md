@@ -28,6 +28,7 @@ Pour rappel des grands principes :
 Afin de forcer la suppression d'un objet, il suffit de désactiver les triggers activés sur la table.
 Pour les noeuds (Point-lumineux, ouvrages électriques, Point-d'intérêt) il est aussi possible de supprimer l'objet dans la table noeud, la suppression est en cascade sur les autres tables.
 
+La donnée spécifique des feux tricolores n'est pas intégrée ici car elle relève pour le moment d'une information de localisation et non d'une gestion patrimoniale actuellement.
 
 ## Schéma fonctionnel
 
@@ -832,7 +833,7 @@ Code permettant de décrire la situation du câble
 Particularité : 
 
 -------------------------------------------------------------------------
-#### lt_ecl_source_defaillance
+#### lt_ecl_source_defaillance et lt_elecslt_source_defaillance
 
 Code permettant de décrire la source de la déaillance repérée
 
@@ -943,9 +944,46 @@ Code permettant de décrire le type de défaillane
 |40|Trappe abîmée|
 |50|Problème d'allumage|
 |60|Phase ouverte|
+|61|Absence rouge principal|
+|62|Absence orange principal|
+|63|Absence vert principal|
+|64|Absence rouge secondaire|
+|65|Absence orange secondaire|
+|66|Absence vert secondaire|
+|67|Absence rouge piéton|
+|68|Absence vert piéton|
+|69|Défaut appel piéton|
+|70|Défaut rappel piéton|
+|71|Défaut croix de Saint-André|
 |99|Autre|
 
 Particularité : x
+
+-------------------------------------------------------------------------
+
+#### lt_elecslt_type_defaillance
+
+Code permettant de décrire le type de défaillane
+
+|Code | Valeur |
+|:-|:-|  
+|00|Non renseigné|
+|61|Absence rouge principal|
+|62|Absence orange principal|
+|63|Absence vert principal|
+|64|Absence rouge secondaire|
+|65|Absence orange secondaire|
+|66|Absence vert secondaire|
+|67|Absence rouge piéton|
+|68|Absence vert piéton|
+|69|Défaut appel piéton|
+|70|Défaut rappel piéton|
+|71|Défaut croix de Saint-André|
+|99|Autre|
+
+Particularité : x
+
+-------------------------------------------------------------------------
 
 -------------------------------------------------------------------------
 #### lt_ecl_type_disjoncteur
@@ -1003,7 +1041,7 @@ Code permettant de décrire le type d''intervention
 
 |Code | Valeur |
 |:-|:-|  
-|00|->|
+|00|-->|
 |10|Changement de disjoncteur|
 |11|Changement de fusible|
 |20|Changement de type de commande|
@@ -1024,6 +1062,27 @@ Code permettant de décrire le type d''intervention
 |31|Contrôle mécanique|
 |18|Ajout d'une option|
 |90|Suppression d'une option|
+|22|Réenclenchement du disjoncteur|
+|82|Réactivation de l'objet|
+|83|Dépose / repose identique (accident)|
+|19|Changement de parasurtenseur|
+|23|Changement rouge principale|
+|24|Changement orange principale|
+|25|Changement vert principale|
+|26|Changement rouge secondaire|
+|27|Changement orange secondaire|
+|28|Changement vert secondaire|
+|29|Changement rouge piéton|
+|32|Changement vert piéton|
+|33|Changement appel piéton|
+|34|Changement lampe rappel piéton|
+|35|Changement lampe croix de St-André|
+|36|Changement caisson complet feux principal|
+|37|Changement caisson complet feux secondaire|
+|38|Changement caisson complet boite piéton|
+|39|Changement caisson rappel piéton|
+|41|Changement caisson croix de St-André|
+|42|Changement feux complet|
 
 Particularité : Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessiter à gérer une cardinalité 1-n depuis la classe `an_ecl_intervention`.
 
@@ -1038,6 +1097,35 @@ Code permettant de décrire le type d''intervention des câbles
 |80|Suppression de l'objet|
 |81|Désactivation de l'objet|
 |82|Réactivation de l'objet|
+|99|Autre|
+
+Particularité : voir lt_ecl_type_intervention
+
+-------------------------------------------------------------------------
+#### lt_elecslt_type_intervention
+
+Code permettant de décrire le type d''intervention des feux tricolores
+
+|Code | Valeur |
+|:-|:-|  
+|23|Changement rouge principale|
+|24|Changement orange principale|
+|25|Changement vert principale|
+|26|Changement rouge secondaire|
+|27|Changement orange secondaire|
+|28|Changement vert secondaire|
+|29|Changement rouge piéton|
+|32|Changement vert piéton|
+|33|Changement appel piéton|
+|34|Changement lampe rappel piéton|
+|35|Changement lampe croix de St-André|
+|36|Changement caisson complet feux principal|
+|37|Changement caisson complet feux secondaire|
+|38|Changement caisson complet boite piéton|
+|39|Changement caisson rappel piéton|
+|41|Changement caisson croix de St-André|
+|42|Changement feux complet|
+|40|Nettoyage|
 |99|Autre|
 
 Particularité : voir lt_ecl_type_intervention
