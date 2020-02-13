@@ -25,5 +25,6 @@
 2020-01-27 : GB / Mise à jour suite adaptation du suivi des interventions
 2020-01-31 : GB / Mise à jour vue applicative (stat) suite prise en compte des réseaux rétrocédés
 2020-02-03 : GB / Intégration liste de valeurs des interventions liées aux feux tricolores
-2020-02-03 : GB / Intégration des signalements / interventions pour les feux tricolroes (support)
+2020-02-03 : GB / Intégration des signalements / interventions pour les feux tricolores (support)
 2020-02-05 : GB / Mise à jour données Feu tricolore (liste de valeurs)
+2020-02-13 : GB / Intégration des signalements / interventions pour les feux tricolroes (armoire)
