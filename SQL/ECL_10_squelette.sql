@@ -100,8 +100,8 @@ DROP TABLE IF EXISTS m_reseau_sec.lt_ecl_type_intervention_cables CASCADE;
 
 DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_type_defaillance;
 DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_source_defaillance;
-DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_type_intervention;
-
+DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_type_intervention_feu;
+DROP TABLE IF EXISTS m_reseau_sec.lt_elecslt_type_intervention_armoire;
 
 --SEQUENCES
 
@@ -1128,7 +1128,20 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('41','Changement caisson croix de St-André'),
 			('42','Changement feux complet'),
 			('40','Nettoyage'),
-			('90','Suppression d''une option');
+			('41','Changement caisson croix de St-André'),
+			('42','Changement feux complet'),
+			('50','Réparation'),
+			('60','Ajout d''un départ'),
+			('70','Repositionnement lanterne/crosse'),
+			('80','Suppression de l''objet'),
+			('81','Désactivation de l''objet'),
+			('82','Réactivation de l''objet'),
+			('83','Dépose/Repose identique (accident)'),
+			('84','Dépose'),
+			('85','Repose'),
+			('90','Suppression d''une option'),
+			('91','Réactivation d''une option'),
+			('99','Autre');
 
 			COMMENT ON TABLE m_reseau_sec.lt_ecl_type_intervention
 				IS 'Code permettant de décrire le type d''intervention';
@@ -1151,8 +1164,9 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			    VALUES
 			('10','Changement de disjoncteur'),
 			('11','Changement de fusible'),
-			('22','Réenclenchement disjoncteur'),
 			('20','Changement de type de commande'),
+			('21','Changement de récepteur'),
+			('22','Réenclenchement disjoncteur'),
 			('30','Contrôle électrique'),
 			('40','Nettoyage'),
 			('50','Réparation'),
@@ -1160,7 +1174,6 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('80','Suppression de l''objet'),
 			('81','Désactivation de l''objet'),
 			('82','Réactivation de l''objet'),
-			('21','Changement de récepteur'),
 			('99','Autre');
 
 			COMMENT ON TABLE m_reseau_sec.lt_ecl_type_intervention_ouvrage
@@ -1210,15 +1223,22 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 
 			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_foyer(code, valeur)
 			    VALUES
+			('10','Changement de disjoncteur'),
+			('11','Changement de fusible'),
 			('12','Changement de lanterne'),
 			('13','Changement de lampe'),
 			('15','Changement de ballast/driver'),
 			('16','Changement d''amorce'),
 			('17','Changement d''auto-transformateur'),
+			('19','Changement de parasurtenseur'),
+			('22','Réenclenchement disjoncteur'),
 			('40','Nettoyage'),
 			('50','Réparation'),
 			('70','Repositionnement lanterne/crosse'),
 			('80','Suppression de l''objet'),
+			('83','Dépose/Repose identique (accident)'),
+			('84','Dépose'),
+			('85','Repose'),
 			('99','Autre');
 
 			COMMENT ON TABLE m_reseau_sec.lt_ecl_type_intervention_foyer
@@ -1269,20 +1289,16 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 
 			INSERT INTO m_reseau_sec.lt_ecl_type_intervention_point_lumineux(code, valeur)
 			    VALUES
-			('10','Changement de disjoncteur'),
-			('11','Changement de fusible'),
-			('22','Réenclenchement disjoncteur'),
-			('18','Ajout d''une option'),
 			('90','Suppression d''une option'),
-			('19','Changement de parasurtenseur'),
+			('91','Réactivation d''une option'),
 			('31','Contrôle mécanique'),
 			('40','Nettoyage'),
 			('50','Réparation'),
 			('80','Suppression de l''objet'),
-			('81','Désactivation de l''objet'),
 			('82','Réactivation de l''objet'),
 			('83','Dépose / repose identique (accident)'),
-			('99','Autre');
+			('84','Dépose'),
+			('85','Repose');
 
 			COMMENT ON TABLE m_reseau_sec.lt_ecl_type_intervention_point_lumineux
 				IS 'Code permettant de décrire le type d''intervention des point lumineux';
@@ -1318,17 +1334,17 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			----------------------------------Type intervention Feu tricolore ---------------------------------------
 			
 			-- Pour GEO, on créé un type d'intervention destiné uniquement aux feux tricolores
-			CREATE TABLE m_reseau_sec.lt_elecslt_type_intervention
+			CREATE TABLE m_reseau_sec.lt_elecslt_type_intervention_feu
 			(
 			  code character varying(2) NOT NULL,
 			  valeur character varying(80) NOT NULL,
-			  CONSTRAINT lt_elecslt_type_intervention_pkey PRIMARY KEY (code)
+			  CONSTRAINT lt_elecslt_type_intervention_feu_pkey PRIMARY KEY (code)
 			)
 			WITH (
 			  OIDS=FALSE
 			);
 
-			INSERT INTO m_reseau_sec.lt_elecslt_type_intervention(code, valeur)
+			INSERT INTO m_reseau_sec.lt_elecslt_type_intervention_feu(code, valeur)
 			    VALUES
 			('23','Changement rouge principale'),
 			('24','Changement orange principale'),
@@ -1350,10 +1366,36 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('40','Nettoyage'),
 			('99','Autre');
 
-			COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_intervention
+			COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_intervention_feu
 				IS 'Code permettant de décrire le type d''intervention des feux tricolores';
-			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention.code IS 'Code de la liste d''intervention des feux tricolores';
-			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention.valeur IS 'Valeur de la liste d''intervention des feux tricolores';
+			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention_feu.code IS 'Code de la liste d''intervention des feux tricolores';
+			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention_feu.valeur IS 'Valeur de la liste d''intervention des feux tricolores';
+
+			----------------------------------Type intervention Armoire Feu tricolore ---------------------------------------
+			
+			-- Pour GEO, on créé un type d'intervention destiné uniquement aux armoires feux tricolores
+			CREATE TABLE m_reseau_sec.lt_elecslt_type_intervention_armoire
+			(
+			  code character varying(2) NOT NULL,
+			  valeur character varying(80) NOT NULL,
+			  CONSTRAINT lt_elecslt_type_intervention_armoire_pkey PRIMARY KEY (code)
+			)
+			WITH (
+			  OIDS=FALSE
+			);
+
+			INSERT INTO m_reseau_sec.lt_elecslt_type_intervention_armoire(code, valeur)
+			    VALUES
+			('50','Réparation'),
+			('11','Changement de fusible'),
+			('30','Contrôle électrique),
+			('40','Nettoyage'),
+			('99','Autre');
+
+			COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_intervention_armoire
+				IS 'Code permettant de décrire le type d''intervention des armoires feux tricolores';
+			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention_armoire.code IS 'Code de la liste d''intervention des feux tricolores';
+			COMMENT ON COLUMN m_reseau_sec.lt_elecslt_type_intervention_armoire.valeur IS 'Valeur de la liste d''intervention des feux tricolores';
 
 
 
@@ -1413,7 +1455,7 @@ COMMENT ON COLUMN m_reseau_sec.lt_ecl_source_defaillance.code IS 'Code de la lis
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_source_defaillance.valeur IS 'Valeur de la liste';
 
 
---############################################################ SOURCE DE DEFAILLANCE (feu tricolore) ##################################################
+--############################################################ SOURCE DE DEFAILLANCE (feu tricolore et armoire) ##################################################
 
 CREATE TABLE m_reseau_sec.lt_elecslt_source_defaillance
 (
@@ -1523,7 +1565,7 @@ COMMENT ON TABLE m_reseau_sec.lt_ecl_type_defaillance
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_defaillance.code IS 'Code de la liste';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_defaillance.valeur IS 'Valeur de la liste';
 
---############################################################ TYPE DEFAILLANCE (feu tricolore) ##################################################
+--############################################################ TYPE DEFAILLANCE (feu tricolore et armoire) ##################################################
 
 CREATE TABLE m_reseau_sec.lt_elecslt_type_defaillance
 (
