@@ -1089,27 +1089,16 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('00','-->'),
 			('10','Changement de disjoncteur'),
 			('11','Changement de fusible'),
-			('22','Réenclenchement du disjoncteur'),
-			('20','Changement de type de commande'),
-			('21','Changement de récepteur'),
-			('30','Contrôle électrique'),
-			('40','Nettoyage'),
-			('50','Réparation'),
-			('60','Ajout d''un départ'),
-			('80','Suppression de l''objet'),
-			('81','Désactivation de l''objet'),
-			('82','Réactivation de l'objet'),
-			('83','Dépose / repose identique (accident)'),
-			('99','Autre'),
 			('12','Changement de lanterne'),
 			('13','Changement de lampe'),
 			('15','Changement de ballast/driver'),
 			('16','Changement d''amorce'),
 			('17','Changement d''auto-transformateur'),
-			('70','Repositionnement lanterne/crosse'),
-			('31','Contrôle mécanique'),
 			('18','Ajout d''une option'),
 			('19','Changement de parasurtenseur'),
+			('20','Changement de type de commande'),
+			('21','Changement de récepteur'),
+			('22','Réenclenchement du disjoncteur'),
 			('23','Changement rouge principale'),
 			('24','Changement orange principale'),
 			('25','Changement vert principale'),
@@ -1117,6 +1106,8 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('27','Changement orange secondaire'),
 			('28','Changement vert secondaire'),
 			('29','Changement rouge piéton'),
+			('30','Contrôle électrique'),
+			('31','Contrôle mécanique'),
 			('32','Changement vert piéton'),
 			('33','Changement appel piéton'),
 			('34','Changement lampe rappel piéton'),
@@ -1125,12 +1116,12 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('37','Changement caisson complet feux secondaire'),
 			('38','Changement caisson complet boite piéton'),
 			('39','Changement caisson rappel piéton'),
-			('41','Changement caisson croix de St-André'),
-			('42','Changement feux complet'),
 			('40','Nettoyage'),
 			('41','Changement caisson croix de St-André'),
 			('42','Changement feux complet'),
 			('50','Réparation'),
+			('51','Relance du contrôleur'),
+			('52','Appel société AXIMUN'),
 			('60','Ajout d''un départ'),
 			('70','Repositionnement lanterne/crosse'),
 			('80','Suppression de l''objet'),
@@ -1238,8 +1229,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 			('80','Suppression de l''objet'),
 			('83','Dépose/Repose identique (accident)'),
 			('84','Dépose'),
-			('85','Repose'),
-			('99','Autre');
+			('85','Repose');
 
 			COMMENT ON TABLE m_reseau_sec.lt_ecl_type_intervention_foyer
 				IS 'Code permettant de décrire le type d''intervention des foyers';
@@ -1386,10 +1376,11 @@ INSERT INTO m_reseau_sec.lt_ecl_type_intervention(code, valeur)
 
 			INSERT INTO m_reseau_sec.lt_elecslt_type_intervention_armoire(code, valeur)
 			    VALUES
-			('50','Réparation'),
-			('11','Changement de fusible'),
-			('30','Contrôle électrique),
+			('22','Réenclenchement du disjoncteur'),
 			('40','Nettoyage'),
+			('50','Réparation'),
+			('51','Relance du contrôleur'),
+			('52','Appel société AXIMUN'),
 			('99','Autre');
 
 			COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_intervention_armoire
@@ -1546,6 +1537,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_defaillance(code, valeur)
 ('30','Vasque cassée'),
 ('40','Trappe abîmée'), 
 ('50','Problème d''allumage'),
+('51','Rupture de câble'),
 ('60','Phase ouverte'),
 ('61','Absence rouge principal'),
 ('62','Absence orange principal'),
@@ -1558,6 +1550,7 @@ INSERT INTO m_reseau_sec.lt_ecl_type_defaillance(code, valeur)
 ('69','Défaut appel piéton'),
 ('70','Défaut rappel piéton'),
 ('71','Défaut croix de Saint-André'),
+('72','Feux clignotant'),
 ('99','Autre');
 
 COMMENT ON TABLE m_reseau_sec.lt_ecl_type_defaillance
@@ -1592,6 +1585,7 @@ INSERT INTO m_reseau_sec.lt_elecslt_type_defaillance(code, valeur)
 ('69','Défaut appel piéton'),
 ('70','Défaut rappel piéton'),
 ('71','Défaut croix de Saint-André'),
+('72','Feux clignotant'),
 ('99','Autre');
 
 COMMENT ON TABLE m_reseau_sec.lt_elecslt_type_defaillance
@@ -3354,9 +3348,19 @@ IF (TG_OP = 'UPDATE') THEN
 	END IF;
 
 	NEW.date_maj = now(); ---------- On attribue la date actuelle à la date de dernière mise à jour
-
+        
 	-- mise à jour du contrat
-        NEW.id_contrat := id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = new.id_noeud ;
+	-- si feu tricolore oju armoire feu tricolre
+        IF NEW.typ_obj = 'feu tricolore' OR NEW.typ_obj = 'armoire feu tricolore' THEN
+		IF NEW.typ_obj = 'feu tricolore' THEN 
+		 NEW.id_contrat := id_contrat_feu FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_feu_b_support n WHERE ST_Contains(gestion.geom,n.geom) AND n.idu = new.id_noeud ; -- si feu
+		ELSE
+		 NEW.id_contrat := id_contrat_feu FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_feu_b_armoire n WHERE ST_Contains(gestion.geom,n.geom) AND n.idu = new.id_noeud ; -- si armoire
+		END IF;
+        ELSE 
+		 NEW.id_contrat := id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = new.id_noeud ; -- les autres cas ECL
+        END IF ;
+
 	 -- décryptage des interventions pour affichage dans GEO dans les rapports de signalements ou d'intervention
         NEW.lib_inter :=
 (
@@ -3686,7 +3690,25 @@ END IF;
 --- Ainsi, les attributs métier d'intervention ,au nombre de 8, servent à plusieurs types d'intervention à la fois.
 --- Voir doc pour plus de précision.
 
+---------------------------------------OUVRAGE ELECTRIQUE FEU TRICOLORE ----------------------------------------
+IF (NEW.id_objet IN (SELECT idu FROM m_reseau_sec.geo_feu_b_support)) THEN -------- Si c'est un ouvrage électrique feu tricolore
 
+	IF (NEW.id_noeud IS NULL) THEN 
+
+		new.id_noeud = NEW.id_objet; ----------------------------------------------------- On attribue à l'intervention un lien avec le noeud.
+
+	END IF;
+END IF;
+
+---------------------------------------OUVRAGE ELECTRIQUE ARMOIRE TRICOLORE ----------------------------------------
+IF (NEW.id_objet IN (SELECT idu FROM m_reseau_sec.geo_feu_b_armoire)) THEN -------- Si c'est une armoire feu tricolore
+
+	IF (NEW.id_noeud IS NULL) THEN 
+
+		new.id_noeud = NEW.id_objet; ----------------------------------------------------- On attribue à l'intervention un lien avec le noeud.
+
+	END IF;
+END IF;
 
 
 ---------------------------------------OUVRAGE ELECTRIQUE----------------------------------------
@@ -4178,6 +4200,7 @@ END IF;
 RETURN NEW;
 
 END;
+
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
@@ -4205,11 +4228,19 @@ CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_intervention_contrat()
 $BODY$
 BEGIN
 
-        UPDATE m_reseau_sec.an_ecl_intervention  SET id_contrat = id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = an_ecl_intervention.id_noeud AND an_ecl_intervention.id_contrat IS NULL;
+        UPDATE m_reseau_sec.an_ecl_intervention  SET id_contrat = id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_ecl_noeud n 
+        WHERE ST_Contains(gestion.geom,n.geom) AND n.id_noeud = an_ecl_intervention.id_noeud AND an_ecl_intervention.id_contrat IS NULL;
+        
+        UPDATE m_reseau_sec.an_ecl_intervention  SET id_contrat = id_contrat_feu FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_feu_b_support n 
+        WHERE ST_Contains(gestion.geom,n.geom) AND n.idu = an_ecl_intervention.id_noeud AND an_ecl_intervention.id_contrat IS NULL;
+
+        UPDATE m_reseau_sec.an_ecl_intervention  SET id_contrat = id_contrat_feu FROM m_amenagement.geo_amt_zone_gestion gestion, m_reseau_sec.geo_feu_b_armoire n 
+        WHERE ST_Contains(gestion.geom,n.geom) AND n.idu = an_ecl_intervention.id_noeud AND an_ecl_intervention.id_contrat IS NULL;
 
 RETURN NEW;
 
 END;
+
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
