@@ -944,6 +944,7 @@ Code permettant de décrire le type de défaillane des feux tricolores
 |40|Trappe abîmée|
 |50|Problème d'allumage|
 |60|Phase ouverte|
+|99|Autre|
 |61|Absence rouge principal|
 |62|Absence orange principal|
 |63|Absence vert principal|
@@ -955,7 +956,8 @@ Code permettant de décrire le type de défaillane des feux tricolores
 |69|Défaut appel piéton|
 |70|Défaut rappel piéton|
 |71|Défaut croix de Saint-André|
-|99|Autre|
+|51|Rupture de câble|
+|72|Feux clignotant|
 
 Particularité : x
 
@@ -968,6 +970,7 @@ Code permettant de décrire le type de défaillane
 |Code | Valeur |
 |:-|:-|  
 |00|Non renseigné|
+|99|Autre|
 |61|Absence rouge principal|
 |62|Absence orange principal|
 |63|Absence vert principal|
@@ -979,7 +982,7 @@ Code permettant de décrire le type de défaillane
 |69|Défaut appel piéton|
 |70|Défaut rappel piéton|
 |71|Défaut croix de Saint-André|
-|99|Autre|
+|72|Feux clignotant|
 
 Particularité : x
 
@@ -1056,7 +1059,6 @@ Code permettant de décrire le type d''intervention
 |12|Changement de lanterne|
 |13|Changement de lampe|
 |15|Changement de ballast/driver|
-|16|Changement d'amorce|
 |17|Changement d'auto-transformateur|
 |70|Repositionnement lanterne/crosse|
 |31|Contrôle mécanique|
@@ -1064,7 +1066,6 @@ Code permettant de décrire le type d''intervention
 |90|Suppression d'une option|
 |22|Réenclenchement du disjoncteur|
 |82|Réactivation de l'objet|
-|83|Dépose / repose identique (accident)|
 |19|Changement de parasurtenseur|
 |23|Changement rouge principale|
 |24|Changement orange principale|
@@ -1083,6 +1084,13 @@ Code permettant de décrire le type d''intervention
 |39|Changement caisson rappel piéton|
 |41|Changement caisson croix de St-André|
 |42|Changement feux complet|
+|91|Réactivation d'une option|
+|83|Dépose/Repose identique (accident)|
+|84|Dépose|
+|85|Repose|
+|16|Changement d'amorceur|
+|52|Appel société AXIMUN|
+|51|Relance du contrôleur|
 
 Particularité : Le fonctionnement du générateur d'application web permet la saisie de choix multiple par la concaténation des différents `code` séparées par un `;`. Il n'y a donc pas de nécessiter à gérer une cardinalité 1-n depuis la classe `an_ecl_intervention`.
 
@@ -1102,7 +1110,7 @@ Code permettant de décrire le type d''intervention des câbles
 Particularité : voir lt_ecl_type_intervention
 
 -------------------------------------------------------------------------
-#### lt_elecslt_type_intervention
+#### lt_elecslt_type_intervention_feu
 
 Code permettant de décrire le type d''intervention des feux tricolores
 
@@ -1127,6 +1135,22 @@ Code permettant de décrire le type d''intervention des feux tricolores
 |42|Changement feux complet|
 |40|Nettoyage|
 |99|Autre|
+
+Particularité : voir lt_ecl_type_intervention
+
+-------------------------------------------------------------------------
+#### lt_elecslt_type_intervention_armoire
+
+Code permettant de décrire le type d''intervention des feux tricolores
+
+|Code | Valeur |
+|:-|:-|  
+|99|Autre|
+|40|Nettoyage|
+|50|Réparation|
+|51|Relance du contrôleur|
+|52|Appel société AXIMUN|
+|22|Réenclenchement du disjoncteur|
 
 Particularité : voir lt_ecl_type_intervention
 
