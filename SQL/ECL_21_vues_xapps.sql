@@ -450,6 +450,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_geo_v_ecl_intervention_liste_affichage AS
     inter.dat_real,
     inter.op_rea,
     inter.typ_obj,
+    inter.type_inter,
     inter.moy_interv,
     inter.observ,
     inter.typ_def,
@@ -477,6 +478,7 @@ UNION ALL
     inter.dat_real,
     inter.op_rea,
     inter.typ_obj,
+    inter.type_inter,
     inter.moy_interv,
     inter.observ,
     inter.typ_def,
@@ -504,6 +506,7 @@ UNION ALL
     inter.dat_real,
     inter.op_rea,
     inter.typ_obj,
+    inter.type_inter,
     inter.moy_interv,
     inter.observ,
     inter.typ_def,
@@ -534,7 +537,7 @@ COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.dat_real I
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.moy_interv IS 'Moyen d''intervention (avec ou sans nacelle)';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.observ IS 'Commentaires divers';
 COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.typ_def IS 'Type de défaillance';
-
+COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.type_inter IS 'Type d''intervention';
 
 
 --####################################################### SUPPORT CATEGORISE PAR ARMOIRES ####################################################
