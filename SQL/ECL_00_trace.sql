@@ -28,3 +28,4 @@
 2020-02-03 : GB / Intégration des signalements / interventions pour les feux tricolores (support)
 2020-02-05 : GB / Mise à jour données Feu tricolore (liste de valeurs)
 2020-02-13 : GB / Intégration des signalements / interventions pour les feux tricolroes (armoire)
+2020-02-20 : GB / Ajout de l'attribut type d'intervention dans la vue applicative liste d'afichage des interventions pour filtrer sur ce champ dans GEO
