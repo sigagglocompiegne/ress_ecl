@@ -4,7 +4,7 @@
 /*ECL_10_SQUELETTE.sql */
 /*PostGIS*/
 /*GeoCompiegnois - http://geo.compiegnois.fr/ */
-/*Auteur : Thibaud Billoteau */
+/*Auteur : Thibaud Billoteau + Grégory Bodet */
 
 /*
 SOMMAIRE :
