@@ -4,7 +4,7 @@
 /*ECL_20_VUES_GESTION.sql */
 /*PostGIS*/
 /* GeoCompiegnois - http://geo.compiegnois.fr/ */
-/* Auteur : Thibaud Billoteau */
+/* Auteur : Thibaud Billoteau + Grégory Bodet*/
 
 /*
 SOMMAIRE :
