@@ -202,7 +202,7 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 	NEW.qua_geo_Z = '30';
 	NEW.qua_geo_XY = '30';
 	NEW.src_geom = '20'; ---Orthophotographie
-	NEW.src_date = '2013';
+	NEW.src_date = '2018';
 	NEW.situation = '10';
 
 		--
@@ -868,7 +868,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 	NEW.qua_geo_Z = '30'; --- Classe C
 	NEW.qua_geo_XY = '30';--- Classe C
 	NEW.src_geom = '20'; ---- Orthophotographie
-	NEW.src_date = '2013';--- 
+	NEW.src_date = '2018';--- 
 	NEW.situation = '10';---- Actif
 	
 	---
@@ -1439,7 +1439,7 @@ IF (TG_OP = 'INSERT') THEN
 	NEW.qua_geo_Z = '30'; --- Classe C
 	NEW.qua_geo_XY = '30';--- Classe C
 	NEW.src_geom = '20'; ---- Orthophotographie
-	NEW.src_date = '2013';--- 
+	NEW.src_date = '2018';--- 
 	NEW.situation = '10';---- Actif
 
 	--
@@ -1655,6 +1655,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		src_geom = NEW.src_geom,
 		src_date = NEW.src_date,
 		op_sai_geo = NEW.op_sai_geo,
+		op_sai = NEW.op_sai,
 		date_donne = NEW.date_donne
 		WHERE id_noeud=NEW.id_pi; ----------------------------------------- On insére toutes les données normalement dans noeud
 
