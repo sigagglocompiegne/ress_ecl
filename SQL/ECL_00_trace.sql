@@ -29,3 +29,5 @@
 2020-02-05 : GB / Mise à jour données Feu tricolore (liste de valeurs)
 2020-02-13 : GB / Intégration des signalements / interventions pour les feux tricolroes (armoire)
 2020-02-20 : GB / Ajout de l'attribut type d'intervention dans la vue applicative liste d'afichage des interventions pour filtrer sur ce champ dans GEO
+2020-03-26 : GB / Mise à jour des vues de gestion avec l'enregistrement par défaut de la date du référentiel de saisie à l'insertion à 2018 au lieu de 2013
+                / Correction de la fonction trigger sur la vue de gestion des Points d'intérêt concernant la mise à jour de l'attribut op_sai (manquant)
