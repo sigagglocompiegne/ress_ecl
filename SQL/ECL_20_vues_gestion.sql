@@ -381,7 +381,8 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 			NEW.ty_fusible				
 			;----------------------------------------------------------- On insére les données dans ouvrage électrique normalement
 
-		---
+		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 		
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_ini= new.id_ouvelec
@@ -390,7 +391,7 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_fin= new.id_ouvelec
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) AND situation <> '12' ;
-
+        END IF;
 
 		
 	ELSE ---- Si la topologie de la saisie n'est pas valide
@@ -617,7 +618,8 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		 --------------------------------------------------------- On insére toutes les données normalement
 		WHERE id_ouvelec=NEW.id_ouvelec;
 
-		---
+		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_ini= new.id_ouvelec
@@ -626,7 +628,7 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_fin= new.id_ouvelec
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) AND situation <> '12' ;
-
+        END IF;
 		---
 
 		IF (NEW.situation = '11') THEN ----------------------------------------------- Si l'objet passe en Inactif
@@ -725,6 +727,8 @@ ELSIF (TG_OP = 'DELETE') THEN --------------------------------------------------
 	WHERE OLD.id_ouvelec=id_noeud;
 
 	---On enlève les liens avec le câble,
+	-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(OLD.geom,ST_StartPoint(geom))) = 1 THEN											   
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_ini= NULL
 	WHERE ST_equals(OLD.geom,ST_StartPoint(geom)) ;
@@ -732,6 +736,7 @@ ELSIF (TG_OP = 'DELETE') THEN --------------------------------------------------
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_fin= NULL
 	WHERE ST_equals(OLD.geom,ST_EndPoint(geom)) ;
+	END IF;
 	
 	--- On supprime les départs, ce qui change leur situation à '12'
 	DELETE FROM m_reseau_sec.an_ecl_depart WHERE id_ouvelec = OLD.id_ouvelec;
@@ -1008,7 +1013,8 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 			NEW.haut_supp
 			;
 
-
+-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_ini= new.id_supp
 		WHERE ST_equals(NEW.geom,ST_StartPoint(geom)) ;
@@ -1017,7 +1023,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_fin= new.id_supp
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
-
+END IF;
 		
 
 	ELSE ---- S'il y a déjà un point avec la même géométrie et que ce n'est pas un point d'intérêt
@@ -1214,6 +1220,8 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		--
 
 		--- On donne aux points initial et final des câbles la valeur de l'identifiant du noeud, si la géométrie est égale
+		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_ini= new.id_supp
 		WHERE ST_equals(NEW.geom,ST_StartPoint(geom)) ;
@@ -1221,7 +1229,7 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_fin= new.id_supp
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
-
+         END IF;
 		--
 
 		
@@ -1272,6 +1280,8 @@ ELSIF (TG_OP = 'DELETE') THEN
 	--
 
 	--- On enlève les liens avec le câble,
+	-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(OLD.geom,ST_StartPoint(geom))) = 1 THEN
 	UPDATE m_reseau_sec.geo_ecl_cable 
 	SET id_nd_ini= NULL
 	WHERE ST_equals(OLD.geom,ST_StartPoint(geom)) ;
@@ -1281,7 +1291,7 @@ ELSIF (TG_OP = 'DELETE') THEN
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_fin= NULL
 	WHERE ST_equals(OLD.geom,ST_EndPoint(geom)) ;
-
+        END IF;
 	
 	REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire;-- On actualise la vue du "chemin d'électricité"
 
@@ -1416,9 +1426,16 @@ ALTER TABLE m_reseau_sec.geo_v_ecl_pi ALTER COLUMN id_contrat SET DEFAULT '00'::
 
 -- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
 
+-- FUNCTION: m_reseau_sec.ft_m_point_interet()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
+
 CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_point_interet()
-  RETURNS trigger AS
-$BODY$
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
 DECLARE id_unique integer;
 
 -- variable pour les logs
@@ -1526,8 +1543,8 @@ IF (TG_OP = 'INSERT') THEN
 		NEW.etat_pi
 		; --------------------------------------------------------- On insère les données dans point d'intérêt normalement
 
-		--
-
+		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_ini= new.id_pi
 		WHERE ST_equals(NEW.geom,ST_StartPoint(geom)) ;
@@ -1535,7 +1552,7 @@ IF (TG_OP = 'INSERT') THEN
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_fin= new.id_pi
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
-
+		END IF;
 
 		
 
@@ -1634,7 +1651,6 @@ ELSIF (TG_OP = 'UPDATE') THEN
 
 		--
 
-
 		UPDATE m_reseau_sec.geo_ecl_noeud 
 		SET 
 		ent_pose = NEW.ent_pose,
@@ -1677,7 +1693,9 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		WHERE id_pi=NEW.id_pi; ---------------------------------------------- On insère les données dans point d'intérêt normalement
 
 		--
-
+		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
+		
 		--- On donne aux points initial et final des câbles la valeur de l'identifiant du noeud, si la géométrie est égale
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_ini= new.id_pi
@@ -1686,8 +1704,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_fin= new.id_pi
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
-		
-
+		END IF;
 
 	ELSE --- Si la saisie géométrique n'est pas valide
 
@@ -1723,7 +1740,8 @@ ELSIF (TG_OP = 'DELETE') THEN
 	situation = '12'
 	WHERE OLD.id_pi=id_noeud;
 	
-	--
+	-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(OLD.geom,ST_StartPoint(geom))) = 1 THEN
 
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_ini= NULL
@@ -1732,7 +1750,7 @@ ELSIF (TG_OP = 'DELETE') THEN
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_fin= NULL
 	WHERE ST_equals(OLD.geom,ST_EndPoint(geom)) ;
-
+        END IF;
 	--
 
 	REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire;-- On actualise la vue du "chemin d'électricité"
@@ -1755,11 +1773,11 @@ ELSIF (TG_OP = 'DELETE') THEN
 END IF;
 
 END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
+$BODY$;
+
 ALTER FUNCTION m_reseau_sec.ft_m_point_interet()
-  OWNER TO sig_create;
+    OWNER TO sig_create;
+
 
 
 
