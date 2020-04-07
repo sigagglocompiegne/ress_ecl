@@ -35,4 +35,5 @@
                 / sont connectés (1 seul noeud initiale et final peut être affecté aux objets)
 2020-04-07 : GB / Modification de l'attribut puis_lamp dans la table an_ecl_modele_lampe de charaecter varying en integer et mise à jour des valeurs de puissance
                 / Modification des fonctions triggers sur cette table et autre table modèle pour prise en compte
+                / ajout de la valeurs ZZ (Non concerné) pour les listes de valeurs des culots de lampe et présence (pour la télégestion)
 
