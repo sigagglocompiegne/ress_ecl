@@ -33,4 +33,6 @@
                 / Correction de la fonction trigger sur la vue de gestion des Points d'intérêt concernant la mise à jour de l'attribut op_sai (manquant)
 2020-03-31 : GB / Adaptation des vues de gestion (Point d'intérêt, Point lumineux et ouvrage) pour éviter une remontée d'erreur lorsque plus de 2 cables 
                 / sont connectés (1 seul noeud initiale et final peut être affecté aux objets)
+2020-04-07 : GB / Modification de l'attribut puis_lamp dans la table an_ecl_modele_lampe de charaecter varying en integer et mise à jour des valeurs de puissance
+                / Modification des fonctions triggers sur cette table et autre table modèle pour prise en compte
 
