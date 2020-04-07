@@ -370,7 +370,8 @@ INSERT INTO m_reseau_sec.lt_ecl_presence(code, valeur)
     VALUES
 	('00','Non-renseigné'),
 	('10','Oui'),
-	('20','Non');
+	('20','Non'),
+	('ZZ','Non concerné');
 
 COMMENT ON TABLE m_reseau_sec.lt_ecl_presence
   IS 'Code permettant de décrire la présence, ou non, d''un élément.';
@@ -395,7 +396,8 @@ INSERT INTO m_reseau_sec.lt_ecl_culot_lampe(code, valeur)
 	('10','E27'),
 	('20','E40'),
 	('30','G12'),
-	('99','Autre');
+	('99','Autre'),
+	('ZZ','Non concerné');
 
 COMMENT ON TABLE m_reseau_sec.lt_ecl_culot_lampe
   IS 'Code permettant de décrire le culot de la lampe';
@@ -926,7 +928,10 @@ COMMENT ON COLUMN m_reseau_sec.lt_ecl_type_commande.valeur IS 'Valeur de la list
 
 --############################################################ Puissance de lampe ##################################################
 
+-- table plus utilisée, valaur saisie directement dans l'attribut puis_lamp de la table modèle de lampe
+
 -- liste de valeurs plus utilisé, saisie de l'utilisateur préférée
+/*
 CREATE TABLE m_reseau_sec.lt_ecl_puissance_lampe
 (
   code character varying(2) NOT NULL,
@@ -957,7 +962,7 @@ COMMENT ON TABLE m_reseau_sec.lt_ecl_puissance_lampe
   IS 'Code permettant de décrire la puissance de la lampe';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_puissance_lampe.code IS 'Code de la liste';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_puissance_lampe.valeur IS 'Valeur de la liste';
-
+*/
 --############################################################ TYPE DE POINT D'INTERET ##################################################
 
 CREATE TABLE m_reseau_sec.lt_ecl_type_pi
@@ -1728,7 +1733,7 @@ BEGIN
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
 	---
-
+IF (TG_OP ='INSERT') THEN
 	IF (new.nom_mod_ln = '') THEN ---- On corrige le '' renvoyer par GEO eu lieu de NULL, car ce la pose des problèmes avec les noms UNIQUE
 
 		new.nom_mod_ln=NULL;
@@ -1752,7 +1757,7 @@ BEGIN
 		VALUES
 		(NEW.id_mod_ln, 'L''IP ne peut pas être supérieur à 69', now() );	
 	END IF;
-
+END IF;
 	---
 
 IF (TG_OP ='UPDATE') THEN
@@ -1807,7 +1812,7 @@ CREATE TABLE m_reseau_sec.an_ecl_modele_lampe-----------------------------------
 	id_mod_lm   integer DEFAULT nextval('m_reseau_sec.ecl_objet_seq') NOT NULL,----- Numéro du modèle de la lampe, interne à l''ARC
 	nom_mod_lm  character varying (254) UNIQUE,--------------------------------- Nom métier du modèle
 	ty_lampe    character varying (2) NOT NULL DEFAULT '00',-------------------- Type de lampe
-	puis_lam    character varying (2) NOT NULL DEFAULT '00' ,------------------- Puissance de la lampe en Watt
+	puis_lam    integer ,------------------------------------------------------- Puissance de la lampe en Watt
 	cul_lamp    character varying(2) NOT NULL DEFAULT '00',--------------------- Culot de la lampe
 	telgest     character varying (2) NOT NULL DEFAULT '00',-------------------- Présence d''une télégestion
 	cou_ecl     character varying (2) NOT NULL DEFAULT '00',-------------------- Couleur d''éclairage de la lampe
@@ -1832,7 +1837,8 @@ $BODY$
 BEGIN
 
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
-
+	
+IF (TG_OP ='INSERT') THEN
 	IF (new.nom_mod_lm = '') THEN ---- On corrige le '' renvoyer par GEO eu lieu de NULL, car ce la pose des problèmes avec les noms UNIQUE
 		new.nom_mod_lm=NULL;
 	END IF;
@@ -1842,26 +1848,11 @@ BEGIN
 	END IF;
 
 	IF (NEW.ty_lampe <> '50') THEN --- Seule une lampe LED (code = 50) peut avoir un télégestion.
-		NEW.telgest='00';
+		NEW.telgest='ZZ';
 	END IF;
 
-	IF (NEW.ty_lampe = '50' AND (NEW.cul_lamp = '30')) THEN --- Les LED ne peuvent pas avoir de culot G12
-		NEW.cul_lamp='00';
-	END IF;
-
-	IF (NEW.ty_lampe = '50' AND (NEW.puis_lam <> '05' AND NEW.puis_lam <> '15' AND NEW.puis_lam <> '20')) THEN --- Les LED (code = 50) ne peuvent avoir comme puissance que les code = 05, 15 ou 20.
-		NEW.puis_lam='00';
-	END IF;
-
-	IF (NEW.ty_lampe = '10' AND (NEW.puis_lam <> '10' AND NEW.puis_lam <> '30' AND NEW.puis_lam <> '40' AND NEW.puis_lam <> '50' AND NEW.puis_lam <> '60' AND NEW.puis_lam <> '70')) THEN
-		NEW.puis_lam='00';
-	END IF;
-
-	IF (NEW.ty_lampe = '20' AND (NEW.puis_lam <> '40' AND NEW.puis_lam <> '50' AND NEW.puis_lam <> '60' AND NEW.puis_lam <> '70' AND NEW.puis_lam <> '80' )) THEN
-		NEW.puis_lam='00';
-	END IF;
-
-
+	
+END IF;
 IF (TG_OP ='UPDATE') THEN
 
 	NEW.date_maj = now(); ---------- On attribue la date actuelle à la date de dernière mise à jour
