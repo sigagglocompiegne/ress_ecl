@@ -2650,7 +2650,7 @@ BEGIN
 	SET
 	nbr_foyer = (SELECT count(*) ------------------------------------------------------------------------------------- On compte le nombre...
 		     FROM m_reseau_sec.an_ecl_foyer ---------------------------------------------------------------------- De foyer
-		     WHERE situation <> '12' AND situation <> '11' AND id_supp = NEW.id_supp) ---------------------------- Dont la situation n'est pas 'Inactif' (code = '11') ou 'Supprimer' (code ='12') ET dont le support est le même que le foyer ajouté.
+		     WHERE /* situation <> '12' AND situation <> '11' AND */ id_supp = NEW.id_supp) ---------------------------- Même si inactif ou supprimé ET dont le support est le même que le foyer ajouté.
 										 
 	WHERE NEW.id_supp=id_supp; ------------------------------------------------------------------------------------ Là ou le support est le même que celui du foyer saisi.
 
