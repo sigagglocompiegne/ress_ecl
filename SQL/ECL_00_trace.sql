@@ -36,5 +36,5 @@
 2020-04-07 : GB / Modification de l'attribut puis_lamp dans la table an_ecl_modele_lampe de charaecter varying en integer et mise à jour des valeurs de puissance
                 / Modification des fonctions triggers sur cette table et autre table modèle pour prise en compte
                 / ajout de la valeurs ZZ (Non concerné) pour les listes de valeurs des culots de lampe et présence (pour la télégestion)
-2020-04-08 : GB / Modification des fonctions triggers pour les supports inactifs et le calcul du nombre de foyers
+2020-04-08 : GB / Modification des fonctions triggers pour les supports inactifs et le calcul du nombre de foyers dans la trigger AFTER INSERT OR UPDATE de la table des foyers
 
