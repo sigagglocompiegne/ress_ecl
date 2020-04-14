@@ -7,8 +7,7 @@
 /* Auteur : Thibaud Billoteau, Bodet Grégory */
 
 /*  
-  dépendances : voir script d'initialisation des dépendances init_bd_pei_dependencies.sql
-  
+ 
   Liste des dépendances :
   schéma          | table                 | description                                                   | usage
 */
