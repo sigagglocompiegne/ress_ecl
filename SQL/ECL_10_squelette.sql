@@ -2650,7 +2650,7 @@ BEGIN
 	SET
 	nbr_foyer = (SELECT count(*) ------------------------------------------------------------------------------------- On compte le nombre...
 		     FROM m_reseau_sec.an_ecl_foyer ---------------------------------------------------------------------- De foyer
-		     WHERE /* situation <> '12' AND situation <> '11' AND */ id_supp = NEW.id_supp) ---------------------------- Même si inactif ou supprimé ET dont le support est le même que le foyer ajouté.
+		     WHERE situation <> '12' AND /*situation <> '11' AND */ id_supp = NEW.id_supp) ---------------------------- Même si inactif ET dont le support est le même que le foyer ajouté.
 										 
 	WHERE NEW.id_supp=id_supp; ------------------------------------------------------------------------------------ Là ou le support est le même que celui du foyer saisi.
 
@@ -2737,7 +2737,7 @@ ALTER FUNCTION m_reseau_sec.ft_m_foyer_after()
 
 
   CREATE TRIGGER t_t3_foyer_after --- t3 réservé à log
-  AFTER INSERT OR UPDATE
+  AFTER INSERT OR UPDATE OR DELETE
   ON m_reseau_sec.an_ecl_foyer
   FOR EACH ROW
   EXECUTE PROCEDURE m_reseau_sec.ft_m_foyer_after(); 
