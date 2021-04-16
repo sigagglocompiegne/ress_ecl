@@ -1050,6 +1050,29 @@ COMMENT ON TABLE m_reseau_sec.lt_ecl_section_cable
   IS 'Code permettant de décrire la section du câble';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_section_cable.code IS 'Code de la liste';
 COMMENT ON COLUMN m_reseau_sec.lt_ecl_section_cable.valeur IS 'Valeur de la liste';
+
+--############################################################ TYPE DE RESEAU ##################################################
+
+CREATE TABLE m_reseau_sec.lt_ecl_reseau_cable
+(
+  code character varying(2) NOT NULL,
+  valeur character varying(80) NOT NULL,
+  CONSTRAINT lt_ecl_reseau_cable_pkey PRIMARY KEY (code)
+)
+WITH (
+  OIDS=FALSE
+);
+
+INSERT INTO m_reseau_sec.lt_ecl_reseau_cable(code, valeur)
+VALUES
+	('00','Non renseigné'),
+	('10','BT'),
+	('20','HTa');
+
+COMMENT ON TABLE m_reseau_sec.lt_ecl_reseau_cable
+  IS 'Code permettant de décrire le type de réseau d''appartenance du câble';
+COMMENT ON COLUMN m_reseau_sec.lt_ecl_reseau_cable.code IS 'Code du type de réseau';
+COMMENT ON COLUMN m_reseau_sec.lt_ecl_reseau_cable.valeur IS 'Valeur du tyde de réseau';
 	
 --############################################################ HAUTEUR TRAPPE ##################################################
 
@@ -2003,6 +2026,7 @@ CREATE TABLE m_reseau_sec.geo_ecl_cable ----------------------------------------
 	date_donne  timestamp without time zone, ------------------------------------ Horodatage de la donnée
 	situation   character varying (2) NOT NULL DEFAULT '10' ------------------- Situation générale : plus utilisé mais encore là ou utilisé ou supprimé
 	id_contrat character varying(2) DEFAULT '00'::character varying, -- Identifiant du contrat de maintenance et d'entretien de l'éclairage public (lien vers la table des contrats r_objet_lt_contrat)
+        typres character varying(2) DEFAULT '00'::character varying, -- Type de réseau de l'éclairage public (BT, HTa, ...)
 	);
 ---
 ALTER TABLE m_reseau_sec.geo_ecl_cable
@@ -2268,7 +2292,7 @@ COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.date_donne IS 'Horodatage de la pro
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.situation IS 'Situation générale : Actif / Inactif / supprimé'; 
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.qua_dat IS 'Qualité de date de la pose';
 COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.id_contrat IS 'Identifiant du contrat de maintenance et d''entretien de l''éclairage public (lien vers la table des contrats r_objet_lt_contrat)';
-
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_cable.typres IS 'Type de réseau d''éclairage (BT, HTa, ...)';
 
 --################################################################# SUPPORT #####################################################
 
@@ -4816,6 +4840,10 @@ ALTER TABLE m_reseau_sec.geo_ecl_cable
 ALTER TABLE m_reseau_sec.geo_ecl_cable
   ADD CONSTRAINT geo_ecl_cable_lt_ecl_section_cable_fkey FOREIGN KEY (sect_cab)
       REFERENCES m_reseau_sec.lt_ecl_section_cable (code) MATCH SIMPLE;  
+						      
+ALTER TABLE m_reseau_sec.geo_ecl_cable
+  ADD CONSTRAINT geo_ecl_cable_lt_ecl_reseau_cable_fkey FOREIGN KEY (typres)
+      REFERENCES m_reseau_sec.lt_ecl_reseau_cable (code) MATCH SIMPLE;
 
 --############################################################ INTERVENTION ##################################################
 
