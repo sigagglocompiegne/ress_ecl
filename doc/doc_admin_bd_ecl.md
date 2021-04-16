@@ -433,7 +433,7 @@ Objet linéaire allant d''un nœud à un autre
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 |id_contrat|Identifiant du contrat de maintenance|character varying(2)| |
-|typres|Type de réseau de l'éclairage public (BT, HTa, ...)|character varying(2)| |
+|typres|Type de réseau de l'éclairage public (BT, HTa, ...)|character varying(2)|'00'::character varying|
 
 * Trigger(s) :
 	* t_t1_cable_before_insert_update (before insert or update):
