@@ -433,6 +433,7 @@ Objet linéaire allant d''un nœud à un autre
 |date_donne|Horodatage de la production initiale de la donnée|timestamp without time zone| |
 |situation|Situation générale : Actif / Inactif / supprimé|character varying(2)|'10'::character varying|
 |id_contrat|Identifiant du contrat de maintenance|character varying(2)| |
+|typres|Type de réseau de l'éclairage public (BT, HTa, ...)|character varying(2)| |
 
 * Trigger(s) :
 	* t_t1_cable_before_insert_update (before insert or update):
@@ -786,6 +787,19 @@ Code permettant de décrire la section du câble
 |22|4|
 |30|2,5|
 |99|Autre|
+
+Particularité : x
+
+-------------------------------------------------------------------------
+#### lt_ecl_reseau_cable
+
+Code permettant de décrire le réseau de l'éclairage public
+
+|Code | Valeur |
+|:-|:-|  
+|00|Non renseigné|
+|10|BT|
+|20|HTa|
 
 Particularité : x
 
