@@ -159,7 +159,8 @@ COMMENT ON COLUMN x_apps.xapps_an_v_ecl_tension_cable.tension IS 'Tension du câ
 
 -- DROP VIEW x_apps.xapps_an_v_ecl_stat_patrimoine;
 
-CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS 
+CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
+ AS
  WITH req_ouvrage_arc AS (
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
@@ -169,12 +170,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_ouvrage_serv AS (
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_armoire_arc AS (
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
@@ -184,12 +185,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_armoire_serv AS (
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_sous_armoire_arc AS (
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
@@ -199,12 +200,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_sous_armoire_serv AS (
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_transfo_arc AS (
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
@@ -214,12 +215,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_transfo_serv AS (
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_depart_arc AS (
          SELECT 'Départ'::text AS type,
             count(d.*) AS nb
@@ -231,13 +232,13 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
             count(d.*) AS nb
            FROM m_reseau_sec.an_ecl_depart d,
             m_reseau_sec.geo_v_ecl_ouvrage_electrique o
-          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text = 'ZZ'::text
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text <> '03'::text AND o.id_contrat::text <> '93'::text
         ), req_depart_serv AS (
          SELECT 'Départ'::text AS type,
             count(d.*) AS nb
            FROM m_reseau_sec.an_ecl_depart d,
             m_reseau_sec.geo_v_ecl_ouvrage_electrique o
-          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND (o.id_contrat::text = 'ZZ'::text OR o.id_contrat::text = '03'::text) AND (d.op_sai::text = 'mporte'::text OR d.op_sai::text = 'slagache'::text OR d.op_sai::text = 'ewiegant'::text)
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND (d.op_sai::text = 'mporte'::text OR d.op_sai::text = 'slagache'::text OR d.op_sai::text = 'ewiegant'::text)
         ), req_pt_lumi_arc AS (
          SELECT 'Support'::text AS type,
             count(*) AS nb
@@ -247,12 +248,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Support'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_point_lumineux
-          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '03'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '93'::text
         ), req_pt_lumi_serv AS (
          SELECT 'Support'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_point_lumineux
-          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND (geo_v_ecl_point_lumineux.id_contrat::text = 'ZZ'::text OR geo_v_ecl_point_lumineux.id_contrat::text = '03'::text) AND (geo_v_ecl_point_lumineux.op_sai::text = 'mporte'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'slagache'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND (geo_v_ecl_point_lumineux.op_sai::text = 'mporte'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'slagache'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'ewiegant'::text)
         ), req_foyer_arc AS (
          SELECT 'Foyer'::text AS type,
             count(*) AS nb
@@ -264,13 +265,13 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
             count(*) AS nb
            FROM m_reseau_sec.an_ecl_foyer f,
             m_reseau_sec.geo_v_ecl_point_lumineux pl
-          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text = 'ZZ'::text
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text <> '03'::text AND pl.id_contrat::text <> '93'::text
         ), req_foyer_serv AS (
          SELECT 'Foyer'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.an_ecl_foyer f,
             m_reseau_sec.geo_v_ecl_point_lumineux pl
-          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND (pl.id_contrat::text = 'ZZ'::text OR pl.id_contrat::text = '03'::text) AND (f.op_sai::text = 'mporte'::text OR f.op_sai::text = 'slagache'::text OR f.op_sai::text = 'ewiegant'::text)
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND (f.op_sai::text = 'mporte'::text OR f.op_sai::text = 'slagache'::text OR f.op_sai::text = 'ewiegant'::text)
         ), req_pt_int_arc AS (
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
@@ -280,12 +281,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_pi
-          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text <> '03'::text AND geo_v_ecl_pi.id_contrat::text <> '93'::text
         ), req_pt_int_serv AS (
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_pi
-          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND (geo_v_ecl_pi.id_contrat::text = 'ZZ'::text OR geo_v_ecl_pi.id_contrat::text = '03'::text) AND (geo_v_ecl_pi.op_sai::text = 'mporte'::text OR geo_v_ecl_pi.op_sai::text = 'slagache'::text OR geo_v_ecl_pi.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND (geo_v_ecl_pi.op_sai::text = 'mporte'::text OR geo_v_ecl_pi.op_sai::text = 'slagache'::text OR geo_v_ecl_pi.op_sai::text = 'ewiegant'::text)
         ), req_cable_arc AS (
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
@@ -295,12 +296,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
-          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text = 'ZZ'::text
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text <> '03'::text AND geo_ecl_cable.id_contrat::text <> '93'::text
         ), req_cable_serv AS (
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
-          WHERE geo_ecl_cable.situation::text <> '12'::text AND (geo_ecl_cable.id_contrat::text = 'ZZ'::text OR geo_ecl_cable.id_contrat::text = '03'::text) AND (geo_ecl_cable.op_sai::text = 'mporte'::text OR geo_ecl_cable.op_sai::text = 'slagache'::text OR geo_ecl_cable.op_sai::text = 'ewiegant'::text)
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND (geo_ecl_cable.op_sai::text = 'mporte'::text OR geo_ecl_cable.op_sai::text = 'slagache'::text OR geo_ecl_cable.op_sai::text = 'ewiegant'::text)
         )
  SELECT 1 AS gid,
     req_ouvrage_arc.type,
@@ -402,13 +403,12 @@ UNION ALL
   WHERE req_cable_arc.type = req_cable_ville.type AND req_cable_arc.type = req_cable_serv.type;
 
 ALTER TABLE x_apps.xapps_an_v_ecl_stat_patrimoine
-  OWNER TO sig_create;
-GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO sig_create;
-GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO create_sig;
-GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO edit_sig;
-GRANT SELECT ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO read_sig;
+    OWNER TO create_sig;
 COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
-  IS 'Bilan du patrimoine numérique d''éclairage public';
+    IS 'Bilan du patrimoine numérique d''éclairage public';
+
+
+
 
 
 
@@ -697,11 +697,57 @@ COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_intervention_total
 
 
 
+
+-- #################################################################################################################################
+-- ###                                                                                                                           ###
+-- ###                                                      VUES TABLEAU DE BORD                                                 ###
+-- ###                                                                                                                           ###
+-- #################################################################################################################################
+
+-- View: x_apps.xapps_an_v_ecl_tb_patrimoine
+
+-- DROP VIEW x_apps.xapps_an_v_ecl_tb_patrimoine;
+
+CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_tb_patrimoine
+ AS
+ WITH req_pt_lumi AS (
+         SELECT 1 AS gid,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_v_ecl_point_lumineux
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '93'::text
+        ), req_foyer AS (
+         SELECT 1 AS gid,
+            count(*) AS nb
+           FROM m_reseau_sec.an_ecl_foyer f,
+            m_reseau_sec.geo_v_ecl_point_lumineux pl
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text <> '93'::text
+        ), req_cable AS (
+         SELECT 1 AS gid,
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+           FROM m_reseau_sec.geo_ecl_cable
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text <> '93'::text
+        )
+ SELECT 1 AS gid,
+    req_pt_lumi.nb AS support,
+    req_foyer.nb AS foyer,
+    req_cable.long_cable AS cable
+   FROM req_pt_lumi,
+    req_foyer,
+    req_cable
+  WHERE req_pt_lumi.gid = req_foyer.gid AND req_pt_lumi.gid = req_cable.gid;
+
+ALTER TABLE x_apps.xapps_an_v_ecl_tb_patrimoine
+    OWNER TO create_sig;
+COMMENT ON VIEW x_apps.xapps_an_v_ecl_tb_patrimoine
+    IS 'Données nécessaire à la réalisation du tableau de bord dans l''application GEO';
+
+
 -- View: x_apps.xapps_an_v_ecl_stat_patrimoine
 
 -- DROP VIEW x_apps.xapps_an_v_ecl_stat_patrimoine;
 
-CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS 
+CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
+ AS
  WITH req_ouvrage_arc AS (
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
@@ -711,12 +757,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_ouvrage_serv AS (
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_armoire_arc AS (
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
@@ -726,12 +772,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_armoire_serv AS (
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_sous_armoire_arc AS (
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
@@ -741,12 +787,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_sous_armoire_serv AS (
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_transfo_arc AS (
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
@@ -756,12 +802,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
         ), req_transfo_serv AS (
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND (geo_v_ecl_ouvrage_electrique.id_contrat::text = 'ZZ'::text OR geo_v_ecl_ouvrage_electrique.id_contrat::text = '03'::text) AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND (geo_v_ecl_ouvrage_electrique.op_sai::text = 'mporte'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'slagache'::text OR geo_v_ecl_ouvrage_electrique.op_sai::text = 'ewiegant'::text)
         ), req_depart_arc AS (
          SELECT 'Départ'::text AS type,
             count(d.*) AS nb
@@ -773,13 +819,13 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
             count(d.*) AS nb
            FROM m_reseau_sec.an_ecl_depart d,
             m_reseau_sec.geo_v_ecl_ouvrage_electrique o
-          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text = 'ZZ'::text
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text <> '03'::text AND o.id_contrat::text <> '93'::text
         ), req_depart_serv AS (
          SELECT 'Départ'::text AS type,
             count(d.*) AS nb
            FROM m_reseau_sec.an_ecl_depart d,
             m_reseau_sec.geo_v_ecl_ouvrage_electrique o
-          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND (o.id_contrat::text = 'ZZ'::text OR o.id_contrat::text = '03'::text) AND (d.op_sai::text = 'mporte'::text OR d.op_sai::text = 'slagache'::text OR d.op_sai::text = 'ewiegant'::text)
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND (d.op_sai::text = 'mporte'::text OR d.op_sai::text = 'slagache'::text OR d.op_sai::text = 'ewiegant'::text)
         ), req_pt_lumi_arc AS (
          SELECT 'Support'::text AS type,
             count(*) AS nb
@@ -789,12 +835,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Support'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_point_lumineux
-          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '03'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '93'::text
         ), req_pt_lumi_serv AS (
          SELECT 'Support'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_point_lumineux
-          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND (geo_v_ecl_point_lumineux.id_contrat::text = 'ZZ'::text OR geo_v_ecl_point_lumineux.id_contrat::text = '03'::text) AND (geo_v_ecl_point_lumineux.op_sai::text = 'mporte'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'slagache'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND (geo_v_ecl_point_lumineux.op_sai::text = 'mporte'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'slagache'::text OR geo_v_ecl_point_lumineux.op_sai::text = 'ewiegant'::text)
         ), req_foyer_arc AS (
          SELECT 'Foyer'::text AS type,
             count(*) AS nb
@@ -806,13 +852,13 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
             count(*) AS nb
            FROM m_reseau_sec.an_ecl_foyer f,
             m_reseau_sec.geo_v_ecl_point_lumineux pl
-          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text = 'ZZ'::text
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text <> '03'::text AND pl.id_contrat::text <> '93'::text
         ), req_foyer_serv AS (
          SELECT 'Foyer'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.an_ecl_foyer f,
             m_reseau_sec.geo_v_ecl_point_lumineux pl
-          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND (pl.id_contrat::text = 'ZZ'::text OR pl.id_contrat::text = '03'::text) AND (f.op_sai::text = 'mporte'::text OR f.op_sai::text = 'slagache'::text OR f.op_sai::text = 'ewiegant'::text)
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND (f.op_sai::text = 'mporte'::text OR f.op_sai::text = 'slagache'::text OR f.op_sai::text = 'ewiegant'::text)
         ), req_pt_int_arc AS (
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
@@ -822,12 +868,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_pi
-          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text = 'ZZ'::text
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text <> '03'::text AND geo_v_ecl_pi.id_contrat::text <> '93'::text
         ), req_pt_int_serv AS (
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_pi
-          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND (geo_v_ecl_pi.id_contrat::text = 'ZZ'::text OR geo_v_ecl_pi.id_contrat::text = '03'::text) AND (geo_v_ecl_pi.op_sai::text = 'mporte'::text OR geo_v_ecl_pi.op_sai::text = 'slagache'::text OR geo_v_ecl_pi.op_sai::text = 'ewiegant'::text)
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND (geo_v_ecl_pi.op_sai::text = 'mporte'::text OR geo_v_ecl_pi.op_sai::text = 'slagache'::text OR geo_v_ecl_pi.op_sai::text = 'ewiegant'::text)
         ), req_cable_arc AS (
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
@@ -837,12 +883,12 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine AS
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
-          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text = 'ZZ'::text
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text <> '03'::text AND geo_ecl_cable.id_contrat::text <> '93'::text
         ), req_cable_serv AS (
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
-          WHERE geo_ecl_cable.situation::text <> '12'::text AND (geo_ecl_cable.id_contrat::text = 'ZZ'::text OR geo_ecl_cable.id_contrat::text = '03'::text) AND (geo_ecl_cable.op_sai::text = 'mporte'::text OR geo_ecl_cable.op_sai::text = 'slagache'::text OR geo_ecl_cable.op_sai::text = 'ewiegant'::text)
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND (geo_ecl_cable.op_sai::text = 'mporte'::text OR geo_ecl_cable.op_sai::text = 'slagache'::text OR geo_ecl_cable.op_sai::text = 'ewiegant'::text)
         )
  SELECT 1 AS gid,
     req_ouvrage_arc.type,
@@ -944,383 +990,10 @@ UNION ALL
   WHERE req_cable_arc.type = req_cable_ville.type AND req_cable_arc.type = req_cable_serv.type;
 
 ALTER TABLE x_apps.xapps_an_v_ecl_stat_patrimoine
-  OWNER TO sig_create;
-GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO sig_create;
-GRANT ALL ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO create_sig;
-GRANT SELECT, UPDATE, INSERT, DELETE ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO edit_sig;
-GRANT SELECT ON TABLE x_apps.xapps_an_v_ecl_stat_patrimoine TO read_sig;
+    OWNER TO create_sig;
 COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
-  IS 'Bilan du patrimoine numérique d''éclairage public';
+    IS 'Bilan du patrimoine numérique d''éclairage public';
 
-
--- #################################################################################################################################
--- ###                                                                                                                           ###
--- ###                                                      VUES TABLEAU DE BORD                                                 ###
--- ###                                                                                                                           ###
--- #################################################################################################################################
-
--- View: x_apps.xapps_an_v_euep_cc_tb1
-
--- DROP VIEW x_apps.xapps_an_v_euep_cc_tb1;
-
-CREATE OR REPLACE VIEW x_apps.xapps_an_v_euep_cc_tb1
- AS
- WITH req_d AS (
-         WITH req_annee AS (
-                 SELECT DISTINCT g.insee::text || to_char(cc.ccdate, 'YYYY'::text) AS cle,
-                    to_char(cc.ccdate, 'YYYY'::text) AS annee,
-                    g.insee,
-                    g.libgeo AS commune
-                   FROM m_reseau_humide.an_euep_cc cc,
-                    r_administratif.an_geo g
-                  WHERE g.epci::text = '200067965'::text
-                  ORDER BY (g.insee::text || to_char(cc.ccdate, 'YYYY'::text))
-                ), req_tcc AS (
-                 WITH req_amin AS (
-                         SELECT an_euep_cc.nidcc,
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbcc AS (
-                         SELECT an_euep_cc.nidcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_ccu
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        )
-                 SELECT "left"(cc.nidcc::text, 5) || a_1.annee AS cle,
-                    "left"(cc.nidcc::text, 5) AS insee,
-                    a_1.annee,
-                    sum(cc.nb_ccu) AS nb_ccu
-                   FROM req_amin a_1
-                     JOIN req_nbcc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY ("left"(cc.nidcc::text, 5)), a_1.annee
-                  ORDER BY ("left"(cc.nidcc::text, 5))
-                ), req_tccarc AS (
-                 WITH req_amin AS (
-                         SELECT DISTINCT an_euep_cc.nidcc,
-                            "left"(an_euep_cc.nidcc::text, 5) AS "left",
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbccarc AS (
-                         SELECT an_euep_cc.nidcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_ccuarc
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        )
-                 SELECT a_1.annee AS cle,
-                    sum(cc.nb_ccuarc) AS nb_ccuarc
-                   FROM req_amin a_1
-                     JOIN req_nbccarc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY a_1.annee
-                  ORDER BY a_1.annee
-                ), req_tccc AS (
-                 WITH req_amin AS (
-                         SELECT an_euep_cc.nidcc,
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbccc AS (
-                         SELECT an_euep_cc.nidcc,
-                            an_euep_cc.rcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_cccu
-                           FROM m_reseau_humide.an_euep_cc
-                          WHERE an_euep_cc.rcc::text = 'oui'::text
-                          GROUP BY an_euep_cc.nidcc, an_euep_cc.rcc
-                        )
-                 SELECT "left"(cc.nidcc::text, 5) || a_1.annee AS cle,
-                    "left"(cc.nidcc::text, 5) AS insee,
-                    a_1.annee,
-                    sum(cc.nb_cccu) AS nb_cccu
-                   FROM req_amin a_1
-                     JOIN req_nbccc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY ("left"(cc.nidcc::text, 5)), a_1.annee
-                  ORDER BY ("left"(cc.nidcc::text, 5))
-                ), req_tcccarc AS (
-                 WITH req_amin AS (
-                         SELECT DISTINCT an_euep_cc.nidcc,
-                            "left"(an_euep_cc.nidcc::text, 5) AS "left",
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbccarc AS (
-                         SELECT an_euep_cc.nidcc,
-                            an_euep_cc.rcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_ccuarc
-                           FROM m_reseau_humide.an_euep_cc
-                          WHERE an_euep_cc.rcc::text = 'oui'::text
-                          GROUP BY an_euep_cc.nidcc, an_euep_cc.rcc
-                        )
-                 SELECT a_1.annee AS cle,
-                    sum(cc.nb_ccuarc) AS nb_cccuarc
-                   FROM req_amin a_1
-                     JOIN req_nbccarc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY a_1.annee
-                  ORDER BY a_1.annee
-                ), req_tccnc AS (
-                 WITH req_amin AS (
-                         SELECT an_euep_cc.nidcc,
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbccnc AS (
-                         SELECT an_euep_cc.nidcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_ccncu
-                           FROM m_reseau_humide.an_euep_cc
-                          WHERE an_euep_cc.rcc::text = 'non'::text AND NOT (an_euep_cc.nidcc::text IN ( SELECT an_euep_cc_1.nidcc
-                                   FROM m_reseau_humide.an_euep_cc an_euep_cc_1
-                                  WHERE an_euep_cc_1.rcc::text = 'oui'::text))
-                          GROUP BY an_euep_cc.nidcc
-                        )
-                 SELECT "left"(cc.nidcc::text, 5) || a_1.annee AS cle,
-                    "left"(cc.nidcc::text, 5) AS insee,
-                    a_1.annee,
-                    sum(cc.nb_ccncu) AS nb_ccncu
-                   FROM req_amin a_1
-                     JOIN req_nbccnc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY ("left"(cc.nidcc::text, 5)), a_1.annee
-                  ORDER BY ("left"(cc.nidcc::text, 5))
-                ), req_tccncarc AS (
-                 WITH req_amin AS (
-                         SELECT DISTINCT an_euep_cc.nidcc,
-                            "left"(an_euep_cc.nidcc::text, 5) AS "left",
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbccarc AS (
-                         SELECT an_euep_cc.nidcc,
-                            an_euep_cc.rcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_ccuarc
-                           FROM m_reseau_humide.an_euep_cc
-                          WHERE an_euep_cc.rcc::text = 'non'::text AND NOT (an_euep_cc.nidcc::text IN ( SELECT an_euep_cc_1.nidcc
-                                   FROM m_reseau_humide.an_euep_cc an_euep_cc_1
-                                  WHERE an_euep_cc_1.rcc::text = 'oui'::text))
-                          GROUP BY an_euep_cc.nidcc, an_euep_cc.rcc
-                        )
-                 SELECT a_1.annee AS cle,
-                    sum(cc.nb_ccuarc) AS nb_ccncuarc
-                   FROM req_amin a_1
-                     JOIN req_nbccarc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY a_1.annee
-                  ORDER BY a_1.annee
-                ), req_tccncc AS (
-                 WITH req_amin AS (
-                         SELECT an_euep_cc.nidcc,
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbccncc AS (
-                         SELECT an_euep_cc.nidcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_ccnccu
-                           FROM m_reseau_humide.an_euep_cc
-                          WHERE an_euep_cc.rcc::text = 'non'::text AND (an_euep_cc.nidcc::text IN ( SELECT an_euep_cc_1.nidcc
-                                   FROM m_reseau_humide.an_euep_cc an_euep_cc_1
-                                  WHERE an_euep_cc_1.rcc::text = 'oui'::text))
-                          GROUP BY an_euep_cc.nidcc
-                        )
-                 SELECT "left"(cc.nidcc::text, 5) || a_1.annee AS cle,
-                    "left"(cc.nidcc::text, 5) AS insee,
-                    a_1.annee,
-                    sum(cc.nb_ccnccu) AS nb_ccnccu
-                   FROM req_amin a_1
-                     JOIN req_nbccncc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY ("left"(cc.nidcc::text, 5)), a_1.annee
-                  ORDER BY ("left"(cc.nidcc::text, 5))
-                ), req_tccncc_arc AS (
-                 WITH req_amin AS (
-                         SELECT DISTINCT an_euep_cc.nidcc,
-                            "left"(an_euep_cc.nidcc::text, 5) AS "left",
-                            to_char(min(an_euep_cc.ccdate), 'YYYY'::text) AS annee
-                           FROM m_reseau_humide.an_euep_cc
-                          GROUP BY an_euep_cc.nidcc
-                        ), req_nbccncc AS (
-                         SELECT an_euep_cc.nidcc,
-                            count(*) AS nb,
-                                CASE
-                                    WHEN count(*) > 1 THEN 1::bigint
-                                    ELSE count(*)
-                                END AS nb_ccnccu
-                           FROM m_reseau_humide.an_euep_cc
-                          WHERE an_euep_cc.rcc::text = 'non'::text AND (an_euep_cc.nidcc::text IN ( SELECT an_euep_cc_1.nidcc
-                                   FROM m_reseau_humide.an_euep_cc an_euep_cc_1
-                                  WHERE an_euep_cc_1.rcc::text = 'oui'::text))
-                          GROUP BY an_euep_cc.nidcc
-                        )
-                 SELECT a_1.annee AS cle,
-                    sum(cc.nb_ccnccu) AS nb_ccnccu_arc
-                   FROM req_amin a_1
-                     JOIN req_nbccncc cc ON a_1.nidcc::text = cc.nidcc::text
-                  GROUP BY a_1.annee
-                  ORDER BY a_1.annee
-                )
-         SELECT DISTINCT row_number() OVER () AS id,
-            ((((((((((((((((('<tr>'::text || '<td rowspan="5">'::text) || a.commune::text) || '</td>'::text) || '<td>Total</td>'::text) || string_agg(('<td align=center>'::text ||
-                CASE
-                    WHEN tcc.nb_ccu IS NOT NULL THEN tcc.nb_ccu
-                    ELSE 0::bigint::numeric
-                END) || '</td>'::text, ''::text)) || '</tr>'::text) || '<tr><td>Conforme</td>'::text) || string_agg(('<td align=center>'::text ||
-                CASE
-                    WHEN tccc.nb_cccu IS NOT NULL THEN tccc.nb_cccu
-                    ELSE 0::bigint::numeric
-                END) || '</td>'::text, ''::text)) || '</tr>'::text) || '<tr><td>Non Conforme</td>'::text) || string_agg(('<td align=center>'::text ||
-                CASE
-                    WHEN tccnc.nb_ccncu IS NOT NULL THEN tccnc.nb_ccncu
-                    ELSE 0::bigint::numeric
-                END) || '</td>'::text, ''::text)) || '</tr>'::text) || '<tr><td>Taux de conformité</td>'::text) || string_agg(('<td align=center>'::text ||
-                CASE
-                    WHEN tccc.nb_cccu IS NULL THEN '0%'::character varying::text
-                    ELSE round(tccc.nb_cccu / NULLIF(tcc.nb_ccu, 0::numeric) * 100::numeric, 1) || '%'::text
-                END) || '</td>'::text, ''::text)) || '</tr>'::text) || '<tr><td>Taux de mise en conformité<sup>(2)</sup></td>'::text) || string_agg(('<td align=center>'::text ||
-                CASE
-                    WHEN tccncc.nb_ccnccu IS NULL THEN '0%'::character varying::text
-                    ELSE round(tccncc.nb_ccnccu / (tccnc.nb_ccncu + tccncc.nb_ccnccu) * 100::numeric, 1) || '%'::text
-                END) || '</td>'::text, ''::text)) || '</tr>'::text AS tableau,
-            string_agg(('<td align=center>'::text || a.annee) || '</td>'::text, ''::text) AS annee,
-            string_agg(('<td align=center><b>'::text || tccarc.nb_ccuarc) || '</b></td>'::text, ''::text) AS nb_ccuarc,
-            string_agg(('<td align=center><b>'::text || tcccarc.nb_cccuarc) || '</b></td>'::text, ''::text) AS nb_cccuarc,
-            string_agg(('<td align=center><b>'::text || tccncarc.nb_ccncuarc) || '</b></td>'::text, ''::text) AS nb_ccncuarc,
-            string_agg(('<td align=center><b>'::text ||
-                CASE
-                    WHEN tccncc_arc.nb_ccnccu_arc IS NULL THEN '0%'::character varying::text
-                    ELSE round(tccncc_arc.nb_ccnccu_arc / (tccncarc.nb_ccncuarc + tccncc_arc.nb_ccnccu_arc) * 100::numeric, 1) || '%'::text
-                END) || '</td>'::text, ''::text) || '</tr>'::text AS tx_ccnccu_arc,
-            string_agg(('<td align=center><b>'::text ||
-                CASE
-                    WHEN tcccarc.nb_cccuarc IS NULL THEN '0%'::character varying::text
-                    ELSE round(tcccarc.nb_cccuarc / NULLIF(tccarc.nb_ccuarc, 0::numeric) * 100::numeric, 1) || '%'::text
-                END) || '</td>'::text, ''::text) || '</tr>'::text AS tx_cccu_arc,
-            string_agg(('<td align=center><b><font size=1>'::text ||
-                CASE
-                    WHEN tccncc_arc.nb_ccnccu_arc IS NULL THEN 0::numeric
-                    ELSE tccncc_arc.nb_ccnccu_arc
-                END) || '</td>'::text, ''::text) || '</tr>'::text AS nb_ccnccu_arc,
-            a.insee,
-            a.commune
-           FROM req_annee a
-             LEFT JOIN req_tcc tcc ON a.cle = tcc.cle
-             LEFT JOIN req_tccc tccc ON a.cle = tccc.cle
-             LEFT JOIN req_tccnc tccnc ON a.cle = tccnc.cle
-             LEFT JOIN req_tccncc tccncc ON a.cle = tccncc.cle
-             LEFT JOIN req_tccarc tccarc ON "right"(a.cle, 4) = tccarc.cle
-             LEFT JOIN req_tcccarc tcccarc ON "right"(a.cle, 4) = tcccarc.cle
-             LEFT JOIN req_tccncarc tccncarc ON "right"(a.cle, 4) = tccncarc.cle
-             LEFT JOIN req_tccncc_arc tccncc_arc ON "right"(a.cle, 4) = tccncc_arc.cle
-          GROUP BY a.insee, a.commune
-          ORDER BY a.insee
-        )
- SELECT row_number() OVER () AS id,
-    ((((((((((((((((((((('<table border=1 align=center><tr><td colspan="2">&nbsp;</td>'::text || req_d.annee) || '</tr>'::text) || string_agg(req_d.tableau, ''::text)) || '<tr><td rowspan="6"><b>ARC<b></td><td><b>Total</b></td>'::text) || req_d.nb_ccuarc) || '</tr>'::text) || '<tr><td><b>Conforme</b></td>'::text) || req_d.nb_cccuarc) || '</tr>'::text) || '<tr><td><b>Non conforme</b></td>'::text) || req_d.nb_ccncuarc) || '</tr>'::text) || '<tr><td><b>Taux de conformité<sup>(3)</sup><b/></td>'::text) || req_d.tx_cccu_arc) || '</tr>'::text) || '<tr><td><b>Taux de mise en conformité<sup>(2)</sup><b/></td>'::text) || req_d.tx_ccnccu_arc) || '</tr>'::text) || '<tr><td><b><font size=1>Nombre de contrôle mis en conformité</font></b></td>'::text) || req_d.nb_ccnccu_arc) || '</tr>'::text) || '</table>'::text AS tableau1
-   FROM req_d
-  GROUP BY req_d.annee, req_d.nb_ccuarc, req_d.nb_cccuarc, req_d.nb_ccncuarc, req_d.tx_ccnccu_arc, req_d.nb_ccnccu_arc, req_d.tx_cccu_arc;
-
-ALTER TABLE x_apps.xapps_an_v_euep_cc_tb1
-    OWNER TO sig_create;
-COMMENT ON VIEW x_apps.xapps_an_v_euep_cc_tb1
-    IS 'Vue applicative formattant le tableau de bord n°1 des contrôles de conformité AC pour affichage dans GEO';
-
-GRANT ALL ON TABLE x_apps.xapps_an_v_euep_cc_tb1 TO sig_create;
-GRANT SELECT ON TABLE x_apps.xapps_an_v_euep_cc_tb1 TO read_sig;
-GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE x_apps.xapps_an_v_euep_cc_tb1 TO edit_sig;
-GRANT ALL ON TABLE x_apps.xapps_an_v_euep_cc_tb1 TO create_sig;
-
--- View: x_apps.xapps_an_v_euep_cc_tb2
-
--- DROP VIEW x_apps.xapps_an_v_euep_cc_tb2;
-
-CREATE OR REPLACE VIEW x_apps.xapps_an_v_euep_cc_tb2
- AS
- WITH req_d AS (
-         WITH req_a AS (
-                 SELECT DISTINCT g.code || to_char(cc.ccdate, 'YYYY'::text) AS cle,
-                    to_char(cc.ccdate, 'YYYY'::text) AS annee,
-                    g.valeur
-                   FROM m_reseau_humide.an_euep_cc cc,
-                    m_reseau_humide.lt_euep_cc_certificateur g
-                  ORDER BY (g.code || to_char(cc.ccdate, 'YYYY'::text))
-                ), req_compte AS (
-                 SELECT DISTINCT a.code || to_char(cc.ccdate, 'YYYY'::text) AS cle,
-                    count(*) OVER (PARTITION BY (to_char(cc.ccdate, 'YYYY'::text)), a.code) AS nb
-                   FROM m_reseau_humide.an_euep_cc cc
-                     JOIN m_reseau_humide.lt_euep_cc_certificateur a ON cc.certtype = a.code
-                  ORDER BY (a.code || to_char(cc.ccdate, 'YYYY'::text))
-                )
-         SELECT DISTINCT row_number() OVER () AS id,
-            (((('<tr>'::text || '<td>'::text) || req_a.valeur::text) || '</td>'::text) || string_agg(('<td align=center>'::text ||
-                CASE
-                    WHEN req_compte.nb IS NOT NULL THEN req_compte.nb
-                    ELSE 0::bigint
-                END) || '</td>'::text, ''::text ORDER BY req_a.annee)) || '</tr>'::text AS tableau,
-            string_agg(('<td>'::text || req_a.annee) || '</td>'::text, ''::text ORDER BY req_a.annee) AS annee
-           FROM req_a
-             LEFT JOIN req_compte ON req_compte.cle = req_a.cle
-          GROUP BY req_a.valeur
-        )
- SELECT row_number() OVER () AS id,
-    ((('<table border=1 align=center><tr><td>&nbsp;</td>'::text || req_d.annee) || '</tr>'::text) || string_agg(req_d.tableau, ''::text)) || '</table>'::text AS tableau1
-   FROM req_d
-  GROUP BY req_d.annee;
-
-ALTER TABLE x_apps.xapps_an_v_euep_cc_tb2
-    OWNER TO sig_create;
-COMMENT ON VIEW x_apps.xapps_an_v_euep_cc_tb2
-    IS 'Vue applicative formatant le tableau de bord n°2 des contrôles de conformité AC (nombre de contrôle par prestataire) pour affichage dans GEO';
-
-GRANT ALL ON TABLE x_apps.xapps_an_v_euep_cc_tb2 TO sig_create;
-GRANT SELECT ON TABLE x_apps.xapps_an_v_euep_cc_tb2 TO read_sig;
-GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE x_apps.xapps_an_v_euep_cc_tb2 TO edit_sig;
-
--- View: x_apps.xapps_an_v_euep_cc_tb3
-
--- DROP VIEW x_apps.xapps_an_v_euep_cc_tb3;
-
-CREATE OR REPLACE VIEW x_apps.xapps_an_v_euep_cc_tb3
- AS
- SELECT DISTINCT cc.certtype,
-    lt.valeur AS certnom,
-    to_char(cc.ccdate, 'YYYY'::text) AS annee,
-    count(*) AS nb_cc
-   FROM m_reseau_humide.an_euep_cc cc
-     LEFT JOIN m_reseau_humide.lt_euep_cc_certificateur lt ON cc.certtype = lt.code
-  GROUP BY cc.certtype, lt.valeur, (to_char(cc.ccdate, 'YYYY'::text))
-  ORDER BY lt.valeur;
-
-ALTER TABLE x_apps.xapps_an_v_euep_cc_tb3
-    OWNER TO sig_create;
-COMMENT ON VIEW x_apps.xapps_an_v_euep_cc_tb3
-    IS 'Vue applicative formatant une table pour la réalisation des statistiques par certificateur dans GEO';
-
-GRANT ALL ON TABLE x_apps.xapps_an_v_euep_cc_tb3 TO sig_create;
-GRANT SELECT ON TABLE x_apps.xapps_an_v_euep_cc_tb3 TO read_sig;
-GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE x_apps.xapps_an_v_euep_cc_tb3 TO edit_sig;
-GRANT ALL ON TABLE x_apps.xapps_an_v_euep_cc_tb3 TO create_sig;
 														
 
 
