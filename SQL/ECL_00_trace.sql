@@ -37,3 +37,6 @@
                 / ajout de la valeurs ZZ (Non concerné) pour les listes de valeurs des culots de lampe et présence (pour la télégestion)
 2020-04-08 : GB / Modification des fonctions triggers pour les supports inactifs et le calcul du nombre de foyers dans la trigger AFTER INSERT OR UPDATE de la table des foyers
 2021-04-18 : GB / Ajout d'un attribut sur le type de réseau électrique (BT, HTa, ...) dans la classe d'objet geo_ecl_cable + liste de valeurs associées
+2021-05-18 : GB / Modification de la zone de gestion intégrant l'espace du Tigre sur la ZAE des Hauts-de-Margny, site ARC mais entretient par le prestataire privé de l''exploitant
+                  Impact sur les triggers de gestions des ouvrages, support, foyer et câble
+                  Impact sur les vues des indicateurs pour ne compter les objets sur ce site (hors intervention)
