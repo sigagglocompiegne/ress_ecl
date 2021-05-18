@@ -168,19 +168,22 @@ COMMENT ON COLUMN m_reseau_sec.geo_v_ecl_ouvrage_electrique.insee IS 'Code insee
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 --- L'insertion des logs se fait également dans cette fonction
 
--- Function: m_reseau_sec.ft_m_ouvrage_electrique()
+-- FUNCTION: m_reseau_sec.ft_m_ouvrage_electrique()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_ouvrage_electrique();
 
-CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
-  RETURNS trigger AS
-$BODY$
+CREATE FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
 DECLARE id_unique integer;
 
 --- variable pour un log
 DECLARE v_idlog integer;
-DECLARE v_dataold character varying(1000);
-DECLARE v_datanew character varying(1000);
+DECLARE v_dataold character varying(5000);
+DECLARE v_datanew character varying(5000);
 DECLARE v_name_table character varying(254);
 
 BEGIN 
@@ -315,7 +318,11 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 			NEW.commune,
 			NEW.insee,
 			NEW.exploit_nd,
-			CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
+			CASE 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant' 
+				
+				ELSE '' END,
 			NEW.ent_pose,
 			NEW.dat_pos,
 			NEW.qua_dat,
@@ -381,7 +388,7 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 			NEW.ty_fusible				
 			;----------------------------------------------------------- On insére les données dans ouvrage électrique normalement
 
-		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+			-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
         IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 		
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
@@ -391,8 +398,7 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_fin= new.id_ouvelec
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) AND situation <> '12' ;
-        END IF;
-
+	END IF;
 		
 	ELSE ---- Si la topologie de la saisie n'est pas valide
 	
@@ -421,7 +427,6 @@ IF (TG_OP = 'INSERT') THEN --------------------------------------------------- S
 RETURN NEW;
 
 ELSIF (TG_OP= 'UPDATE') THEN --------------------------------------------------- Si c'est un UPDATE
-
 
         
         IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
@@ -559,10 +564,8 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 
 		--
 
-
 	IF (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') < 1 )
-	      OR ( (NEW.geom = OLD.geom) AND ((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') = 1 ) AND (OLD.situation <>'12')))  THEN -- S'il n'y a pa d'autre noeud dont la géométrie est égale
-
+	      OR ( (NEW.geom = OLD.geom) AND ((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') = 1 ) AND (OLD.situation <>'12')))  THEN -- S'il n'y a pas d'autre noeud dont la géométrie est égale
 
 		UPDATE m_reseau_sec.geo_ecl_noeud 
 		SET 
@@ -572,7 +575,10 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		op_sai=NEW.op_sai,
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
-		presta_nd = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
+		presta_nd = CASE 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant' 
+				ELSE '' END,
 		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
@@ -586,6 +592,7 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		src_geom = NEW.src_geom,
 		src_date = NEW.src_date,
 		op_sai_geo = NEW.op_sai_geo
+
 		WHERE id_noeud=NEW.id_ouvelec; ----------------------------------------- On insére toutes les données normalement dans noeud
 
 		---
@@ -615,10 +622,12 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		pres_var=NEW.pres_var,
 		ty_disjonc=NEW.ty_disjonc,
 		ty_fusible=NEW.ty_fusible
+
+                
 		 --------------------------------------------------------- On insére toutes les données normalement
 		WHERE id_ouvelec=NEW.id_ouvelec;
 
-		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+			-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
         IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 
 		UPDATE m_reseau_sec.geo_ecl_cable
@@ -628,7 +637,7 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_fin= new.id_ouvelec
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) AND situation <> '12' ;
-        END IF;
+END IF;
 		---
 
 		IF (NEW.situation = '11') THEN ----------------------------------------------- Si l'objet passe en Inactif
@@ -687,8 +696,6 @@ ELSIF (TG_OP= 'UPDATE') THEN ---------------------------------------------------
 
 		END IF;
 
-
-
 	ELSE --- Si la topologie n'est pas valide
 	
 		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
@@ -720,15 +727,14 @@ RETURN NEW;
 	
 ELSIF (TG_OP = 'DELETE') THEN --------------------------------------------------- Si c'est un UPDATE
 
-
 	UPDATE m_reseau_sec.geo_ecl_noeud --- En cas de suppression on change juste la situation de l'objet
 	SET
 	situation = '12'
 	WHERE OLD.id_ouvelec=id_noeud;
 
 	---On enlève les liens avec le câble,
-	-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
-        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(OLD.geom,ST_StartPoint(geom))) = 1 THEN											   
+			-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+        IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(OLD.geom,ST_StartPoint(geom))) = 1 THEN
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_ini= NULL
 	WHERE ST_equals(OLD.geom,ST_StartPoint(geom)) ;
@@ -754,16 +760,14 @@ ELSIF (TG_OP = 'DELETE') THEN --------------------------------------------------
 	NULL,
 	now();
 
-
 	
 	RETURN NEW;
 END IF;
 END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
+$BODY$;
+
 ALTER FUNCTION m_reseau_sec.ft_m_ouvrage_electrique()
-  OWNER TO sig_create;
+    OWNER TO create_sig;
 
 
 
@@ -841,29 +845,28 @@ ALTER TABLE m_reseau_sec.geo_v_ecl_point_lumineux ALTER COLUMN haut_trap SET DEF
 --- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
 --- L'insertion des logs se fait également dans cette fonction					 
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
--- Function: m_reseau_sec.ft_m_point_lumineux()
 
-
--- Function: m_reseau_sec.ft_m_point_lumineux()
+-- FUNCTION: m_reseau_sec.ft_m_point_lumineux()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_point_lumineux();
 
-CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_point_lumineux()
-  RETURNS trigger AS
-$BODY$
+CREATE FUNCTION m_reseau_sec.ft_m_point_lumineux()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
 DECLARE id_unique integer;
 
 --- variable pour les logs
 DECLARE v_idlog integer;
-DECLARE v_dataold character varying(2000);
-DECLARE v_datanew character varying(2000);
+DECLARE v_dataold character varying(5000);
+DECLARE v_datanew character varying(5000);
 DECLARE v_name_table character varying(254);
-
 
 BEGIN
 
 ---
-
 
 IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 
@@ -960,7 +963,10 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 			NEW.commune,
 			NEW.insee,
 			NEW.exploit_nd,
-			CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
+			CASE 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant' 
+				ELSE '' END,
 			NEW.ent_pose,
 			NEW.dat_pos,
 			NEW.qua_dat,
@@ -1019,7 +1025,6 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 		SET id_nd_ini= new.id_supp
 		WHERE ST_equals(NEW.geom,ST_StartPoint(geom)) ;
 
-
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
 		SET id_nd_fin= new.id_supp
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
@@ -1035,7 +1040,6 @@ END IF;
 
 	END IF;
 		--- On accepte uniquement les PI sur les point lumineux et inversement.  
-
 
 	---log
 	v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass); 
@@ -1053,7 +1057,6 @@ END IF;
 RETURN NEW;
 
 ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------- Si c'est un UPDATE
-
 
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
@@ -1152,7 +1155,10 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		commune =NEW.commune,
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
-		presta_nd = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
+		presta_nd = CASE 
+			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant'
+			ELSE '' END,
 		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
@@ -1203,7 +1209,6 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 			situation = '11'
 			WHERE id_supp = NEW.id_supp;
 
-
 		END IF;
 
 		--
@@ -1229,7 +1234,7 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		UPDATE m_reseau_sec.geo_ecl_cable
 		SET id_nd_fin= new.id_supp
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
-         END IF;
+		END IF;
 		--
 
 		
@@ -1264,7 +1269,6 @@ RETURN NEW;
 
 ELSIF (TG_OP = 'DELETE') THEN
 
-
 	UPDATE m_reseau_sec.geo_ecl_noeud --- En cas de suppression on change juste la situation de l'objet
 	SET
 	situation = '12'
@@ -1291,10 +1295,10 @@ ELSIF (TG_OP = 'DELETE') THEN
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_fin= NULL
 	WHERE ST_equals(OLD.geom,ST_EndPoint(geom)) ;
-        END IF;
+	END IF;
+
 	
 	REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire;-- On actualise la vue du "chemin d'électricité"
-
 
 	--- log
 	v_dataold := ROW(OLD.*);------------------------------------ On concatène tous les anciens attributs dans un seul
@@ -1315,11 +1319,10 @@ ELSIF (TG_OP = 'DELETE') THEN
 END IF;
 
 END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
+$BODY$;
+
 ALTER FUNCTION m_reseau_sec.ft_m_point_lumineux()
-  OWNER TO sig_create;
+    OWNER TO create_sig;
 
 
 
@@ -1422,15 +1425,11 @@ ALTER TABLE m_reseau_sec.geo_v_ecl_pi ALTER COLUMN id_contrat SET DEFAULT '00'::
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 --- L'insertion des logs se fait également dans cette fonction	
 
--- Function: m_reseau_sec.ft_m_point_interet()
-
--- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
-
 -- FUNCTION: m_reseau_sec.ft_m_point_interet()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
 
-CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_point_interet()
+CREATE FUNCTION m_reseau_sec.ft_m_point_interet()
     RETURNS trigger
     LANGUAGE 'plpgsql'
     COST 100
@@ -1440,8 +1439,8 @@ DECLARE id_unique integer;
 
 -- variable pour les logs
 DECLARE v_idlog integer;
-DECLARE v_dataold character varying(1000);
-DECLARE v_datanew character varying(1000);
+DECLARE v_dataold character varying(5000);
+DECLARE v_datanew character varying(5000);
 DECLARE v_name_table character varying(254);
 
 BEGIN
@@ -1507,7 +1506,10 @@ IF (TG_OP = 'INSERT') THEN
 			NEW.commune,
 			NEW.insee,
 			NEW.exploit_nd,
-			CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
+			CASE 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant' 
+				ELSE '' END,
 			NEW.ent_pose,
 			NEW.dat_pos,
 			NEW.qua_dat,
@@ -1657,7 +1659,10 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		commune =NEW.commune,
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
-		presta_nd = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END,
+		presta_nd = CASE 
+			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens'
+			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant'
+			ELSE '' END,
 		id_contrat = NEW.id_contrat,
 		dat_pos=NEW.dat_pos,
 		qua_dat=NEW.qua_dat,
@@ -1750,7 +1755,7 @@ ELSIF (TG_OP = 'DELETE') THEN
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_fin= NULL
 	WHERE ST_equals(OLD.geom,ST_EndPoint(geom)) ;
-        END IF;
+   END IF;
 	--
 
 	REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire;-- On actualise la vue du "chemin d'électricité"
@@ -1776,7 +1781,8 @@ END;
 $BODY$;
 
 ALTER FUNCTION m_reseau_sec.ft_m_point_interet()
-    OWNER TO sig_create;
+    OWNER TO create_sig;
+
 
 
 
