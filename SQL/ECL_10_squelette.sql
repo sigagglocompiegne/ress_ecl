@@ -2041,13 +2041,16 @@ ALTER TABLE m_reseau_sec.geo_ecl_cable
 --- On force une valeur aux attributs noeud initial et noeud final du câble. --> lien avec table noeud.
 --- On force une valeur pour les attributs commune, insee, gestionnaire, prestataire, en fonction d'autres tables.
 
--- Function: m_reseau_sec.ft_m_cable_before()
+-- FUNCTION: m_reseau_sec.ft_m_cable_before()
 
 -- DROP FUNCTION m_reseau_sec.ft_m_cable_before();
 
-CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_cable_before()
-  RETURNS trigger AS
-$BODY$
+CREATE FUNCTION m_reseau_sec.ft_m_cable_before()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
 BEGIN
 
 	IF (TG_OP ='INSERT') THEN
@@ -2056,9 +2059,12 @@ BEGIN
 		NEW.qua_geo_Z = '30'; --- Classe C
 		NEW.qua_geo_XY = '30';--- Classe C
 		NEW.src_geom = '20'; ---- Orthophotographie
-		NEW.src_date = '2013';--- 
+		NEW.src_date = '2018';--- 
 		NEW.situation = '10';---- Actif
-		NEW.presta_cab = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END;
+		NEW.presta_cab = CASE 
+			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant' 
+			ELSE '' END;
 		NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom));
 	
 	END IF; 
@@ -2083,9 +2089,6 @@ BEGIN
 
 	
 	END IF; 
-
-
-
 
 	
 
@@ -2147,7 +2150,6 @@ BEGIN
 
 	END IF;
 
-
 	---- Un câble ne peut pas être relié à une armoire principale comme noeud final, donc si c'est le cas, on inverse le noeud final et le noeud initial
 	IF ((SELECT count(*) 
 	     FROM m_reseau_sec.geo_ecl_noeud nd 
@@ -2166,7 +2168,6 @@ BEGIN
 			new.id_nd_fin= (SELECT id_noeud 
 					FROM m_reseau_sec.geo_ecl_noeud nd 
 					WHERE ST_equals(nd.geom,ST_StartPoint(NEW.geom))AND situation <> '12');---- Noeud final = noeud initial
-
 
 		END IF ;
 		
@@ -2189,7 +2190,6 @@ BEGIN
 
 			NEW.presta_cab = (SELECT presta_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
-
 		ELSIF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)) > 1) THEN
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
@@ -2205,13 +2205,13 @@ BEGIN
 
 		END IF;
 
-	NEW.presta_cab = CASE WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' ELSE '' END;
+	NEW.presta_cab = CASE 
+		WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+		WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant'
+		ELSE '' END;
 	NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom));
 
 ---
-
-
-
 
 ---
 
@@ -2219,11 +2219,11 @@ BEGIN
 RETURN NEW;
 
 END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
+$BODY$;
+
 ALTER FUNCTION m_reseau_sec.ft_m_cable_before()
-  OWNER TO sig_create;
+    OWNER TO create_sig;
+
 
 
 ---
