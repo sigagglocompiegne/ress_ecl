@@ -39,4 +39,4 @@
 2021-04-18 : GB / Ajout d'un attribut sur le type de réseau électrique (BT, HTa, ...) dans la classe d'objet geo_ecl_cable + liste de valeurs associées
 2021-05-18 : GB / Modification de la zone de gestion intégrant l'espace du Tigre sur la ZAE des Hauts-de-Margny, site ARC mais entretient par le prestataire privé de l''exploitant
                   Impact sur les triggers de gestions des ouvrages, support, foyer et câble
-                  Impact sur les vues des indicateurs pour ne compter les objets sur ce site (hors intervention)
+                  Impact sur les vues des indicateurs pour intégrer les objets sur ce site en tant que patrimoine de la collectivité
