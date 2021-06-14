@@ -40,3 +40,5 @@
 2021-05-18 : GB / Modification de la zone de gestion intégrant l'espace du Tigre sur la ZAE des Hauts-de-Margny, site ARC mais entretient par le prestataire privé de l''exploitant
                   Impact sur les triggers de gestions des ouvrages, support, foyer et câble
                   Impact sur les vues des indicateurs pour intégrer les objets sur ce site en tant que patrimoine de la collectivité
+2021-06-14 : GB / Correction sur formule indicateur linéaire de câble
+                  Intégration d'un attribut du stock du nombre de lampe dans la table des modèles de lampes (à venir fonctionnel de décompte par rapport aux interventions de changement de lampes)
