@@ -1844,6 +1844,7 @@ CREATE TABLE m_reseau_sec.an_ecl_modele_lampe-----------------------------------
 	date_sai    timestamp without time zone NOT NULL DEFAULT NOW(),------------- Date de la saisie de la donnée dans la base
 	date_maj    timestamp without time zone,------------------------------------ Date de dernière mise à jour de la donnée
 	op_sai      character varying(80)  ----------------------------------------- Opérateur de la saisie de la donnée
+	nb_stock    smallint NOT NULL DEFAULT 0, ------------------------------------ Nombre de lamp dans le stcok courant
 	);
 ---
 ALTER TABLE m_reseau_sec.an_ecl_modele_lampe
@@ -1909,8 +1910,8 @@ VALUES
 
 INSERT INTO m_reseau_sec.an_ecl_modele_lampe 
 VALUES 
-('1','Modèle par défaut','00','00','00','00','00',NULL, NULL,now(),NULL,'geo1'), --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
-('2','Même modèle','00','00','00','00','00',NULL, NULL,now(),NULL,'geo1');
+('1','Modèle par défaut','00','00','00','00','00',NULL, NULL,now(),NULL,'geo1',0), --- MODELE PAR DEFAUT AFIN D'EVITER LES VALEUR NULL
+('2','Même modèle','00','00','00','00','00',NULL, NULL,now(),NULL,'geo1',0);
 
 ---
 
@@ -1927,6 +1928,7 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.observ IS 'Commentaires diver
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.date_sai IS 'Date de la saisie de la donnée dans la base';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.date_maj IS 'Date de dernière mise à jour de la donnée';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.op_sai IS 'Opérateur de la saisie de la donnée';
+COMMENT ON COLUMN m_reseau_sec.an_ecl_modele_lampe.nb_stock IS 'Nombre de lampe dans le stock courant';
 
 
 
