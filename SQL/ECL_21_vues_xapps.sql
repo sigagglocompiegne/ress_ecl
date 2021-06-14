@@ -466,7 +466,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_tb_patrimoine
           WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text
         ), req_cable AS (
          SELECT 1 AS gid,
-            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 1000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
           WHERE geo_ecl_cable.situation::text <> '12'::text
         )
@@ -620,17 +620,17 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
           WHERE geo_v_ecl_pi.situation::text <> '12'::text AND (geo_v_ecl_pi.op_sai::text = 'mporte'::text OR geo_v_ecl_pi.op_sai::text = 'slagache'::text OR geo_v_ecl_pi.op_sai::text = 'ewiegant'::text)
         ), req_cable_arc AS (
          SELECT 'Linéaire de câble**'::text AS type,
-            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 1000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
           WHERE geo_ecl_cable.situation::text <> '12'::text AND (geo_ecl_cable.id_contrat::text = '03'::text OR geo_ecl_cable.id_contrat::text = '93'::text)
         ), req_cable_ville AS (
          SELECT 'Linéaire de câble**'::text AS type,
-            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 1000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
           WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text <> '03'::text AND geo_ecl_cable.id_contrat::text <> '93'::text
         ), req_cable_serv AS (
          SELECT 'Linéaire de câble**'::text AS type,
-            round(sum(st_length(geo_ecl_cable.geom))::numeric / 10000::numeric, 2) AS long_cable
+            round(sum(st_length(geo_ecl_cable.geom))::numeric / 1000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
           WHERE geo_ecl_cable.situation::text <> '12'::text AND (geo_ecl_cable.op_sai::text = 'mporte'::text OR geo_ecl_cable.op_sai::text = 'slagache'::text OR geo_ecl_cable.op_sai::text = 'ewiegant'::text)
         )
