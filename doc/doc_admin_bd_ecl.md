@@ -293,6 +293,7 @@ Modèles de lampe existants ou ayant existés à Compiègne
 |date_sai|Date de la saisie de la donnée dans la base|timestamp without time zone|now()|
 |date_maj|Date de dernière mise à jour de la donnée|timestamp without time zone| |
 |op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
+|nb_stock|Nombre de lampe dans le stock courant|smallint| |
 
 * Trigger(s) :
 	* t_t1_modele_lampe (before insert or update) : 
