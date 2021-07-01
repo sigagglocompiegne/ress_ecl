@@ -242,6 +242,10 @@ Interventions et signalements du service métier
 
 		- selon le(s) type(s) d'intervention(s) on update les valeurs de l'objet concerné.
 
+	* t_t2_lampe_gestion_stock (before update or insert) : permet de mettre à jour le stock de lampe sur des interventions du service éclairage public en fonction des interventions relevant de changement de lampe.
+	* t_t3_log_intervention_contrat (after insert) : automatisaiton de l'attribut id_contrat dans la table des interventions
+	* t_t4_log_intervention (AFTER INSERT OR DELETE OR UPDATE) : intégration des modifications dans la table des logs
+
 * Vue(s) :
     -  xapps_an_v_ecl_stat_intervention
     -  xapps_an_v_ecl_stat_intervention_total
