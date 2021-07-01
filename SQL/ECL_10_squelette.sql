@@ -4360,6 +4360,81 @@ CREATE TRIGGER t_t3_log_intervention
   FOR EACH ROW
 EXECUTE PROCEDURE m_reseau_sec.ft_m_log_inter_ecl();
 
+-- FUNCTION: m_reseau_sec.ft_m_lampe_gestion_stock()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_lampe_gestion_stock();
+
+CREATE FUNCTION m_reseau_sec.ft_m_lampe_gestion_stock()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+
+BEGIN
+
+IF (TG_OP='INSERT') THEN
+
+IF NEW.type_si_in = '20' AND NEW.type_inter like '%13%' AND NEW.att_met8 = 2 AND NEW.op_rea = '91'  THEN
+
+	UPDATE m_reseau_sec.an_ecl_modele_lampe SET nb_stock = nb_stock-1 WHERE id_mod_lm = (SELECT f.id_mod_lm FROM m_reseau_sec.an_ecl_foyer f WHERE NEW.id_objet= f.id_foyer) ; 
+
+END IF;
+
+IF NEW.type_si_in = '20' AND NEW.type_inter like '%13%' AND NEW.att_met8 <> 2 AND NEW.att_met8 <> 1 AND NEW.op_rea = '91'  THEN
+
+	UPDATE m_reseau_sec.an_ecl_modele_lampe SET nb_stock = nb_stock-1 WHERE id_mod_lm = NEW.att_met8 ; 
+
+END IF;
+
+END IF;
+
+IF (TG_OP='UPDATE') THEN
+
+IF NEW.type_si_in = '20' AND NEW.type_inter like '%13%' AND OLD.type_inter NOT like '%13%' AND NEW.att_met8 = 2 AND NEW.op_rea = '91'  THEN
+
+	UPDATE m_reseau_sec.an_ecl_modele_lampe SET nb_stock = nb_stock-1 WHERE id_mod_lm = (SELECT f.id_mod_lm FROM m_reseau_sec.an_ecl_foyer f WHERE NEW.id_objet= f.id_foyer) ; 
+
+END IF;
+
+IF NEW.type_si_in = '20' AND NEW.type_inter like '%13%' AND OLD.type_inter NOT like '%13%' AND NEW.att_met8 <> 2 AND NEW.att_met8 <> 1 AND NEW.op_rea = '91'  THEN
+
+	UPDATE m_reseau_sec.an_ecl_modele_lampe SET nb_stock = nb_stock-1 WHERE id_mod_lm = NEW.att_met8 ; 
+
+END IF;
+
+END IF;
+
+RETURN NEW;
+
+END;
+$BODY$;
+
+ALTER FUNCTION m_reseau_sec.ft_m_lampe_gestion_stock()
+    OWNER TO create_sig;
+
+GRANT EXECUTE ON FUNCTION m_reseau_sec.ft_m_lampe_gestion_stock() TO PUBLIC;
+
+GRANT EXECUTE ON FUNCTION m_reseau_sec.ft_m_lampe_gestion_stock() TO create_sig;
+
+COMMENT ON FUNCTION m_reseau_sec.ft_m_lampe_gestion_stock()
+    IS 'Fonction trigger gérant le nombre de lampe dans le stock si une intervention correspond à un changement de lampe';
+
+
+
+-- Trigger: t_t2_lampe_gestion_stock
+
+-- DROP TRIGGER t_t2_lampe_gestion_stock ON m_reseau_sec.an_ecl_intervention;
+
+CREATE TRIGGER t_t2_lampe_gestion_stock
+    BEFORE INSERT OR UPDATE 
+    ON m_reseau_sec.an_ecl_intervention
+    FOR EACH ROW
+    EXECUTE PROCEDURE m_reseau_sec.ft_m_lampe_gestion_stock();
+    
+
+
+
 --
 COMMENT ON TABLE m_reseau_sec.an_ecl_intervention IS 'Interventions et signalements du service métier ';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_intervention.id_inter IS 'Numéro de l''intervention interne à l''ARC';
