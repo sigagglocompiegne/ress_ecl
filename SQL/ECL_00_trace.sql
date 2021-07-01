@@ -42,3 +42,4 @@
                   Impact sur les vues des indicateurs pour intégrer les objets sur ce site en tant que patrimoine de la collectivité
 2021-06-14 : GB / Correction sur formule indicateur linéaire de câble
                   Intégration d'un attribut du stock du nombre de lampe dans la table des modèles de lampes (à venir fonctionnel de décompte par rapport aux interventions de changement de lampes)
+2021-07-01 : GB / Intégration fonction trigger pour automatiser le stock en fonction des interventions de changement de lampe
