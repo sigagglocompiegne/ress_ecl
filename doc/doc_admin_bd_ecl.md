@@ -1563,7 +1563,12 @@ Un projet QGIS a été réalisé pour la gestion interne des données. Il est st
  ## Mise à jour régulière des données des prestataires extérieurs
 
   Le processus est en cours de développement.
-  
+ 
+# Export Open Data
+
+## xopendata_geo_v_ecl_ptlum
+Description : Vue opendata décodée et simplifiée des points lumineux 
+ 
 # Schéma fonctionnel
   ## Modèle conceptuel simplifié
   ![GeoCompiegnois](img/schema_spy_large.png)
