@@ -727,7 +727,7 @@ UNION ALL
     req_cable_arc.long_cable AS nb_arc,
     req_cable_ville.long_cable AS nb_ville,
     req_cable_arc.long_cable + req_cable_ville.long_cable AS total,
-    req_cable_ville.long_cable AS nb_serv
+    req_cable_serv.long_cable AS nb_serv
    FROM req_cable_arc,
     req_cable_ville,
     req_cable_serv
