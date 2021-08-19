@@ -43,3 +43,4 @@
 2021-06-14 : GB / Correction sur formule indicateur linéaire de câble
                   Intégration d'un attribut du stock du nombre de lampe dans la table des modèles de lampes (à venir fonctionnel de décompte par rapport aux interventions de changement de lampes)
 2021-07-01 : GB / Intégration fonction trigger pour automatiser le stock en fonction des interventions de changement de lampe
+2021-08-19 : GB : Correction sur indicateur linéaire cable, affectation bonne variable pour la saisie par le service et non sur la zone de gestion ville
