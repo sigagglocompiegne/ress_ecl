@@ -1400,7 +1400,8 @@ CREATE OR REPLACE VIEW m_reseau_sec.geo_v_ecl_pi AS
         noeud.presta_nd,
 	noeud.id_contrat,
 	noeud.commune,
-        noeud.insee       
+        noeud.insee,
+	pi.solaire
  FROM m_reseau_sec.an_ecl_pi pi
      JOIN m_reseau_sec.geo_ecl_noeud noeud ON pi.id_pi = noeud.id_noeud;
      
@@ -1424,6 +1425,10 @@ ALTER TABLE m_reseau_sec.geo_v_ecl_pi ALTER COLUMN id_contrat SET DEFAULT '00'::
 --- En cas de DELETE, attribut situation passe à 'supprimer' --> Le point n'est donc pas réellement supprimé.
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 --- L'insertion des logs se fait également dans cette fonction	
+
+-- FUNCTION: m_reseau_sec.ft_m_point_interet()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
 
 -- FUNCTION: m_reseau_sec.ft_m_point_interet()
 
@@ -1584,7 +1589,7 @@ IF (TG_OP = 'INSERT') THEN
 RETURN NEW;
 
 ELSIF (TG_OP = 'UPDATE') THEN 
-
+    
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
 	--- on peut mettre à jour les caractéristiques des PI dans aucune contrainte
@@ -1595,7 +1600,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		etat_pi=NEW.etat_pi,
 		solaire=NEW.solaire
 		WHERE id_pi=NEW.id_pi; 
-		
+	
 	---
 
 	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
@@ -1640,7 +1645,7 @@ ELSIF (TG_OP = 'UPDATE') THEN
 
 		--
 
-		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) THEN
+		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) AND NEW.id_contrat <> '00' AND NEW.id_contrat <> 'ZZ' THEN
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
@@ -1704,7 +1709,8 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		UPDATE m_reseau_sec.an_ecl_pi 
 		SET 
 		ty_pi=NEW.ty_pi,
-		etat_pi=NEW.etat_pi
+		etat_pi=NEW.etat_pi,
+		solaire=NEW.solaire
 		WHERE id_pi=NEW.id_pi; ---------------------------------------------- On insère les données dans point d'intérêt normalement
 
 		--
@@ -1727,8 +1733,10 @@ ELSIF (TG_OP = 'UPDATE') THEN
 		VALUES
 		(NEW.id_pi, 'Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.', now() );
 		RETURN OLD ;
+		
 
 	END IF;
+
 		--- On accepte uniquement les PI sur les point lumineux inversement. Le reste n'est pas possible.  
 
 	--- log
@@ -1792,6 +1800,8 @@ $BODY$;
 
 ALTER FUNCTION m_reseau_sec.ft_m_point_interet()
     OWNER TO create_sig;
+
+
 
 
 
