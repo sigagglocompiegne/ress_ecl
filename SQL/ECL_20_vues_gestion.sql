@@ -1542,7 +1542,8 @@ IF (TG_OP = 'INSERT') THEN
 		SELECT
 		id_unique,
 		NEW.ty_pi,
-		NEW.etat_pi
+		NEW.etat_pi,
+		NEW.solaire
 		; --------------------------------------------------------- On insère les données dans point d'intérêt normalement
 
 		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
@@ -1586,6 +1587,15 @@ ELSIF (TG_OP = 'UPDATE') THEN
 
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
+	--- on peut mettre à jour les caractéristiques des PI dans aucune contrainte
+	
+		UPDATE m_reseau_sec.an_ecl_pi 
+		SET 
+		ty_pi=NEW.ty_pi,
+		etat_pi=NEW.etat_pi,
+		solaire=NEW.solaire
+		WHERE id_pi=NEW.id_pi; 
+		
 	---
 
 	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
