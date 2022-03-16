@@ -374,6 +374,7 @@ Objet réel ou abstrait indiquant un point d''importance pour la connaissance pa
 |id_pi|Identifiant du nœud lié au point d'interet|integer| |
 |ty_pi|Type de point d'intérêt|character varying(2)|'00'::character varying|
 |etat_pi|Etat du point d'intérêt |character varying(2)|'00'::character varying|
+|solaire|Alimentation par énergie solaire |boolean|false|
 
 * Vue(s) :
     - m_reseau_sec.geo_v_ecl_pi
@@ -1508,6 +1509,7 @@ Description : Objet réel ou abstrait indiquant un point ayant une importance po
 |     geo_ecl_noeud   | id_contrat        |
 |     geo_ecl_noeud   | commune           |
 |     geo_ecl_noeud   | insee             |
+|     an_ecl_pi       | solaire           |
 
 
 * Trigger(s) :
