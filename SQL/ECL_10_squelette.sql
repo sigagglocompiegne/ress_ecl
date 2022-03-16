@@ -2337,6 +2337,7 @@ CREATE TABLE m_reseau_sec.an_ecl_pi --------------------------------------------
 	id_pi       integer NOT NULL,  --------------------------------------------- Identifiant du nœud lié au point d''interet
 	ty_pi       character varying (2) NOT NULL DEFAULT '00',  ------------------ Type de point d''intérêt
 	etat_pi     character varying (2) NOT NULL DEFAULT '00'  ------------------ Etat du point d''intérêt
+	solaire     boolean DEFAULT false			  ------------------ Alimentation par énergie solaire
 	);
 ---
 ALTER TABLE m_reseau_sec.an_ecl_pi
