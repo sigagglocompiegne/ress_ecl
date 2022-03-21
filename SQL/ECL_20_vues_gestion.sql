@@ -846,11 +846,11 @@ ALTER TABLE m_reseau_sec.geo_v_ecl_point_lumineux ALTER COLUMN haut_trap SET DEF
 --- L'insertion des logs se fait également dans cette fonction					 
 --- Gestionnaire, exploitant et commune / insee mis à jours selon géométrie d'autres tables.
 
--- FUNCTION: m_reseau_sec.ft_m_point_lumineux()
+-- FUNCTION: m_reseau_sec.ft_m_point_interet()
 
--- DROP FUNCTION m_reseau_sec.ft_m_point_lumineux();
+-- DROP FUNCTION m_reseau_sec.ft_m_point_interet();
 
-CREATE FUNCTION m_reseau_sec.ft_m_point_lumineux()
+CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_point_interet()
     RETURNS trigger
     LANGUAGE 'plpgsql'
     COST 100
@@ -858,7 +858,7 @@ CREATE FUNCTION m_reseau_sec.ft_m_point_lumineux()
 AS $BODY$
 DECLARE id_unique integer;
 
---- variable pour les logs
+-- variable pour les logs
 DECLARE v_idlog integer;
 DECLARE v_dataold character varying(5000);
 DECLARE v_datanew character varying(5000);
@@ -866,9 +866,9 @@ DECLARE v_name_table character varying(254);
 
 BEGIN
 
----
+	---
 
-IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
+IF (TG_OP = 'INSERT') THEN 
 
 	id_unique = nextval('m_reseau_sec.ecl_objet_seq');
 
@@ -878,84 +878,48 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 	NEW.src_geom = '20'; ---- Orthophotographie
 	NEW.src_date = '2018';--- 
 	NEW.situation = '10';---- Actif
-	
-	---
 
-	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
+	--
 
-	---
-
-	IF (NEW.date_donne > now()::timestamp) THEN ----------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
-		NEW.date_donne=NULL; --------------------------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
-		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)------------------------------------- Puis on ajoute dans la table erreur
-		VALUES
-		(id_unique, 'La date de création de la donnée doit être inférieure à la date actuelle', now() );-- Ce message, qui apparaît dans GEO sur la fiche
-	END IF;
-
-		---
-
-	IF (NEW.dat_pos > now()::timestamp) THEN --------------------------------------------------------------------- Si la date de la pose est supérieure à la date actuelle
+	IF (NEW.dat_pos > now()::timestamp) THEN -------------------------------------------------------------------- Si la date de la pose est supérieure à la date actuelle
 		NEW.dat_pos=NULL; ------------------------------------------------------------------------------------ On surcorrige la saisie en attribuant la valeur NULL
 		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)------------------------------------- Puis on ajoute dans la table erreur
 		VALUES
 		(id_unique, 'La date de pose doit être inférieure à la date actuelle', now() );------------------ Ce message, qui apparaît dans GEO sur la fiche
 	END IF;
-		---
 
-	IF (NEW.haut_supp > 30::integer) THEN ---------------------------------------Si la hauteur est supérieure à 30 mètres, on met un message d'erreur et on atttribue une valeur NULL
-		
-		NEW.haut_supp=NULL;
-			
-		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
-		VALUES
-		(id_unique, 'Le support doit faire moins de 30 mètres', now() );
-
-	END IF;
-
-	---
-
-	IF (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12' ) < 1 )
-	   OR (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom)AND situation <> '12') = 1) AND 
-	       (( SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') IN (SELECT id_pi FROM m_reseau_sec.an_ecl_pi))
-	      )   
-	   )  THEN 
-	   -- S'il n'y a pas d'autre noeud dont la géométrie est égale et la situation est Actif ou inatif, ou bien s'il y a un autre noeud au même endroit et que c'est un point d'intérêt
-
-		--
+	--
+	
+	IF (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') < 1 )
+	      OR (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') =1) AND 
+		(( SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') IN (SELECT id_supp FROM m_reseau_sec.an_ecl_support)
+		    ))   
+	   )  THEN -- S'il n'y a pas d'autre noeud dont la géométrie est égale, ou bien s'il y a un autre noeud au même endroit et que c'est un point lumineux
 
 		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) THEN
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
 			NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
-			
 
 		ELSE  ------------------------------------------------ Si l'objet n'est dans aucune zone de gestion, on met un message d'erreur
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_supp, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(id_unique, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
 			RETURN OLD ;
 
 		END IF;
-		
+
+		--
+
 		NEW.insee = (SELECT insee FROM r_osm.geo_vm_osm_commune_arcba arcba WHERE ST_Contains(arcba.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 		
 		NEW.commune = (SELECT commune FROM r_osm.geo_vm_osm_commune_arcba arcba WHERE ST_Contains(arcba.geom,NEW.geom));--- Remplissage automatique de l'attribut commune
 
 		--
 
-		IF (NEW.ty_supp <> '10') THEN ---- Si le support n'est pas un mât, on change les attributs n'ayant de sens que pour un mât
-		
-			NEW.opt_supp = NULL; --- Les options accrochées au support
-			NEW.haut_trap='ZZ';----- La hauteur de la trappe
-			NEW.id_mod_sup='1';----- Le modèle de mât
-			
-		END IF;
-
-		--
-
-		---On insère les données normalement dans noeud, avec une date de mise à jour des données = NULL.
+	
 		INSERT INTO m_reseau_sec.geo_ecl_noeud (id_noeud,commune, insee, exploit_nd, presta_nd,ent_pose,dat_pos,qua_dat, geom,op_sai,
 							depart, observ, date_sai, date_maj,date_donne,op_sai_geo,qua_geo_Z,qua_geo_XY, src_geom, src_date,situation,id_contrat)
 			SELECT
@@ -975,7 +939,7 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 			NEW.depart,
 			NEW.observ,
 			now(),
-			NULL,
+			NULL, --- Date de dernière mise à jour
 			NEW.date_donne,
 			NEW.op_sai_geo,
 			NEW.qua_geo_Z,
@@ -987,59 +951,43 @@ IF (TG_OP = 'INSERT') THEN ------ Si c'est un INSERT
 
 		--
 
-		IF (NEW.depart IS NOT NULL) THEN -------------------------------------------------- Si le point lumineux est lié à un départ
-			REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire; --- on actualise la vue du "chemin d'électricité"
+		IF (NEW.depart IS NOT NULL) THEN
+		
+			REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire;-- on rafraichi la vue du "chemin d'électricité"
+
 		END IF;
 
 		--
 
-		---On insère les données normalement dans support.
-		INSERT INTO m_reseau_sec.an_ecl_support (
-			id_supp,
-			etat_supp,
-			id_mod_sup, 
-			ty_supp,
-			opt_supp,
-			ty_parasu,
-			ty_fusible,
-			haut_trap,
-			ty_disjonc,
-			haut_supp
-			 )
-			SELECT
-			id_unique,
-			NEW.etat_supp,
-			NEW.id_mod_sup, 
-			NEW.ty_supp ,
-			NEW.opt_supp ,
-			NEW.ty_parasu ,
-			NEW.ty_fusible  ,
-			NEW.haut_trap,
-			NEW.ty_disjonc,
-			NEW.haut_supp
-			;
+		INSERT INTO m_reseau_sec.an_ecl_pi 
+		SELECT
+		id_unique,
+		NEW.ty_pi,
+		NEW.etat_pi,
+		NEW.solaire
+		; --------------------------------------------------------- On insère les données dans point d'intérêt normalement
 
--- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
+		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
         IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
-		SET id_nd_ini= new.id_supp
+		SET id_nd_ini= new.id_pi
 		WHERE ST_equals(NEW.geom,ST_StartPoint(geom)) ;
 
 		UPDATE m_reseau_sec.geo_ecl_cable --- On UPDATE câble dont un des points (final ou initial) est égal à la géométrie de l'objet
-		SET id_nd_fin= new.id_supp
+		SET id_nd_fin= new.id_pi
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
-END IF;
+		END IF;
+
 		
 
-	ELSE ---- S'il y a déjà un point avec la même géométrie et que ce n'est pas un point d'intérêt
+	ELSE ---- S'il y a déjà un point avec la même géométrie et que ce n'est pas un point lumineux
 
 		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 		VALUES
-		(NEW.id_supp, 'Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.', now() );
+		(NEW.id_pi, 'Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.', now() );
 		RETURN OLD ;
 
-	END IF;
-		--- On accepte uniquement les PI sur les point lumineux et inversement.  
+	END IF; 
 
 	---log
 	v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass); 
@@ -1053,82 +1001,90 @@ END IF;
 	NULL,
 	v_datanew,
 	now();
-
+	
 RETURN NEW;
 
-ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------- Si c'est un UPDATE
-
+ELSIF (TG_OP = 'UPDATE') THEN 
+    
 	DELETE FROM m_reseau_sec.an_ecl_erreur; ------ On efface les messages d'erreurs existants
 
+	--- on peut mettre à jour les caractéristiques des PI sans aucune contrainte
+	
+		UPDATE m_reseau_sec.an_ecl_pi 
+		SET 
+		ty_pi=NEW.ty_pi,
+		etat_pi=NEW.etat_pi,
+		solaire=NEW.solaire		
+		
+		WHERE id_pi=NEW.id_pi; 
+		
+		IF NEW.solaire = true THEN
+		UPDATE m_reseau_sec.geo_ecl_noeud 
+		SET
+		depart = null
+		WHERE id_noeud = NEW.id_pi;
+		END IF;
+		
+		UPDATE m_reseau_sec.geo_ecl_noeud 
+		SET
+		presta_nd = NEW.presta_nd,
+		ent_pose = NEW.ent_pose,
+		dat_pos = NEW.dat_pos,
+		qua_dat = NEW.qua_dat,
+		observ = NEW.observ,
+		qua_geo_xy = NEW.qua_geo_xy,
+		src_geom = NEW.src_geom,
+		src_date = NEW.src_date,
+		date_maj=now()
+		WHERE id_noeud = NEW.id_pi;
+		
+		
+
 	---
-        IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
+
+	IF ST_equals(new.geom,old.geom) is false AND new.qua_geo_xy = '10' THEN
 	INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)----------------------------------- Puis on ajoute dans la table erreur
 		VALUES
-		(NEW.id_supp, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
+		(NEW.id_pi, 'Vous ne pouvez pas modifier la géométrie d''un objet en classe A', now() );--- Ce message, qui apparaît dans GEO sur la fiche départ
 
 		new.geom = old.geom;
 	ELSE
 	NEW.date_maj = now(); ---------------------------------- On attribue la date actuelle à la date de dernière mise à jour.
 	END IF;
-	---
-
-	IF (NEW.date_donne > now()::timestamp) THEN ----------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
-		NEW.date_donne=OLD.date_donne; --------------------------------------------------------------------------------- On surcorrige la saisie en attribuant la valeur NULL
-		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)------------------------------------- Puis on ajoute dans la table erreur
-		VALUES
-		(NEW.id_supp, 'La date de création de la donnée doit être inférieure à la date actuelle', now() );-- Ce message, qui apparaît dans GEO sur la fiche
-	END IF;
-
-		---
-
-	IF (NEW.dat_pos > now()::timestamp) THEN -------------------------------------------------------------------- Si la date de la pose est supérieure à la date actuelle
-		NEW.dat_pos=NULL; ------------------------------------------------------------------------------------ On surcorrige la saisie en attribuant la valeur NULL
-		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)------------------------------------- Puis on ajoute dans la table erreur
-		VALUES
-		(NEW.id_supp, 'La date de pose doit être inférieure à la date actuelle', now() );------------------ Ce message, qui apparaît dans GEO sur la fiche
-	END IF;
-		---
-
-	IF (NEW.haut_supp > 30::integer) THEN ---------------------------------------Si la hauteur est supérieure à 30 mètres, on met un message d'erreur et on atttribue une valeur NULL
-		
-		NEW.haut_supp=NULL;
-			
-		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
-		VALUES
-		(NEW.id_supp, 'Le support doit faire moins de 30 mètres', now() );
-
-	END IF;
 
 	---
 
 	IF (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') < 1 )
-		--
 	      OR (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') =1) AND 
-		(( (SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom)AND situation <> '12') IN (SELECT id_pi FROM m_reseau_sec.an_ecl_pi))
+		(( (SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12' ) IN (SELECT id_supp FROM m_reseau_sec.an_ecl_support))
 		    OR NEW.geom=OLD.geom))
-		--
-	      OR (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') =2) AND
-	            ( (SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud nd WHERE ST_equals(NEW.geom,geom)AND situation <> '12' AND id_noeud NOT IN(SELECT id_supp FROM m_reseau_sec.an_ecl_support)) IN (SELECT id_pi FROM m_reseau_sec.an_ecl_pi))
-	                AND (NEW.geom = OLD.geom) AND (OLD.situation <> '12'))
-		--
-	   )  THEN 
-	  
-	-- S'il n'y a pas d'autre noeud dont la géométrie est égale, 
-	-- OU S'il y a un noeud avec la même géométrie et que c'est un point d'intérêt ou bien le point lui même
-	-- OU S'il y a deux noeud avec la même géométrie et que l'un est un point d'intérêt et l'autre est le noeud lui même ALORS
-	-- (Tous ces tests excluent les objets supprimés, mais pas les inactifs)
+	       OR (((SELECT count(*) FROM m_reseau_sec.geo_ecl_noeud WHERE ST_equals(NEW.geom,geom) AND situation <> '12') =2) AND
+	            ( (SELECT id_noeud FROM m_reseau_sec.geo_ecl_noeud nd WHERE ST_equals(NEW.geom,geom)AND situation <> '12' AND id_noeud NOT IN(SELECT id_pi FROM m_reseau_sec.an_ecl_pi)) IN (SELECT id_supp FROM m_reseau_sec.an_ecl_support))
+	                AND (NEW.geom = OLD.geom) AND (OLD.situation <> '12')
+		   )
+	   )  THEN -- S'il n'y a pas d'autre noeud dont la géométrie est égale, ou bien s'il y a un autre noeud au même endroit et que c'est un point lumineux
 
-		IF (NEW.ty_supp <> '10') THEN ---- Si le support n'est pas un mât, on change les attributs n'ayant de sens que pour un mât
-		
-			NEW.opt_supp = NULL; --- Les options accrochées au support
-			NEW.haut_trap='ZZ';----- La hauteur de la trappe
-			NEW.id_mod_sup='1';----- Le modèle de mât
-			
+		--
+
+		IF (NEW.date_donne > now()::timestamp) THEN -------------------------------------------------------------------- Si la date de la donnée est supérieure à la date actuelle
+			NEW.date_donne=NULL; ------------------------------------------------------------------------------------ On surcorrige la saisie en attribuant la valeur NULL
+			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)------------------------------------- Puis on ajoute dans la table erreur
+			VALUES
+			(NEW.id_pi, 'La date de la donnée doit être inférieure à la date actuelle', now() );------------------ Ce message, qui apparaît dans GEO sur la fiche
 		END IF;
 
 		--
 	
-		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) THEN
+		IF (NEW.dat_pos > now()::timestamp) THEN -------------------------------------------------------------------- Si la date de la pose est supérieure à la date actuelle
+			NEW.dat_pos=NULL; ------------------------------------------------------------------------------------ On surcorrige la saisie en attribuant la valeur NULL
+			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)------------------------------------- Puis on ajoute dans la table erreur
+			VALUES
+			(NEW.id_pi, 'La date de pose doit être inférieure à la date actuelle', now() );------------------ Ce message, qui apparaît dans GEO sur la fiche
+		END IF;
+
+		--
+
+		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) > 0) AND NEW.id_contrat <> '00' AND NEW.id_contrat <> 'ZZ' THEN
 
 			NEW.exploit_nd = (SELECT gest FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 
@@ -1138,11 +1094,13 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 
 			INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 			VALUES
-			(NEW.id_supp, 'L''objet en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
+			(NEW.id_pi, 'L''objet est en dehors des zones de gestion. Contacter SIG pour changer les zones.', now() );
 			RETURN OLD ;
 
 		END IF;
-		
+
+		--
+
 		NEW.insee = (SELECT insee FROM r_osm.geo_vm_osm_commune_arcba arcba WHERE ST_Contains(arcba.geom,NEW.geom)); ------ Remplissage automatique de l'insee
 		
 		NEW.commune = (SELECT commune FROM r_osm.geo_vm_osm_commune_arcba arcba WHERE ST_Contains(arcba.geom,NEW.geom));--- Remplissage automatique de l'attribut commune;
@@ -1156,7 +1114,7 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		insee = NEW.insee,
 		exploit_nd = NEW.exploit_nd,
 		presta_nd = CASE 
-			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens'
 			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant'
 			ELSE '' END,
 		id_contrat = NEW.id_contrat,
@@ -1172,83 +1130,53 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 		src_geom = NEW.src_geom,
 		src_date = NEW.src_date,
 		op_sai_geo = NEW.op_sai_geo,
-		date_donne = NEW.date_donne,
-		op_sai = NEW.op_sai
-		WHERE id_noeud=NEW.id_supp; ----------------------------------------- On insére toutes les données normalement dans noeud
+		op_sai = NEW.op_sai,
+		date_donne = NEW.date_donne
+		WHERE id_noeud=NEW.id_pi; ----------------------------------------- On insére toutes les données normalement dans noeud
 
 		--
 
 		IF ( NEW.depart <> OLD.depart OR (NEW.depart IS NOT NULL AND OLD.depart IS NULL) OR (NEW.depart IS NULL AND OLD.depart IS NOT NULL) ) 
-		    THEN----------------------------------------------------------------- Si le nouveau départ auquel est lié le noeud est différent de l'ancien
-		
+		THEN----------------------------------------------------------------- Si le nouveau départ auquel est lié le noeud est différent de l'ancien
+
 			REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire;-- on rafraichi la vue du "chemin d'électricité"
-
+		
 		END IF;
 
 		--
 
-		UPDATE m_reseau_sec.an_ecl_support 
-		SET  
-		etat_supp=NEW.etat_supp,
-		haut_trap=NEW.haut_trap,
-		id_mod_sup=NEW.id_mod_sup,
-		ty_supp=NEW.ty_supp ,
-		opt_supp=NEW.opt_supp ,
-		ty_parasu=NEW.ty_parasu ,
-		ty_fusible=NEW.ty_fusible  ,
-		ty_disjonc=NEW.ty_disjonc,
-		haut_supp=NEW.haut_supp   
-		WHERE id_supp=NEW.id_supp; ---------------------------------------------- On insère les donnés normalement dans support
+		UPDATE m_reseau_sec.an_ecl_pi 
+		SET 
+		ty_pi=NEW.ty_pi,
+		etat_pi=NEW.etat_pi,
+		solaire=NEW.solaire
+		WHERE id_pi=NEW.id_pi; ---------------------------------------------- On insère les données dans point d'intérêt normalement
 
 		--
-
-		IF (NEW.situation = '11') THEN --- Si le point lumineux devient inactif
-
-			UPDATE m_reseau_sec.an_ecl_foyer ------------------------------------ Ses foyers le deviennent aussi
-			SET 
-			situation = '11'
-			WHERE id_supp = NEW.id_supp;
-
-		END IF;
-
-		--
-
-		IF ((OLD.situation = '11' OR OLD.situation = '12') AND NEW.situation='10') THEN
-
-			UPDATE m_reseau_sec.an_ecl_foyer ------------------------------------ On change l'attribut dans la table 
-			SET 
-			situation = '10'
-			WHERE id_supp = NEW.id_supp;
-
-		END IF;
-
-		--
-
-		--- On donne aux points initial et final des câbles la valeur de l'identifiant du noeud, si la géométrie est égale
 		-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
         IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(NEW.geom,ST_StartPoint(geom))) = 1 THEN
+		
+		--- On donne aux points initial et final des câbles la valeur de l'identifiant du noeud, si la géométrie est égale
 		UPDATE m_reseau_sec.geo_ecl_cable
-		SET id_nd_ini= new.id_supp
+		SET id_nd_ini= new.id_pi
 		WHERE ST_equals(NEW.geom,ST_StartPoint(geom)) ;
 
 		UPDATE m_reseau_sec.geo_ecl_cable
-		SET id_nd_fin= new.id_supp
+		SET id_nd_fin= new.id_pi
 		WHERE ST_equals(NEW.geom,ST_EndPoint(geom)) ;
 		END IF;
-		--
-
-		
-		
 
 	ELSE --- Si la saisie géométrique n'est pas valide
 
 		INSERT INTO m_reseau_sec.an_ecl_erreur (id_objet, message, heure)
 		VALUES
-		(NEW.id_supp, 'Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, et inversement.', now() );
-
+		(NEW.id_pi, 'Les seules superpositions possibles sont un point lumineux avec un point d''intérêt, ou inversement.', now() );
 		RETURN OLD ;
+		
 
 	END IF;
+
+		--- On accepte uniquement les PI sur les point lumineux inversement. Le reste n'est pas possible.  
 
 	--- log
 	v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass);
@@ -1264,45 +1192,33 @@ ELSIF (TG_OP = 'UPDATE') THEN --------------------------------------------------
 	v_dataold,
 	v_datanew,
 	now();
-	
-RETURN NEW;
 
+RETURN NEW;
+		
 ELSIF (TG_OP = 'DELETE') THEN
 
 	UPDATE m_reseau_sec.geo_ecl_noeud --- En cas de suppression on change juste la situation de l'objet
 	SET
 	situation = '12'
-	WHERE OLD.id_supp=id_noeud;
-
-	--
-
-	UPDATE m_reseau_sec.an_ecl_foyer --- En cas de suppression on change juste la situation des foyers de l"objet
-	SET
-	situation = '12'
-	WHERE OLD.id_supp=id_supp;
-
-	--
-
-	--- On enlève les liens avec le câble,
+	WHERE OLD.id_pi=id_noeud;
+	
 	-- test vérification si le cable à plusieurs points, passe pour éviter une erreur sinon mise à jour
         IF (SELECT count(*) FROM m_reseau_sec.geo_ecl_cable WHERE ST_equals(OLD.geom,ST_StartPoint(geom))) = 1 THEN
-	UPDATE m_reseau_sec.geo_ecl_cable 
+
+	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_ini= NULL
 	WHERE ST_equals(OLD.geom,ST_StartPoint(geom)) ;
-
-	--
 
 	UPDATE m_reseau_sec.geo_ecl_cable
 	SET id_nd_fin= NULL
 	WHERE ST_equals(OLD.geom,ST_EndPoint(geom)) ;
-	END IF;
+   END IF;
+	--
 
-	
 	REFRESH MATERIALIZED VIEW x_apps.xapps_an_vmr_ecl_materialisee_noeud_armoire;-- On actualise la vue du "chemin d'électricité"
 
-	--- log
-	v_dataold := ROW(OLD.*);------------------------------------ On concatène tous les anciens attributs dans un seul
-	v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass);
+	 v_dataold := ROW(OLD.*);------------------------------------ On concatène tous les anciens attributs dans un seul
+	 v_idlog := nextval('m_reseau_sec.an_ecl_log_idlog_seq'::regclass);
 
 	INSERT INTO m_reseau_sec.an_ecl_log (idlog, tablename,  type_ope, dataold, datanew, date_maj)
 	SELECT
@@ -1321,9 +1237,8 @@ END IF;
 END;
 $BODY$;
 
-ALTER FUNCTION m_reseau_sec.ft_m_point_lumineux()
+ALTER FUNCTION m_reseau_sec.ft_m_point_interet()
     OWNER TO create_sig;
-
 
 
 
