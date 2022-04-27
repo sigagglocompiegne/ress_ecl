@@ -2564,9 +2564,16 @@ ALTER TABLE m_reseau_sec.an_ecl_foyer
 -- SUPPRESSION DES MESSAGES D'ERREUR
 -- GESTION DES CONTRAINTES DE SAISIE avec génération de message d'erreur
 -- FORCAGE DE CERTAINS ATTRIBUTS A L'INSERTION
+-- FUNCTION: m_reseau_sec.ft_m_foyer()
+
+-- DROP FUNCTION m_reseau_sec.ft_m_foyer();
+
 CREATE OR REPLACE FUNCTION m_reseau_sec.ft_m_foyer()
-  RETURNS trigger AS
-$BODY$
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
 DECLARE produit integer;
 BEGIN
 
@@ -2616,6 +2623,12 @@ BEGIN
 		NEW.pct_fct = NULL; --------------------------------------------------------------------------------------------- Puis on surcorrige la saisie en attribuant la valeur NULL
 	END IF;
 
+	--- forçage d'un modèle de lampe LED quand une lanterne HAPILED ou LED ROSE est saisie
+    IF NEW.id_mod_ln = '12' or NEW.id_mod_ln = '21' THEN 
+		NEW.id_mod_lm = '30';
+	END IF;
+	
+	
 	---
 
 	IF (TG_OP = 'UPDATE') THEN ----------- SI c'est un UPDATE
@@ -2647,11 +2660,11 @@ BEGIN
 		RETURN NEW;
 	END IF; --------------------- FIN de condition
 
-
 END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
+$BODY$;
+
+ALTER FUNCTION m_reseau_sec.ft_m_foyer()
+    OWNER TO create_sig;
 
   CREATE TRIGGER t_t1_foyer
   BEFORE INSERT OR UPDATE
