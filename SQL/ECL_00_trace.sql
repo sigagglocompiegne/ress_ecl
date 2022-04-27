@@ -45,3 +45,4 @@
 2021-07-01 : GB / Intégration fonction trigger pour automatiser le stock en fonction des interventions de changement de lampe
 2021-08-19 : GB : Correction sur indicateur linéaire cable, affectation bonne variable pour la saisie par le service et non sur la zone de gestion ville
 2022-03-16 : GB : intégration attribut sur PI si alimenté par énergie solaire + possibilté de modifié les caractéristiques des PI
+2022-04-27 : GB : intégration automatisme passage Lampe en LED si lanterne en HAPILED ou LED ROSE
