@@ -46,6 +46,7 @@ DROP TABLE IF EXISTS m_reseau_sec.an_ecl_ouvrage_electrique CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_depart CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_pi CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.geo_ecl_noeud CASCADE;
+DROP TABLE IF EXISTS m_reseau_sec.geo_ecl_pct CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.geo_ecl_cable CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_fourreau CASCADE;
 DROP TABLE IF EXISTS m_reseau_sec.an_ecl_foyer CASCADE;
@@ -110,6 +111,7 @@ DROP SEQUENCE m_reseau_sec.ecl_log_seq ;
 DROP SEQUENCE m_reseau_sec.an_ecl_media_gid_seq ;
 DROP SEQUENCE m_reseau_sec.an_ecl_erreur_id_erreur_seq ;
 DROP SEQUENCE m_reseau_sec.an_ecl_intervention_seq ;
+DROP SEQUENCE m_reseau_sec.geo_ecl_pct_idpct_seq ;
 
 --TRIGGERS
 
@@ -272,6 +274,24 @@ GRANT ALL ON SEQUENCE m_reseau_sec.an_ecl_intervention_seq TO create_sig;
 COMMENT ON SEQUENCE m_reseau_sec.an_ecl_intervention_seq
   IS 'Séquence unique pour toutes les interventions';
 
+--############################################################ POINT DE LEVE ##################################################  
+-- SEQUENCE: m_reseau_sec.geo_ecl_pct_idpct_seq
+
+-- DROP SEQUENCE m_reseau_sec.geo_ecl_pct_idpct_seq;
+
+CREATE SEQUENCE m_reseau_sec.geo_ecl_pct_idpct_seq
+    INCREMENT 1
+    START 4463
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE m_reseau_sec.geo_ecl_pct_idpct_seq
+    OWNER TO create_sig;
+
+GRANT ALL ON SEQUENCE m_reseau_sec.geo_ecl_pct_idpct_seq TO PUBLIC;
+
+GRANT ALL ON SEQUENCE m_reseau_sec.geo_ecl_pct_idpct_seq TO create_sig;
 
 -- ###############################################################################################################################
 -- ###                                                                                                                         ###
@@ -4571,7 +4591,88 @@ COMMENT ON COLUMN m_reseau_sec.an_ecl_log.dataold IS 'Valeur ancienne avant l''o
 COMMENT ON COLUMN m_reseau_sec.an_ecl_log.datanew IS 'Valeur nouvelle après l''opération sur l''entité';
 COMMENT ON COLUMN m_reseau_sec.an_ecl_log.date_maj IS 'Horodatage de l''opération sur la base d''éclairage public';
 
+--############################################################ POINT LEVE ##################################################
 
+-- Table: m_reseau_sec.geo_ecl_pct
+
+-- DROP TABLE m_reseau_sec.geo_ecl_pct;
+
+CREATE TABLE m_reseau_sec.geo_ecl_pct
+(
+    idpct bigint NOT NULL DEFAULT nextval('m_reseau_sec.geo_ecl_pct_idpct_seq'::regclass),
+    x_l93 double precision,
+    y_l93 double precision,
+    altitude double precision,
+    profondeur double precision,
+    hauteur double precision,
+    qua_geo_xy character varying(2) COLLATE pg_catalog."default" NOT NULL DEFAULT '00'::character varying,
+    qua_geo_z character varying(2) COLLATE pg_catalog."default" NOT NULL DEFAULT '00'::character varying,
+    horodatage date,
+    typ_res character varying(20) COLLATE pg_catalog."default",
+    insee character varying(5) COLLATE pg_catalog."default",
+    op_sai character varying(80) COLLATE pg_catalog."default",
+    observ character varying(254) COLLATE pg_catalog."default",
+    geom geometry,
+    CONSTRAINT geo_ecl_pct_pkey PRIMARY KEY (idpct),
+    CONSTRAINT geo_ecl_noeud_lt_ecl_qualite_geolocalisation_xy_fkey FOREIGN KEY (qua_geo_xy)
+        REFERENCES m_reseau_sec.lt_ecl_qualite_geolocalisation (code) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET DEFAULT,
+    CONSTRAINT geo_ecl_noeud_lt_ecl_qualite_geolocalisation_z_fkey FOREIGN KEY (qua_geo_z)
+        REFERENCES m_reseau_sec.lt_ecl_qualite_geolocalisation (code) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE SET DEFAULT,
+    CONSTRAINT geo_ecl_pct_fkey FOREIGN KEY (idpct)
+        REFERENCES m_reseau_sec.geo_ecl_pct (idpct) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT enforce_srid_geom CHECK (st_srid(geom) = 2154),
+    CONSTRAINT enforce_geotype_geom CHECK (geometrytype(geom) = 'POINT'::text),
+    CONSTRAINT enforce_dims_geom CHECK (st_ndims(geom) = 2)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE m_reseau_sec.geo_ecl_pct
+    OWNER to create_sig;
+
+COMMENT ON TABLE m_reseau_sec.geo_ecl_pct
+    IS 'Les objets de cette table correspondent aux points levés sur le terrain par le producteur de la donnée permettant de définir la profondeur.';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.idpct
+    IS 'identifiant unique interne de l''objet';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.x_l93
+    IS 'abscisse de la localisation du texte d''altitude';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.y_l93
+    IS 'ordonnée de la localisation du texte d''altitude';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.altitude
+    IS 'altitude de l''objet relevé';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.profondeur
+    IS 'Profondeur en m de la génératrice supérieure';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.hauteur
+    IS 'Hauteur en m de la génératrice inférieure';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.horodatage
+    IS 'Date du lever du point';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.typ_res
+    IS 'type de réseau concerné par le point de levé (basse ou moyenne tension)';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.insee
+    IS 'Code insee de la commune d''assise du point de levé';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.op_sai
+    IS 'Opérateur de la saisie de la donnée';
+
+COMMENT ON COLUMN m_reseau_sec.geo_ecl_pct.observ
+    IS 'Commentaire divers';
 
 
 -- ###############################################################################################################################
