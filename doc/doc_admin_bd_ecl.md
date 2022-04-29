@@ -505,6 +505,25 @@ Nœud ponctuel du réseau.
     - m_reseau_sec.geo_v_ecl_point_lumineux
 
 -------------------------------------------------------------------------
+#### geo_ecl_pct 
+ Description : Les objets de cette table correspondent aux points levés sur le terrain par le producteur de la donnée permettant de définir la profondeur.
+
+
+|Nom attribut | Définition | Type  | Valeurs par défaut |
+|:-|:-|:-|:-|  
+|idpct|identifiant unique interne de l'objet|bigint|nextval('m_reseau_sec.geo_ecl_pct_idpct_seq'::regclass)|
+|x_l93|abscisse de la localisation du texte d'altitude|double precision| |
+|y_l93|ordonnée de la localisation du texte d'altitude|double precision| |
+|altitude|altitude de l'objet relevé|double precision| |
+|profondeur|Profondeur en m de la génératrice supérieure|double precision| |
+|hauteur|Hauteur en m de la génératrice inférieure|double precision| |
+|horodatage|Date du lever du point|date| |
+|typ_res|type de réseau concerné par le point de levé (basse ou moyenne tension)|character varying(20)| |
+|insee|Code insee de la commune d'assise du point de levé|character varying(5)| |
+|op_sai|Opérateur de la saisie de la donnée|character varying(80)| |
+|observ|Commentaire divers|character varying(254)| |
+-------------------------------------------------------------------------
+
 ### Classes d'objets de gestion
 
 #### an_ecl_media
