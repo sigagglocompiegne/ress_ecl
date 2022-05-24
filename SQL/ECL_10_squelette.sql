@@ -2644,7 +2644,7 @@ BEGIN
 	END IF;
 
 	--- forçage d'un modèle de lampe LED quand une lanterne HAPILED ou LED ROSE est saisie
-    IF NEW.id_mod_ln = '12' or NEW.id_mod_ln = '21' THEN 
+    IF NEW.id_mod_ln = '12' or NEW.id_mod_ln = '21' or NEW.id_mod_ln = '49' or NEW.id_mod_ln = '50' THEN 
 		NEW.id_mod_lm = '30';
 	END IF;
 	
