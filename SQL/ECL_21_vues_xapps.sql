@@ -285,28 +285,32 @@ COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_intervention_liste_affichage.type_inter
 
 --####################################################### SUPPORT CATEGORISE PAR ARMOIRES ####################################################
 
+-- View: x_apps.xapps_geo_v_ecl_support_par_armoire
+
 -- DROP VIEW x_apps.xapps_geo_v_ecl_support_par_armoire;
 
-CREATE OR REPLACE VIEW x_apps.xapps_geo_v_ecl_support_par_armoire AS 
+CREATE OR REPLACE VIEW x_apps.xapps_geo_v_ecl_support_par_armoire
+ AS
+ SELECT an_ecl_support.id_supp,
+    ouv.nom_ouv,
+    geo_ecl_noeud.geom
+   FROM m_reseau_sec.an_ecl_support
+     JOIN m_reseau_sec.geo_ecl_noeud ON an_ecl_support.id_supp = geo_ecl_noeud.id_noeud,
+    m_reseau_sec.an_ecl_ouvrage_electrique ouv
+  WHERE id_contrat <> '98' AND (geo_ecl_noeud.id_contrat::text = 'ZZ'::text OR geo_ecl_noeud.id_contrat::text = '03'::text) AND (geo_ecl_noeud.depart IN ( SELECT dep.id_depart
+           FROM m_reseau_sec.an_ecl_depart dep
+          WHERE dep.id_ouvelec = ouv.id_ouvelec));
 
-	SELECT 	   
-		id_supp,
-		nom_ouv,
-		geom
-
-		FROM (m_reseau_sec.an_ecl_support JOIN m_reseau_sec.geo_ecl_noeud ON id_supp= id_noeud), m_reseau_sec.an_ecl_ouvrage_electrique ouv
-		WHERE depart IN (SELECT id_depart FROM m_reseau_sec.an_ecl_depart dep WHERE dep.id_ouvelec = ouv.id_ouvelec);
-
-		
 ALTER TABLE x_apps.xapps_geo_v_ecl_support_par_armoire
-  OWNER TO sig_read;
-GRANT ALL ON TABLE x_apps.xapps_geo_v_ecl_support_par_armoire TO sig_read;
-GRANT ALL ON TABLE x_apps.xapps_geo_v_ecl_support_par_armoire TO sig_temp;
+    OWNER TO create_sig;
+COMMENT ON VIEW x_apps.xapps_geo_v_ecl_support_par_armoire
+    IS 'Support categorisé par armoires pour affichage GEO';
 
-COMMENT ON VIEW x_apps.xapps_geo_v_ecl_support_par_armoire IS 'Support categorisé par armoires pour affichage GEO';
-COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_support_par_armoire.id_supp IS 'idenfitifiant du support';
-COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_support_par_armoire.nom_ouv IS 'Nom de l''ouvrage';
-COMMENT ON COLUMN x_apps.xapps_geo_v_ecl_support_par_armoire.geom IS 'Géométrie du support';
+GRANT ALL ON TABLE x_apps.xapps_geo_v_ecl_support_par_armoire TO sig_create;
+GRANT SELECT ON TABLE x_apps.xapps_geo_v_ecl_support_par_armoire TO sig_read;
+GRANT ALL ON TABLE x_apps.xapps_geo_v_ecl_support_par_armoire TO create_sig;
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE x_apps.xapps_geo_v_ecl_support_par_armoire TO sig_edit;
+
 
 
 --############################################################## TABLEAU DE BORD INTERVENTION ####################################################
@@ -457,18 +461,18 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_tb_patrimoine
          SELECT 1 AS gid,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_point_lumineux
-          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '98'::text
         ), req_foyer AS (
          SELECT 1 AS gid,
             count(*) AS nb
            FROM m_reseau_sec.an_ecl_foyer f,
             m_reseau_sec.geo_v_ecl_point_lumineux pl
-          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text <> '98'::text
         ), req_cable AS (
          SELECT 1 AS gid,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 1000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
-          WHERE geo_ecl_cable.situation::text <> '12'::text
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text <> '98'::text
         )
  SELECT 1 AS gid,
     req_pt_lumi.nb AS support,
@@ -486,6 +490,7 @@ COMMENT ON VIEW x_apps.xapps_an_v_ecl_tb_patrimoine
 
 
 
+														
 -- View: x_apps.xapps_an_v_ecl_stat_patrimoine
 
 -- DROP VIEW x_apps.xapps_an_v_ecl_stat_patrimoine;
@@ -501,7 +506,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '98'::text
         ), req_ouvrage_serv AS (
          SELECT 'Ouvrage (total)'::text AS type,
             count(*) AS nb
@@ -516,7 +521,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '10'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '98'::text
         ), req_armoire_serv AS (
          SELECT 'dont armoire'::text AS type,
             count(*) AS nb
@@ -531,7 +536,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '11'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '98'::text
         ), req_sous_armoire_serv AS (
          SELECT 'dont sous-armoire'::text AS type,
             count(*) AS nb
@@ -546,7 +551,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_ouvrage_electrique
-          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text
+          WHERE geo_v_ecl_ouvrage_electrique.situation::text <> '12'::text AND geo_v_ecl_ouvrage_electrique.ty_ouvelec::text = '20'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '03'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '93'::text AND geo_v_ecl_ouvrage_electrique.id_contrat::text <> '98'::text
         ), req_transfo_serv AS (
          SELECT 'dont transformateur'::text AS type,
             count(*) AS nb
@@ -563,7 +568,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
             count(d.*) AS nb
            FROM m_reseau_sec.an_ecl_depart d,
             m_reseau_sec.geo_v_ecl_ouvrage_electrique o
-          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text <> '03'::text AND o.id_contrat::text <> '93'::text
+          WHERE d.id_ouvelec = o.id_ouvelec AND d.situation::text <> '12'::text AND o.id_contrat::text <> '03'::text AND o.id_contrat::text <> '93'::text AND o.id_contrat::text <> '98'::text
         ), req_depart_serv AS (
          SELECT 'Départ'::text AS type,
             count(d.*) AS nb
@@ -579,7 +584,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
          SELECT 'Support'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_point_lumineux
-          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '03'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '93'::text
+          WHERE geo_v_ecl_point_lumineux.situation::text <> '12'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '03'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '93'::text AND geo_v_ecl_point_lumineux.id_contrat::text <> '98'::text
         ), req_pt_lumi_serv AS (
          SELECT 'Support'::text AS type,
             count(*) AS nb
@@ -596,7 +601,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
             count(*) AS nb
            FROM m_reseau_sec.an_ecl_foyer f,
             m_reseau_sec.geo_v_ecl_point_lumineux pl
-          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text <> '03'::text AND pl.id_contrat::text <> '93'::text
+          WHERE f.id_supp = pl.id_supp AND f.situation::text <> '12'::text AND pl.id_contrat::text <> '03'::text AND pl.id_contrat::text <> '93'::text AND pl.id_contrat::text <> '98'::text
         ), req_foyer_serv AS (
          SELECT 'Foyer'::text AS type,
             count(*) AS nb
@@ -612,7 +617,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
            FROM m_reseau_sec.geo_v_ecl_pi
-          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text <> '03'::text AND geo_v_ecl_pi.id_contrat::text <> '93'::text
+          WHERE geo_v_ecl_pi.situation::text <> '12'::text AND geo_v_ecl_pi.id_contrat::text <> '03'::text AND geo_v_ecl_pi.id_contrat::text <> '93'::text AND geo_v_ecl_pi.id_contrat::text <> '98'::text
         ), req_pt_int_serv AS (
          SELECT 'Point d''intérêt'::text AS type,
             count(*) AS nb
@@ -627,7 +632,7 @@ CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 1000::numeric, 2) AS long_cable
            FROM m_reseau_sec.geo_ecl_cable
-          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text <> '03'::text AND geo_ecl_cable.id_contrat::text <> '93'::text
+          WHERE geo_ecl_cable.situation::text <> '12'::text AND geo_ecl_cable.id_contrat::text <> '03'::text AND geo_ecl_cable.id_contrat::text <> '93'::text AND geo_ecl_cable.id_contrat::text <> '98'::text
         ), req_cable_serv AS (
          SELECT 'Linéaire de câble**'::text AS type,
             round(sum(st_length(geo_ecl_cable.geom))::numeric / 1000::numeric, 2) AS long_cable
@@ -737,6 +742,84 @@ ALTER TABLE x_apps.xapps_an_v_ecl_stat_patrimoine
     OWNER TO create_sig;
 COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_patrimoine
     IS 'Bilan du patrimoine numérique d''éclairage public';
-														
+
+
+
+
+-- View: x_apps.xapps_an_v_ecl_stat_feu_tricolore
+
+-- DROP VIEW x_apps.xapps_an_v_ecl_stat_feu_tricolore;
+
+CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_stat_feu_tricolore
+ AS
+ WITH req_support_arc AS (
+         SELECT 'Support de feu'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_feu_b_support
+          WHERE geo_feu_b_support.id_contrat::text = 'ZZ'::text AND geo_feu_b_support.type::text <> 'FEUX-RADAR'::text
+        ), req_supportm_arc AS (
+         SELECT 'Support de feu'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_feu_b_support
+          WHERE geo_feu_b_support.id_contrat::text = 'ZZ'::text AND geo_feu_b_support.pose_mat = true AND geo_feu_b_support.type::text <> 'FEUX-RADAR'::text
+        ), req_dsupport_arc AS (
+         SELECT 'dont '::text || geo_feu_b_support.type::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_feu_b_support
+          WHERE geo_feu_b_support.id_contrat::text = 'ZZ'::text AND geo_feu_b_support.type::text <> 'FEUX-RADAR'::text
+          GROUP BY geo_feu_b_support.type
+          ORDER BY ('dont '::text || geo_feu_b_support.type::text)
+        ), req_dsupportm_arc AS (
+         SELECT 'dont '::text || geo_feu_b_support.type::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_feu_b_support
+          WHERE geo_feu_b_support.id_contrat::text = 'ZZ'::text AND geo_feu_b_support.pose_mat = true AND geo_feu_b_support.type::text <> 'FEUX-RADAR'::text
+          GROUP BY geo_feu_b_support.type
+          ORDER BY ('dont '::text || geo_feu_b_support.type::text)
+        ), req_armoire_arc AS (
+         SELECT 'Armoire'::text AS type,
+            count(*) AS nb
+           FROM m_reseau_sec.geo_feu_b_armoire
+          WHERE geo_feu_b_armoire.id_contrat::text = 'ZZ'::text
+        ), req_cablefeu_arc AS (
+         SELECT 'Linéaire de câble**'::text AS type,
+            round(sum(st_length(geo_feu_b_ligne.geom))::numeric / 10000::numeric, 2) AS long_cable
+           FROM m_reseau_sec.geo_feu_b_ligne
+          WHERE geo_feu_b_ligne.id_contrat::text = 'ZZ'::text
+        )
+ SELECT 1 AS gid,
+    req_armoire_arc.type,
+    req_armoire_arc.nb AS nb_sup,
+    NULL::bigint AS nb_supm
+   FROM req_armoire_arc
+UNION ALL
+ SELECT 2 AS gid,
+    req_support_arc.type,
+    req_support_arc.nb AS nb_sup,
+    req_supportm_arc.nb AS nb_supm
+   FROM req_support_arc,
+    req_supportm_arc
+  WHERE req_support_arc.type = req_supportm_arc.type
+UNION ALL
+ SELECT 3 AS gid,
+    req_dsupport_arc.type,
+    req_dsupport_arc.nb AS nb_sup,
+        CASE
+            WHEN req_dsupportm_arc.nb IS NULL THEN 0::bigint
+            ELSE req_dsupportm_arc.nb
+        END AS nb_supm
+   FROM req_dsupport_arc
+     LEFT JOIN req_dsupportm_arc ON req_dsupport_arc.type = req_dsupportm_arc.type
+UNION ALL
+ SELECT 4 AS gid,
+    req_cablefeu_arc.type,
+    req_cablefeu_arc.long_cable AS nb_sup,
+    NULL::bigint AS nb_supm
+   FROM req_cablefeu_arc;
+
+ALTER TABLE x_apps.xapps_an_v_ecl_stat_feu_tricolore
+    OWNER TO create_sig;
+COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_feu_tricolore
+    IS 'Bilan du patrimoine numérique des feux tricolores';
 
 
