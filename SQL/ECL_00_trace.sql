@@ -48,4 +48,5 @@
 2022-04-27 : GB : intégration automatisme passage Lampe en LED si lanterne en HAPILED ou LED ROSE
 2022-04-29 : GB : intégration d'une classe d'objets des points de levé du réseau
 2022-05-24 : GB : intégration automatisme passage Lampe en LED si lanterne en Bluster XXL ou tweet néo
-
+2022-06-09 : GB : intégration de la gestion d'un réseau privé alimenté par le réseau d'éclairage public (ajout d'une valeur dans la classe des contrats
+                / et ajustement du fonctionnel statistique pour ne pas intégrer ces objets dans les indicateurs du service
