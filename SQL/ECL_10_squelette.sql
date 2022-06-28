@@ -2083,12 +2083,24 @@ BEGIN
 		NEW.src_geom = '20'; ---- Orthophotographie
 		NEW.src_date = '2018';--- 
 		NEW.situation = '10';---- Actif
-		NEW.presta_cab = CASE 
-			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
-			WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant' 
-			ELSE '' END;
-		NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom));
-	
+		NEW.presta_cab = 
+		--CASE WHEN NEW.id_contrat <> '98' THEN
+			CASE 
+			    WHEN NEW.id_contrat = '98' THEN 'Privé'
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant'
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '03' THEN 'INEO Nord Picardie'
+			ELSE '' --END
+	  /*  ELSE
+		NEW.presta_cab = 'Privé'*/
+		END;
+		
+		NEW.id_contrat = 
+			CASE WHEN NEW.id_contrat <> '98' THEN
+			(SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom))
+			ELSE
+			'98'
+			END;
 	END IF; 
 
 ---
@@ -2204,7 +2216,7 @@ BEGIN
 	NEW.commune2 = (SELECT commune FROM r_osm.geo_vm_osm_commune_arcba arcba WHERE ST_Contains(arcba.geom,ST_EndPoint(NEW.geom)));
 
 ---
-
+	IF NEW.id_contrat <> '98' THEN
 		IF ( (SELECT count(*) FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Intersects(gestion.geom,NEW.geom)) = 1) THEN
 	
 
@@ -2227,11 +2239,25 @@ BEGIN
 
 		END IF;
 
-	NEW.presta_cab = CASE 
-		WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
-		WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant'
-		ELSE '' END;
-	NEW.id_contrat = (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom));
+    ELSE
+	NEW.id_contrat = '98';
+	END IF;
+	
+	NEW.presta_cab = 
+	CASE WHEN NEW.id_contrat <> '98' THEN
+		CASE 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = 'ZZ' THEN 'Service d''éclairage public - Lesens' 
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '93' THEN 'Prestataire privé de l''exploitant'
+				WHEN (SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom)) = '03' THEN 'INEO Nord Picardie'
+		ELSE '' END
+	ELSE
+	'Privé'
+	END;
+	
+	NEW.id_contrat = 
+		CASE WHEN NEW.id_contrat <> '98' THEN
+		(SELECT id_contrat_ecl FROM m_amenagement.geo_amt_zone_gestion gestion WHERE ST_Contains(gestion.geom,NEW.geom))
+		ELSE '98'END;
 
 ---
 
@@ -2245,8 +2271,6 @@ $BODY$;
 
 ALTER FUNCTION m_reseau_sec.ft_m_cable_before()
     OWNER TO create_sig;
-
-
 
 ---
 
