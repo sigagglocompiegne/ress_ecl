@@ -1546,6 +1546,9 @@ Description : Objet réel ou abstrait indiquant un point ayant une importance po
 ### xapps_an_v_ecl_patrimoine
 Description : Bilan du patrimoine numérique d''éclairage public
 
+### xapps_an_v_ecl_tb_lampe
+Description : Répartition selon le type de lampe
+
 ### xapps_an_v_ecl_stat_intervention 
 Description : Compte des interventions selon le type
 
