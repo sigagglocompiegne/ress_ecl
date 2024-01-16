@@ -823,3 +823,19 @@ COMMENT ON VIEW x_apps.xapps_an_v_ecl_stat_feu_tricolore
     IS 'Bilan du patrimoine numérique des feux tricolores';
 
 
+-- View: x_apps.xapps_an_v_ecl_tb_lampe
+
+-- DROP VIEW x_apps.xapps_an_v_ecl_tb_lampe;
+
+CREATE OR REPLACE VIEW x_apps.xapps_an_v_ecl_tb_lampe
+AS SELECT row_number() OVER () AS id,
+    tl.valeur AS lampe_typ,
+    count(*) AS nb_lampe
+   FROM m_reseau_sec.geo_v_ecl_point_lumineux n,
+    m_reseau_sec.an_ecl_foyer f,
+    m_reseau_sec.an_ecl_modele_lampe l,
+    m_reseau_sec.lt_ecl_type_lampe tl
+  WHERE n.id_supp = f.id_supp AND f.id_mod_lm = l.id_mod_lm AND l.ty_lampe::text = tl.code::text AND f.situation::text <> '12'::text AND n.id_contrat::text <> '98'::text
+  GROUP BY tl.valeur;
+
+COMMENT ON VIEW x_apps.xapps_an_v_ecl_tb_lampe IS 'Données nécessaire à la réalisation du tableau de bord dans l''application GEO, pour la répartition des lampes des foyers par type';
